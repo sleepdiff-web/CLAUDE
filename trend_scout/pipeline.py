@@ -16,6 +16,7 @@ from .output import (
     send_slack,
     write_alerts,
     write_csv,
+    write_dashboard,
 )
 from .scoring import score_series
 from .trends_client import TrendsClient
@@ -29,6 +30,7 @@ class RunResult:
     breakouts: list[dict[str, Any]]
     csv_path: str
     alerts_md: str
+    dashboard_path: str
 
 
 def _gather_candidates(cfg: Config, client: TrendsClient) -> dict[str, Candidate]:
@@ -113,9 +115,11 @@ def run(cfg: Config, *, dry_run: bool = False) -> RunResult:
     out_dir = cfg.output_dir
     csv_path = out_dir / cfg.output["csv_name"]
     alerts_base = out_dir / cfg.output["alerts_name"]
+    dashboard_path = out_dir / cfg.output.get("dashboard_name", "dashboard.html")
 
     write_csv(top_rows, csv_path)
     _, alerts_md = write_alerts(breakouts, alerts_base)
+    write_dashboard(top_rows, series, dashboard_path, geo=cfg.geo)
     push_to_gsheet(top_rows)
     send_slack(breakouts)
 
@@ -129,4 +133,5 @@ def run(cfg: Config, *, dry_run: bool = False) -> RunResult:
         breakouts=breakouts,
         csv_path=str(csv_path),
         alerts_md=str(alerts_md),
+        dashboard_path=str(dashboard_path),
     )

@@ -60,6 +60,7 @@ output:
   dir: "output"
   csv_name: "trending_ingredients.csv"
   alerts_name: "breakout_alerts"   # writes .md and .json
+  dashboard_name: "dashboard.html" # double-click this to view results in a browser
   top_n: 60                        # rows written to the sheet
   history_path: "data/history.json"  # tracks previously-seen terms for "NEW" flagging
 

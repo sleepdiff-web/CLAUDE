@@ -32,6 +32,8 @@ def main(argv: list[str] | None = None) -> int:
                         help="only check that the network egress allowlist permits the data sources")
     parser.add_argument("--skip-preflight", action="store_true",
                         help="don't run the egress check before the pipeline")
+    parser.add_argument("--no-open", action="store_true",
+                        help="don't auto-open the dashboard in a browser when done")
     parser.add_argument("--verbose", "-v", action="store_true", help="debug logging")
     args = parser.parse_args(argv)
 
@@ -55,13 +57,22 @@ def main(argv: list[str] | None = None) -> int:
     cfg = load_config(args.config)
     result = run(cfg, dry_run=args.dry_run)
 
-    print(f"\nScored ingredients written to: {result.csv_path}")
+    print(f"\nDashboard (open in browser):   {result.dashboard_path}")
+    print(f"Scored ingredients (Excel):    {result.csv_path}")
     print(f"Breakout alerts written to:    {result.alerts_md}")
     print(f"Breakouts this run: {len(result.breakouts)}")
     for r in result.rows[:15]:
         flag = "🔥" if r["is_breakout"] else ("🆕" if r["is_new"] else "  ")
         print(f"  {r['rank']:>2}. {flag} {r['ingredient']:<28} "
               f"score={r['score']:<6} growth={r['growth_pct']}%")
+
+    if not args.no_open:
+        try:
+            import webbrowser
+            webbrowser.open(Path(result.dashboard_path).resolve().as_uri())
+            print("\nOpened the dashboard in your browser.")
+        except Exception:
+            print("\nTip: open the dashboard file above in your browser to view results.")
     return 0
 
 
