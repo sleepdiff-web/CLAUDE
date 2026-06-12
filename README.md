@@ -42,6 +42,9 @@ you've never heard of, then a *scoring layer* that ranks them by momentum.
 ```bash
 pip install -r requirements.txt
 
+# 0. Confirm the network can actually reach the data sources (see gotcha below):
+python scripts/run_weekly.py --preflight
+
 # Discover candidates without hitting the Trends scoring API (fast, offline-ish):
 python scripts/run_weekly.py --dry-run --verbose
 
@@ -130,30 +133,60 @@ These were deliberately left out to keep it free; easy to add later:
 - **Real search volumes** via Glimpse/SerpApi (pytrends only gives a 0–100 index).
 - **Per-region scoring** (US/UK separately) by running the pipeline per `geo`.
 
-## Limitations & the cloud-IP gotcha (read this)
+## The #1 gotcha: network egress allowlist (read this first)
 
-- **Google Trends blocks datacenter IPs with HTTP 403.** This includes most
-  cloud sandboxes *and GitHub Actions runners*. From your own machine
-  (residential IP) `pytrends` works fine. To run the weekly job in CI you must
-  supply residential/rotating **proxies** — set them in `market.proxies` in
-  `config.yaml` or via the `TRENDS_PROXIES` env var / GitHub secret
-  (comma-separated). The client already wires these through; without them the
-  run degrades gracefully (logs the 403, returns no Trends data — it won't
-  crash). This was verified live: the code is correct, the cloud IP is blocked.
-- **Reddit also 403s generic/datacenter requests.** The fetcher uses a
-  browser-like UA and falls back across `www`/`old` hosts; if still blocked,
-  set `REDDIT_CLIENT_ID` / `REDDIT_CLIENT_SECRET` to use the official API (PRAW)
-  instead. No credentials needed when running where the public endpoint works.
+If a run returns **no data** and you see `HTTP 403` with
+`x-deny-reason: host_not_allowed`, the data sources are being blocked by your
+environment's **network egress allowlist** — *not* by Google or Reddit. Managed
+sandboxes (Claude Code on the web, many CI setups) default to a **Trusted**
+network policy that only permits package registries and a few cloud hosts.
+`trends.google.com` and `reddit.com` aren't on that list, so the proxy denies
+them before the request ever leaves the box.
+
+**Check it in one command:**
+
+```bash
+python scripts/run_weekly.py --preflight
+```
+
+This probes every required host and, if any are blocked, prints the exact
+domains to allow and how.
+
+**The fix** — in the environment's settings, set **Network access → Custom**,
+keep *"Also include default list of common package managers"* checked, and add:
+
+```
+trends.google.com
+www.google.com        # pytrends fetches a consent cookie here
+www.reddit.com
+old.reddit.com
+oauth.reddit.com      # only if you use the PRAW (official API) path
+```
+
+(Or set Network access to **Full**.) Docs:
+<https://code.claude.com/docs/en/claude-code-on-the-web#network-access>
+
+Running **locally on your own machine** has no such allowlist — Trends + Reddit
+just work, no config needed.
+
+## Other limitations
+
 - `pytrends` is an unofficial scraper: free but rate-limited and can break if
   Google changes Trends. It's isolated behind `trends_client.py` so it can be
-  swapped for a paid API (Glimpse/SerpApi) without touching the rest.
-- The 0–100 interest index is *relative*, not absolute search volume.
+  swapped for a paid API (Glimpse/SerpApi) without touching the rest. If Google
+  itself (not the allowlist) rate-limits a cloud IP, supply residential proxies
+  via `market.proxies` in `config.yaml` or the `TRENDS_PROXIES` env var.
+- **Reddit**: the fetcher uses a browser-like UA and falls back across
+  `www`/`old` hosts. If Reddit blocks the unauthenticated path, set
+  `REDDIT_CLIENT_ID` / `REDDIT_CLIENT_SECRET` to use the official API (PRAW).
+- The Trends 0–100 interest index is *relative*, not absolute search volume.
 - The Kalodata link is best-effort; adjust `kalodata.search_url_template` in
   `config.yaml` if their URL scheme changes.
 
 ### Recommended ways to run
 
-1. **Locally** (simplest, free): `python scripts/run_weekly.py` from your own
-   machine — residential IP, Trends + Reddit both work.
-2. **GitHub Actions weekly**: add a `TRENDS_PROXIES` secret (residential proxy)
-   so the runner isn't 403'd; optionally `REDDIT_CLIENT_ID`/`SECRET` for Reddit.
+1. **Locally** (simplest, free): `python scripts/run_weekly.py` — no allowlist,
+   Trends + Reddit both work out of the box.
+2. **Cloud / GitHub Actions**: allowlist the domains above (the workflow assumes
+   they're reachable). Add a `TRENDS_PROXIES` secret only if Google additionally
+   rate-limits the runner IP; optionally `REDDIT_CLIENT_ID`/`SECRET` for Reddit.

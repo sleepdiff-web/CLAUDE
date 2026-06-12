@@ -18,6 +18,9 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from trend_scout.config import load_config  # noqa: E402
 from trend_scout.pipeline import run  # noqa: E402
+from trend_scout.preflight import (  # noqa: E402
+    REDDIT_HOSTS, TRENDS_HOSTS, check_egress, report,
+)
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -25,6 +28,10 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--config", default=None, help="path to config.yaml")
     parser.add_argument("--dry-run", action="store_true",
                         help="discover candidates but skip Trends scoring / API calls")
+    parser.add_argument("--preflight", action="store_true",
+                        help="only check that the network egress allowlist permits the data sources")
+    parser.add_argument("--skip-preflight", action="store_true",
+                        help="don't run the egress check before the pipeline")
     parser.add_argument("--verbose", "-v", action="store_true", help="debug logging")
     args = parser.parse_args(argv)
 
@@ -32,6 +39,18 @@ def main(argv: list[str] | None = None) -> int:
         level=logging.DEBUG if args.verbose else logging.INFO,
         format="%(asctime)s %(levelname)s %(name)s: %(message)s",
     )
+
+    # Preflight: surface egress-allowlist blocks loudly and actionably.
+    if args.preflight or not args.skip_preflight:
+        statuses = check_egress(TRENDS_HOSTS + REDDIT_HOSTS)
+        ok, text = report(statuses)
+        print("Network egress preflight:")
+        print(text)
+        if args.preflight:
+            return 0 if ok else 2
+        if not ok:
+            print("\n⚠️  Some data sources are unreachable — the run will collect partial or no "
+                  "data until the allowlist is fixed (see above). Continuing...\n")
 
     cfg = load_config(args.config)
     result = run(cfg, dry_run=args.dry_run)

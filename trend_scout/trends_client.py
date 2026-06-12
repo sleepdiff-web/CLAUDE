@@ -66,6 +66,13 @@ class TrendsClient:
                 msg = str(exc)
                 if "429" in msg or "rate" in msg.lower():
                     wait *= 2  # be extra gentle on explicit rate limits
+                if "403" in msg:
+                    # In a sandbox this is usually the egress allowlist, not Google.
+                    log.warning(
+                        "Trends 403 — if running in a managed/cloud sandbox, ensure "
+                        "trends.google.com and www.google.com are in your network egress "
+                        "allowlist (Network access -> Custom). Run preflight to confirm."
+                    )
                 log.warning(
                     "Trends call failed (attempt %d/%d): %s — sleeping %.1fs",
                     attempt + 1, self.max_retries, msg, wait,

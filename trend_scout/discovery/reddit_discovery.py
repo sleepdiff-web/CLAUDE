@@ -52,6 +52,14 @@ def _fetch_listing(
                 if resp.status_code == 200:
                     children = resp.json().get("data", {}).get("children", [])
                     return [c.get("data", {}) for c in children]
+                # Egress allowlist denial — not transient, don't retry/host-hop blindly.
+                if resp.headers.get("x-deny-reason") == "host_not_allowed":
+                    log.error(
+                        "r/%s blocked by network egress allowlist (%s). Add '%s' to your "
+                        "environment's Allowed domains (Network access -> Custom).",
+                        subreddit, host, host.split("//")[-1],
+                    )
+                    break
                 if resp.status_code in (429, 500, 502, 503):
                     wait = 2 * (2 ** attempt)
                     log.warning("r/%s HTTP %d via %s — backing off %ds",
