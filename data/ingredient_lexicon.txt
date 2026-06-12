@@ -1,0 +1,191 @@
+# Seed lexicon of known supplement / functional-food ingredients.
+# One per line, lowercase. Used to (a) recognise ingredients in free text and
+# (b) sanity-check discovered candidates. Add to this over time — the pipeline
+# also discovers NEW terms not on this list via Trends rising queries.
+turmeric
+curcumin
+ashwagandha
+beetroot
+berberine
+quercetin
+resveratrol
+spirulina
+chlorella
+moringa
+maca
+rhodiola
+ginseng
+ginkgo
+ginger
+echinacea
+elderberry
+milk thistle
+saw palmetto
+fenugreek
+fennel
+cinnamon
+garlic
+cordyceps
+reishi
+lions mane
+chaga
+turkey tail
+psyllium
+inulin
+collagen
+glutathione
+nac
+n acetyl cysteine
+coq10
+ubiquinol
+magnesium glycinate
+magnesium threonate
+zinc
+selenium
+iodine
+vitamin d3
+vitamin k2
+omega 3
+fish oil
+krill oil
+algae oil
+creatine
+beta alanine
+citrulline
+taurine
+l theanine
+theanine
+caffeine
+tyrosine
+5 htp
+gaba
+melatonin
+valerian
+passionflower
+lemon balm
+chamomile
+green tea
+matcha
+egcg
+yerba mate
+guarana
+acai
+goji
+maqui
+camu camu
+amla
+sea moss
+irish moss
+bladderwrack
+fucoidan
+astaxanthin
+lutein
+zeaxanthin
+lycopene
+sulforaphane
+broccoli sprout
+apigenin
+fisetin
+spermidine
+nmn
+nr
+nicotinamide riboside
+urolithin a
+ergothioneine
+tmg
+betaine
+glycine
+sea buckthorn
+schisandra
+tongkat ali
+fadogia agrestis
+shilajit
+boron
+tribulus
+horny goat weed
+black seed oil
+nigella sativa
+oregano oil
+colostrum
+bovine colostrum
+beef liver
+organ meat
+bee pollen
+royal jelly
+propolis
+manuka honey
+apple cider vinegar
+chlorophyll
+wheatgrass
+barley grass
+camu
+pine pollen
+mucuna pruriens
+bacopa
+bacopa monnieri
+huperzine a
+alpha gpc
+citicoline
+phosphatidylserine
+pterostilbene
+calcium akg
+ca akg
+glycine propionyl
+hmb
+betaine anhydrous
+electrolytes
+trace minerals
+fulvic acid
+humic acid
+diatomaceous earth
+bentonite clay
+activated charcoal
+slippery elm
+marshmallow root
+licorice root
+dgl
+l glutamine
+glutamine
+zinc carnosine
+butyrate
+postbiotic
+prebiotic
+probiotic
+saccharomyces boulardii
+akkermansia
+lactobacillus
+bifidobacterium
+digestive enzymes
+betaine hcl
+ox bile
+tudca
+nattokinase
+serrapeptase
+lumbrokinase
+boswellia
+white willow bark
+devils claw
+cats claw
+cordyceps militaris
+agaricus
+maitake
+pau d arco
+neem
+triphala
+guggul
+holy basil
+tulsi
+gymnema
+gymnema sylvestre
+bitter melon
+banaba
+chromium picolinate
+alpha lipoic acid
+dihydroberberine
+gdm
+inositol
+myo inositol
+d chiro inositol
+dim
+calcium d glucarate
+sulforaphane glucosinolate

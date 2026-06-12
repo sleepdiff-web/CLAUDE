@@ -1,0 +1,68 @@
+# TrendScout configuration
+# Worldwide, free-tier (pytrends + Reddit public JSON), weekly cadence.
+
+market:
+  geo: ""            # "" = Worldwide. Use "US", "GB", etc. to narrow later.
+  timeframe: "today 3-m"   # pytrends window used for momentum scoring (~90 days)
+  # Google Trends blocks datacenter IPs (incl. GitHub Actions runners) with
+  # HTTP 403. Run locally, or add residential/rotating proxies here (or via the
+  # TRENDS_PROXIES env var, comma-separated) to run from the cloud.
+  proxies: []        # e.g. ["https://user:pass@host:port"]
+
+# --- Discovery: seeds we expand into candidate ingredients ----------------
+discovery:
+  # Broad categories. We harvest Google Trends "rising related queries" off
+  # each of these to surface ingredient names we don't already know.
+  trends_seeds:
+    - "supplement"
+    - "superfood"
+    - "gut health"
+    - "longevity supplement"
+    - "natural remedy"
+    - "adaptogen"
+    - "nootropic"
+    - "anti inflammatory supplement"
+    - "vitamin"
+    - "herbal supplement"
+
+  # Reddit communities where supplement trends start. Read via public JSON
+  # (no API key). We pull top posts of the week and extract ingredient names.
+  reddit_subreddits:
+    - "Supplements"
+    - "Nootropics"
+    - "Biohackers"
+    - "Longevity"
+    - "HerbalMedicine"
+    - "tea"
+    - "AdvancedFitness"
+  reddit_listing: "top"     # top | hot
+  reddit_time: "week"       # used when listing == top
+  reddit_limit: 75          # posts per subreddit
+
+  max_candidates: 120       # cap how many candidates we score (rate limits)
+
+# --- Scoring: what counts as "in demand" ----------------------------------
+# You chose: fast growth / breakout AND sustained + accelerating.
+scoring:
+  recent_weeks: 4           # trailing window treated as "now"
+  prior_weeks: 8            # window before that, the baseline
+  min_interest: 8           # ignore terms whose recent interest is basically flat noise
+  breakout_growth_pct: 80   # >= this growth % (recent vs prior) flags a breakout
+  min_sustained_weeks: 2    # recent window must have >=N weeks above threshold (not a 1-week spike)
+  max_recent_volatility: 1.1  # reject spikes: coeff. of variation cap on recent window
+  weights:                  # how the 0-100 momentum score is composed
+    growth: 0.50
+    level: 0.25
+    acceleration: 0.25
+
+# --- Output ----------------------------------------------------------------
+output:
+  dir: "output"
+  csv_name: "trending_ingredients.csv"
+  alerts_name: "breakout_alerts"   # writes .md and .json
+  top_n: 60                        # rows written to the sheet
+  history_path: "data/history.json"  # tracks previously-seen terms for "NEW" flagging
+
+kalodata:
+  # Best-effort deep link into Kalodata product search for each ingredient.
+  search_url_template: "https://www.kalodata.com/product?keyword={query}"

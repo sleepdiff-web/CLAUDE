@@ -1,0 +1,49 @@
+name: TrendScout weekly
+
+on:
+  schedule:
+    # Mondays 07:00 UTC. Cron uses UTC; adjust if you want a local time.
+    - cron: "0 7 * * 1"
+  workflow_dispatch: {}   # allow manual runs from the Actions tab
+
+permissions:
+  contents: write          # to commit the refreshed output/ artifacts
+
+jobs:
+  scout:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run pipeline
+        env:
+          # Google Trends 403s CI runner IPs — set a residential proxy secret
+          # (comma-separated) or the weekly run will collect no Trends data.
+          TRENDS_PROXIES: ${{ secrets.TRENDS_PROXIES }}
+          # Optional: official Reddit API if the public JSON path is blocked.
+          REDDIT_CLIENT_ID: ${{ secrets.REDDIT_CLIENT_ID }}
+          REDDIT_CLIENT_SECRET: ${{ secrets.REDDIT_CLIENT_SECRET }}
+          # Optional integrations — set these as repo secrets to enable.
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          GSHEET_ID: ${{ secrets.GSHEET_ID }}
+          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON_PATH }}
+        run: python scripts/run_weekly.py --verbose
+
+      - name: Commit refreshed results
+        run: |
+          git config user.name  "trendscout-bot"
+          git config user.email "actions@github.com"
+          git add -f output/*.csv output/*.md output/*.json data/history.json || true
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: weekly TrendScout results $(date -u +%Y-%m-%d)"
+            git push
+          else
+            echo "No changes to commit."
+          fi

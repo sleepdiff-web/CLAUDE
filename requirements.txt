@@ -1,0 +1,13 @@
+# Core
+pytrends==4.9.2          # Unofficial Google Trends client (free)
+urllib3<2                # pytrends 4.9.2 uses Retry(method_whitelist=...), removed in urllib3 2.x
+requests>=2.31,<2.32     # keep compatible with urllib3<2
+PyYAML>=6.0              # config.yaml
+
+# Optional integrations (only needed if you enable them)
+gspread>=6.0             # push results to a Google Sheet
+google-auth>=2.0         # auth for gspread service account
+praw>=7.7                # official Reddit API fallback if public JSON is blocked
+
+# Dev
+pytest>=8.0

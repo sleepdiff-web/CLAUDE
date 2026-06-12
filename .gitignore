@@ -1,0 +1,17 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+*.egg-info/
+.pytest_cache/
+
+# Generated output (keep the dir, ignore the artifacts)
+output/*.csv
+output/*.json
+output/*.md
+!output/.gitkeep
+
+# Local state
+data/history.json
+data/cache/
