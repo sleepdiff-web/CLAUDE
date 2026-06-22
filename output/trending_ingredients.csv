@@ -1,6 +1,29 @@
 rank,ingredient,score,is_breakout,is_new,growth_pct,mean_recent,acceleration,sustained,source,discovered_context,kalodata_url,google_trends_url
-1,anti inflammatory,0,False,True,0,0,0,False,trends,best anti inflammatory supplement,https://www.kalodata.com/product?keyword=anti+inflammatory,https://trends.google.com/trends/explore?q=anti+inflammatory
-2,vitamin d3,0,False,True,0,0,0,False,trends,nature made vitamin d3 1000 iu,https://www.kalodata.com/product?keyword=vitamin+d3,https://trends.google.com/trends/explore?q=vitamin+d3
-3,vitamin k2,0,False,True,0,0,0,False,trends,vitamin k2,https://www.kalodata.com/product?keyword=vitamin+k2,https://trends.google.com/trends/explore?q=vitamin+k2
-4,magnesium,0,False,True,0,0,0,False,trends,magnesium,https://www.kalodata.com/product?keyword=magnesium,https://trends.google.com/trends/explore?q=magnesium
-5,vitamin e oil,0,False,True,0,0,0,False,trends,vitamin e oil,https://www.kalodata.com/product?keyword=vitamin+e+oil,https://trends.google.com/trends/explore?q=vitamin+e+oil
+1,fiber,23.97,False,True,-4.32,44.25,0.16,True,trends,fiber supplement,https://www.kalodata.com/product?keyword=fiber,https://trends.google.com/trends/explore?q=fiber
+2,world,21.19,False,True,-3.56,84.75,-6.58,True,trends,supplement world,https://www.kalodata.com/product?keyword=world,https://trends.google.com/trends/explore?q=world
+3,store,14.83,False,True,4.35,9.0,-0.26,True,trends,supplement store,https://www.kalodata.com/product?keyword=store,https://trends.google.com/trends/explore?q=store
+4,turmeric,7.2,False,True,1.82,7.0,-0.06,False,trends,turmeric supplement,https://www.kalodata.com/product?keyword=turmeric,https://trends.google.com/trends/explore?q=turmeric
+5,probiotic,6.9,False,True,-1.64,7.5,-0.23,False,trends,probiotic supplement,https://www.kalodata.com/product?keyword=probiotic,https://trends.google.com/trends/explore?q=probiotic
+6,gaba,6.7,False,True,-4.35,2.75,0.09,False,trends,gaba supplement,https://www.kalodata.com/product?keyword=gaba,https://trends.google.com/trends/explore?q=gaba
+7,liquid iron,6.38,False,True,0.0,1.0,0.0,False,trends,liquid iron supplement,https://www.kalodata.com/product?keyword=liquid+iron,https://trends.google.com/trends/explore?q=liquid+iron
+8,magnesium,6.38,False,True,0.0,1.0,0.0,False,trends,magnesium supplement,https://www.kalodata.com/product?keyword=magnesium,https://trends.google.com/trends/explore?q=magnesium
+9,zinc,2.5,False,True,0.0,0.0,0.0,False,trends,zinc supplement,https://www.kalodata.com/product?keyword=zinc,https://trends.google.com/trends/explore?q=zinc
+10,collagen,2.46,False,True,-100.0,0.0,-0.08,False,trends,collagen supplement,https://www.kalodata.com/product?keyword=collagen,https://trends.google.com/trends/explore?q=collagen
+11,keto burn,0,False,True,0,0,0,False,trends,keto burn supplement,https://www.kalodata.com/product?keyword=keto+burn,https://trends.google.com/trends/explore?q=keto+burn
+12,psyllium,0,False,True,0,0,0,False,trends,metamucil psyllium fiber supplement,https://www.kalodata.com/product?keyword=psyllium,https://trends.google.com/trends/explore?q=psyllium
+13,source,0,False,True,0,0,0,False,trends,supplement source,https://www.kalodata.com/product?keyword=source,https://trends.google.com/trends/explore?q=source
+14,amla,0,False,True,0,0,0,False,trends,amla supplement,https://www.kalodata.com/product?keyword=amla,https://trends.google.com/trends/explore?q=amla
+15,dietary,0,False,True,0,0,0,False,trends,dietary supplement,https://www.kalodata.com/product?keyword=dietary,https://trends.google.com/trends/explore?q=dietary
+16,meaning,0,False,True,0,0,0,False,trends,supplement meaning,https://www.kalodata.com/product?keyword=meaning,https://trends.google.com/trends/explore?q=meaning
+17,calcium,0,False,True,0,0,0,False,trends,calcium supplement,https://www.kalodata.com/product?keyword=calcium,https://trends.google.com/trends/explore?q=calcium
+18,creatine,0,False,True,0,0,0,False,trends,creatine supplement,https://www.kalodata.com/product?keyword=creatine,https://trends.google.com/trends/explore?q=creatine
+19,omega 3,0,False,True,0,0,0,False,trends,omega 3,https://www.kalodata.com/product?keyword=omega+3,https://trends.google.com/trends/explore?q=omega+3
+20,magnesium glycinate,0,False,True,0,0,0,False,trends,magnesium glycinate,https://www.kalodata.com/product?keyword=magnesium+glycinate,https://trends.google.com/trends/explore?q=magnesium+glycinate
+21,dog gut,0,False,True,0,0,0,False,trends,dog gut health,https://www.kalodata.com/product?keyword=dog+gut,https://trends.google.com/trends/explore?q=dog+gut
+22,celtara gut,0,False,True,0,0,0,False,trends,celtara gut health,https://www.kalodata.com/product?keyword=celtara+gut,https://trends.google.com/trends/explore?q=celtara+gut
+23,fermented foods,0,False,True,0,0,0,False,trends,fermented foods,https://www.kalodata.com/product?keyword=fermented+foods,https://trends.google.com/trends/explore?q=fermented+foods
+24,emma gut,0,False,True,0,0,0,False,trends,emma gut health,https://www.kalodata.com/product?keyword=emma+gut,https://trends.google.com/trends/explore?q=emma+gut
+25,improve gut,0,False,True,0,0,0,False,trends,improve gut health,https://www.kalodata.com/product?keyword=improve+gut,https://trends.google.com/trends/explore?q=improve+gut
+26,probiotics,0,False,True,0,0,0,False,trends,probiotics,https://www.kalodata.com/product?keyword=probiotics,https://trends.google.com/trends/explore?q=probiotics
+27,probiotics gut,0,False,True,0,0,0,False,trends,probiotics gut health,https://www.kalodata.com/product?keyword=probiotics+gut,https://trends.google.com/trends/explore?q=probiotics+gut
+28,gut meaning,0,False,True,0,0,0,False,trends,gut meaning,https://www.kalodata.com/product?keyword=gut+meaning,https://trends.google.com/trends/explore?q=gut+meaning
