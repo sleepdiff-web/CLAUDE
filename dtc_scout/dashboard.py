@@ -38,8 +38,17 @@ _TEMPLATE = """<!doctype html>
   nav a.on { color: var(--ink); border-bottom: 2px solid var(--ink); }
   .sub { color: var(--ink-2); font-size: 12px; margin-left: auto; }
   .bar { display: flex; gap: 8px; flex-wrap: wrap; align-items: center;
-         padding: 12px 28px; position: sticky; top: 0; background: var(--bg);
+         padding: 10px 28px 12px; position: sticky; top: 0; background: var(--bg);
          border-bottom: 1px solid var(--line); z-index: 5; }
+  .toolrow { display: flex; gap: 14px; align-items: center; width: 100%;
+             padding: 2px 0 8px; border-bottom: 1px solid var(--line); margin-bottom: 8px; }
+  .search { background: var(--panel); border: 1px solid var(--line); border-radius: 18px;
+            color: var(--ink); font: 12.5px/1 inherit; padding: 7px 14px; width: 230px; }
+  .search::placeholder { color: var(--ink-3); }
+  .tabs { display: flex; gap: 2px; }
+  .tabs button { background: none; border: none; color: var(--ink-3); font: 12.5px/1 inherit;
+                 padding: 7px 10px; cursor: pointer; border-radius: 8px; }
+  .tabs button.on { color: var(--ink); background: var(--panel); font-weight: 600; }
   .chip { position: relative; }
   .chip select { appearance: none; background: var(--panel); color: var(--ink-2);
     border: 1px solid var(--line); border-radius: 18px; padding: 6px 26px 6px 12px;
@@ -63,9 +72,31 @@ _TEMPLATE = """<!doctype html>
   .who .niche { color: var(--ink-3); font-size: 11px; }
   .card-h .meta { margin-left: auto; text-align: right; color: var(--ink-3);
                   font-size: 11px; flex: none; }
-  .headline { padding: 0 13px; font-weight: 600; font-size: 13px; }
-  .body { padding: 4px 13px 0; color: var(--ink-2); font-size: 12px; display: -webkit-box;
-          -webkit-line-clamp: 5; -webkit-box-orient: vertical; overflow: hidden; }
+  .media { position: relative; background: var(--panel); }
+  .media video, .media img { display: block; width: 100%; max-height: 460px;
+                             object-fit: cover; }
+  .prow { display: flex; align-items: center; gap: 9px; padding: 10px 13px 0; }
+  .prow img { width: 34px; height: 34px; border-radius: 8px; object-fit: cover;
+              border: 1px solid var(--line); background: var(--panel); flex: none; }
+  .prow .pt { min-width: 0; font-weight: 600; font-size: 12.5px; white-space: nowrap;
+              overflow: hidden; text-overflow: ellipsis; }
+  .prow .pp { margin-left: auto; flex: none; color: var(--ink-2); font-size: 12px; }
+  .body { padding: 8px 13px 0; color: var(--ink-2); font-size: 12px; display: -webkit-box;
+          -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .body.open { -webkit-line-clamp: unset; }
+  .seemore { padding: 2px 13px 0; color: var(--ink-3); font-size: 11.5px; cursor: pointer; }
+  .shopbar { display: flex; align-items: center; gap: 10px; margin-top: 11px;
+             padding: 10px 13px; border-top: 1px solid var(--line); background: var(--panel); }
+  .shopbar .dm { min-width: 0; }
+  .shopbar .dm .u { color: var(--ink-3); font-size: 10px; text-transform: uppercase;
+                    letter-spacing: .05em; }
+  .shopbar .dm .t { font-weight: 600; font-size: 12px; white-space: nowrap;
+                    overflow: hidden; text-overflow: ellipsis; }
+  .shopbar .shop { margin-left: auto; flex: none; font-size: 11.5px; font-weight: 600;
+                   text-decoration: none; background: var(--card); border: 1px solid var(--line);
+                   border-radius: 8px; padding: 6px 12px; }
+  .actions { display: flex; gap: 6px; padding: 8px 13px 11px; align-items: center; }
+  .actions .btn { font-size: 11px; padding: 4px 9px; }
   .tags { padding: 10px 13px 0; display: flex; flex-wrap: wrap; gap: 5px; }
   .tag { font-size: 10.5px; padding: 2px 8px; border-radius: 9px; background: var(--panel);
          border: 1px solid var(--line); color: var(--ink-2); }
@@ -201,55 +232,105 @@ function saveToSwipe(adId) {
 }
 
 // ---- ad card (shared by explore + swipes) -----------------------------------
+function daysAgo(iso) {
+  if (!iso) return '';
+  const d = Math.round((new Date(DATA.run_date) - new Date(iso)) / 86400000);
+  return d >= 0 ? `${d}d` : '';
+}
+// Correct deep link: numeric archive ids open the specific ad in the library.
+const libraryUrl = a => /^\\d+$/.test(a.archive_id)
+  ? `https://www.facebook.com/ads/library/?id=${a.archive_id}` : '';
 function adCard(a, inSwipeFile) {
   const b = brandById[a.page_id];
+  const media = a.media_path
+    ? (a.media_type === 'video'
+        ? `<div class="media"><video src="${a.media_path}" controls preload="metadata" muted></video></div>`
+        : `<div class="media"><img src="${a.media_path}" loading="lazy" alt=""></div>`)
+    : '';
+  const prod = (productsBy[a.page_id] || [])[0];
+  const prow = prod ? `<div class="prow">
+      ${prod.image ? `<img src="${prod.image}" loading="lazy" alt="">` : ''}
+      <span class="pt">${esc(prod.title)}</span>
+      ${prod.price != null ? `<span class="pp">~$${prod.price}</span>` : ''}
+    </div>` : '';
   const tags = [
     !a.stop_date ? '<span class="tag live">● active</span>' : '',
     ...['awareness_level', 'visual_treatment', 'authority_figure', 'offer_type']
       .map(k => a[k]).filter(v => v && v !== 'unknown' && v !== 'none')
       .map(v => `<span class="tag">${v.replaceAll('_', ' ')}</span>`),
-    b.is_subscription ? '<span class="tag">subscription brand</span>' : '',
-    b.traffic_tier !== 'unknown' ? `<span class="tag">traffic: ${b.traffic_tier}</span>` : '',
   ].join('');
+  const lib = libraryUrl(a);
   const action = inSwipeFile
-    ? `<button class="btn right" onclick="removeSwipe('${inSwipeFile}','${a.archive_id}')">Remove</button>`
-    : `<button class="btn right" onclick="saveToSwipe('${a.archive_id}')">＋ Save</button>`;
+    ? `<button class="btn" onclick="removeSwipe('${inSwipeFile}','${a.archive_id}')">Remove</button>`
+    : `<button class="btn" onclick="saveToSwipe('${a.archive_id}')">＋ Save</button>`;
   return `<div class="card">
     <div class="card-h">
       <span class="avatar">${initials(b.page_name)}</span>
       <span class="who" onclick="openDetail('${b.page_id}')"><b>${esc(b.page_name)}</b><span class="niche">${b.niche} · ${b.active_ads} active ads</span></span>
-      <span class="meta">${fmt(a.eu_reach)} reach<br>${a.start_date || ''}</span>
+      <span class="meta">${fmt(a.eu_reach)} reach<br>${daysAgo(a.start_date)}</span>
       ${heartBtn(b.page_id)}
     </div>
-    ${a.link_title ? `<div class="headline">${esc(a.link_title)}</div>` : ''}
-    ${a.body ? `<div class="body">${esc(a.body)}</div>` : ''}
+    ${media}
+    ${prow}
+    ${a.body ? `<div class="body" id="bd-${a.archive_id}">${esc(a.body)}</div>
+      <div class="seemore" onclick="const e=document.getElementById('bd-${a.archive_id}');e.classList.toggle('open');this.textContent=e.classList.contains('open')?'See less':'See more'">See more</div>` : ''}
     <div class="tags">${tags}</div>
-    <div class="card-f">
-      <a class="domain" href="https://${b.domain}" target="_blank">${b.domain}</a>
+    <div class="shopbar">
+      <div class="dm"><div class="u">${b.domain}</div>
+        ${a.link_title ? `<div class="t">${esc(a.link_title)}</div>` : ''}</div>
+      <a class="shop" href="https://${b.domain}" target="_blank">Shop Now</a>
+    </div>
+    <div class="actions">
       ${action}
-      ${a.snapshot_url ? `<a class="btn" href="${a.snapshot_url}" target="_blank">View ad ↗</a>` : ''}
+      ${a.media_path ? `<a class="btn" href="${a.media_path}" download>⬇ ${a.media_type === 'video' ? 'HD' : 'Image'}</a>` : ''}
+      ${lib ? `<a class="btn" href="${lib}" target="_blank">Ad Library ↗</a>` : ''}
     </div>
   </div>`;
 }
 
 // ---- explore view -------------------------------------------------------------
+// Filter chips grouped under tabs, like the reference (All / Creative / ...).
 const FILTERS = [
-  {key: 'niche',            label: 'Niche',            of: a => brandById[a.page_id].niche},
-  {key: 'awareness_level',  label: 'Awareness',        of: a => a.awareness_level},
-  {key: 'visual_treatment', label: 'Visual treatment', of: a => a.visual_treatment},
-  {key: 'authority_figure', label: 'Authority',        of: a => a.authority_figure},
-  {key: 'offer_type',       label: 'Subs vs one-time', of: a => a.offer_type},
-  {key: 'traffic_tier',     label: 'Monthly traffic',  of: a => brandById[a.page_id].traffic_tier},
-  {key: 'active',           label: 'Activity',         of: a => a.stop_date ? 'stopped' : 'active'},
+  {key: 'niche',            label: 'Niche',            tab: 'audience', of: a => brandById[a.page_id].niche},
+  {key: 'awareness_level',  label: 'Awareness',        tab: 'audience', of: a => a.awareness_level},
+  {key: 'traffic_tier',     label: 'Monthly traffic',  tab: 'audience', of: a => brandById[a.page_id].traffic_tier},
+  {key: 'visual_treatment', label: 'Visual treatment', tab: 'creative', of: a => a.visual_treatment},
+  {key: 'authority_figure', label: 'Presenter',        tab: 'creative', of: a => a.authority_figure},
+  {key: 'offer_type',       label: 'Subs vs one-time', tab: 'funnel',   of: a => a.offer_type},
+  {key: 'active',           label: 'Activity',         tab: 'activity', of: a => a.stop_date ? 'stopped' : 'active'},
 ];
+const TABS = [['all', 'All'], ['recent', 'Recent'], ['creative', 'Creative'],
+              ['audience', 'Audience'], ['funnel', 'Funnel'], ['activity', 'Activity']];
 const state = {};
+let tab = 'all', query = '';
 const bar = document.getElementById('bar');
+
+const toolrow = document.createElement('div'); toolrow.className = 'toolrow';
+const searchEl = document.createElement('input');
+searchEl.className = 'search'; searchEl.placeholder = 'Search ads...';
+searchEl.oninput = () => { query = searchEl.value.trim().toLowerCase(); render(); };
+const tabsEl = document.createElement('div'); tabsEl.className = 'tabs';
+tabsEl.innerHTML = TABS.map(([k, t]) => `<button data-tab="${k}" class="${k === 'all' ? 'on' : ''}">${t}</button>`).join('');
+tabsEl.onclick = e => {
+  const btn = e.target.closest('button'); if (!btn) return;
+  tab = btn.dataset.tab;
+  tabsEl.querySelectorAll('button').forEach(x => x.classList.toggle('on', x === btn));
+  if (tab === 'recent') sortSel.value = 'recent';
+  for (const f of FILTERS) {
+    const chip = document.getElementById('chip-' + f.key);
+    if (chip) chip.style.display = (tab === 'all' || tab === 'recent' || f.tab === tab) ? '' : 'none';
+  }
+  render();
+};
+toolrow.append(searchEl, tabsEl);
+bar.prepend(toolrow);
+
 for (const f of FILTERS) {
   const counts = {};
   for (const a of ADS) { const v = f.of(a); if (v && v !== 'unknown' && v !== 'none') counts[v] = (counts[v] || 0) + 1; }
   const opts = Object.entries(counts).sort((x, y) => y[1] - x[1]);
   if (!opts.length) continue;
-  const wrap = document.createElement('span'); wrap.className = 'chip';
+  const wrap = document.createElement('span'); wrap.className = 'chip'; wrap.id = 'chip-' + f.key;
   const sel = document.createElement('select');
   sel.innerHTML = `<option value="">${f.label}</option>` +
     opts.map(([v, n]) => `<option value="${v}">${v.replaceAll('_', ' ')} · ${n.toLocaleString()}</option>`).join('');
@@ -262,14 +343,20 @@ sortSel.innerHTML = `<option value="reach">Sort: reach</option><option value="re
 sortSel.onchange = () => render();
 sortWrap.appendChild(sortSel); bar.appendChild(sortWrap);
 
+function matchesQuery(a) {
+  if (!query) return true;
+  const b = brandById[a.page_id];
+  return `${a.body} ${a.link_title} ${b.page_name} ${b.domain}`.toLowerCase().includes(query);
+}
 function renderExplore(el) {
-  let ads = ADS.filter(a => FILTERS.every(f => !state[f.key] || f.of(a) === state[f.key]));
+  let ads = ADS.filter(a => FILTERS.every(f => !state[f.key] || f.of(a) === state[f.key]))
+               .filter(matchesQuery);
   ads.sort(sortSel.value === 'recent'
     ? (x, y) => (y.start_date || '').localeCompare(x.start_date || '')
     : (x, y) => (y.eu_reach || 0) - (x.eu_reach || 0));
   document.getElementById('count').textContent = `${ads.length.toLocaleString()} results`;
-  el.innerHTML = `<div class="grid">${ads.map(a => adCard(a)).join('')}</div>` ||
-    '<p class="empty">No ads match.</p>';
+  el.innerHTML = ads.length ? `<div class="grid">${ads.map(a => adCard(a)).join('')}</div>`
+    : '<p class="empty">No ads match.</p>';
 }
 
 // ---- following ledger ---------------------------------------------------------

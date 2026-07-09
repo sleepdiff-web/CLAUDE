@@ -50,6 +50,11 @@ class Config:
     def classify(self) -> dict[str, Any]:
         return self.raw.get("classify", {})
 
+    # --- media -----------------------------------------------------------------
+    @property
+    def media(self) -> dict[str, Any]:
+        return self.raw.get("media", {})
+
     # --- traffic ---------------------------------------------------------------
     @property
     def traffic(self) -> dict[str, Any]:

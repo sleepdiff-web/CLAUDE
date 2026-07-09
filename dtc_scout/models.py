@@ -25,6 +25,9 @@ class Ad:
     visual_treatment: str = "unknown"
     authority_figure: str = "unknown"
     offer_type: str = "unknown"
+    # Downloaded creative (filled by media stage)
+    media_type: str = ""            # "video" | "image" | ""
+    media_path: str = ""            # relative to output dir, e.g. media/123.mp4
 
     @property
     def active(self) -> bool:

@@ -41,7 +41,9 @@ CREATE TABLE IF NOT EXISTS ads (
     awareness_level  TEXT,
     visual_treatment TEXT,
     authority_figure TEXT,
-    offer_type       TEXT
+    offer_type       TEXT,
+    media_type       TEXT DEFAULT '',
+    media_path       TEXT DEFAULT ''
 );
 CREATE TABLE IF NOT EXISTS snapshots (
     page_id    TEXT,
@@ -69,6 +71,12 @@ class Database:
         self.conn = sqlite3.connect(path)
         self.conn.row_factory = sqlite3.Row
         self.conn.executescript(SCHEMA)
+        # Migrations for DBs created before these columns existed.
+        for column in ("media_type", "media_path"):
+            try:
+                self.conn.execute(f"ALTER TABLE ads ADD COLUMN {column} TEXT DEFAULT ''")
+            except sqlite3.OperationalError:
+                pass  # already present
 
     def close(self) -> None:
         self.conn.close()
@@ -128,10 +136,15 @@ class Database:
             """
             INSERT INTO ads (archive_id, page_id, body, link_title, link_caption,
                              start_date, stop_date, eu_reach, snapshot_url, platforms,
-                             niche, awareness_level, visual_treatment, authority_figure, offer_type)
-            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+                             niche, awareness_level, visual_treatment, authority_figure,
+                             offer_type, media_type, media_path)
+            VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
             ON CONFLICT(archive_id) DO UPDATE SET
                 stop_date=excluded.stop_date, eu_reach=excluded.eu_reach,
+                media_type=CASE WHEN excluded.media_path!=''
+                    THEN excluded.media_type ELSE ads.media_type END,
+                media_path=CASE WHEN excluded.media_path!=''
+                    THEN excluded.media_path ELSE ads.media_path END,
                 awareness_level=CASE WHEN excluded.awareness_level!='unknown'
                     THEN excluded.awareness_level ELSE ads.awareness_level END,
                 visual_treatment=CASE WHEN excluded.visual_treatment!='unknown'
@@ -145,7 +158,7 @@ class Database:
                 ad.archive_id, ad.page_id, ad.body, ad.link_title, ad.link_caption,
                 ad.start_date, ad.stop_date, ad.eu_reach, ad.snapshot_url, ad.platforms,
                 ad.niche, ad.awareness_level, ad.visual_treatment,
-                ad.authority_figure, ad.offer_type,
+                ad.authority_figure, ad.offer_type, ad.media_type, ad.media_path,
             ),
         )
         self.conn.commit()

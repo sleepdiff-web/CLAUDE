@@ -44,6 +44,14 @@ classify:
   max_ads_per_brand: 8      # classify only each brand's top ads (by EU reach)
   batch_size: 8             # ads per LLM call
 
+# --- Media ------------------------------------------------------------------
+# Download each listed brand's top ad creatives (video/image) from the ad
+# snapshot pages into output/media/, so dashboard cards show and play the real
+# creative offline (and "Download HD" is a local file). Re-runs reuse files.
+media:
+  enabled: true
+  max_per_brand: 8
+
 # --- Traffic ----------------------------------------------------------------
 traffic:
   # Free proxy for "monthly traffic" filtering: Tranco domain rank -> tier.

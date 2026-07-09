@@ -24,6 +24,7 @@ from .config import Config
 from .dashboard import render_dashboard
 from .db import Database
 from .models import Ad, BrandMetrics
+from .sources.media import MediaFetcher
 from .sources.meta_ad_library import MetaAdLibraryClient, extract_domain
 from .sources.shopify import ShopifyProbe
 from .sources.traffic import TrafficClient
@@ -79,6 +80,9 @@ def run(cfg: Config, today: date, dry_run: bool = False) -> dict:
         return {"candidates": len(candidates), "dry_run": True}
 
     # 2-3. ENRICH + VET --------------------------------------------------------
+    media_enabled = bool(cfg.media.get("enabled", True))
+    media_per_brand = int(cfg.media.get("max_per_brand", 8))
+    fetcher = MediaFetcher(cfg.output_dir / "media") if media_enabled else None
     shopify = ShopifyProbe()
     traffic = TrafficClient(
         high_cutoff=int(cfg.traffic.get("high_cutoff", 60000)),
@@ -112,6 +116,12 @@ def run(cfg: Config, today: date, dry_run: bool = False) -> dict:
                 db.upsert_ad(ad)
             if products:
                 db.replace_products(page_id, products[:40])
+            if fetcher:  # real creatives for the brand's top ads by reach
+                for ad in sorted(ads, key=lambda a: -a.eu_reach)[:media_per_brand]:
+                    found = fetcher.fetch(ad.archive_id, ad.snapshot_url)
+                    if found:
+                        ad.media_type, ad.media_path = found
+                        db.upsert_ad(ad)
         log.info("vet: %-30s %s %s", m.page_name[:30], status, "; ".join(verdict.reasons))
 
     # 4. CLASSIFY ----------------------------------------------------------------
