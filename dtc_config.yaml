@@ -1,0 +1,61 @@
+# DTCScout configuration
+# Pre-vetted database of fast-scaling DTC brands, discovered via the Meta Ad
+# Library (EU transparency data), enriched with Shopify + traffic signals, and
+# classified with an optional LLM pass. Free-tier sources only.
+
+meta:
+  api_version: "v21.0"
+  # EU countries give full ad transparency (all ads + eu_total_reach), not just
+  # political ads. Reach across these countries is our impressions proxy.
+  countries: ["NL", "DE", "FR"]
+  # Niche -> search terms harvested from the Ad Library. Each hit is grouped by
+  # advertiser page to surface candidate brands.
+  niches:
+    skincare: ["skincare serum", "acne treatment", "anti aging cream"]
+    supplements: ["gut health supplement", "greens powder", "collagen supplement"]
+    haircare: ["hair growth serum", "hair loss treatment"]
+    wellness: ["sleep gummies", "magnesium supplement"]
+  ads_per_term: 200        # max ads fetched per search term (pagination cap)
+  max_ads_per_brand: 400   # cap when pulling a candidate brand's full ad account
+
+# --- Vetting: the inclusion criteria every brand must keep meeting ----------
+# Brands that stop meeting the criteria are flagged "removed" on the next run
+# (they stay in the DB for history, but drop out of the dashboard by default).
+vetting:
+  min_active_ads: 12        # running a real ad account, not dabbling
+  min_new_ads_30d: 4        # still launching creatives = still scaling
+  max_brand_age_months: 12  # "new" = earliest ad in the library within N months
+  require_shopify: true     # DTC store, not an app / marketplace / retailer
+  # Exclude household names: a Tranco rank better (lower) than this is a big
+  # brand (think calvinklein.com), not the fast-scaling stores we want.
+  big_brand_rank_cutoff: 5000
+  exclude_domains:          # manual blocklist, always excluded
+    - "amazon.com"
+    - "walmart.com"
+    - "temu.com"
+    - "sheinoutlet.com"
+
+# --- Classification: the "next level" filters ------------------------------
+# Runs on ad copy + landing-page text. Uses the Claude API when
+# ANTHROPIC_API_KEY is set; otherwise falls back to keyword heuristics so the
+# pipeline still runs end-to-end for free.
+classify:
+  model: "claude-haiku-4-5-20251001"
+  max_ads_per_brand: 8      # classify only each brand's top ads (by EU reach)
+  batch_size: 8             # ads per LLM call
+
+# --- Traffic ----------------------------------------------------------------
+traffic:
+  # Free proxy for "monthly traffic" filtering: Tranco domain rank -> tier.
+  # rank <= high_cutoff  => "high"   (roughly the 100k+ uniques/mo stores)
+  # rank <= medium_cutoff => "medium"
+  # ranked at all         => "low" ; unranked => "unknown"
+  high_cutoff: 60000
+  medium_cutoff: 250000
+
+output:
+  dir: "output"
+  db_path: "data/dtc_scout.db"
+  brands_csv: "dtc_brands.csv"
+  ads_csv: "dtc_ads.csv"
+  dashboard_name: "dtc_dashboard.html"
