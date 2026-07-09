@@ -45,6 +45,31 @@ def looks_like_shopify(html: str) -> bool:
     return bool(html and _SHOPIFY_HTML_RE.search(html))
 
 
+def parse_products(raw_products: list[dict]) -> list[dict]:
+    """Normalise Shopify products.json records to what the DB stores.
+
+    Catalogue order is preserved (sales rank isn't public); price is the
+    cheapest variant; created_at powers the catalog-freshness stats.
+    """
+    out = []
+    for p in raw_products:
+        prices = []
+        for v in p.get("variants") or []:
+            try:
+                prices.append(float(v.get("price")))
+            except (TypeError, ValueError):
+                pass
+        images = p.get("images") or []
+        out.append({
+            "handle": p.get("handle", "") or "",
+            "title": p.get("title", "") or "",
+            "price": min(prices) if prices else None,
+            "image": (images[0].get("src", "") if images else "") or "",
+            "created_at": (p.get("created_at") or "")[:10],
+        })
+    return out
+
+
 class ShopifyProbe:
     """Network-facing probe for one storefront domain."""
 
@@ -77,14 +102,16 @@ class ShopifyProbe:
 
     def probe(self, domain: str) -> dict:
         """Returns {'is_shopify': bool|None, 'is_subscription': bool|None,
-        'product_count': int}. None means the store was unreachable."""
+        'product_count': int, 'products': list}. None means unreachable."""
         html = self.fetch_homepage(domain)
         products = self.fetch_products(domain)
         if not html and not products:
-            return {"is_shopify": None, "is_subscription": None, "product_count": 0}
+            return {"is_shopify": None, "is_subscription": None,
+                    "product_count": 0, "products": []}
         is_shopify = bool(products) or looks_like_shopify(html)
         return {
             "is_shopify": is_shopify,
             "is_subscription": detect_subscription(html),
             "product_count": len(products),
+            "products": parse_products(products),
         }

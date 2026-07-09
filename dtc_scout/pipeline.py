@@ -90,10 +90,12 @@ def run(cfg: Config, today: date, dry_run: bool = False) -> dict:
         if not ads:
             continue
         m = build_metrics(page_id, page_name or ads[0].page_name, ads, today, niche or ads[0].niche)
+        products: list[dict] = []
         if m.domain:
             probe = shopify.probe(m.domain)
             m.is_shopify = probe["is_shopify"]
             m.is_subscription = probe["is_subscription"]
+            products = probe["products"]
             m.traffic_rank, m.traffic_tier = traffic.lookup(m.domain)
 
         verdict = evaluate(m, criteria, today)
@@ -108,6 +110,8 @@ def run(cfg: Config, today: date, dry_run: bool = False) -> dict:
         if verdict.passed:
             for ad in ads:
                 db.upsert_ad(ad)
+            if products:
+                db.replace_products(page_id, products[:40])
         log.info("vet: %-30s %s %s", m.page_name[:30], status, "; ".join(verdict.reasons))
 
     # 4. CLASSIFY ----------------------------------------------------------------

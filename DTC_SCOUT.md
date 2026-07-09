@@ -44,10 +44,31 @@ niche terms ─►│ Meta Ad Library keyword search (EU     │─► candidate
 | Best sellers / product data | `/products.json` probe (catalogue; sales rank not public) |
 | Daily-updated database | run on a cron (GitHub Actions), same as TrendScout |
 
+| Following + ledger | dashboard "Following" tab: ad-activity sparklines, best sellers, avg ad life, median price (follows persist in the browser) |
+| Swipe files | save any ad into named collections from the dashboard (browser localStorage) |
+| Brand detail page | stat tiles, awareness/creative/offer mix bars, catalog freshness, bestsellers, top ads |
+| MCP server ("connect to your AI") | `python -m dtc_scout.mcp_server` — see below |
+
 **Deliberately deferred** (v2+): visual treatment from actual video/images
 (needs a vision pass over ad snapshots), landing-page type classification
-(quiz/advertorial/listicle), video/audio download, transcripts, swipe files,
-following, and the MCP server (trivial to add once the SQLite DB has data).
+(quiz/advertorial/listicle), video/audio download, transcripts, and revenue
+estimates (traffic × assumed CVR × AOV — fake precision until traffic data
+improves).
+
+## MCP server: query the database from Claude
+
+Once a run has populated `data/dtc_scout.db`:
+
+```bash
+pip install "mcp[cli]"
+claude mcp add dtcscout -- python -m dtc_scout.mcp_server
+```
+
+Four read-only tools: `list_brands`, `search_ads` (by awareness level, offer
+type, authority figure, niche), `analyze_brand` (full breakdown: mixes, avg ad
+life, median price, catalog freshness, bestsellers, ad-activity history), and
+`research_brief` (top hooks in a niche — the "pull me the best unaware ads
+and suggest concepts" workflow).
 
 ## Quick start
 

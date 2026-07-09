@@ -6,6 +6,7 @@ PyYAML>=6.0              # config.yaml
 
 # Optional integrations (only needed if you enable them)
 anthropic>=0.40          # DTCScout LLM creative classification (keyword fallback without it)
+mcp>=1.0                 # DTCScout MCP server (query the brand DB from Claude)
 gspread>=6.0             # push results to a Google Sheet
 google-auth>=2.0         # auth for gspread service account
 praw>=7.7                # official Reddit API fallback if public JSON is blocked

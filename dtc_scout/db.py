@@ -50,6 +50,16 @@ CREATE TABLE IF NOT EXISTS snapshots (
     eu_reach   INTEGER,
     PRIMARY KEY (page_id, run_date)
 );
+CREATE TABLE IF NOT EXISTS products (
+    page_id    TEXT,
+    handle     TEXT,
+    title      TEXT,
+    price      REAL,
+    image      TEXT,
+    created_at TEXT,
+    position   INTEGER,
+    PRIMARY KEY (page_id, handle)
+);
 """
 
 
@@ -153,3 +163,22 @@ class Database:
                 "SELECT * FROM snapshots WHERE page_id=? ORDER BY run_date", (page_id,)
             )
         ]
+
+    # --- products -------------------------------------------------------------
+    def replace_products(self, page_id: str, products: list[dict]) -> None:
+        self.conn.execute("DELETE FROM products WHERE page_id=?", (page_id,))
+        self.conn.executemany(
+            "INSERT OR REPLACE INTO products (page_id, handle, title, price, image, created_at, position)"
+            " VALUES (?,?,?,?,?,?,?)",
+            [
+                (page_id, p["handle"], p["title"], p["price"], p["image"], p["created_at"], i)
+                for i, p in enumerate(products)
+            ],
+        )
+        self.conn.commit()
+
+    def products_for_brand(self, page_id: str, top_n: int | None = None) -> list[dict]:
+        q = "SELECT * FROM products WHERE page_id=? ORDER BY position"
+        if top_n:
+            q += f" LIMIT {int(top_n)}"
+        return [dict(r) for r in self.conn.execute(q, (page_id,))]
