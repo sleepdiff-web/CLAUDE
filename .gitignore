@@ -16,3 +16,4 @@ output/*.html
 # Local state
 data/history.json
 data/cache/
+data/dtc_scout.db

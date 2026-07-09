@@ -53,13 +53,20 @@ following, and the MCP server (trivial to add once the SQLite DB has data).
 
 ```bash
 pip install -r requirements.txt
-export META_ACCESS_TOKEN=...        # required (free) — see below
-export ANTHROPIC_API_KEY=...        # optional — enables LLM classification
+
+# Put your token in a gitignored .env file (kept out of shell history):
+cat > .env <<'EOF'
+META_ACCESS_TOKEN=YOUR_APP_ID|YOUR_APP_SECRET   # required (free) — see below
+ANTHROPIC_API_KEY=sk-...                         # optional — LLM classification
+EOF
 
 python scripts/run_dtc_scout.py --preflight   # network + env check
 python scripts/run_dtc_scout.py --dry-run --verbose
 python scripts/run_dtc_scout.py --verbose     # full run
 ```
+
+`scripts/run_dtc_scout.py` auto-loads `.env` from the project root; a real
+`export META_ACCESS_TOKEN=...` still overrides it if you prefer.
 
 Outputs:
 
