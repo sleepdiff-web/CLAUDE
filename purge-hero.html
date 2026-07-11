@@ -1,0 +1,76 @@
+<style>
+  #PurgeHero {
+    font-family: var(--font-body-family-override, inherit);
+    position: relative; width: 100%; box-sizing: border-box; overflow: hidden;
+    background-image: url("https://cdn.shopify.com/s/files/1/0681/4312/0443/files/660e1c50-a546-4cab-adbe-0d916dfb0a06.png?v=1783728076");
+    background-size: cover; background-position: top center; background-repeat: no-repeat;
+    min-height: 360px; display: flex; align-items: center;
+  }
+  #PurgeHero * { box-sizing: border-box; }
+  #PurgeHero::before {
+    content: ""; position: absolute; inset: 0; z-index: 1;
+    background: linear-gradient(90deg, rgba(250,247,239,.92) 0%, rgba(250,247,239,.72) 38%, rgba(250,247,239,0) 66%);
+  }
+  #PurgeHero .hero-inner { position: relative; z-index: 2; width: 100%; max-width: 1180px; margin: 0 auto; padding: 32px 20px; }
+  #PurgeHero .hero-copy { max-width: 540px; }
+  #PurgeHero .hero-title {
+    margin: 0 0 12px; color: #1A1A1A; font-weight: 800; line-height: 1.18;
+    letter-spacing: .2px; text-transform: uppercase; font-size: clamp(22px, 4.4vw, 34px);
+  }
+  #PurgeHero .hero-sub { margin: 0 0 20px; color: #2A2A2A; font-size: clamp(14px, 2vw, 17px); line-height: 1.45; font-weight: 600; }
+  #PurgeHero .hero-btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    background: linear-gradient(180deg, #7FB08A 0%, #A9CFA8 100%);
+    color: #1F2A22 !important; text-decoration: none;
+    font-size: 16px; font-weight: 800; letter-spacing: .3px; text-transform: uppercase;
+    padding: 14px 32px; border-radius: 14px;
+    box-shadow: 0 4px 14px rgba(127,176,138,.35); transition: background .2s ease;
+  }
+  #PurgeHero .hero-btn:hover { background: linear-gradient(180deg, #6EA07A 0%, #98C097 100%); }
+  #PurgeHero .hero-trust { display: flex; align-items: center; gap: 8px; margin: 16px 0 0; }
+  #PurgeHero .hero-stars { color: #1A1A1A; font-size: 16px; letter-spacing: 1px; }
+  #PurgeHero .hero-trust a { color: #1A1A1A; font-size: 13.5px; font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }
+
+  /* ---------- MOBILE ONLY (≤767px) — full-bleed 9:16 image, text baked over lower space. Desktop untouched. ---------- */
+  @media screen and (max-width: 767px) {
+    #PurgeHero {
+      background-image: url("https://cdn.shopify.com/s/files/1/0681/4312/0443/files/hf_20260619_043229_f4513546-52d6-4e8f-9009-d2a57686ea33.png?v=1781843864");
+      background-size: cover; background-position: top center;
+      min-height: 84vh; display: flex; align-items: flex-end;
+    }
+    #PurgeHero::before {
+      background: linear-gradient(180deg, rgba(250,247,239,0) 46%, rgba(250,247,239,.78) 64%, rgba(250,247,239,.97) 82%);
+    }
+    #PurgeHero .hero-inner { max-width: none; padding: 0 22px 30px; }
+    #PurgeHero .hero-copy { max-width: none; margin: 0 auto; text-align: center; }
+    #PurgeHero .hero-title { font-size: 21px; line-height: 1.22; margin: 0 0 9px; }
+    #PurgeHero .hero-sub { font-size: 13.5px; margin: 0 0 16px; }
+    #PurgeHero .hero-btn { display: flex; width: 100%; padding: 14px 20px; font-size: 15px; }
+    #PurgeHero .hero-trust { justify-content: center; margin: 12px 0 0; }
+    #PurgeHero .hero-stars { font-size: 14px; }
+    #PurgeHero .hero-trust a { font-size: 12.5px; }
+  }
+
+  /* ---------- DESKTOP ONLY (≥768px) — show the WHOLE image, no crop ---------- */
+  @media screen and (min-width: 768px) {
+    #PurgeHero {
+      background-size: contain; background-position: center right;
+      min-height: 0; aspect-ratio: 1920 / 720;
+    }
+    #PurgeHero .hero-inner { padding: 48px 32px; }
+  }
+</style>
+
+<section id="PurgeHero" aria-label="Purge hero">
+  <div class="hero-inner">
+    <div class="hero-copy">
+      <h2 class="hero-title">Gut relief that actually gets to the root</h2>
+      <p class="hero-sub">Daily natural support for healthy uric acid, joints &amp; active mobility.</p>
+      <a class="hero-btn" href="/products/purge-uric-acid">Shop Now</a>
+      <div class="hero-trust">
+        <span class="hero-stars">★★★★★</span>
+        <a href="/products/purge-uric-acid">8,000+ happy customers</a>
+      </div>
+    </div>
+  </div>
+</section>
