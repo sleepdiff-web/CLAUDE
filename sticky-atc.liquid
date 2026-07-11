@@ -1,0 +1,273 @@
+{% comment %}
+  Sticky ATC — Custom Liquid version (bundle selector setup)
+  Paste this into a "Custom Liquid" block on the product template.
+  Edit the CONFIG assigns below to change colours, text, sizing, behaviour.
+{% endcomment %}
+
+{%- comment -%} ===== CONFIG ===== {%- endcomment -%}
+{% assign sx_id = 'csa1' %}
+
+{%- comment -%} Behaviour {%- endcomment -%}
+{% comment %} Pixels scrolled before the bar appears. Higher = shows later. {% endcomment %}
+{% assign scroll_threshold = 800 %}
+{% comment %} Pixels from the very bottom of the page at which the bar hides again. Higher = hides sooner (further from bottom). {% endcomment %}
+{% assign bottom_hide_offset = 120 %}
+{% comment %} true = bar scrolls to the bundle section. false = adds to cart directly. {% endcomment %}
+{% assign scroll_to_bundle = true %}
+{% comment %} CSS selector(s) for the Kaching Bundles block. Comma-separated = tries each in order. {% endcomment %}
+{% assign bundle_selector = '.kaching-bundles, [data-kaching-bundles], kaching-bundles, .kbundles, #kaching-bundles' %}
+{% comment %} Pixels of space left ABOVE the bundle block. Higher = lands higher up so benefits show. {% endcomment %}
+{% assign scroll_offset = 260 %}
+
+{%- comment -%} Button {%- endcomment -%}
+{% assign button_text = 'Add to cart' %}
+{% assign loading_text = 'Adding...' %}
+{% assign success_text = 'Added!' %}
+{% assign button_color = '#000000' %}
+{% assign button_hover_color = '#333333' %}
+{% assign button_text_color = '#ffffff' %}
+{% assign button_disabled_color = '#cccccc' %}
+{% assign button_font_size = 14 %}
+{% assign button_padding_vertical = 12 %}
+{% assign button_padding_horizontal = 24 %}
+{% assign button_border_radius = 4 %}
+
+{%- comment -%} Product info {%- endcomment -%}
+{% assign show_price = true %}
+{% assign image_size = 60 %}
+{% assign image_border_radius = 4 %}
+{% assign title_font_size = 16 %}
+{% assign title_font_weight = 600 %}
+{% assign price_font_size = 14 %}
+
+{%- comment -%} Colours {%- endcomment -%}
+{% assign background_color = '#ffffff' %}
+{% assign text_color = '#000000' %}
+{% assign price_color = '#666666' %}
+{% assign border_color = '#e0e0e0' %}
+
+{%- comment -%} Layout {%- endcomment -%}
+{% assign padding = 16 %}
+{% assign content_gap = 16 %}
+{% assign border_width = 1 %}
+{%- comment -%} ===== END CONFIG ===== {%- endcomment -%}
+
+{% style %}
+  .sx-sticky-atc-{{ sx_id }}{position:fixed;left:0;right:0;bottom:0;z-index:999;background:{{ background_color }};border-top:{{ border_width }}px solid {{ border_color }};padding:{{ padding }}px;transform:translateY(100%);transition:transform .3s ease;box-shadow:0 -2px 10px rgba(0,0,0,.1)}
+  .sx-sticky-atc-{{ sx_id }}.is-visible{transform:translateY(0)}
+  .sx-sticky-atc__content-{{ sx_id }}{display:flex;align-items:center;gap:{{ content_gap }}px;max-width:1200px;margin:0 auto}
+  .sx-sticky-atc__image-{{ sx_id }}{width:{{ image_size }}px;height:{{ image_size }}px;flex-shrink:0;border-radius:{{ image_border_radius }}px;overflow:hidden}
+  .sx-sticky-atc__image-{{ sx_id }} img{width:100%;height:100%;object-fit:cover}
+  .sx-sticky-atc__placeholder-{{ sx_id }}{width:100%;height:100%;background:#f4f4f4;display:flex;align-items:center;justify-content:center}
+  .sx-sticky-atc__info-{{ sx_id }}{flex:1;min-width:0}
+  .sx-sticky-atc__title-{{ sx_id }}{color:{{ text_color }};font-size:{{ title_font_size }}px;font-weight:{{ title_font_weight }};margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .sx-sticky-atc__price-{{ sx_id }}{color:{{ price_color }};font-size:{{ price_font_size }}px;margin:4px 0 0}
+  .sx-sticky-atc__price-{{ sx_id }} s{opacity:.6;margin-left:6px}
+  .sx-sticky-atc__btn-{{ sx_id }}{background:{{ button_color }};color:{{ button_text_color }};border:0;padding:{{ button_padding_vertical }}px {{ button_padding_horizontal }}px;border-radius:{{ button_border_radius }}px;font-size:{{ button_font_size }}px;font-weight:600;cursor:pointer;white-space:nowrap;min-width:120px;transition:background .2s ease}
+  .sx-sticky-atc__btn-{{ sx_id }}:hover{background:{{ button_hover_color }}}
+  .sx-sticky-atc__btn-{{ sx_id }}[disabled]{background:{{ button_disabled_color }};cursor:not-allowed;opacity:.7}
+  @media(max-width:749px){
+    .sx-sticky-atc-{{ sx_id }}{padding:{{ padding | times: 0.8 }}px}
+    .sx-sticky-atc__content-{{ sx_id }}{gap:{{ content_gap | times: 0.7 }}px}
+    .sx-sticky-atc__image-{{ sx_id }}{width:{{ image_size | times: 0.8 }}px;height:{{ image_size | times: 0.8 }}px}
+    .sx-sticky-atc__btn-{{ sx_id }}{min-width:100px;padding:{{ button_padding_vertical | times: 0.8 }}px {{ button_padding_horizontal | times: 0.8 }}px;font-size:{{ button_font_size | times: 0.9 }}px}
+  }
+{% endstyle %}
+
+<sticky-atc-bar class="sx-sticky-atc-{{ sx_id }}" data-product-id="{{ product.id }}">
+  <div class="sx-sticky-atc__content-{{ sx_id }}">
+    <div class="sx-sticky-atc__image-{{ sx_id }}">
+      {% assign media = product.selected_or_first_available_variant.featured_media | default: product.featured_media %}
+      {% if media %}
+        <img src="{{ media | image_url: width: 200 }}" alt="{{ media.alt | escape }}" loading="lazy" width="{{ media.width | default: 200 }}" height="{{ media.height | default: 200 }}">
+      {% else %}
+        <div class="sx-sticky-atc__placeholder-{{ sx_id }}">{{ 'product-1' | placeholder_svg_tag }}</div>
+      {% endif %}
+    </div>
+
+    <div class="sx-sticky-atc__info-{{ sx_id }}">
+      <h3 class="sx-sticky-atc__title-{{ sx_id }}">{{ product.title }}</h3>
+      {% if show_price %}
+        <div class="sx-sticky-atc__price-{{ sx_id }}" data-sticky-price>
+          {% assign cur_variant = product.selected_or_first_available_variant %}
+          <span>{{ cur_variant.price | money }}</span>
+          {% if cur_variant.compare_at_price > cur_variant.price %}
+            <s>{{ cur_variant.compare_at_price | money }}</s>
+          {% endif %}
+        </div>
+      {% endif %}
+    </div>
+
+    {% assign selected_variant = product.selected_or_first_available_variant %}
+    <button
+      type="button"
+      class="sx-sticky-atc__btn-{{ sx_id }}"
+      data-sticky-atc-btn
+      data-variant-id="{{ selected_variant.id }}"
+      {% unless selected_variant.available %}disabled aria-disabled="true"{% endunless %}
+    >
+      {{ button_text }}
+    </button>
+  </div>
+</sticky-atc-bar>
+
+<script>
+(function(){
+  const el = document.currentScript.previousElementSibling; // <sticky-atc-bar>
+  if(!el) return;
+
+  const btn = el.querySelector('[data-sticky-atc-btn]');
+  const priceBox = el.querySelector('[data-sticky-price]');
+  const img = el.querySelector('img');
+  const scrollThreshold = {{ scroll_threshold }};
+  const bottomHideOffset = {{ bottom_hide_offset }};
+  const scrollToBundle = {{ scroll_to_bundle }};
+  const bundleSelector = {{ bundle_selector | json }};
+  const scrollOffset = {{ scroll_offset }};
+
+  // Find main product form to mirror variant selection
+  const mainForm = document.querySelector('form[action*="/cart/add"]');
+
+  function getCurrentVariantId(){
+    const input = mainForm && mainForm.querySelector('input[name="id"]');
+    return (input && input.value) || btn.dataset.variantId;
+  }
+
+  function updateFromVariantChange(){
+    const vid = getCurrentVariantId();
+    if(vid) btn.dataset.variantId = vid;
+
+    // try to copy live price html
+    if(priceBox){
+      const livePrice = document.querySelector('[data-product-price], [data-price-wrapper], .price__container');
+      if(livePrice) priceBox.innerHTML = livePrice.innerHTML;
+    }
+
+    // try to switch image using gallery active media
+    const activeImg = document.querySelector('[data-variant-id="'+vid+'"] img, [data-media-id].is-active img');
+    if(activeImg && img){ img.src = activeImg.currentSrc || activeImg.src; }
+  }
+
+  // Scroll to the Kaching Bundles section (falls back to top if not found)
+  function scrollToBundleSection(){
+    const target = document.querySelector(bundleSelector);
+    if(target){
+      const y = target.getBoundingClientRect().top + window.scrollY - scrollOffset;
+      window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }
+
+  // Show after scrolling past the threshold, but hide again near the very
+  // bottom of the page so the bar doesn't cover the footer / bundle section.
+  let visible = false;
+  function onScroll(){
+    const scrolled = window.scrollY;
+    const viewport = window.innerHeight;
+    const pageHeight = Math.max(
+      document.documentElement.scrollHeight,
+      document.body ? document.body.scrollHeight : 0
+    );
+    const distanceFromBottom = pageHeight - (scrolled + viewport);
+
+    const pastThreshold = scrolled > scrollThreshold;
+    const atBottom = distanceFromBottom <= bottomHideOffset;
+    const shouldShow = pastThreshold && !atBottom;
+
+    if(shouldShow !== visible){
+      visible = shouldShow;
+      el.classList.toggle('is-visible', shouldShow);
+    }
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  window.addEventListener('resize', onScroll, {passive:true});
+  onScroll();
+
+  // Listen to main form & custom variant events
+  if(mainForm){
+    mainForm.addEventListener('change', updateFromVariantChange);
+    new MutationObserver(updateFromVariantChange).observe(mainForm, {subtree:true, childList:true, attributes:true});
+  }
+  document.addEventListener('variant:change', function(e){ if(e.detail && e.detail.variant && e.detail.variant.id){ btn.dataset.variantId = e.detail.variant.id; updateFromVariantChange(); }});
+
+  // Add to cart / scroll functionality
+  btn.addEventListener('click', async function(ev){
+    ev.preventDefault();
+
+    // If enabled, scroll to the bundle section and do nothing else
+    if (scrollToBundle) {
+      scrollToBundleSection();
+      return;
+    }
+
+    const variantId = btn.dataset.variantId;
+    if(!variantId || btn.disabled) return;
+
+    const originalText = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = '{{ loading_text }}';
+
+    try {
+      const formData = { items: [{ id: variantId, quantity: 1 }] };
+      const response = await fetch('/cart/add.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+
+      if(!response.ok) throw new Error('Failed to add to cart');
+
+      btn.textContent = '{{ success_text }}';
+
+      // Get fresh cart data
+      const cartData = await fetch('/cart.js').then(function(r){ return r.json(); });
+
+      // Update cart count in header
+      const cartBubbles = document.querySelectorAll('.cart-count-bubble, [data-cart-count], .cart-count');
+      cartBubbles.forEach(function(bubble){
+        bubble.textContent = cartData.item_count;
+        if(cartData.item_count > 0) bubble.style.display = '';
+      });
+
+      // Trigger cart refresh events
+      document.dispatchEvent(new CustomEvent('cart:refresh'));
+      document.documentElement.dispatchEvent(new CustomEvent('cart:refresh', { bubbles: true, detail: cartData }));
+
+      // Update cart drawer with full section render
+      fetch(window.location.href + '?section_id=cart-drawer').then(function(r){ return r.text(); }).then(function(html){
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+        const newDrawer = doc.querySelector('cart-drawer');
+        const currentDrawer = document.querySelector('cart-drawer');
+
+        if(currentDrawer && newDrawer) {
+          currentDrawer.parentNode.replaceChild(newDrawer, currentDrawer);
+
+          setTimeout(function(){
+            const cartDrawer = document.querySelector('cart-drawer');
+            if(cartDrawer) {
+              if(typeof cartDrawer.open === 'function') {
+                cartDrawer.open();
+              } else {
+                const cartIcon = document.querySelector('#cart-icon-bubble, [href*="/cart"]');
+                if(cartIcon) cartIcon.click();
+              }
+            }
+          }, 150);
+        }
+      });
+
+      setTimeout(function(){ btn.textContent = originalText; btn.disabled = false; }, 2000);
+    } catch(error) {
+      console.error('Add to cart error:', error);
+      btn.textContent = originalText;
+      btn.disabled = false;
+      alert('Could not add item to cart. Please try again.');
+    }
+  });
+
+  // initial sync
+  updateFromVariantChange();
+})();
+</script>
