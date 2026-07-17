@@ -1,0 +1,100 @@
+<style>
+  #PurgeDiff {
+    --bg:#33503F; --title:#FFFFFF; --body:#FFFFFF;
+    --card:#F3F4F0; --card-text:#1A1A1A; --card-border:#E2E4DD; --check:#2E9E5B;
+    --head: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    display:block; box-sizing:border-box;
+    font-family:var(--font-body-family-override, inherit);
+    -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+    background:var(--bg);
+    padding:32px 20px;
+    overflow:hidden;
+  }
+  #PurgeDiff * { box-sizing:border-box; }
+
+  #PurgeDiff .diff-inner {
+    max-width:1120px; margin:0 auto;
+    display:flex; flex-direction:column; gap:26px;
+  }
+
+  #PurgeDiff .diff-title {
+    font-family:var(--head); font-size:26px; font-weight:800; line-height:1.15;
+    color:#FFFFFF !important; margin:0 0 14px; letter-spacing:-.01em;
+  }
+  #PurgeDiff .diff-sub {
+    font-family:var(--head); font-size:15px; font-weight:400; line-height:1.55;
+    color:#FFFFFF !important; margin:0 0 20px;
+  }
+
+  #PurgeDiff .diff-grid {
+    display:grid; grid-template-columns:1fr 1fr; gap:12px;
+  }
+  #PurgeDiff .diff-card {
+    display:flex; align-items:center; gap:9px;
+    background:var(--card); border:1px solid var(--card-border); border-radius:10px;
+    padding:13px 14px;
+    font-family:var(--head); font-size:14px; font-weight:600; line-height:1.25;
+    color:var(--card-text);
+  }
+  #PurgeDiff .diff-card svg { flex:0 0 auto; width:16px; height:16px; color:var(--check); }
+
+  /* Mobile: full-bleed image edge-to-edge, on top */
+  #PurgeDiff .diff-media {
+    order:-1;
+    width:calc(100% + 40px); margin:-32px -20px 22px;
+  }
+  #PurgeDiff .diff-media img {
+    width:100%; height:auto; display:block; border-radius:0; object-fit:cover;
+    background:#2A4234;
+  }
+
+  /* ---------- DESKTOP (≥900px): two columns, image right, rounded ---------- */
+  @media screen and (min-width:900px) {
+    #PurgeDiff { padding:56px 32px; }
+    #PurgeDiff .diff-inner {
+      flex-direction:row; align-items:center; gap:56px;
+    }
+    #PurgeDiff .diff-text { flex:1 1 50%; order:1; }
+    #PurgeDiff .diff-media { flex:1 1 50%; order:2; max-width:440px; width:100%; margin:0; }
+    #PurgeDiff .diff-media img { border-radius:16px; }
+    #PurgeDiff .diff-title { font-size:30px; }
+    #PurgeDiff .diff-sub { font-size:16px; }
+    #PurgeDiff .diff-card { font-size:14.5px; padding:14px 16px; }
+  }
+
+  <!-- image source unchanged below -->
+</style>
+
+<div id="PurgeDiff">
+  <div class="diff-inner">
+
+    <div class="diff-text">
+      <h2 class="diff-title">Start Going Every Morning</h2>
+      <p class="diff-sub">Years of dysbiosis quietly broke the signaling system your colon was designed to run on. Purge Labs restores the postbiotic acids, repopulates the SCFA producers, and soothes the lining so your body can move on its own again.</p>
+
+      <div class="diff-grid">
+        <div class="diff-card">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M4 10.5l4 4 8-9"/></svg>
+          End the Constipation Cycle
+        </div>
+        <div class="diff-card">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M4 10.5l4 4 8-9"/></svg>
+          Stop the Sulfur Burps &amp; Bloating
+        </div>
+        <div class="diff-card">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M4 10.5l4 4 8-9"/></svg>
+           Get your morning back without Miralax
+        </div>
+        <div class="diff-card">
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M4 10.5l4 4 8-9"/></svg>
+          One Gummy a Day
+        </div>
+      </div>
+    </div>
+
+    <div class="diff-media">
+      <img src="https://cdn.shopify.com/s/files/1/0681/4312/0443/files/feb78266-587f-4844-8491-2315bb38d3f9.png?v=1783691794" alt="Customer holding Purge Labs Kombucha Gummies" width="440" height="440" loading="lazy">
+    </div>
+
+  </div>
+</div>
