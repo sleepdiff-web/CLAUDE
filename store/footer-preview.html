@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JevaWell Footer Preview</title>
+<style>
+  body { margin: 0; font-family: "Helvetica Neue", Arial, sans-serif; background: #f4f4f4; }
+
+  .jw-footer {
+    background-color: #25402C;
+    color: #ffffff;
+    padding: 56px 24px 40px;
+  }
+  .jw-footer__inner { max-width: 1600px; margin: 0 auto; }
+  .jw-footer__top { display: flex; flex-direction: column; gap: 28px; }
+
+  .jw-footer__logo-text {
+    font-size: 30px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    color: #f5f1e6;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+  }
+  .jw-footer__logo-text .leaf { color: #f5f1e6; font-size: 0.8em; margin: 0 -2px; }
+
+  .jw-footer__heading { font-size: 20px; font-weight: 600; margin: 0 0 6px; }
+
+  .jw-footer__menu { list-style: none; margin: 0; padding: 0; }
+  .jw-footer__menu a {
+    display: inline-block;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 15px;
+    padding: 7px 0;
+  }
+  .jw-footer__menu a:hover { text-decoration: underline; }
+
+  .jw-footer__disclaimer {
+    color: #CDBE8A;
+    font-size: 13px;
+    line-height: 1.65;
+    text-align: center;
+    max-width: 560px;
+    margin: 48px auto 0;
+  }
+
+  .jw-footer__locale { margin-top: 40px; text-align: center; }
+  .jw-footer__locale-label {
+    display: block;
+    font-size: 15px;
+    color: #e8e4d8;
+    margin-bottom: 12px;
+  }
+  .jw-footer__locale select {
+    appearance: none;
+    -webkit-appearance: none;
+    background: transparent;
+    color: #ffffff;
+    border: 1px solid rgba(255,255,255,0.45);
+    border-radius: 10px;
+    padding: 12px 44px 12px 24px;
+    font-size: 15px;
+    cursor: pointer;
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23ffffff' stroke-width='1.5'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 18px center;
+  }
+  .jw-footer__locale select option { color: #000; }
+
+  @media (min-width: 990px) {
+    .jw-footer__top,
+    .jw-footer__bottom {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr 1fr;
+      align-items: start;
+      gap: 40px;
+    }
+    .jw-footer__logo { justify-self: center; padding-top: 8px; }
+    .jw-footer__bottom { margin-top: 48px; }
+    .jw-footer__disclaimer { grid-column: 2; margin: 0 auto; font-size: 12.5px; }
+    .jw-footer__locale {
+      grid-column: 3;
+      justify-self: center;
+      margin-top: 0;
+    }
+  }
+</style>
+</head>
+<body>
+
+<footer class="jw-footer">
+  <div class="jw-footer__inner">
+    <div class="jw-footer__top">
+      <div class="jw-footer__logo">
+        <a href="/" class="jw-footer__logo-text">JEV<span class="leaf">🌿</span>WELL</a>
+      </div>
+
+      <nav aria-label="Footer">
+        <h2 class="jw-footer__heading">Need Help?</h2>
+        <ul class="jw-footer__menu">
+          <li><a href="/pages/contact">Contact</a></li>
+          <li><a href="/pages/track-order">Track Order</a></li>
+          <li><a href="/policies/refund-policy">Returns Policy</a></li>
+          <li><a href="/policies/privacy-policy">Privacy Policy</a></li>
+          <li><a href="/policies/terms-of-service">Terms of Service</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="jw-footer__bottom">
+    <p class="jw-footer__disclaimer">
+      *These statements have not been evaluated by the Food and Drug
+      Administration. This product is not intended to diagnose, treat, cure, or
+      prevent any disease. Individual results may vary, and testimonials are not
+      claimed to represent typical results. All testimonials are by real people,
+      and may not reflect the typical purchaser's experience, and are not
+      intended to represent or guarantee that anyone will achieve the same or
+      similar results.
+    </p>
+
+    <div class="jw-footer__locale">
+      <label class="jw-footer__locale-label" for="country">Country/region</label>
+      <select id="country">
+        <option selected>United States | USD $</option>
+        <option>Canada | CAD $</option>
+        <option>United Kingdom | GBP £</option>
+      </select>
+    </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
