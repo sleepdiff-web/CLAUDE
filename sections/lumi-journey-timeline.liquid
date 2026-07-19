@@ -1,0 +1,248 @@
+{%- comment -%}
+============================================================================
+  LUMI — "Your Journey" scroll-driven timeline  (full-width cream band)
+  A vertical line fills red from the top as you scroll; the fill front tracks the
+  middle of the screen. Each circle lights (grey outline -> red check) and its
+  milestone un-greys the moment it passes the middle. Fully 1:1 with scroll.
+  Mobile: line on the left, all content to its right.
+  Desktop: line centred, milestones alternate left / right (zigzag).
+  CSS namespaced under .lumi-tl + hardened with !important. Font via @import.
+============================================================================
+{%- endcomment -%}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<section class="lumi-tl" data-lumi-tl>
+  <div class="lumi-tl__inner">
+    <div class="lumi-tl__track" data-track>
+      <span class="lumi-tl__line" data-line aria-hidden="true"></span>
+      <span class="lumi-tl__fill" data-fill aria-hidden="true"></span>
+
+      <!-- 1 -->
+      <div class="lumi-tl__item" data-item data-side="right">
+        <span class="lumi-tl__dot" data-dot aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M5 12.5l4 4 9-9.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <div class="lumi-tl__content">
+          <p class="lumi-tl__eyebrow">WEEKS 1–2</p>
+          <h3 class="lumi-tl__title">The Foundation</h3>
+          <ul class="lumi-tl__list">
+            <li>Just 2 capsules daily</li>
+            <li>Gentle and easy to follow</li>
+            <li>No prescription, no side effects</li>
+            <li>You're taking back control</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 2 -->
+      <div class="lumi-tl__item" data-item data-side="left">
+        <span class="lumi-tl__dot" data-dot aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M5 12.5l4 4 9-9.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <div class="lumi-tl__content">
+          <p class="lumi-tl__eyebrow">WEEK 3-4</p>
+          <h3 class="lumi-tl__title">The First Wins</h3>
+          <ul class="lumi-tl__list">
+            <li>Fewer bathroom emergencies</li>
+            <li>Leave home with confidence</li>
+            <li>Anxiety starts to fade</li>
+            <li>Your body is listening again</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 3 -->
+      <div class="lumi-tl__item" data-item data-side="right">
+        <span class="lumi-tl__dot" data-dot aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M5 12.5l4 4 9-9.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <div class="lumi-tl__content">
+          <p class="lumi-tl__eyebrow">WEEK 5-8</p>
+          <h3 class="lumi-tl__title">The Shift</h3>
+          <ul class="lumi-tl__list">
+            <li>Fewer leaks and accidents</li>
+            <li>Sleeping through the night again</li>
+            <li>Laugh, sneeze, exercise — no fear</li>
+            <li>You're living again, not just coping</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 4 -->
+      <div class="lumi-tl__item" data-item data-side="left">
+        <span class="lumi-tl__dot" data-dot aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M5 12.5l4 4 9-9.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <div class="lumi-tl__content">
+          <p class="lumi-tl__eyebrow">WEEK 8+</p>
+          <h3 class="lumi-tl__title">Long-Term Freedom</h3>
+          <ul class="lumi-tl__list">
+            <li>Bladder control feels natural again</li>
+            <li>Stronger tissues, lasting support</li>
+            <li>No quick fix — real results that stay</li>
+            <li>You feel like you again</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+  .lumi-tl, .lumi-tl *, .lumi-tl *::before, .lumi-tl *::after { box-sizing: border-box !important; }
+
+  .lumi-tl {
+    --tl-x: 24px;                     /* line x on mobile */
+    --tl-accent: #8f2b33;
+    --tl-grey: #d5d2cc;
+    width: 100vw !important; max-width: 100vw !important;
+    margin: 0 0 0 calc(50% - 50vw) !important;
+    margin-right: calc(50% - 50vw) !important;
+    padding: 0 !important;
+    background: #f8f6f2 !important;
+    font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+    -webkit-font-smoothing: antialiased !important;
+    overflow: hidden !important;
+  }
+
+  .lumi-tl__inner { max-width: 1080px !important; margin: 0 auto !important; padding: 48px 22px !important; }
+
+  .lumi-tl__track { position: relative !important; }
+
+  .lumi-tl__line, .lumi-tl__fill {
+    position: absolute !important;
+    left: var(--tl-x) !important;
+    transform: translateX(-50%) !important;
+    width: 2px !important;
+    border-radius: 2px !important;
+    /* top / height are set by JS as inline styles — deliberately NOT !important
+       so the script can control them. The values below are static fallbacks. */
+  }
+  .lumi-tl__line { background: var(--tl-grey) !important; z-index: 1 !important; top: 0; bottom: 0; }
+  .lumi-tl__fill { background: var(--tl-accent) !important; z-index: 2 !important; top: 0; height: 0; }
+
+  .lumi-tl__item { position: relative !important; padding-left: 58px !important; margin: 0 0 40px !important; }
+  .lumi-tl__item:last-child { margin-bottom: 0 !important; }
+
+  .lumi-tl__dot {
+    position: absolute !important;
+    left: var(--tl-x) !important;
+    transform: translateX(-50%) !important;
+    top: 0 !important;
+    z-index: 3 !important;
+    width: 40px !important; height: 40px !important;
+    display: flex !important; align-items: center !important; justify-content: center !important;
+    border-radius: 50% !important;
+    border: 2px solid var(--tl-grey) !important;
+    background: #f8f6f2 !important;
+    color: #c9c6c0 !important;                 /* inactive check colour */
+    transition: border-color .3s ease, background-color .3s ease, color .3s ease !important;
+  }
+  .lumi-tl__item.is-active .lumi-tl__dot {
+    border-color: var(--tl-accent) !important;
+    background: var(--tl-accent) !important;
+    color: #ffffff !important;
+  }
+
+  .lumi-tl__content { opacity: 0.4 !important; transition: opacity .45s ease !important; }
+  .lumi-tl__item.is-active .lumi-tl__content { opacity: 1 !important; }
+
+  .lumi-tl__eyebrow {
+    margin: 0 0 3px !important; padding: 0 !important;
+    color: #6b6875 !important; -webkit-text-fill-color: #6b6875 !important;
+    font-size: 12px !important; font-weight: 700 !important;
+    letter-spacing: 0.06em !important; text-transform: uppercase !important; line-height: 1.2 !important;
+  }
+  .lumi-tl__title {
+    margin: 0 0 12px !important; padding: 0 !important;
+    color: #23232a !important; -webkit-text-fill-color: #23232a !important;
+    font-size: 21px !important; font-weight: 700 !important; line-height: 1.2 !important;
+  }
+  .lumi-tl__list { list-style: none !important; margin: 0 !important; padding: 0 !important; }
+  .lumi-tl__list li {
+    position: relative !important;
+    margin: 0 0 8px !important; padding: 0 !important;
+    color: #2E2A39 !important; -webkit-text-fill-color: #2E2A39 !important;
+    font-size: 16px !important; line-height: 1.4 !important; font-weight: 500 !important;
+  }
+  .lumi-tl__list li::before {
+    content: "\2713" !important;                /* check mark */
+    color: #8f2b33 !important; -webkit-text-fill-color: #8f2b33 !important;
+    font-weight: 700 !important; margin-right: 7px !important;
+  }
+
+  /* ---- Desktop: centred line, alternating sides ---- */
+  @media (min-width: 750px) {
+    .lumi-tl { --tl-x: 50%; }
+    .lumi-tl__inner { padding: 72px 24px !important; }
+    .lumi-tl__item { padding-left: 0 !important; margin-bottom: 4px !important; }
+
+    .lumi-tl__item[data-side="right"] .lumi-tl__content {
+      margin-left: calc(50% + 40px) !important; text-align: left !important;
+    }
+    .lumi-tl__item[data-side="left"] .lumi-tl__content {
+      margin-right: calc(50% + 40px) !important; text-align: right !important;
+    }
+    .lumi-tl__title { font-size: 24px !important; }
+    .lumi-tl__list li { font-size: 16px !important; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .lumi-tl__dot, .lumi-tl__content { transition: none !important; }
+  }
+</style>
+
+<script>
+(function () {
+  function setup(root) {
+    if (root.hasAttribute('data-lumi-ready')) return;
+    root.setAttribute('data-lumi-ready', '');
+
+    var track = root.querySelector('[data-track]');
+    var line  = root.querySelector('[data-line]');
+    var fill  = root.querySelector('[data-fill]');
+    var items = Array.prototype.slice.call(root.querySelectorAll('[data-item]'));
+    var dots  = items.map(function (it) { return it.querySelector('[data-dot]'); });
+    if (!track || !dots.length) return;
+
+    var geom = { top: 0, height: 0, dotY: [] };
+
+    function measure() {
+      var tr = track.getBoundingClientRect();
+      var first = dots[0].getBoundingClientRect();
+      var last  = dots[dots.length - 1].getBoundingClientRect();
+      geom.top = (first.top + first.height / 2) - tr.top;
+      var bottom = (last.top + last.height / 2) - tr.top;
+      geom.height = Math.max(0, bottom - geom.top);
+      geom.dotY = dots.map(function (d) { var r = d.getBoundingClientRect(); return (r.top + r.height / 2) - tr.top; });
+      line.style.top = geom.top + 'px';
+      line.style.height = geom.height + 'px';
+      fill.style.top = geom.top + 'px';
+      update();
+    }
+
+    function update() {
+      var tr = track.getBoundingClientRect();
+      var middleRel = (window.innerHeight / 2) - tr.top;          /* screen-middle in track coords */
+      var fillPx = Math.max(0, Math.min(middleRel - geom.top, geom.height));
+      fill.style.height = fillPx + 'px';
+      var frontRel = geom.top + fillPx;
+      items.forEach(function (it, i) {
+        it.classList.toggle('is-active', geom.dotY[i] <= frontRel + 0.5);
+      });
+    }
+
+    var ticking = false;
+    function onScroll() {
+      if (ticking) return; ticking = true;
+      window.requestAnimationFrame(function () { update(); ticking = false; });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', measure, { passive: true });
+    window.addEventListener('load', measure);
+    measure();
+    setTimeout(measure, 300);   /* re-measure after webfont swap */
+  }
+
+  function boot() { document.querySelectorAll('[data-lumi-tl]').forEach(setup); }
+  if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', boot); } else { boot(); }
+})();
+</script>
