@@ -1,0 +1,13 @@
+{
+  "manifest_version": 3,
+  "name": "Drip Writer",
+  "version": "1.0.0",
+  "description": "Types your text into any field on a page like a human — variable speed, realistic typos that backspace and self-correct.",
+  "permissions": ["activeTab", "scripting"],
+  "action": {
+    "default_title": "Drip Writer — open the typing panel"
+  },
+  "background": {
+    "service_worker": "background.js"
+  }
+}
