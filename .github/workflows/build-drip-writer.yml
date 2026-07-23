@@ -1,0 +1,52 @@
+name: Build Drip Writer desktop app
+
+# Builds the Windows .exe from drip-writer/desktop/drip_writer.py and publishes
+# it as a GitHub Release, so it can be downloaded and double-clicked with no
+# Python install. Runs on pushes that touch the app, and can be run by hand from
+# the Actions tab (Run workflow).
+
+on:
+  push:
+    branches:
+      - claude/drip-writer-human-typing-hgyplc
+    paths:
+      - "drip-writer/desktop/**"
+      - ".github/workflows/build-drip-writer.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install build tools
+        run: pip install pyinstaller pynput
+
+      - name: Build DripWriter.exe
+        run: >
+          pyinstaller --onefile --noconsole --name DripWriter
+          drip-writer/desktop/drip_writer.py
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: DripWriter-Windows
+          path: dist/DripWriter.exe
+
+      - name: Publish to a GitHub Release (direct download link)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          gh release delete drip-writer-desktop --yes --cleanup-tag || true
+          gh release create drip-writer-desktop dist/DripWriter.exe \
+            --title "Drip Writer — desktop app" \
+            --notes "Windows app that types your text into any program like a human. Download DripWriter.exe below and double-click it. (Windows may warn 'Windows protected your PC' the first time — click More info -> Run anyway.)"
