@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Drip Writer — human-style typing</title>
+<style>
+  :root{
+    --bg:#0f1115; --panel:#171a21; --panel2:#1e222b; --border:#2a2f3a;
+    --text:#e7e9ee; --muted:#9aa3b2; --accent:#5b9dff; --accent2:#3a7bff;
+    --good:#59d499; --warn:#ffb454; --err:#ff6b6b; --cursor:#5b9dff;
+    --radius:14px;
+  }
+  @media (prefers-color-scheme: light){
+    :root{
+      --bg:#f4f6fb; --panel:#ffffff; --panel2:#f0f3f9; --border:#dde2ec;
+      --text:#141821; --muted:#5c6474; --accent:#2f6bff; --accent2:#2f6bff;
+      --cursor:#2f6bff;
+    }
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--bg); color:var(--text);
+    font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased; padding:24px; max-width:960px; margin:0 auto;
+  }
+  h1{font-size:22px; margin:0 0 2px; letter-spacing:-.02em}
+  .sub{color:var(--muted); margin:0 0 20px; font-size:13.5px}
+  .card{background:var(--panel); border:1px solid var(--border); border-radius:var(--radius); padding:18px; margin-bottom:16px}
+  label.lbl{display:block; font-size:12px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin-bottom:8px; font-weight:600}
+  textarea{
+    width:100%; min-height:120px; resize:vertical; background:var(--panel2); color:var(--text);
+    border:1px solid var(--border); border-radius:10px; padding:12px 14px; font:14px/1.55 inherit;
+  }
+  textarea:focus{outline:none; border-color:var(--accent)}
+  .controls{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:18px; margin-top:4px}
+  .ctl{display:flex; flex-direction:column; gap:6px}
+  .ctl .row{display:flex; justify-content:space-between; align-items:baseline}
+  .ctl .val{font-variant-numeric:tabular-nums; font-weight:700; color:var(--text)}
+  .ctl .hint{color:var(--muted); font-size:11.5px}
+  input[type=range]{width:100%; accent-color:var(--accent)}
+  .toggles{display:flex; flex-wrap:wrap; gap:14px; margin-top:6px}
+  .tog{display:flex; align-items:center; gap:8px; font-size:13.5px; color:var(--text); cursor:pointer; user-select:none}
+  .tog input{width:16px; height:16px; accent-color:var(--accent)}
+  .btnrow{display:flex; flex-wrap:wrap; gap:10px; margin-top:16px}
+  button{
+    border:1px solid var(--border); background:var(--panel2); color:var(--text);
+    padding:10px 16px; border-radius:10px; font:600 14px/1 inherit; cursor:pointer; transition:.12s;
+  }
+  button:hover{border-color:var(--accent)}
+  button:disabled{opacity:.45; cursor:not-allowed}
+  button.primary{background:var(--accent2); border-color:var(--accent2); color:#fff}
+  button.primary:hover{filter:brightness(1.08)}
+  .out-wrap{position:relative}
+  .output{
+    white-space:pre-wrap; word-break:break-word; min-height:120px; background:var(--panel2);
+    border:1px solid var(--border); border-radius:10px; padding:14px 16px; font:14px/1.6 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  .cursor{display:inline-block; width:2px; height:1.15em; background:var(--cursor); vertical-align:text-bottom; margin-left:1px; animation:blink 1.05s steps(1) infinite}
+  @keyframes blink{50%{opacity:0}}
+  .stats{display:flex; flex-wrap:wrap; gap:20px; margin-top:14px; color:var(--muted); font-size:12.5px}
+  .stats b{color:var(--text); font-variant-numeric:tabular-nums}
+  .footer{color:var(--muted); font-size:12px; text-align:center; margin-top:8px}
+  .presets{display:flex; gap:8px; flex-wrap:wrap; margin-top:10px}
+  .presets button{padding:6px 12px; font-size:12.5px; font-weight:500}
+</style>
+</head>
+<body>
+  <h1>Drip Writer</h1>
+  <p class="sub">Paste your text, press Start, and it types itself out like a real person — variable speed, the occasional typo backspaced and corrected, natural pauses at punctuation. Copy the finished text when it's done.</p>
+
+  <div class="card">
+    <label class="lbl" for="src">Your text</label>
+    <textarea id="src" placeholder="Paste or type the text you want &quot;typed out&quot; here…"></textarea>
+
+    <div class="controls">
+      <div class="ctl">
+        <div class="row"><span class="lbl" style="margin:0">Speed</span><span class="val"><span id="wpmVal">55</span> WPM</span></div>
+        <input id="wpm" type="range" min="15" max="140" value="55">
+        <span class="hint">Average person types 40–70 WPM.</span>
+      </div>
+      <div class="ctl">
+        <div class="row"><span class="lbl" style="margin:0">Typo rate</span><span class="val"><span id="errVal">4</span>%</span></div>
+        <input id="err" type="range" min="0" max="20" value="4">
+        <span class="hint">How often a mistake is made (then fixed).</span>
+      </div>
+      <div class="ctl">
+        <div class="row"><span class="lbl" style="margin:0">Rhythm variance</span><span class="val"><span id="varVal">35</span>%</span></div>
+        <input id="var" type="range" min="0" max="80" value="35">
+        <span class="hint">Higher = more uneven, human keystroke timing.</span>
+      </div>
+    </div>
+
+    <div class="toggles">
+      <label class="tog"><input type="checkbox" id="tPunct" checked> Pause at punctuation</label>
+      <label class="tog"><input type="checkbox" id="tThink" checked> Occasional thinking pauses</label>
+      <label class="tog"><input type="checkbox" id="tCorrect" checked> Fix typos (backspace & retype)</label>
+    </div>
+
+    <div class="btnrow">
+      <button class="primary" id="start">▶ Start typing</button>
+      <button id="pause" disabled>⏸ Pause</button>
+      <button id="reset" disabled>↺ Reset</button>
+      <button id="copy" disabled>⧉ Copy result</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <label class="lbl">Live output</label>
+    <div class="out-wrap">
+      <div class="output" id="out"><span class="cursor" id="cur"></span></div>
+    </div>
+    <div class="stats">
+      <span>Progress: <b id="stProg">0%</b></span>
+      <span>Live speed: <b id="stWpm">0</b> WPM</span>
+      <span>Typos made: <b id="stErr">0</b></span>
+      <span>Characters: <b id="stChar">0</b></span>
+    </div>
+  </div>
+
+  <p class="footer">Everything runs in your browser — nothing is sent anywhere.</p>
+
+<script>
+(function(){
+  "use strict";
+  const $ = id => document.getElementById(id);
+  const src=$("src"), out=$("out"), cur=$("cur");
+  const wpm=$("wpm"), err=$("err"), vary=$("var");
+  const wpmVal=$("wpmVal"), errVal=$("errVal"), varVal=$("varVal");
+  const tPunct=$("tPunct"), tThink=$("tThink"), tCorrect=$("tCorrect");
+  const bStart=$("start"), bPause=$("pause"), bReset=$("reset"), bCopy=$("copy");
+  const stProg=$("stProg"), stWpm=$("stWpm"), stErr=$("stErr"), stChar=$("stChar");
+
+  wpm.oninput = ()=> wpmVal.textContent = wpm.value;
+  err.oninput = ()=> errVal.textContent = err.value;
+  vary.oninput = ()=> varVal.textContent = vary.value;
+
+  // QWERTY neighbours for realistic "fat finger" substitutions.
+  const NEIGH = {
+    q:"wa",w:"qeas",e:"wrsd",r:"etdf",t:"ryfg",y:"tugh",u:"yihj",i:"uojk",o:"ipkl",p:"ol",
+    a:"qwsz",s:"awedxz",d:"serfcx",f:"drtgvc",g:"ftyhbv",h:"gyujnb",j:"huikmn",k:"jiolm",l:"kop",
+    z:"asx",x:"zsdc",c:"xdfv",v:"cfgb",b:"vghn",n:"bhjm",m:"njk",
+    "1":"2","2":"13","3":"24","4":"35","5":"46","6":"57","7":"68","8":"79","9":"80","0":"9"
+  };
+
+  let running=false, paused=false, cancelTok=0;
+  let typed="";                 // committed correct characters
+  let startTime=0, correctChars=0, typoCount=0;
+  let pausedAccum=0, pauseStart=0; // ms of wall-time spent paused
+
+  function randn(){ // approx normal via central limit
+    let s=0; for(let i=0;i<3;i++) s+=Math.random();
+    return (s/3-0.5)*2; // ~ -1..1
+  }
+  function baseDelay(){ // ms per char from WPM (5 chars/word convention)
+    const w=Math.max(5,+wpm.value);
+    return 60000/(w*5);
+  }
+  function jitter(ms){
+    const v=(+vary.value)/100;
+    const factor=1+randn()*v;
+    return Math.max(8, ms*factor);
+  }
+  const sleep = ms => new Promise(r=>setTimeout(r,ms));
+
+  async function wait(ms, tok){
+    // honours pause; abort if a new run started
+    let elapsed=0;
+    const step=Math.min(ms,40);
+    while(elapsed<ms){
+      if(tok!==cancelTok) throw "cancelled";
+      if(!paused){ await sleep(step); elapsed+=step; }
+      else { await sleep(40); }
+    }
+    if(tok!==cancelTok) throw "cancelled";
+  }
+
+  function render(showCursor){
+    out.textContent = typed;
+    if(showCursor!==false){ out.appendChild(cur); }
+  }
+  function updateStats(total){
+    const secs=(performance.now()-startTime-pausedAccum)/1000;
+    const liveWpm = secs>0 ? Math.round((correctChars/5)/(secs/60)) : 0;
+    stWpm.textContent = liveWpm>0?liveWpm:0;
+    stErr.textContent = typoCount;
+    stChar.textContent = correctChars;
+    stProg.textContent = total? Math.round(correctChars/total*100)+"%" : "0%";
+  }
+
+  function wrongChar(ch){
+    const lower=ch.toLowerCase();
+    const opts=NEIGH[lower];
+    if(!opts) return null;
+    let w=opts[Math.floor(Math.random()*opts.length)];
+    if(ch!==lower) w=w.toUpperCase(); // preserve case
+    return w;
+  }
+
+  async function typeError(correct, tok){
+    // pick an error style; returns true if handled here
+    const style=Math.random();
+    const canFix=tCorrect.checked;
+
+    // 1) adjacent-key substitution
+    if(style<0.6){
+      const w=wrongChar(correct);
+      if(w===null) return false;
+      typed+=w; render(); typoCount++; updateStats(lastTotal);
+      if(!canFix){ return true; }
+      await wait(jitter(baseDelay()*(1.6+Math.random()*2)), tok); // notice it
+      typed=typed.slice(0,-1); render();                          // backspace
+      await wait(jitter(baseDelay()*0.7), tok);
+      typed+=correct; render();                                   // retype
+      return true;
+    }
+    // 2) transposition-ish: double the char, then remove one
+    if(style<0.8){
+      typed+=correct+correct; render(); typoCount++; updateStats(lastTotal);
+      if(!canFix){ typed=typed.slice(0,-1); render(); return true; }
+      await wait(jitter(baseDelay()*(1.4+Math.random()*1.5)), tok);
+      typed=typed.slice(0,-1); render();
+      return true;
+    }
+    // 3) extra neighbour char inserted before the correct one
+    const w=wrongChar(correct);
+    if(w===null) return false;
+    typed+=w; render(); typoCount++; updateStats(lastTotal);
+    if(!canFix){ typed+=correct; render(); return true; }
+    await wait(jitter(baseDelay()*(1.5+Math.random()*1.6)), tok);
+    typed=typed.slice(0,-1); render();
+    await wait(jitter(baseDelay()*0.7), tok);
+    typed+=correct; render();
+    return true;
+  }
+
+  let lastTotal=0;
+  async function run(){
+    const text=src.value;
+    if(!text){ return; }
+    const tok=++cancelTok;
+    running=true; paused=false;
+    typed=""; correctChars=0; typoCount=0; lastTotal=text.length;
+    startTime=performance.now(); pausedAccum=0;
+    render();
+    setButtons();
+
+    const errRate=(+err.value)/100;
+
+    try{
+      for(let i=0;i<text.length;i++){
+        const ch=text[i];
+        const isLetterDigit=/[a-z0-9]/i.test(ch);
+
+        // maybe make a typo (only on letters/digits, not first char of nothing)
+        if(isLetterDigit && Math.random()<errRate){
+          const handled=await typeError(ch, tok);
+          if(handled){
+            // commit correct char state
+            correctChars++; updateStats(text.length);
+            await wait(jitter(baseDelay()), tok);
+            continue;
+          }
+        }
+
+        typed+=ch; render(); correctChars++; updateStats(text.length);
+
+        // timing for this keystroke
+        let d=baseDelay();
+        if(ch===" ") d*=1.15;
+        if(tPunct.checked){
+          if(/[.!?]/.test(ch)) d*=6 + Math.random()*6;      // end of sentence
+          else if(/[,;:]/.test(ch)) d*=2.5 + Math.random()*2;
+          else if(ch==="\n") d*=4;
+        }
+        await wait(jitter(d), tok);
+
+        // occasional mid-thought pause
+        if(tThink.checked && ch===" " && Math.random()<0.03){
+          await wait(jitter(baseDelay()*(6+Math.random()*10)), tok);
+        }
+      }
+      // done
+      render(false); // hide cursor at end
+      updateStats(text.length);
+      stProg.textContent="100%";
+      running=false; paused=false;
+      setButtons();
+    }catch(e){
+      // cancelled — leave state as-is
+    }
+  }
+
+  function setButtons(){
+    bStart.textContent = running ? "↻ Restart" : "▶ Start typing";
+    bPause.disabled = !running;
+    bPause.textContent = paused ? "▶ Resume" : "⏸ Pause";
+    bReset.disabled = !typed && !running;
+    bCopy.disabled = !typed;
+  }
+
+  bStart.onclick = ()=>{ run(); };
+  bPause.onclick = ()=>{
+    if(!running) return;
+    paused=!paused;
+    if(paused){ pauseStart=performance.now(); }
+    else { pausedAccum+=performance.now()-pauseStart; }
+    setButtons();
+  };
+  bReset.onclick = ()=>{
+    cancelTok++; running=false; paused=false;
+    typed=""; correctChars=0; typoCount=0;
+    render(); updateStats(0); stProg.textContent="0%"; stWpm.textContent="0";
+    setButtons();
+  };
+  bCopy.onclick = async ()=>{
+    try{ await navigator.clipboard.writeText(typed); bCopy.textContent="✓ Copied"; setTimeout(()=>bCopy.textContent="⧉ Copy result",1400); }
+    catch(e){
+      const t=document.createElement("textarea"); t.value=typed; document.body.appendChild(t); t.select();
+      try{document.execCommand("copy"); bCopy.textContent="✓ Copied";}catch(_){}
+      document.body.removeChild(t); setTimeout(()=>bCopy.textContent="⧉ Copy result",1400);
+    }
+  };
+
+  render();
+  setButtons();
+})();
+</script>
+</body>
+</html>
