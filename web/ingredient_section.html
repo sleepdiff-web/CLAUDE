@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Every Ingredient Carefully Chosen</title>
+  <style>
+    /* ------------------------------------------------------------------ *
+     * "Every Ingredient Carefully Chosen" section
+     * Self-contained: drop this <section> + the .ingredients-* CSS into
+     * your page. Swap the emoji placeholders in each .ingredient-card__media
+     * for real product photos (<img src="..." alt="...">).
+     * ------------------------------------------------------------------ */
+
+    :root {
+      --ing-bg: #f4f2ec;          /* section background (cream) */
+      --ing-card-bg: #ffffff;     /* card background */
+      --ing-heading: #14161a;     /* near-black heading */
+      --ing-name: #1f2328;        /* ingredient name */
+      --ing-subtitle: #1e3a8a;    /* blue subtitle */
+      --ing-body: #3f4650;        /* paragraph text */
+      --ing-plus-bg: #9aa0a6;     /* "+" button background */
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Poppins", "Segoe UI", system-ui, -apple-system, sans-serif;
+      background: var(--ing-bg);
+    }
+
+    .ingredients {
+      background: var(--ing-bg);
+      padding: 72px 20px 88px;
+    }
+
+    .ingredients__inner {
+      max-width: 980px;
+      margin: 0 auto;
+    }
+
+    .ingredients__title {
+      margin: 0 auto;
+      max-width: 640px;
+      text-align: center;
+      color: var(--ing-heading);
+      font-weight: 800;
+      font-size: clamp(2rem, 5vw, 3.25rem);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+
+    .ingredients__lead {
+      margin: 22px auto 0;
+      max-width: 620px;
+      text-align: center;
+      color: var(--ing-body);
+      font-size: clamp(0.95rem, 2.2vw, 1.05rem);
+      line-height: 1.6;
+    }
+
+    .ingredients__lead strong { font-weight: 700; color: var(--ing-body); }
+
+    .ingredients__grid {
+      margin-top: 48px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    .ingredient-card {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      background: var(--ing-card-bg);
+      border-radius: 22px;
+      padding: 26px 28px;
+      min-height: 118px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(20, 22, 26, 0.06);
+    }
+
+    .ingredient-card__text { z-index: 1; }
+
+    .ingredient-card__name {
+      margin: 0;
+      color: var(--ing-name);
+      font-weight: 500;
+      font-size: clamp(1.35rem, 3.4vw, 1.7rem);
+      line-height: 1.1;
+    }
+
+    .ingredient-card__subtitle {
+      margin: 8px 0 0;
+      color: var(--ing-subtitle);
+      font-weight: 600;
+      font-size: 0.98rem;
+    }
+
+    .ingredient-card__media {
+      flex-shrink: 0;
+      width: 190px;
+      height: 118px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3.2rem;              /* size for emoji placeholder */
+      line-height: 1;
+      user-select: none;
+    }
+
+    /* Real photos should fill the media area cleanly */
+    .ingredient-card__media img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+
+    .ingredient-card__plus {
+      position: absolute;
+      right: 16px;
+      bottom: 16px;
+      width: 26px;
+      height: 26px;
+      border: none;
+      border-radius: 50%;
+      background: var(--ing-plus-bg);
+      color: #fff;
+      font-size: 1.05rem;
+      line-height: 1;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s ease, transform 0.15s ease;
+    }
+
+    .ingredient-card__plus:hover {
+      background: #7c8288;
+      transform: scale(1.06);
+    }
+
+    /* Mobile: single column, media tucked to the right edge */
+    @media (max-width: 640px) {
+      .ingredients { padding: 56px 18px 64px; }
+      .ingredients__grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+      .ingredient-card { padding: 22px 22px; min-height: 104px; }
+      .ingredient-card__media { width: 130px; height: 96px; font-size: 2.6rem; }
+    }
+  </style>
+</head>
+<body>
+  <section class="ingredients">
+    <div class="ingredients__inner">
+      <h2 class="ingredients__title">Every Ingredient Carefully Chosen</h2>
+
+      <p class="ingredients__lead">
+        Every ingredient in our formula is there for a reason&mdash;and backed by
+        <strong>peer-reviewed research</strong>, not marketing fluff. We don&rsquo;t
+        hide behind &ldquo;proprietary blends&rdquo; or vague labels. You get a clear,
+        transparent list of clinically supported ingredients&mdash;each included at a
+        meaningful dose.
+      </p>
+
+      <div class="ingredients__grid">
+        <!-- Tart Cherry -->
+        <article class="ingredient-card">
+          <div class="ingredient-card__text">
+            <h3 class="ingredient-card__name">Tart Cherry</h3>
+            <p class="ingredient-card__subtitle">Calms the Joint</p>
+          </div>
+          <div class="ingredient-card__media" aria-hidden="true">🍒</div>
+          <button class="ingredient-card__plus" type="button" aria-label="Learn more about Tart Cherry">+</button>
+        </article>
+
+        <!-- Celery Seed -->
+        <article class="ingredient-card">
+          <div class="ingredient-card__text">
+            <h3 class="ingredient-card__name">Celery Seed</h3>
+            <p class="ingredient-card__subtitle">Moves the Fluid</p>
+          </div>
+          <div class="ingredient-card__media" aria-hidden="true">🌿</div>
+          <button class="ingredient-card__plus" type="button" aria-label="Learn more about Celery Seed">+</button>
+        </article>
+
+        <!-- Chanca Piedra -->
+        <article class="ingredient-card">
+          <div class="ingredient-card__text">
+            <h3 class="ingredient-card__name">Chanca Piedra</h3>
+            <p class="ingredient-card__subtitle">Clears the Exit</p>
+          </div>
+          <div class="ingredient-card__media" aria-hidden="true">🍃</div>
+          <button class="ingredient-card__plus" type="button" aria-label="Learn more about Chanca Piedra">+</button>
+        </article>
+
+        <!-- BioPerine -->
+        <article class="ingredient-card">
+          <div class="ingredient-card__text">
+            <h3 class="ingredient-card__name">BioPerine</h3>
+            <p class="ingredient-card__subtitle">Improves Absorption</p>
+          </div>
+          <div class="ingredient-card__media" aria-hidden="true">🌶️</div>
+          <button class="ingredient-card__plus" type="button" aria-label="Learn more about BioPerine">+</button>
+        </article>
+      </div>
+    </div>
+  </section>
+</body>
+</html>
