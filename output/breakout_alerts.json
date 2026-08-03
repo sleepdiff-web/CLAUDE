@@ -1,1 +1,21 @@
-[]
+[
+  {
+    "score": 53.5,
+    "growth_pct": 1766.67,
+    "mean_recent": 14.0,
+    "mean_prior": 0.75,
+    "slope_recent": -8.6,
+    "acceleration": -8.67,
+    "volatility": 0.69,
+    "sustained": true,
+    "is_breakout": true,
+    "n_points": 93,
+    "ingredient": "amgd superfood",
+    "is_new": true,
+    "source": "trends",
+    "discovered_context": "amgd superfood",
+    "kalodata_url": "https://www.kalodata.com/product?keyword=amgd+superfood",
+    "google_trends_url": "https://trends.google.com/trends/explore?q=amgd+superfood",
+    "rank": 2
+  }
+]
