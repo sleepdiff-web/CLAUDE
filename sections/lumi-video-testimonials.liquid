@@ -1,0 +1,88 @@
+{%- comment -%} LUMI — VIDEO TESTIMONIALS (v5 — updated videos) {%- endcomment -%}
+<div class="lumi-vt" data-lumi-vt>
+  <h3 class="lumi-vt__heading">What our customers are saying:</h3>
+
+  <div class="lumi-vt__track" data-lumi-track>
+    {%- assign lumi_videos = "https://cdn.shopify.com/videos/c/o/v/bbd174a28bc242c9b51c0b551d0e9181.mp4,https://cdn.shopify.com/videos/c/o/v/2ea4856de96842f4a5e001eab0f6347b.mp4,https://cdn.shopify.com/videos/c/o/v/f87ef44f8eb54a6b93bf5cb6ff69dfe8.mp4" | split: "," -%}
+    {%- for src in lumi_videos -%}
+      <div class="lumi-vt__card" data-lumi-card>
+        <video class="lumi-vt__video" data-lumi-video src="{{ src }}#t=0.001" preload="metadata" playsinline webkit-playsinline></video>
+        <button type="button" class="lumi-vt__play" data-lumi-play aria-label="Play video">
+          <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true" focusable="false"><path d="M8 5v14l11-7z" fill="#ffffff"></path></svg>
+        </button>
+      </div>
+    {%- endfor -%}
+  </div>
+
+  <div class="lumi-vt__dots" data-lumi-dots aria-hidden="true">
+    <button type="button" class="lumi-vt__dot is-active" data-lumi-dot></button>
+    <button type="button" class="lumi-vt__dot" data-lumi-dot></button>
+  </div>
+</div>
+
+<style>
+  .lumi-vt,.lumi-vt *,.lumi-vt *::before,.lumi-vt *::after{box-sizing:border-box !important;}
+
+  /* wider container so cards aren't squeezed small */
+  .lumi-vt{display:block !important;width:100% !important;max-width:1100px !important;margin:24px auto !important;padding:0 8px !important;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif !important;-webkit-font-smoothing:antialiased !important;}
+  .lumi-vt__heading{margin:0 0 16px !important;padding:0 !important;text-align:center !important;font-size:18px !important;line-height:1.3 !important;font-weight:600 !important;color:#212529 !important;letter-spacing:0 !important;text-transform:none !important;}
+
+  .lumi-vt__track{position:relative !important;display:flex !important;gap:10px !important;overflow-x:auto !important;overflow-y:hidden !important;scroll-snap-type:x mandatory !important;-webkit-overflow-scrolling:touch !important;scrollbar-width:none !important;margin:0 !important;padding:0 !important;list-style:none !important;}
+  .lumi-vt__track::-webkit-scrollbar{display:none !important;height:0 !important;}
+
+  /* MOBILE — 2 big cards, forced height so the theme can't shrink them */
+  .lumi-vt__card{position:relative !important;flex:0 0 calc((100% - 10px) / 2) !important;scroll-snap-align:start !important;height:auto !important;aspect-ratio:3 / 4 !important;min-height:300px !important;margin:0 !important;padding:0 !important;border:0 !important;border-radius:12px !important;overflow:hidden !important;background:#000 !important;cursor:pointer !important;}
+  .lumi-vt__video{position:absolute !important;inset:0 !important;width:100% !important;height:100% !important;max-width:none !important;max-height:none !important;margin:0 !important;padding:0 !important;object-fit:cover !important;object-position:center !important;background:#000 !important;display:block !important;}
+
+  .lumi-vt__play{position:absolute !important;top:50% !important;left:50% !important;transform:translate(-50%,-50%) !important;width:66px !important;height:66px !important;margin:0 !important;padding:0 !important;display:flex !important;align-items:center !important;justify-content:center !important;border:0 !important;border-radius:50% !important;background:#E0B23C !important;box-shadow:0 2px 10px rgba(0,0,0,0.35) !important;cursor:pointer !important;-webkit-appearance:none !important;appearance:none !important;transition:transform .15s ease !important;z-index:2 !important;}
+  .lumi-vt__play:hover{transform:translate(-50%,-50%) scale(1.06) !important;}
+  .lumi-vt__play:focus-visible{outline:3px solid #B8860B !important;outline-offset:2px !important;}
+  .lumi-vt__play svg{display:block !important;margin-left:2px !important;}
+  .lumi-vt__card.is-playing .lumi-vt__play{display:none !important;}
+
+  .lumi-vt__dots{display:flex !important;justify-content:center !important;align-items:center !important;gap:8px !important;margin:14px 0 0 !important;padding:0 !important;}
+  .lumi-vt__dot{width:8px !important;height:8px !important;margin:0 !important;padding:0 !important;border:0 !important;border-radius:50% !important;background:#cfd4da !important;cursor:pointer !important;-webkit-appearance:none !important;appearance:none !important;transition:background .2s ease !important;}
+  .lumi-vt__dot.is-active{background:#8f2b33 !important;}
+
+  /* DESKTOP — 3 across, CROPPED SHORTER (fixed 300px height) */
+  @media (min-width:750px){
+    .lumi-vt{padding:0 !important;}
+    .lumi-vt__track{overflow:visible !important;scroll-snap-type:none !important;gap:20px !important;}
+    .lumi-vt__card{flex:1 1 0 !important;aspect-ratio:auto !important;height:300px !important;min-height:0 !important;}
+    .lumi-vt__play{width:74px !important;height:74px !important;}
+    .lumi-vt__dots{display:none !important;}
+  }
+
+  @media (prefers-reduced-motion:reduce){.lumi-vt__play,.lumi-vt__dot{transition:none !important;}}
+</style>
+
+<script>
+(function () {
+  function initLumiVT(root) {
+    if (root.hasAttribute('data-lumi-ready')) return;
+    root.setAttribute('data-lumi-ready', '');
+    var track=root.querySelector('[data-lumi-track]');
+    var cards=Array.prototype.slice.call(root.querySelectorAll('[data-lumi-card]'));
+    var videos=Array.prototype.slice.call(root.querySelectorAll('[data-lumi-video]'));
+    var dots=Array.prototype.slice.call(root.querySelectorAll('[data-lumi-dot]'));
+    function stopOthers(except){videos.forEach(function(v){if(v!==except){try{v.pause();}catch(e){}v.controls=false;var c=v.closest('[data-lumi-card]');if(c)c.classList.remove('is-playing');}});}
+    cards.forEach(function(card){
+      var video=card.querySelector('[data-lumi-video]');
+      if(!video)return;
+      card.addEventListener('click',function(){if(card.classList.contains('is-playing'))return;stopOthers(video);card.classList.add('is-playing');video.controls=true;var p=video.play();if(p&&p.catch)p.catch(function(){});});
+      video.addEventListener('play',function(){stopOthers(video);card.classList.add('is-playing');video.controls=true;});
+      video.addEventListener('ended',function(){card.classList.remove('is-playing');video.controls=false;try{video.currentTime=0.001;}catch(e){}});
+    });
+    if(dots.length&&track){
+      function step(){var w=cards[0]?cards[0].getBoundingClientRect().width:0;var cs=getComputedStyle(track);var gap=parseFloat(cs.columnGap||cs.gap||'10')||10;return w+gap;}
+      function updateDots(){var s=step()||1;var idx=Math.round(track.scrollLeft/s);if(idx<0)idx=0;if(idx>dots.length-1)idx=dots.length-1;dots.forEach(function(d,i){d.classList.toggle('is-active',i===idx);});}
+      var ticking=false;
+      track.addEventListener('scroll',function(){if(ticking)return;ticking=true;window.requestAnimationFrame(function(){updateDots();ticking=false;});},{passive:true});
+      dots.forEach(function(dot,i){dot.addEventListener('click',function(){track.scrollTo({left:Math.round(step()*i),behavior:'smooth'});});});
+      updateDots();
+    }
+  }
+  function boot(){document.querySelectorAll('[data-lumi-vt]').forEach(initLumiVT);}
+  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',boot);}else{boot();}
+})();
+</script>
