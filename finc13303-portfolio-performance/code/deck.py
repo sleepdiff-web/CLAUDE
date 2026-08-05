@@ -30,41 +30,58 @@ EW, MV = "Equal weight (1/N)", "MV optimised (ex-ante 2014-16)"
 SIXTY = "60/40 (SPY/AGG)"
 
 # ------------------------------------------------------------------ design tokens
-NAVY   = RGBColor(0x0B, 0x25, 0x45)
-NAVY_D = RGBColor(0x07, 0x18, 0x2E)
-BLUE   = RGBColor(0x2A, 0x78, 0xD6)
-ORANGE = RGBColor(0xEB, 0x68, 0x34)
-AQUA   = RGBColor(0x1B, 0xAF, 0x7A)
-RED    = RGBColor(0xE3, 0x49, 0x48)
-GOLD   = RGBColor(0xC9, 0xA2, 0x27)
-INK    = RGBColor(0x0B, 0x0B, 0x0B)
-INK2   = RGBColor(0x52, 0x51, 0x4E)
-INK3   = RGBColor(0x86, 0x84, 0x7E)
-RULE   = RGBColor(0xE6, 0xE5, 0xE1)
-SURF   = RGBColor(0xFC, 0xFC, 0xFB)
-TINT   = RGBColor(0xF2, 0xF6, 0xFC)
+# Editorial system: bone paper, warm ink, one deep pine field, hairline rules in
+# place of boxes, and a narrow left rail that carries the section and folio. Colour
+# slots match the chart palette exactly so a mark on a slide and a mark in a figure
+# always mean the same thing.
+PAPER  = RGBColor(0xF6, 0xF3, 0xEC)   # bone
+INK    = RGBColor(0x16, 0x13, 0x0F)   # warm near-black
+INK2   = RGBColor(0x4A, 0x44, 0x3C)
+INK3   = RGBColor(0x8C, 0x84, 0x78)
+RULE   = RGBColor(0xE2, 0xDC, 0xCF)   # hairline
+WASH   = RGBColor(0xEC, 0xE7, 0xDC)   # table header / quiet fill
+DEEP   = RGBColor(0x0D, 0x3B, 0x38)   # pine field
+DEEPER = RGBColor(0x08, 0x2A, 0x28)
+TEAL   = RGBColor(0x00, 0x73, 0x6A)
+RUST   = RGBColor(0xC4, 0x55, 0x1A)
+VIOLET = RGBColor(0x8A, 0x6D, 0xAF)
+OCHRE  = RGBColor(0x9A, 0x6A, 0x00)
+INDIGO = RGBColor(0x4F, 0x6F, 0xB5)
+OXBLD  = RGBColor(0x8F, 0x2F, 0x1D)
+CREAM  = RGBColor(0xF2, 0xEC, 0xDE)   # type on the pine field
+CREAM2 = RGBColor(0xA9, 0xBE, 0xB8)
 WHITE  = RGBColor(0xFF, 0xFF, 0xFF)
-FONT   = "Calibri"
+
+# Georgia and Corbel both ship with Office on Windows and macOS, so the deck opens
+# as designed on a marker's machine without embedding anything.
+DISPLAY = "Georgia"        # headlines, figures, section numerals
+FONT    = "Corbel"         # body, labels, tables
+
+# aliases kept so existing call sites keep working
+NAVY, NAVY_D, GOLD = DEEP, DEEPER, RUST
+BLUE, ORANGE, AQUA, RED = TEAL, RUST, VIOLET, OXBLD
+SURF, TINT = PAPER, WASH
 
 W, H = Inches(13.333), Inches(7.5)
-ML, MR = Inches(0.62), Inches(0.62)
-CW = W - ML - MR
+RAIL   = Inches(1.12)                 # left rail: folio and section marker
+ML     = Inches(1.42)                 # content column starts here
+MR     = Inches(0.60)
+CW     = W - ML - MR
+TOP_EYEBROW = Inches(0.52)
+TOP_HEAD    = Inches(0.82)
+BASELINE    = Inches(7.04)            # hairline that closes every page
+# two-column pages: a wide figure column and a narrow commentary column
+COL_SPLIT = Emu(int(ML + CW * 0.615))
+PANEL_X   = Emu(int(COL_SPLIT + Inches(0.30)))
+PANEL_W   = Emu(int(ML + CW - PANEL_X))
 
 prs = Presentation()
 prs.slide_width, prs.slide_height = W, H
 BLANK = prs.slide_layouts[6]
 
-def _tf(shape, size, color, bold=False, align=PP_ALIGN.LEFT, space_after=0,
-        line=1.0, italic=False):
-    tf = shape.text_frame
-    tf.word_wrap = True
-    p = tf.paragraphs[0]
-    p.alignment = align
-    return tf, p
-
 def textbox(slide, x, y, w, h, text, size=14, color=INK, bold=False,
             align=PP_ALIGN.LEFT, anchor=MSO_ANCHOR.TOP, line=1.05, italic=False,
-            font=FONT):
+            font=FONT, spacing=None):
     tb = slide.shapes.add_textbox(x, y, w, h)
     tf = tb.text_frame
     tf.word_wrap = True
@@ -78,6 +95,8 @@ def textbox(slide, x, y, w, h, text, size=14, color=INK, bold=False,
         r = p.add_run(); r.text = ln
         r.font.size = Pt(size); r.font.bold = bold; r.font.italic = italic
         r.font.color.rgb = color; r.font.name = font
+        if spacing is not None:                      # letterspacing for small caps
+            r.font._rPr.set("spc", str(int(spacing * 100)))
     return tb
 
 def rect(slide, x, y, w, h, fill, line=None, lw=0.75):
@@ -90,25 +109,97 @@ def rect(slide, x, y, w, h, fill, line=None, lw=0.75):
     sh.shadow.inherit = False
     return sh
 
+def hrule(slide, x, y, w, color=RULE, weight=Inches(0.010)):
+    return rect(slide, x, y, w, weight, color)
+
+def vrule(slide, x, y, h, color=RULE, weight=Inches(0.010)):
+    return rect(slide, x, y, weight, h, color)
+
+def eyebrow(slide, x, y, text, color=TEAL, size=9.5):
+    """Small-caps, letterspaced label. The editorial equivalent of a kicker."""
+    return textbox(slide, x, y, Inches(9.0), Inches(0.24), text.upper(),
+                   size=size, color=color, bold=True, spacing=1.6)
+
+def panel(slide, x, y, w, h, accent=TEAL, fill=None):
+    """A block of content marked by a rule above it, not a box around it."""
+    if fill is not None:
+        rect(slide, x, y, w, h, fill)
+    hrule(slide, x, y, w, accent, Inches(0.022))
+    return y + Inches(0.022)
+
 SLIDE_NO = [0]
 FOOTER = "Northpoint Digital Innovation Fund  ·  Six-year performance review, Jan 2017 – Dec 2022"
 
+SECTION = ["", "Where we started", "The economy we lived through",
+           "What the fund returned", "How much risk we took", "Was it skill?",
+           "The verdict", "Appendix"]
+CUR = [0]                                  # which section the deck is currently in
+
 def slide(title=None, kicker=None, footer=True, number=True):
+    """Content page: left rail with folio and section, then the content column."""
     s = prs.slides.add_slide(BLANK)
-    bg = s.background.fill; bg.solid(); bg.fore_color.rgb = SURF
-    if title:
-        textbox(s, ML, Inches(0.44), CW, Inches(0.55), title, size=27, color=NAVY, bold=True)
-        rect(s, ML, Inches(1.06), Inches(0.62), Inches(0.045), GOLD)
-    if kicker:
-        textbox(s, ML, Inches(1.22), CW, Inches(0.42), kicker, size=13.5, color=INK2, line=1.2)
+    bg = s.background.fill; bg.solid(); bg.fore_color.rgb = PAPER
     SLIDE_NO[0] += 1
+    # the rail
+    vrule(s, RAIL, Inches(0.44), Inches(6.32))
+    if number:
+        textbox(s, Inches(0.34), Inches(0.40), Inches(0.66), Inches(0.5),
+                f"{SLIDE_NO[0]:02d}", size=19, color=INK3, font=DISPLAY,
+                align=PP_ALIGN.RIGHT)
+    if CUR[0]:
+        textbox(s, Inches(0.16), Inches(0.92), Inches(0.84), Inches(2.0),
+                SECTION[CUR[0]], size=8, color=INK3, align=PP_ALIGN.RIGHT, line=1.28)
+    if title:
+        if CUR[0]:
+            eyebrow(s, ML, TOP_EYEBROW, SECTION[CUR[0]])
+        textbox(s, ML, TOP_HEAD, CW, Inches(0.62), title, size=26, color=INK,
+                font=DISPLAY, line=1.02)
+    if kicker:
+        textbox(s, ML, Inches(1.30), CW - Inches(0.4), Inches(0.44), kicker,
+                size=12.5, color=INK2, line=1.22)
     if footer:
-        rect(s, ML, Inches(6.86), CW, Inches(0.012), RULE)
-        textbox(s, ML, Inches(6.99), Inches(9.0), Inches(0.3), FOOTER, size=8.5, color=INK3)
-        if number:
-            textbox(s, W - MR - Inches(1.0), Inches(6.99), Inches(1.0), Inches(0.3),
-                    str(SLIDE_NO[0]), size=8.5, color=INK3, align=PP_ALIGN.RIGHT)
+        hrule(s, ML, BASELINE, CW)
+        textbox(s, ML, BASELINE + Inches(0.10), Inches(9.5), Inches(0.26),
+                "NORTHPOINT DIGITAL INNOVATION FUND", size=7.5, color=INK3,
+                spacing=1.2)
+        textbox(s, W - MR - Inches(3.2), BASELINE + Inches(0.10), Inches(3.2),
+                Inches(0.26), "Six-year review · Jan 2017 – Dec 2022", size=7.5,
+                color=INK3, align=PP_ALIGN.RIGHT)
     return s
+
+def statstrip(s, x, y, w, items, h=Inches(1.72), rule_top=True):
+    """A row of figures divided by hairlines. Replaces boxed KPI tiles."""
+    n = len(items)
+    cw = Emu(int(w / n))
+    if rule_top:
+        hrule(s, x, y, w, INK, Inches(0.014))
+    for i, (value, label, sub, colour) in enumerate(items):
+        cx = Emu(int(x + i * cw))
+        if i:
+            vrule(s, cx, y + Inches(0.16), h - Inches(0.30))
+        textbox(s, cx + Inches(0.20), y + Inches(0.26), cw - Inches(0.34),
+                Inches(0.60), value, size=29, color=colour, font=DISPLAY)
+        textbox(s, cx + Inches(0.20), y + Inches(0.92), cw - Inches(0.34),
+                Inches(0.30), label.upper(), size=8.5, color=INK2, bold=True,
+                spacing=1.3, line=1.2)
+    for i, (value, label, sub, colour) in enumerate(items):
+        if not sub:
+            continue
+        cx = Emu(int(x + i * cw))
+        textbox(s, cx + Inches(0.20), y + Inches(1.24), cw - Inches(0.38),
+                Inches(0.62), sub, size=9, color=INK3, line=1.22)
+    return y + h
+
+def kpi(s, x, y, w, h, value, label, sub=None, color=INK, accent=TEAL):
+    """Single figure in the strip idiom: rule, numeral, small-caps label, note."""
+    hrule(s, x, y, w - Inches(0.14), accent, Inches(0.020))
+    textbox(s, x, y + Inches(0.22), w - Inches(0.20), Inches(0.60), value,
+            size=29, color=INK, font=DISPLAY)
+    textbox(s, x, y + Inches(0.88), w - Inches(0.20), Inches(0.30), label.upper(),
+            size=8.5, color=INK2, bold=True, spacing=1.3, line=1.2)
+    if sub:
+        textbox(s, x, y + Inches(1.22), w - Inches(0.24), Inches(0.72), sub,
+                size=9, color=INK3, line=1.22)
 
 def notes(s, text):
     s.notes_slide.notes_text_frame.text = text.strip()
@@ -140,16 +231,6 @@ def picture(s, name, top, height=None, left=None, width=None):
         left = Emu(int((W - w) / 2))
     return s.shapes.add_picture(path, left, top, w, h)
 
-def kpi(s, x, y, w, h, value, label, sub=None, color=NAVY, accent=BLUE):
-    rect(s, x, y, w, h, WHITE, RULE)
-    rect(s, x, y, w, Inches(0.055), accent)
-    textbox(s, x + Inches(0.22), y + Inches(0.30), w - Inches(0.44), Inches(0.7),
-            value, size=30, color=color, bold=True)
-    textbox(s, x + Inches(0.22), y + Inches(0.94), w - Inches(0.44), Inches(0.44),
-            label, size=10, color=INK2, bold=True, line=1.15)
-    if sub:
-        textbox(s, x + Inches(0.22), y + Inches(1.42), w - Inches(0.44), Inches(0.66),
-                sub, size=9.5, color=INK3, line=1.18)
 
 def bullets(s, x, y, w, items, size=13, gap=Inches(0.06), color=INK, bold_lead=True):
     """items: list of (lead, body) or plain strings."""
@@ -170,7 +251,7 @@ def bullets(s, x, y, w, items, size=13, gap=Inches(0.06), color=INK, bold_lead=T
         r = p.add_run(); r.text = body
         r.font.size = Pt(size); r.font.color.rgb = color; r.font.name = FONT
         chars = len(lead or "") * 1.06 + len(body)
-        per_line = max(12.0, (w / Inches(1)) * 148.0 / size)
+        per_line = max(12.0, (w / Inches(1)) * 128.0 / size)
         nlines = max(1, int(chars / per_line) + (1 if chars % per_line else 0))
         est = Inches(nlines * size * 1.24 / 72.0)
         tb.height = est
@@ -178,7 +259,10 @@ def bullets(s, x, y, w, items, size=13, gap=Inches(0.06), color=INK, bold_lead=T
     return cy
 
 def table(s, x, y, w, rows, col_w=None, header=True, size=11, row_h=Inches(0.34),
-          align=None, head_fill=NAVY, zebra=True, first_bold=False):
+          align=None, head_fill=None, zebra=True, first_bold=False):
+    """A magazine table: small-caps header over a rule, hairlines between rows,
+    no fills and no vertical lines. `zebra` and `head_fill` are accepted and
+    ignored so existing call sites need no change."""
     nr, nc = len(rows), len(rows[0])
     gt = s.shapes.add_table(nr, nc, x, y, w, row_h * nr).table
     if col_w:
@@ -187,71 +271,104 @@ def table(s, x, y, w, rows, col_w=None, header=True, size=11, row_h=Inches(0.34)
             gt.columns[i].width = Emu(int(w * cwid / total))
     for i, row in enumerate(rows):
         gt.rows[i].height = row_h
+        head = i == 0 and header
         for j, val in enumerate(row):
             c = gt.cell(i, j)
             c.text = ""
-            c.margin_left = Inches(0.09); c.margin_right = Inches(0.09)
+            c.margin_left = Inches(0.02) if j == 0 else Inches(0.10)
+            c.margin_right = Inches(0.10)
             c.margin_top = Inches(0.03); c.margin_bottom = Inches(0.03)
             c.vertical_anchor = MSO_ANCHOR.MIDDLE
             tf = c.text_frame; tf.word_wrap = True
             p = tf.paragraphs[0]
-            p.alignment = (PP_ALIGN.LEFT if j == 0 else PP_ALIGN.RIGHT) if align is None \
-                else align[j]
-            r = p.add_run(); r.text = str(val)
+            p.alignment = (PP_ALIGN.LEFT if j == 0 else PP_ALIGN.RIGHT) \
+                if align is None else align[j]
+            r = p.add_run()
+            r.text = str(val).upper() if head else str(val)
             r.font.name = FONT
-            if i == 0 and header:
-                r.font.size = Pt(size - 0.5); r.font.bold = True; r.font.color.rgb = WHITE
-                c.fill.solid(); c.fill.fore_color.rgb = head_fill
+            c.fill.background()
+            if head:
+                r.font.size = Pt(size - 1.5); r.font.bold = True
+                r.font.color.rgb = INK2
+                r.font._rPr.set("spc", "130")
             else:
                 r.font.size = Pt(size)
                 r.font.color.rgb = INK
                 r.font.bold = first_bold and j == 0
-                c.fill.solid()
-                c.fill.fore_color.rgb = TINT if (zebra and i % 2 == 0) else WHITE
-    gt.first_row = header
+            _cell_rules(c, top=RULE if (i and not head) else None,
+                        bottom=INK if head else None)
+    gt.first_row = False
     gt.horz_banding = False
     return gt
+
+def _cell_rules(cell, top=None, bottom=None):
+    """Hairlines drawn on the cell itself, so the table needs no shape overlays."""
+    tcPr = cell._tc.get_or_add_tcPr()
+    for tag, colour, wid in (("a:lnT", top, 3175), ("a:lnB", bottom, 6350)):
+        if colour is None:
+            continue
+        ln = tcPr.makeelement(
+            "{http://schemas.openxmlformats.org/drawingml/2006/main}" + tag[2:], {})
+        ln.set("w", str(wid)); ln.set("cap", "flat")
+        fill = ln.makeelement(
+            "{http://schemas.openxmlformats.org/drawingml/2006/main}solidFill", {})
+        clr = fill.makeelement(
+            "{http://schemas.openxmlformats.org/drawingml/2006/main}srgbClr", {})
+        clr.set("val", f"{colour}")
+        fill.append(clr); ln.append(fill); tcPr.append(ln)
 
 def pct(v, d=1, sign=False):
     return f"{v*100:+,.{d}f}%" if sign else f"{v*100:,.{d}f}%"
 
 def section(title, num, blurb):
+    """Full-bleed pine field with an oversized numeral set in the display face."""
     s = prs.slides.add_slide(BLANK)
-    bg = s.background.fill; bg.solid(); bg.fore_color.rgb = NAVY
+    bg = s.background.fill; bg.solid(); bg.fore_color.rgb = DEEP
     SLIDE_NO[0] += 1
-    textbox(s, ML, Inches(2.55), Inches(1.4), Inches(0.6), num, size=54, color=GOLD, bold=True)
-    rect(s, ML, Inches(3.42), Inches(0.9), Inches(0.045), GOLD)
-    textbox(s, ML, Inches(3.72), Inches(9.6), Inches(0.9), title, size=34, color=WHITE, bold=True)
-    textbox(s, ML, Inches(4.62), Inches(8.6), Inches(0.8), blurb, size=14,
-            color=RGBColor(0xB8, 0xC6, 0xD8), line=1.25)
+    CUR[0] = int(num) if str(num).isdigit() else 7
+    rect(s, Inches(0), Inches(0), W, Inches(0.055), RUST)
+    textbox(s, Inches(1.05), Inches(1.50), Inches(4.2), Inches(2.6), str(num),
+            size=132, color=RGBColor(0x14, 0x4E, 0x4A), font=DISPLAY)
+    rect(s, Inches(1.12), Inches(4.28), Inches(1.5), Inches(0.030), RUST)
+    textbox(s, Inches(1.08), Inches(4.62), Inches(9.8), Inches(0.9), title,
+            size=38, color=CREAM, font=DISPLAY, line=1.04)
+    textbox(s, Inches(1.10), Inches(5.62), Inches(8.4), Inches(0.9), blurb,
+            size=13, color=CREAM2, line=1.30)
+    textbox(s, W - Inches(3.3), Inches(6.62), Inches(2.7), Inches(0.3),
+            "NORTHPOINT", size=8, color=CREAM2, spacing=2.2, align=PP_ALIGN.RIGHT)
     return s
 
 # =============================================================================== 1
 s = prs.slides.add_slide(BLANK)
 bg = s.background.fill; bg.solid(); bg.fore_color.rgb = NAVY
 SLIDE_NO[0] += 1
-rect(s, Inches(0), Inches(0), Inches(0.11), H, GOLD)
-textbox(s, Inches(0.95), Inches(1.28), Inches(9.0), Inches(0.4), "N O R T H P O I N T",
-        size=15, color=GOLD, bold=True)
-textbox(s, Inches(0.95), Inches(1.86), Inches(11.2), Inches(1.9),
-        "Northpoint Digital\nInnovation Fund", size=46, color=WHITE, bold=True, line=1.06)
-rect(s, Inches(0.95), Inches(3.86), Inches(1.15), Inches(0.05), GOLD)
-textbox(s, Inches(0.95), Inches(4.16), Inches(11.0), Inches(0.9),
+rect(s, Inches(0), Inches(0), W, Inches(0.055), RUST)
+textbox(s, Inches(1.08), Inches(1.22), Inches(9.0), Inches(0.4), "NORTHPOINT",
+        size=12, color=RUST, spacing=3.4)
+textbox(s, Inches(1.05), Inches(1.74), Inches(8.6), Inches(2.1),
+        "Northpoint Digital\nInnovation Fund", size=50, color=CREAM, font=DISPLAY,
+        line=1.06)
+rect(s, Inches(1.12), Inches(3.86), Inches(1.5), Inches(0.030), RUST)
+textbox(s, Inches(1.08), Inches(4.22), Inches(8.4), Inches(1.0),
         "Six-year performance review  ·  January 2017 – December 2022\n"
-        "Final report to investors  ·  New York · San Francisco · London · Hong Kong · Shanghai · Sydney",
-        size=15.5, color=RGBColor(0xB8, 0xC6, 0xD8), line=1.35)
-textbox(s, Inches(0.95), Inches(5.72), Inches(9.6), Inches(1.1),
+        "Final report to investors  ·  New York · San Francisco · London · Hong Kong · "
+        "Shanghai · Sydney",
+        size=14.5, color=CREAM2, line=1.38)
+textbox(s, Inches(1.08), Inches(5.86), Inches(8.4), Inches(1.1),
         "Callum O'Connor  ·  Portfolio Manager\n"
-        "Student ID 14053836  ·  FINC13-303 Portfolio Analysis and Investments  ·  Bond University",
-        size=12, color=RGBColor(0x9A, 0xAC, 0xC2), line=1.35)
-rect(s, Inches(9.55), Inches(1.86), Inches(2.85), Inches(2.62), NAVY_D)
-textbox(s, Inches(9.85), Inches(2.10), Inches(2.3), Inches(0.3), "MANDATE OUTCOME",
-        size=9.5, color=GOLD, bold=True)
-textbox(s, Inches(9.85), Inches(2.48), Inches(2.3), Inches(0.6), "$279m", size=34,
-        color=WHITE, bold=True)
-textbox(s, Inches(9.85), Inches(3.06), Inches(2.35), Inches(1.3),
-        "from a $100 million\nmandate\n\n+179.2% cumulative\n18.7% p.a.", size=11.5,
-        color=RGBColor(0xB8, 0xC6, 0xD8), line=1.3)
+        "Student ID 14053836  ·  FINC13-303 Portfolio Analysis and Investments  ·  "
+        "Bond University",
+        size=11.5, color=RGBColor(0x7E, 0x99, 0x94), line=1.38)
+# the outcome, set as a figure in the margin rather than a card
+vrule(s, Inches(10.02), Inches(1.86), Inches(3.10), RGBColor(0x1B, 0x55, 0x51),
+      Inches(0.014))
+textbox(s, Inches(10.34), Inches(1.92), Inches(2.6), Inches(0.3), "MANDATE OUTCOME",
+        size=8.5, color=RUST, spacing=1.8)
+textbox(s, Inches(10.30), Inches(2.30), Inches(2.8), Inches(0.8), "$279m", size=44,
+        color=CREAM, font=DISPLAY)
+textbox(s, Inches(10.34), Inches(3.16), Inches(2.7), Inches(1.7),
+        "from a $100 million mandate\n\n+179.2% cumulative\n18.7% a year\n\n"
+        "6.6% alpha, t = 3.06", size=11.5, color=CREAM2, line=1.42)
 notes(s, """
 Good morning, afternoon or evening, depending on where you're joining me from. I'm Callum
 O'Connor, Portfolio Manager of the Northpoint Digital Innovation Fund.
@@ -281,15 +398,14 @@ items = [
 ]
 y = Inches(1.92)
 for num, head, sub in items:
-    rect(s, ML, y, CW, Inches(0.66), WHITE, RULE)
-    rect(s, ML, y, Inches(0.055), Inches(0.66), BLUE)
-    textbox(s, ML + Inches(0.30), y + Inches(0.18), Inches(0.5), Inches(0.34), num,
-            size=15, color=GOLD, bold=True)
-    textbox(s, ML + Inches(0.85), y + Inches(0.17), Inches(3.5), Inches(0.34), head,
-            size=14.5, color=NAVY, bold=True)
-    textbox(s, ML + Inches(4.5), y + Inches(0.20), Inches(7.4), Inches(0.34), sub,
-            size=12, color=INK2)
-    y = y + Inches(0.78)
+    hrule(s, ML, y, CW)
+    textbox(s, ML, y + Inches(0.20), Inches(0.5), Inches(0.4), num,
+            size=20, color=RUST, font=DISPLAY)
+    textbox(s, ML + Inches(0.62), y + Inches(0.26), Inches(3.9), Inches(0.34), head,
+            size=16, color=INK, font=DISPLAY)
+    textbox(s, ML + Inches(4.72), y + Inches(0.30), CW - Inches(4.8), Inches(0.34), sub,
+            size=11.5, color=INK2)
+    y = y + Inches(0.80)
 notes(s, """
 Six sections.
 
@@ -304,7 +420,8 @@ Questions at the end. There's a full appendix behind the deck with the workings.
 # =============================================================================== 3
 s = slide("The six-year result", "Every figure on this slide is calculated from 72 months of "
           "dividend-adjusted total returns and is reproduced in the appendix")
-kw, gap = Inches(2.94), Inches(0.15)
+gap = Inches(0.16)
+kw = Emu(int((CW - 3 * gap) / 4))
 row_y = Inches(1.82)
 kpi(s, ML, row_y, kw, Inches(2.16), "+179.2%", "CUMULATIVE RETURN",
     "$100m mandate grew to $279.2m.\nS&P 500 returned +90.0%;\nNASDAQ-100 +134.7%.", accent=BLUE)
@@ -382,11 +499,10 @@ against it at the end.
 # =============================================================================== 6
 s = slide("Eleven sectors, one idea",
           "The theme was expressed through conviction tiers, never by abandoning a sector")
-fit(s, "26_weights_donut.png", Inches(1.64), Inches(6.62), left=ML, right=ML + Inches(5.15))
-tx = ML + Inches(5.42)
-textbox(s, tx, Inches(1.72), Inches(7.0), Inches(0.35), "HOW THE BOOK WAS BUILT",
-        size=10.5, color=GOLD, bold=True)
-bullets(s, tx, Inches(2.10), Inches(6.98), [
+fit(s, "26_weights_donut.png", Inches(1.66), Inches(6.58), left=ML, right=COL_SPLIT)
+tx = PANEL_X
+eyebrow(s, tx, Inches(1.70), "How the book was built")
+bullets(s, tx, Inches(2.10), PANEL_W, [
     ("Tier 1, 42%.", "Microsoft, Alphabet and Amazon: the platform companies where the cloud, "
      "advertising and e-commerce theses all compound at once. Highest conviction, largest weights."),
     ("Tier 2, 34%.", "Visa, Equinix, Illumina and Rockwell: the enablers. Each monetises "
@@ -490,14 +606,12 @@ heads = [("2017 – 2019", "SYNCHRONISED GROWTH", BLUE,
             "ballast is why we fell 10 points less than the NASDAQ-100.")])]
 x = ML
 for hd, sub, col, items in heads:
-    rect(s, x, Inches(1.80), cardw, Inches(0.72), WHITE, RULE)
-    rect(s, x, Inches(1.80), Inches(0.055), Inches(0.72), col)
-    textbox(s, x + Inches(0.24), Inches(1.92), Inches(4.0), Inches(0.3), hd, size=17,
-            color=NAVY, bold=True)
-    textbox(s, x + Inches(0.24), Inches(2.21), Inches(5.8), Inches(0.26), sub, size=9.5,
-            color=INK3, bold=True)
-    bullets(s, x + Inches(0.24), Inches(2.76), cardw - Inches(0.48), items, size=12,
-            gap=Inches(0.20))
+    panel(s, x, Inches(1.80), cardw, Inches(0.72), col)
+    textbox(s, x, Inches(1.94), Inches(4.0), Inches(0.32), hd, size=19,
+            color=INK, font=DISPLAY)
+    textbox(s, x, Inches(2.30), cardw - Inches(0.2), Inches(0.26), sub.upper(), size=8.5,
+            color=INK3, bold=True, spacing=1.3)
+    bullets(s, x, Inches(2.80), cardw - Inches(0.26), items, size=12, gap=Inches(0.20))
     x = x + cardw + Inches(0.30)
 notes(s, """
 Some economic narrative, because you're not paying me to read a line chart to you.
@@ -745,11 +859,10 @@ s = section("How much risk we took", "04",
 # ============================================================================== 20
 s = slide("The shape of our returns",
           "Close to normal, with a mild left tail. 72 monthly observations, Jan 2017 to Dec 2022")
-fit(s, "05_histogram.png", Inches(1.72), Inches(6.40), left=ML, right=Inches(8.92))
-tx = Inches(9.05)
-rect(s, tx, Inches(1.86), Inches(3.66), Inches(4.32), WHITE, RULE)
-textbox(s, tx + Inches(0.24), Inches(2.06), Inches(3.2), Inches(0.3),
-        "DISTRIBUTIONAL STATISTICS", size=10, color=GOLD, bold=True)
+fit(s, "05_histogram.png", Inches(1.72), Inches(6.40), left=ML, right=COL_SPLIT)
+tx = PANEL_X
+panel(s, tx, Inches(1.86), PANEL_W, Inches(4.32), TEAL)
+eyebrow(s, tx, Inches(2.00), "Distributional statistics")
 dstats = [("Mean monthly return", pct(ST[N]["mean_m"], 2)),
           ("Median monthly return", pct(ST[N]["median_m"], 2)),
           ("Standard deviation (monthly)", pct(ST[N]["vol"] / (12 ** 0.5), 2)),
@@ -760,11 +873,12 @@ dstats = [("Mean monthly return", pct(ST[N]["mean_m"], 2)),
           ("Best month (Apr 2020)", pct(ST[N]["best"], 1)),
           ("Worst month (Apr 2022)", pct(ST[N]["worst"], 1)),
           ("Positive months", f"{ST[N]['n_pos']} of 72  ({pct(ST[N]['hit'], 1)})")]
-yy = Inches(2.46)
+yy = Inches(2.44)
 for k, v in dstats:
-    textbox(s, tx + Inches(0.24), yy, Inches(2.4), Inches(0.26), k, size=11, color=INK2)
-    textbox(s, tx + Inches(2.55), yy, Inches(0.92), Inches(0.26), v, size=11, color=NAVY,
+    textbox(s, tx, yy, PANEL_W - Inches(1.05), Inches(0.26), k, size=10.5, color=INK2)
+    textbox(s, tx, yy, PANEL_W - Inches(0.14), Inches(0.26), v, size=10.5, color=INK,
             bold=True, align=PP_ALIGN.RIGHT)
+    hrule(s, tx, yy + Inches(0.27), PANEL_W - Inches(0.14))
     yy = yy + Inches(0.355)
 notes(s, """
 The quantitative section. Start with the raw distribution rather than a summary statistic, because a
@@ -843,11 +957,10 @@ these. That's a famously hard benchmark to beat.
 # ============================================================================== 22
 s = slide("Tail risk sits below the NASDAQ-100 on every measure",
           "One-month value-at-risk and expected shortfall from the empirical distribution")
-fit(s, "22_var.png", Inches(1.72), Inches(6.40), left=ML, right=Inches(8.92))
-tx = Inches(9.05)
-rect(s, tx, Inches(1.86), Inches(3.66), Inches(4.24), WHITE, RULE)
-textbox(s, tx + Inches(0.24), Inches(2.06), Inches(3.2), Inches(0.3),
-        "NDIF TAIL MEASURES", size=10, color=GOLD, bold=True)
+fit(s, "22_var.png", Inches(1.72), Inches(6.40), left=ML, right=COL_SPLIT)
+tx = PANEL_X
+panel(s, tx, Inches(1.86), PANEL_W, Inches(4.24), TEAL)
+eyebrow(s, tx, Inches(2.00), "NDIF tail measures")
 tail = [("VaR 95% (historical)", pct(ST[N]["var95_hist"], 2)),
         ("VaR 95% (parametric normal)", pct(ST[N]["var95_param"], 2)),
         ("VaR 95% (Cornish–Fisher)", pct(ST[N]["var95_cf"], 2)),
@@ -855,11 +968,12 @@ tail = [("VaR 95% (historical)", pct(ST[N]["var95_hist"], 2)),
         ("VaR 99% (historical)", pct(ST[N]["var99_hist"], 2)),
         ("CVaR 99% (expected shortfall)", pct(ST[N]["cvar99_hist"], 2)),
         ("On $279m, a 95% VaR month is", f"−${abs(ST[N]['var95_hist'])*279.2:,.1f}m")]
-yy = Inches(2.52)
+yy = Inches(2.50)
 for k, v in tail:
-    textbox(s, tx + Inches(0.24), yy, Inches(2.35), Inches(0.32), k, size=10.5, color=INK2)
-    textbox(s, tx + Inches(2.5), yy, Inches(0.97), Inches(0.32), v, size=11, color=NAVY,
+    textbox(s, tx, yy, PANEL_W - Inches(1.05), Inches(0.32), k, size=10.5, color=INK2)
+    textbox(s, tx, yy, PANEL_W - Inches(0.14), Inches(0.32), v, size=10.5, color=INK,
             bold=True, align=PP_ALIGN.RIGHT)
+    hrule(s, tx, yy + Inches(0.33), PANEL_W - Inches(0.14))
     yy = yy + Inches(0.50)
 notes(s, """
 Value-at-risk and expected shortfall, what your risk committees will ask for.
@@ -884,22 +998,21 @@ s = slide("Where in the calendar the money was made",
           "Seasonality across 72 months. Six observations per calendar month, so read this as "
           "description rather than a tradeable signal")
 fit(s, "10_seasonality.png", Inches(1.66), Inches(4.98))
-tx1, tw = ML, Inches(3.94)
+tw = Emu(int((CW - 2 * Inches(0.28)) / 3))
 cards = [("July  +5.8%", "The strongest month, on the back of six positive Julys out of six — "
           "including +13.1% in July 2022 during the bear-market rally.", AQUA),
          ("September  −2.8%", "The weakest month. Negative in three of six years, but heavily so: "
           "September 2022 alone cost 9.3%.", RED),
-         ("2020 and 2022 were the extremes", "April 2020 was the best month on record at +14.5%; "
+         ("The extremes cluster", "April 2020 was the best month on record at +14.5%; "
           "April 2022 the worst at −12.1%. Both sit inside the same two-year window.", BLUE)]
 x = ML
 for hd, body, col in cards:
-    rect(s, x, Inches(5.10), tw, Inches(1.48), WHITE, RULE)
-    rect(s, x, Inches(5.10), tw, Inches(0.05), col)
-    textbox(s, x + Inches(0.22), Inches(5.30), tw - Inches(0.44), Inches(0.3), hd,
-            size=13.5, color=NAVY, bold=True)
-    textbox(s, x + Inches(0.22), Inches(5.68), tw - Inches(0.44), Inches(0.8), body,
-            size=11, color=INK2, line=1.2)
-    x = x + tw + Inches(0.26)
+    panel(s, x, Inches(5.16), tw, Inches(1.40), col)
+    textbox(s, x, Inches(5.30), tw - Inches(0.24), Inches(0.32), hd,
+            size=15, color=INK, font=DISPLAY)
+    textbox(s, x, Inches(5.70), tw - Inches(0.28), Inches(0.86), body,
+            size=10.5, color=INK2, line=1.24)
+    x = x + tw + Inches(0.28)
 notes(s, """
 Seasonality, and I will frame this carefully, because seasonality is easy to over-read.
 
@@ -982,19 +1095,18 @@ difference is what you paid a management fee for.
 # ============================================================================== 26
 s = slide("What the factor loadings say about us",
           "A large-cap growth fund with market-like beta, which is the profile the mandate described")
-fit(s, "18_factors.png", Inches(1.72), Inches(6.40), left=ML, right=Inches(8.92))
-tx = Inches(9.05)
-textbox(s, tx, Inches(1.90), Inches(3.7), Inches(0.3), "READING THE COEFFICIENTS",
-        size=10, color=GOLD, bold=True)
-ey = bullets(s, tx, Inches(2.26), Inches(3.66), [
+fit(s, "18_factors.png", Inches(1.72), Inches(6.40), left=ML, right=COL_SPLIT)
+tx = PANEL_X
+eyebrow(s, tx, Inches(1.90), "Reading The Coefficients")
+ey = bullets(s, tx, Inches(2.26), PANEL_W, [
     ("Market +1.05.", "Essentially one-for-one with the market. We were not levered."),
     ("Size −0.22.", "Significantly negative: a large-cap fund, as intended."),
     ("Value −0.19.", "Significantly negative: a growth fund, as intended."),
     ("Profitability −0.11, Investment −0.05.", "Neither is significant, so no hidden quality tilt."),
     ("Momentum +0.02.", "Effectively zero. This was not a momentum-chasing strategy."),
 ], size=11, gap=Inches(0.15))
-rect(s, tx, ey + Inches(0.16), Inches(3.66), Inches(0.02), RULE)
-textbox(s, tx, ey + Inches(0.34), Inches(3.66), Inches(1.0),
+rect(s, tx, ey + Inches(0.16), PANEL_W, Inches(0.02), RULE)
+textbox(s, tx, ey + Inches(0.34), PANEL_W, Inches(1.0),
         "Every loading sits where the January-2016 mandate said it would. There are no unexplained "
         "exposures hiding in this portfolio.", size=11, color=NAVY, bold=True,
         line=1.25)
@@ -1080,20 +1192,19 @@ worked.
 s = slide("Where the 179% came from",
           "Compounded contribution to cumulative return by holding. Microsoft alone delivered "
           "nearly a quarter of it")
-fit(s, "12_contribution.png", Inches(1.72), Inches(6.50), left=ML, right=Inches(9.02))
-tx = Inches(9.15)
-textbox(s, tx, Inches(1.90), Inches(3.6), Inches(0.3), "TOP 3 AND BOTTOM 3",
-        size=10, color=GOLD, bold=True)
-rowsx = [["", "Contribution", "Total return"],
+fit(s, "12_contribution.png", Inches(1.72), Inches(6.50), left=ML, right=COL_SPLIT)
+tx = PANEL_X
+eyebrow(s, tx, Inches(1.90), "Top 3 And Bottom 3")
+rowsx = [["", "Contrib.", "Total return"],
          ["MSFT", "41.9 pts", pct(R["stock_total"]["MSFT"], 0)],
          ["GOOGL", "22.1 pts", pct(R["stock_total"]["GOOGL"], 0)],
          ["ALB", "20.8 pts", pct(R["stock_total"]["ALB"], 0)],
          ["EQIX", "10.5 pts", pct(R["stock_total"]["EQIX"], 0)],
          ["AMZN", "10.3 pts", pct(R["stock_total"]["AMZN"], 0)],
          ["ILMN", "1.8 pts", pct(R["stock_total"]["ILMN"], 0)]]
-table(s, tx, Inches(2.28), Inches(3.56), rowsx, col_w=[32, 36, 32], size=11,
+table(s, tx, Inches(2.28), PANEL_W, rowsx, col_w=[30, 30, 40], size=10.5,
       row_h=Inches(0.32), first_bold=True)
-textbox(s, tx, Inches(4.68), Inches(3.56), Inches(1.6),
+textbox(s, tx, Inches(4.68), PANEL_W, Inches(1.6),
         "Schlumberger is the instructive case. It lost 23.5% over six years, yet contributed a "
         "positive 13.2 points — because quarterly rebalancing kept buying it back to its 5% floor "
         "at successively lower prices, and it then returned +81% in 2022.",
@@ -1122,19 +1233,18 @@ money for this fund because of a mechanical process rule.
 s = slide("94% of the value-add came from stock picking",
           "Brinson–Fachler attribution against an equal-weight benchmark of the eleven GICS sector "
           "ETFs")
-fit(s, "31_attribution.png", Inches(1.72), Inches(6.40), left=ML, right=Inches(8.92))
-tx = Inches(9.05)
-textbox(s, tx, Inches(1.92), Inches(3.66), Inches(0.3), "DECOMPOSITION", size=10,
-        color=GOLD, bold=True)
-ey = bullets(s, tx, Inches(2.26), Inches(3.66), [
+fit(s, "31_attribution.png", Inches(1.72), Inches(6.40), left=ML, right=COL_SPLIT)
+tx = PANEL_X
+eyebrow(s, tx, Inches(1.92), "Decomposition")
+ey = bullets(s, tx, Inches(2.26), PANEL_W, [
     ("Allocation +1.8 pts.", "The sector tilts, overweight technology and underweight energy, "
      "contributed very little."),
     ("Selection +41.4 pts.", "Almost all of the active return came from picking better stocks "
      "than the sector average."),
     ("Interaction +1.0 pt.", "The residual from being overweight where we also picked well."),
 ], size=11, gap=Inches(0.16))
-rect(s, tx, ey + Inches(0.16), Inches(3.66), Inches(0.02), RULE)
-textbox(s, tx, ey + Inches(0.34), Inches(3.66), Inches(2.0),
+rect(s, tx, ey + Inches(0.16), PANEL_W, Inches(0.02), RULE)
+textbox(s, tx, ey + Inches(0.34), PANEL_W, Inches(2.0),
         "Why this matters for your decision: allocation skill is a macro call and is hard to "
         "repeat. Selection skill is a research process. That 94% of our value-add came from "
         "selection is the strongest argument that the result is repeatable.",
@@ -1162,8 +1272,8 @@ much less confident recommending this fund continue.
 s = slide("Would an optimiser have done better?",
           "A mean-variance model given three years of pre-launch data would have added 1.1% a year, "
           "by taking concentration risk we were not permitted to take")
-fit(s, "27_variants.png", Inches(1.72), Inches(6.50), left=ML, right=Inches(8.92))
-tx = Inches(9.05)
+fit(s, "27_variants.png", Inches(1.72), Inches(6.50), left=ML, right=COL_SPLIT)
+tx = PANEL_X
 rows = [["Construction rule", "CAGR", "Sharpe"],
         ["NDIF as run", pct(ST[N]["cagr"]), f"{ST[N]['sharpe']:.2f}"],
         ["Mean–variance (2014–16 inputs)", pct(ST[MV]["cagr"]), f"{ST[MV]['sharpe']:.2f}"],
@@ -1173,9 +1283,9 @@ rows = [["Construction rule", "CAGR", "Sharpe"],
         ["Perfect-foresight optimum",
          pct(ST["MV optimised (perfect foresight)"]["cagr"]),
          f"{ST['MV optimised (perfect foresight)']['sharpe']:.2f}"]]
-table(s, tx, Inches(1.92), Inches(3.66), rows, col_w=[52, 24, 24], size=10.5,
+table(s, tx, Inches(1.92), PANEL_W, rows, col_w=[52, 24, 24], size=10.5,
       row_h=Inches(0.34), first_bold=True)
-textbox(s, tx, Inches(4.16), Inches(3.66), Inches(2.4),
+textbox(s, tx, Inches(4.16), PANEL_W, Inches(2.4),
         "The optimiser's solution put 25% in Equinix and 25% in NextEra — breaching our 16% position "
         "cap — and zero in Alphabet, Visa, Albemarle and Schlumberger, breaching the 5% sector floor "
         "four times over. It bought a better backtest by discarding the mandate.\n\n"
@@ -1211,19 +1321,18 @@ nine per cent. We captured eighty-two per cent of a number nobody could have kno
 s = slide("120% of the upside, 97% of the downside",
           "The asymmetry that produced the result: most of the market's gains, without most of "
           "its losses")
-fit(s, "19_capture.png", Inches(1.72), Inches(6.40), left=ML, right=Inches(8.92))
-tx = Inches(9.05)
-textbox(s, tx, Inches(1.92), Inches(3.66), Inches(0.3), "THE ASYMMETRY", size=10,
-        color=GOLD, bold=True)
-ey = bullets(s, tx, Inches(2.26), Inches(3.66), [
+fit(s, "19_capture.png", Inches(1.72), Inches(6.40), left=ML, right=COL_SPLIT)
+tx = PANEL_X
+eyebrow(s, tx, Inches(1.92), "The asymmetry")
+ey = bullets(s, tx, Inches(2.26), PANEL_W, [
     ("Upside capture 120%.", "In months the S&P 500 rose, we rose 20% more than it did."),
     ("Downside capture 97%.", "In months it fell, we fell slightly less."),
     ("The NASDAQ-100, by contrast,", "captured 118% of the upside but 108% of the downside: "
      "more of the gains, and more of the losses."),
     ("50 positive months of 72.", "A 69.4% hit rate against 65.3% for the NASDAQ-100."),
 ], size=11, gap=Inches(0.16))
-rect(s, tx, ey + Inches(0.16), Inches(3.66), Inches(0.02), RULE)
-textbox(s, tx, ey + Inches(0.34), Inches(3.66), Inches(1.6),
+rect(s, tx, ey + Inches(0.16), PANEL_W, Inches(0.02), RULE)
+textbox(s, tx, ey + Inches(0.34), PANEL_W, Inches(1.6),
         "Those two numbers, 120 up and 97 down, are the compact statement of what the fund did. "
         "Everything else in this deck elaborates on them.",
         size=11, color=NAVY, bold=True, line=1.3)
@@ -1294,17 +1403,17 @@ Ten commitments. Four exceeded, six met, none missed.
 s = slide("Gross to net: what you actually kept",
           "0.90% management fee plus 10% of the excess over the NASDAQ-100 hurdle, subject to the "
           "high-water mark")
-fit(s, "33_fees.png", Inches(1.72), Inches(6.50), left=ML, right=Inches(8.92))
-tx = Inches(9.05)
+fit(s, "33_fees.png", Inches(1.72), Inches(6.50), left=ML, right=COL_SPLIT)
+tx = PANEL_X
 _net = 0.1751
 rows = [["", "p.a.", "Over six years"],
         ["Gross return", pct(ST[N]["cagr"]), pct(ST[N]["cum_return"], 0)],
         ["Management fee", "−0.90%", "−5.3%"],
         ["Performance fee", "−0.25%", "−1.5%"],
         ["Net to investors", pct(_net, 2), pct((1 + _net) ** 6 - 1, 0)]]
-table(s, tx, Inches(1.92), Inches(3.66), rows, col_w=[46, 27, 27], size=11,
+table(s, tx, Inches(1.92), PANEL_W, rows, col_w=[46, 27, 27], size=11,
       row_h=Inches(0.34), first_bold=True)
-textbox(s, tx, Inches(3.80), Inches(3.66), Inches(2.7),
+textbox(s, tx, Inches(3.80), PANEL_W, Inches(2.7),
         "Total fee load was 1.15% a year — 0.90% base plus 0.25% of performance fee, because the "
         "hurdle is the NASDAQ-100 rather than zero and we only cleared it by 2.5 points a year.\n\n"
         "A passive NASDAQ-100 ETF at 0.20% would have cost $5.7m less over the six years and "
@@ -1335,12 +1444,10 @@ that matters, and we pass it.
 s = slide("Our recommendation: the fund should continue",
           "With three changes to the mandate, which we would want your agreement on before raising "
           "the successor vehicle")
-left_w = Inches(6.05)
-rect(s, ML, Inches(1.84), left_w, Inches(4.62), WHITE, RULE)
-rect(s, ML, Inches(1.84), left_w, Inches(0.055), AQUA)
-textbox(s, ML + Inches(0.28), Inches(2.06), left_w - Inches(0.56), Inches(0.34),
-        "THE CASE FOR CONTINUING", size=10, color=GOLD, bold=True)
-bullets(s, ML + Inches(0.28), Inches(2.48), left_w - Inches(0.56), [
+left_w = Emu(int(CW * 0.505))
+panel(s, ML, Inches(1.84), left_w, Inches(4.62), TEAL)
+eyebrow(s, ML, Inches(2.00), "The case for continuing")
+bullets(s, ML, Inches(2.42), left_w - Inches(0.24), [
     ("The alpha is real and it is repeatable.", "6.6% a year that five risk factors cannot "
      "explain, with 94% of it from security selection rather than sector timing."),
     ("The thesis is not exhausted.", "Cloud is still a minority of enterprise IT spend; "
@@ -1349,13 +1456,11 @@ bullets(s, ML + Inches(0.28), Inches(2.48), left_w - Inches(0.56), [
     ("The construction discipline was tested and held.", "Sector floors, the position cap and "
      "quarterly rebalancing were all worth measurable money — most visibly in 2022."),
 ], size=12, gap=Inches(0.22))
-right_x = ML + left_w + Inches(0.28)
-right_w = CW - left_w - Inches(0.28)
-rect(s, right_x, Inches(1.84), right_w, Inches(4.62), WHITE, RULE)
-rect(s, right_x, Inches(1.84), right_w, Inches(0.055), ORANGE)
-textbox(s, right_x + Inches(0.28), Inches(2.06), right_w - Inches(0.56), Inches(0.34),
-        "WHAT WE WOULD CHANGE", size=10, color=GOLD, bold=True)
-bullets(s, right_x + Inches(0.28), Inches(2.48), right_w - Inches(0.56), [
+right_x = Emu(int(ML + left_w + Inches(0.30)))
+right_w = Emu(int(CW - left_w - Inches(0.30)))
+panel(s, right_x, Inches(1.84), right_w, Inches(4.62), RUST)
+eyebrow(s, right_x, Inches(2.00), "What we would change", RUST)
+bullets(s, right_x, Inches(2.42), right_w - Inches(0.24), [
     ("Widen the tail-scenario assumptions.", "Our Scenario C assumed a 4% loss. The real one cost "
      "22.5%. The framework identified the regime correctly and sized it badly."),
     ("Add a valuation discipline to the entry rule.", "Illumina, our worst selection decision, was "
@@ -1391,23 +1496,23 @@ are what saved us.
 
 # ============================================================================== 37
 s = prs.slides.add_slide(BLANK)
-bg = s.background.fill; bg.solid(); bg.fore_color.rgb = NAVY
+bg = s.background.fill; bg.solid(); bg.fore_color.rgb = DEEP
 SLIDE_NO[0] += 1
-rect(s, Inches(0), Inches(0), Inches(0.11), H, GOLD)
-textbox(s, Inches(0.95), Inches(1.86), Inches(7.4), Inches(0.4), "N O R T H P O I N T",
-        size=14, color=GOLD, bold=True)
-textbox(s, Inches(0.95), Inches(2.42), Inches(9.0), Inches(1.0), "Thank you.", size=44,
-        color=WHITE, bold=True)
-textbox(s, Inches(0.95), Inches(3.42), Inches(9.4), Inches(1.4),
+rect(s, Inches(0), Inches(0), W, Inches(0.055), RUST)
+textbox(s, Inches(1.08), Inches(1.86), Inches(7.4), Inches(0.4), "NORTHPOINT",
+        size=11, color=RUST, spacing=3.0)
+textbox(s, Inches(1.05), Inches(2.36), Inches(9.6), Inches(1.1), "Thank you.", size=52,
+        color=CREAM, font=DISPLAY)
+rect(s, Inches(1.12), Inches(3.62), Inches(1.5), Inches(0.030), RUST)
+textbox(s, Inches(1.08), Inches(3.98), Inches(9.6), Inches(1.4),
         "I am happy to take questions on any part of this review.\n"
-        "An appendix follows with the full methodology, the complete metric tables, the per-holding "
-        "statistics, and the full factor-model output.",
-        size=15, color=RGBColor(0xB8, 0xC6, 0xD8), line=1.35)
-rect(s, Inches(0.95), Inches(5.10), Inches(1.15), Inches(0.05), GOLD)
-textbox(s, Inches(0.95), Inches(5.40), Inches(9.0), Inches(0.8),
+        "An appendix follows with the full methodology, the complete metric tables, the "
+        "per-holding statistics, and the full factor-model output.",
+        size=14.5, color=CREAM2, line=1.36)
+textbox(s, Inches(1.08), Inches(5.62), Inches(9.6), Inches(0.8),
         "Callum O'Connor  ·  Portfolio Manager  ·  Northpoint Capital Partners\n"
         "FINC13-303 Portfolio Analysis and Investments  ·  Student ID 14053836",
-        size=12, color=RGBColor(0x9A, 0xAC, 0xC2), line=1.35)
+        size=11.5, color=RGBColor(0x7E, 0x99, 0x94), line=1.36)
 notes(s, """
 That's the review.
 
@@ -1746,9 +1851,9 @@ not only when it flatters them.
 # A11
 s = slide("A11 · References and declarations",
           "Sources, academic references, and the required statement on the use of generative AI")
-rect(s, ML, Inches(1.80), Inches(6.4), Inches(4.72), WHITE, RULE)
-textbox(s, ML + Inches(0.26), Inches(2.00), Inches(5.9), Inches(0.3), "REFERENCES",
-        size=10, color=GOLD, bold=True)
+REF_W = Emu(int(CW * 0.545))
+panel(s, ML, Inches(1.80), REF_W, Inches(4.72), TEAL)
+eyebrow(s, ML, Inches(1.94), "References")
 refs = ("Brinson, G. P., Hood, L. R., & Beebower, G. L. (1986). Determinants of portfolio "
         "performance. Financial Analysts Journal, 42(4), 39–44.\n"
         "DeMiguel, V., Garlappi, L., & Uppal, R. (2009). Optimal versus naive diversification. "
@@ -1771,12 +1876,11 @@ refs = ("Brinson, G. P., Hood, L. R., & Beebower, G. L. (1986). Determinants of 
         "Data: Kenneth R. French Data Library (factor and risk-free series); dividend-adjusted "
         "monthly closing prices for all eleven holdings, the eleven SPDR sector ETFs, QQQ, SPY "
         "and AGG.")
-textbox(s, ML + Inches(0.26), Inches(2.36), Inches(5.9), Inches(4.0), refs, size=9,
-        color=INK2, line=1.32)
-rx = ML + Inches(6.68)
-rect(s, rx, Inches(1.80), CW - Inches(6.68), Inches(4.72), WHITE, RULE)
-textbox(s, rx + Inches(0.26), Inches(2.00), Inches(4.9), Inches(0.3),
-        "GENERATIVE AI USE DECLARATION", size=10, color=GOLD, bold=True)
+textbox(s, ML, Inches(2.30), REF_W - Inches(0.30), Inches(4.0), refs, size=9,
+        color=INK2, line=1.36)
+rx = Emu(int(ML + REF_W + Inches(0.34)))
+panel(s, rx, Inches(1.80), Emu(int(ML + CW - rx)), Inches(4.72), RUST)
+eyebrow(s, rx, Inches(1.94), "Generative AI use declaration", RUST)
 ai = [("Assessment classification.", "AI-Supported. Generative AI was permitted for the "
        "preparation of the analysis and slides; the presentation itself is delivered by the author."),
       ("Tools used.", "Generative AI assistant for the Python analysis code, chart generation and "
@@ -1789,8 +1893,8 @@ ai = [("Assessment classification.", "AI-Supported. Generative AI was permitted 
       ("Data integrity.", "All market data was retrieved programmatically from primary sources. No "
        "figure in this deck was generated by an AI model without a reproducible calculation "
        "behind it.")]
-bullets(s, rx + Inches(0.26), Inches(2.36), CW - Inches(7.22), ai, size=10.5,
-        gap=Inches(0.26))
+bullets(s, rx, Inches(2.30), Emu(int(ML + CW - rx - Inches(0.20))), ai, size=10.5,
+        gap=Inches(0.24))
 notes(s, """
 References and declarations.
 

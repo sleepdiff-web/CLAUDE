@@ -17,14 +17,17 @@ for sec in doc.sections:
     sec.top_margin = sec.bottom_margin = Inches(0.9)
     sec.left_margin = sec.right_margin = Inches(1.0)
 st = doc.styles["Normal"]
-st.font.name = "Calibri"; st.font.size = Pt(11)
+st.font.name = "Corbel"; st.font.size = Pt(11)
 st.paragraph_format.space_after = Pt(8)
 st.paragraph_format.line_spacing = 1.25
 
-NAVY = RGBColor(0x0B, 0x25, 0x45)
-GREY = RGBColor(0x52, 0x51, 0x4E)
+PINE = RGBColor(0x0D, 0x3B, 0x38)
+RUST = RGBColor(0xC4, 0x55, 0x1A)
+NAVY = PINE
+GREY = RGBColor(0x4A, 0x44, 0x3C)
 
-def para(text, size=11, bold=False, color=None, align=None, after=8, before=0, italic=False):
+def para(text, size=11, bold=False, color=None, align=None, after=8, before=0,
+         italic=False, font=None):
     p = doc.add_paragraph()
     p.paragraph_format.space_after = Pt(after)
     p.paragraph_format.space_before = Pt(before)
@@ -34,9 +37,11 @@ def para(text, size=11, bold=False, color=None, align=None, after=8, before=0, i
     r.font.size = Pt(size); r.bold = bold; r.italic = italic
     if color:
         r.font.color.rgb = color
+    if font:
+        r.font.name = font
     return p
 
-para("Northpoint Digital Innovation Fund", 22, True, NAVY, after=2)
+para("Northpoint Digital Innovation Fund", 24, False, PINE, after=2, font="Georgia")
 para("Six-year performance review — presenter script", 14, False, GREY, after=14)
 para("Callum O'Connor  ·  Student ID 14053836  ·  FINC13-303 Portfolio Analysis and "
      "Investments  ·  Assignment 2, Part 1", 10, False, GREY, after=6)
@@ -70,10 +75,10 @@ for i, s in enumerate(prs.slides, start=1):
         notes = s.notes_slide.notes_text_frame.text.strip()
     p = doc.add_paragraph()
     p.paragraph_format.space_before = Pt(16); p.paragraph_format.space_after = Pt(4)
-    r = p.add_run(f"Slide {i}")
-    r.bold = True; r.font.size = Pt(10); r.font.color.rgb = GREY
+    r = p.add_run(f"{i:02d}")
+    r.bold = True; r.font.size = Pt(10); r.font.color.rgb = RUST
     r = p.add_run(f"   {title}")
-    r.bold = True; r.font.size = Pt(13); r.font.color.rgb = NAVY
+    r.font.size = Pt(13.5); r.font.color.rgb = PINE; r.font.name = "Georgia"
     if not notes:
         para("(no narration — section divider, hold for two seconds and move on)", 10,
              False, GREY, italic=True)
@@ -88,7 +93,7 @@ for i, s in enumerate(prs.slides, start=1):
         para(" ".join(block.split()), 11)
 
 doc.add_page_break()
-para("Delivery notes", 16, True, NAVY, after=8)
+para("Delivery notes", 18, False, PINE, after=8, font="Georgia")
 para(f"Main body (slides 1–37): {main_words:,} words — about {main_words/160:.0f} minutes at a "
      f"brisk 160 words per minute, {main_words/150:.0f} minutes at a measured 150. "
      f"Appendix (slides 38–49): {total_words-main_words:,} words, spoken only if a question "

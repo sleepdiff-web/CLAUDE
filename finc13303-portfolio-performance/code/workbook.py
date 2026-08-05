@@ -25,15 +25,16 @@ ALLR = pd.read_csv(os.path.join(DATA, "all_monthly_returns.csv"), index_col=0)
 WP = pd.read_csv(os.path.join(DATA, "weight_path.csv"), index_col=0)
 ANN = pd.read_csv(os.path.join(DATA, "annual.csv"), index_col=0)
 
-NAVY = "FF0B2545"; GOLD = "FFC9A227"; TINT = "FFF2F6FC"; WHITE = "FFFFFFFF"
-HEAD = PatternFill("solid", fgColor=NAVY)
+PINE = "FF0D3B38"; RUST = "FFC4551A"; TINT = "FFF1EDE3"; WHITE = "FFFFFFFF"
+BONE = "FFF6F3EC"
+HEAD = PatternFill("solid", fgColor=PINE)
 BAND = PatternFill("solid", fgColor=TINT)
-HFONT = Font(name="Calibri", size=10.5, bold=True, color=WHITE)
-BFONT = Font(name="Calibri", size=10.5)
-LFONT = Font(name="Calibri", size=10.5, bold=True)
-TFONT = Font(name="Calibri", size=13, bold=True, color="FF0B2545")
-NOTE = Font(name="Calibri", size=9, italic=True, color="FF52514E")
-THIN = Side(style="thin", color="FFE6E5E1")
+HFONT = Font(name="Corbel", size=10.5, bold=True, color="FFF2ECDE")
+BFONT = Font(name="Corbel", size=10.5)
+LFONT = Font(name="Corbel", size=10.5, bold=True)
+TFONT = Font(name="Georgia", size=13, bold=True, color="FF16130F")
+NOTE = Font(name="Corbel", size=9, italic=True, color="FF4A443C")
+THIN = Side(style="thin", color="FFE2DCCF")
 BOX = Border(bottom=THIN)
 
 wb = Workbook()

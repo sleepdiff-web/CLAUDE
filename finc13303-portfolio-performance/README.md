@@ -89,9 +89,22 @@ python notes_doc.py      # the presenter script .docx
 python audit.py          # re-checks every figure in the built deck against the data
 ```
 
-Chart colours use a colourblind-safe categorical palette validated against CVD separation and
-contrast thresholds; sequential encodings are single-hue and diverging encodings use a neutral grey
-midpoint.
+## Design
+
+The deck uses an editorial system rather than a stock presentation template: bone paper
+(`#F6F3EC`), warm near-black ink, a deep pine field for the title and section pages, hairline rules
+in place of boxes, and a narrow left rail carrying the folio and section marker. Headlines are set
+in Georgia, body and data in Corbel; both ship with Office on Windows and macOS, so the file opens
+as designed without embedding fonts. Chart titles live on the slide rather than inside the image,
+so each headline is set once.
+
+The categorical palette — pine-teal `#00736A`, terracotta `#C4551A`, violet `#8A6DAF`, ochre
+`#9A6A00`, indigo `#4F6FB5`, oxblood `#8F2F1D` — was chosen by searching candidate hues against a
+colour-vision-deficiency validator on this surface. The selected ordering clears every gate with no
+contrast relief required: worst adjacent pair ΔE 10.0 under simulated CVD and 20.3 under normal
+vision. Sequential encodings use a single-hue teal ramp; diverging encodings run teal to terracotta
+through a warm neutral midpoint. Oxblood is reserved for losses and is never used as a series
+identity.
 
 ## Note on scope
 

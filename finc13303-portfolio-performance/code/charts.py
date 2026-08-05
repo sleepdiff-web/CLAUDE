@@ -23,20 +23,30 @@ CH = os.path.join(BASE, "charts")
 os.makedirs(CH, exist_ok=True)
 
 # ------------------------------------------------------------------ design tokens
-SURFACE   = "#fcfcfb"
-INK       = "#0b0b0b"
-INK2      = "#52514e"
-INK3      = "#86847e"
-GRID      = "#e6e5e1"
-S1, S2, S3, S4 = "#2a78d6", "#eb6834", "#1baf7a", "#eda100"
-S5, S6, S7, S8 = "#e87ba4", "#008300", "#4a3aa7", "#e34948"
-SEQ = ["#cde2fb", "#b7d3f6", "#9ec5f4", "#86b6ef", "#6da7ec", "#5598e7",
-       "#3987e5", "#2a78d6", "#256abf", "#1c5cab", "#184f95", "#104281", "#0d366b"]
-DIV_MID = "#f0efec"
-BLUE_CMAP = LinearSegmentedColormap.from_list("seqblue", SEQ)
-DIV_CMAP = LinearSegmentedColormap.from_list("divbr", ["#8f1f22", "#c2352f", "#e34948",
-                                                      "#ef8b86", DIV_MID, "#86b6ef",
-                                                      "#3987e5", "#256abf", "#0d366b"])
+# Editorial palette on a bone-paper ground. The six categorical slots were selected
+# by search against the CVD validator: worst adjacent pair ΔE 10.0 (colour-vision
+# deficient) and 20.3 (normal vision) on this surface, with no contrast relief needed.
+SURFACE   = "#f6f3ec"        # bone paper
+INK       = "#16130f"        # warm near-black
+INK2      = "#4a443c"
+INK3      = "#8c8478"
+GRID      = "#e2dccf"        # hairline rule
+DEEP      = "#0d3b38"        # deep pine, for fields and section markers
+S1, S2, S3 = "#00736a", "#c4551a", "#8a6daf"     # pine-teal · terracotta · violet
+S4, S5, S6 = "#9a6a00", "#4f6fb5", "#8f2f1d"     # ochre · indigo · oxblood
+S7, S8 = "#5d8c3a", "#a0446e"                    # moss · plum (series identity)
+LOSS     = S6         # status: losses, negative months, the downside of a pair
+PALE     = "#a8ccc7"   # de-emphasised marks, a light step of the teal ramp
+FAINT    = "#d8d2c4"   # background series, one shade off the paper
+DEEP_RED = "#6b2411"   # the far tail, darker than the oxblood slot
+# single-hue sequential ramp, light to dark
+SEQ = ["#e4efec", "#cfe4df", "#b6d6d0", "#99c6bf", "#79b5ad", "#57a39a",
+       "#2f9086", "#008077", "#00736a", "#00655d", "#005650", "#004642", "#023733"]
+DIV_MID = "#ece7dc"
+BLUE_CMAP = LinearSegmentedColormap.from_list("seqteal", SEQ)
+DIV_CMAP = LinearSegmentedColormap.from_list(
+    "divtr", ["#6b2411", "#8f2f1d", "#b8471f", "#d98a54", DIV_MID,
+              "#7ec0b6", "#2f9086", "#00736a", "#023733"])
 
 plt.rcParams.update({
     "font.family": "Lato", "font.size": 11.5,
@@ -45,12 +55,17 @@ plt.rcParams.update({
     "axes.labelcolor": INK2, "text.color": INK,
     "xtick.color": INK2, "ytick.color": INK2,
     "xtick.labelsize": 10.5, "ytick.labelsize": 10.5,
-    "grid.color": GRID, "grid.linewidth": 0.9, "grid.linestyle": "-",
+    "grid.color": GRID, "grid.linewidth": 0.85, "grid.linestyle": "-",
     "axes.grid": True, "axes.grid.axis": "y", "axes.axisbelow": True,
     "legend.frameon": False, "legend.fontsize": 10.5,
     "lines.linewidth": 2.0, "lines.solid_capstyle": "round",
-    "figure.dpi": 200, "savefig.dpi": 200, "savefig.bbox": "tight", "savefig.pad_inches": 0.18,
+    "figure.dpi": 200, "savefig.dpi": 200, "savefig.bbox": "tight",
+    "savefig.pad_inches": 0.16,
 })
+# Titles live on the slide, not inside the image, so the chart fills its frame and
+# the headline is set once in the deck's display face rather than twice.
+BARE = True
+
 PCT = FuncFormatter(lambda v, _: f"{v*100:,.0f}%")
 PCT1 = FuncFormatter(lambda v, _: f"{v*100:,.1f}%")
 USD = FuncFormatter(lambda v, _: f"${v/1e6:,.0f}m")
@@ -141,11 +156,21 @@ def frame(ax, ygrid=True, xgrid=False):
     ax.grid(ygrid, axis="y"); ax.grid(xgrid, axis="x")
 
 def title(ax, t, sub=None):
+    if BARE:
+        return
     ax.set_title(esc(t), loc="left", fontsize=15.5, fontweight="bold", color=INK,
                  pad=22 if sub else 12)
     if sub:
         ax.annotate(esc(sub), xy=(0, 1.012), xycoords="axes fraction", fontsize=11,
                     color=INK2, ha="left", va="bottom")
+
+def suptitle(fig, *a, **k):
+    if not BARE:
+        suptitle(fig, *a, **k)
+
+def figtext(fig, *a, **k):
+    if not BARE:
+        fig.text(*a, **k)
 
 def save(fig, name):
     fig.savefig(os.path.join(CH, name))
@@ -309,7 +334,7 @@ def c05():
     xs = np.linspace(-0.15, 0.16, 400)
     ax.plot(xs, stats.norm.pdf(xs, r.mean(), r.std(ddof=1)) * len(r) * 0.01,
             color=INK2, lw=1.8, zorder=4)
-    for v, lab, c in [(st["var95_hist"], "VaR 95%", S8), (st["cvar95_hist"], "CVaR 95%", "#8f1f22")]:
+    for v, lab, c in [(st["var95_hist"], "VaR 95%", LOSS), (st["cvar95_hist"], "CVaR 95%", DEEP_RED)]:
         ax.axvline(v, color=c, lw=1.8, zorder=5)
         ax.annotate(f"{lab}\n{v*100:,.1f}%", xy=(v, ax.get_ylim()[1] * 0.86),
                     xytext=(-6, 0), textcoords="offset points", color=c,
@@ -474,7 +499,7 @@ def c11():
     ma = pd.DataFrame(RES["month_avg"])[N]
     ma.index = ma.index.astype(int)
     ma = ma.sort_index()
-    cols = [S1 if v >= 0 else S8 for v in ma]
+    cols = [S1 if v >= 0 else LOSS for v in ma]
     fig, ax = plt.subplots(figsize=(11.2, 4.8))
     ax.bar(range(1, 13), ma.values, 0.62, color=cols, zorder=3)
     for i, v in zip(range(1, 13), ma.values):
@@ -497,7 +522,7 @@ def c12():
     cs = pd.Series(RES["contrib"]).sort_values()
     fig, ax = plt.subplots(figsize=(11.2, 5.6))
     top3 = cs.nlargest(3).index; bot3 = cs.nsmallest(3).index
-    cols = [S1 if t in top3 else (S2 if t in bot3 else "#b7d3f6") for t in cs.index]
+    cols = [S1 if t in top3 else (S2 if t in bot3 else PALE) for t in cs.index]
     ax.barh(range(len(cs)), cs.values, 0.62, color=cols, zorder=3)
     for i, (t, v) in enumerate(cs.items()):
         ax.annotate(f"{v*100:,.1f} pts", (v, i), textcoords="offset points", xytext=(7, 0),
@@ -526,7 +551,7 @@ def c13():
         diff = stot[t] - etot[t]
         ax.annotate(f"{diff*100:+,.0f}", (xi, max(stot[t], etot[t])),
                     textcoords="offset points", xytext=(0, 7), ha="center",
-                    fontsize=9.4, fontweight="bold", color=S1 if diff > 0 else S8)
+                    fontsize=9.4, fontweight="bold", color=S1 if diff > 0 else LOSS)
     ax.axhline(0, color=INK2, lw=1.0)
     ax.set_xticks(x)
     ax.set_xticklabels([f"{t}\n{GICS[t]}" for t in order], fontsize=9.2)
@@ -535,9 +560,6 @@ def c13():
     frame(ax)
     ax.legend([Patch(color=S1), Patch(color=S2)],
               ["Our holding", "Its GICS sector ETF"], loc="upper right", ncol=2)
-    ax.annotate("XLC launched Jun-2018; the Communication Services sleeve is spliced with XLK "
-                "before that date.", xy=(0, -0.20), xycoords="axes fraction", fontsize=9,
-                color=INK3)
     nbeat = int((stot > etot).sum())
     words = {8: "Eight", 9: "Nine", 10: "Ten", 11: "Eleven"}
     title(ax, f"{words.get(nbeat, nbeat)} of eleven picks beat their own sector",
@@ -577,7 +599,7 @@ def c15_16():
     fig, ax = plt.subplots(figsize=(11.2, 4.6))
     ax.plot(d, a, color=S1, lw=2.4)
     ax.fill_between(d, 0, a, where=(a >= 0), color=S1, alpha=0.12)
-    ax.fill_between(d, 0, a, where=(a < 0), color=S8, alpha=0.12)
+    ax.fill_between(d, 0, a, where=(a < 0), color=LOSS, alpha=0.12)
     ax.axhline(0, color=INK2, lw=1.0)
     ax.yaxis.set_major_formatter(PCT)
     frame(ax)
@@ -606,14 +628,14 @@ def c17():
     ax.plot(EFF["vol"], EFF["ret"], color=INK3, lw=1.8, zorder=2)
     items = []
     for t in TICK:
-        ax.scatter(ss[t]["vol"], ss[t]["cagr"], s=46, color="#9ec5f4",
+        ax.scatter(ss[t]["vol"], ss[t]["cagr"], s=46, color=PALE,
                    edgecolor=SURFACE, lw=1.4, zorder=3)
         items.append(dict(x=ss[t]["vol"], y=ss[t]["cagr"], text=t, color=INK3,
                           size=8.8, weight="normal", radius=6, priority=0))
     pts = [(N, "NDIF (as run)", S1, "*", 520),
            ("Equal weight (1/N)", "Equal weight 1/N", S3, "o", 165),
            ("MV optimised (ex-ante 2014-16)", "Mean–variance (2014–16 inputs)", S2, "D", 150),
-           (Q, "NASDAQ-100", S7, "s", 150), (S, "S&P 500", S8, "s", 150)]
+           (Q, "NASDAQ-100", S2, "s", 150), (S, "S&P 500", S3, "s", 150)]
     for k, lab, c, m, s in pts:
         ax.scatter(st[k]["vol"], st[k]["cagr"], s=s, marker=m, color=c,
                    edgecolor=SURFACE, lw=2, zorder=6)
@@ -637,7 +659,7 @@ def c18():
     facs = ["Mkt-RF", "SMB", "HML", "RMW", "CMA"]
     labs = ["Market\n(Mkt-RF)", "Size\n(SMB)", "Value\n(HML)", "Profitability\n(RMW)", "Investment\n(CMA)"]
     vals = [reg[f] for f in facs]; ts = [reg[f + "_t"] for f in facs]
-    cols = [S1 if abs(t) >= 1.96 else "#b7d3f6" for t in ts]
+    cols = [S1 if abs(t) >= 1.96 else PALE for t in ts]
     fig, ax = plt.subplots(figsize=(11.2, 5.0))
     ax.bar(range(5), vals, 0.5, color=cols, zorder=3)
     for i, (v, t) in enumerate(zip(vals, ts)):
@@ -649,7 +671,7 @@ def c18():
     ax.set_xticks(range(5)); ax.set_xticklabels(labs, fontsize=10.5)
     ax.set_ylim(-0.45, 1.32)
     frame(ax)
-    ax.legend([Patch(color=S1), Patch(color="#b7d3f6")],
+    ax.legend([Patch(color=S1), Patch(color=PALE)],
               ["Statistically significant (|t| ≥ 1.96)", "Not significant"], loc="upper right")
     title(ax, "A large-cap growth fund with market beta of one",
           f"Fama–French five-factor loadings · R² = {reg['r2']:.2f} · "
@@ -693,7 +715,7 @@ def c20():
                                   gridspec_kw={"width_ratios": [1, 1], "wspace": 0.28})
     y = np.arange(3)
     ax.barh(y, pos, 0.5, color=S1, zorder=3)
-    ax.barh(y, neg, 0.5, left=[p + 0.55 for p in pos], color=S8, zorder=3)
+    ax.barh(y, neg, 0.5, left=[p + 0.55 for p in pos], color=LOSS, zorder=3)
     for i, (p, n) in enumerate(zip(pos, neg)):
         ax.annotate(f"{p} up", (p / 2, i), ha="center", va="center", color=SURFACE,
                     fontsize=10.5, fontweight="bold")
@@ -707,7 +729,7 @@ def c20():
     ap = [st[k]["avg_pos"] for k in ks]; an = [st[k]["avg_neg"] for k in ks]
     x2 = np.arange(3); w = 0.36
     ax2.bar(x2 - w / 2, ap, w * 0.92, color=S1, zorder=3)
-    ax2.bar(x2 + w / 2, an, w * 0.92, color=S8, zorder=3)
+    ax2.bar(x2 + w / 2, an, w * 0.92, color=LOSS, zorder=3)
     for xi, a_, b_ in zip(x2, ap, an):
         ax2.annotate(f"{a_*100:,.1f}%", (xi - w / 2, a_), textcoords="offset points",
                      xytext=(0, 5), ha="center", fontsize=9.6, color=INK2, fontweight="bold")
@@ -719,7 +741,7 @@ def c20():
     frame(ax2)
     ax2.set_title("Average up month vs average down month", loc="left", fontsize=13,
                   fontweight="bold", color=INK, pad=10)
-    fig.suptitle("NDIF was positive in 50 of 72 months", x=0.005, y=1.035, ha="left",
+    suptitle(fig, "NDIF was positive in 50 of 72 months", x=0.005, y=1.035, ha="left",
                  fontsize=15.5, fontweight="bold", color=INK)
     save(fig, "20_posneg.png")
 
@@ -751,9 +773,9 @@ def c21():
         a.yaxis.set_major_formatter(PCT)
         a.set_title(ttl, loc="left", fontsize=12.5, fontweight="bold", color=INK, pad=8)
         frame(a); a.grid(False)
-    fig.suptitle("Rebalancing kept the mandate honest", x=0.005, y=1.10, ha="left",
+    suptitle(fig, "Rebalancing kept the mandate honest", x=0.005, y=1.10, ha="left",
                  fontsize=15.5, fontweight="bold", color=INK)
-    fig.text(0.005, 1.035, "Weight by conviction tier · left to drift, Tier 1 would have reached 48% of the book "
+    figtext(fig, 0.005, 1.035, "Weight by conviction tier · left to drift, Tier 1 would have reached 48% of the book "
              "by end-2022; quarterly rebalancing held it near its 42% target", ha="left", fontsize=11, color=INK2)
     save(fig, "21_weight_drift.png")
 
@@ -822,7 +844,7 @@ def c24():
     frame(a1)
     a1.set_title("2022 total return", loc="left", fontsize=12.5, fontweight="bold",
                  color=INK, pad=8)
-    cols = [S8 if v < 0 else S1 for v in st.values]
+    cols = [LOSS if v < 0 else S1 for v in st.values]
     a2.barh(range(len(st)), st.values, 0.6, color=cols, zorder=3)
     for i, (t, v) in enumerate(st.items()):
         inside = v < -0.13
@@ -837,7 +859,7 @@ def c24():
     frame(a2, ygrid=False, xgrid=True)
     a2.set_title("2022 by holding — the ballast earned its place", loc="left",
                  fontsize=12.5, fontweight="bold", color=INK, pad=8)
-    fig.suptitle("The 2022 stress test: down 22.5% against a NASDAQ down 32.6%",
+    suptitle(fig, "The 2022 stress test: down 22.5% against a NASDAQ down 32.6%",
                  x=0.005, y=1.04, ha="left", fontsize=15.5, fontweight="bold", color=INK)
     save(fig, "24_2022.png")
 
@@ -849,7 +871,7 @@ def c25():
     fc = [0.18, 0.18, 0.09, 0.18, 0.18, -0.04]           # ex-ante scenario labels
     lab = ["A", "A", "B", "A", "A", "C"]
     x = np.arange(6); w = 0.36
-    ax.bar(x - w / 2, fc, w * 0.92, color="#b7d3f6", zorder=3)
+    ax.bar(x - w / 2, fc, w * 0.92, color=PALE, zorder=3)
     ax.bar(x + w / 2, act, w * 0.92, color=S1, zorder=3)
     for xi, f, a in zip(x, fc, act):
         ax.annotate(f"{f*100:,.0f}%", (xi - w / 2, f), textcoords="offset points",
@@ -863,7 +885,7 @@ def c25():
     ax.set_xticklabels([f"{y}\nScenario {l}" for y, l in zip(yrs, lab)], fontsize=10.5)
     ax.yaxis.set_major_formatter(PCT); ax.set_ylim(-0.34, 0.52)
     frame(ax)
-    ax.legend([Patch(color="#b7d3f6"), Patch(color=S1)],
+    ax.legend([Patch(color=PALE), Patch(color=S1)],
               ["2016 scenario return assumption", "Realised NDIF return"],
               loc="upper right", ncol=2)
     title(ax, "The scenarios were right about direction, conservative about size",
@@ -929,7 +951,7 @@ def c28():
                  f"  {k.split(' (')[0]}\n  {w.iloc[-1]*100:+,.0f}%", c, fs=10)
     ax.axhline(0, color=INK2, lw=1.0)
     ax.axvspan(pd.Timestamp("2020-02-01"), pd.Timestamp("2020-03-31"),
-               color=S8, alpha=0.07, zorder=1)
+               color=LOSS, alpha=0.07, zorder=1)
     ax.annotate("COVID-19 crash\nFeb–Mar 2020", xy=(pd.Timestamp("2020-03-01"), -0.16),
                 ha="center", fontsize=10, color=INK2)
     ax.yaxis.set_major_formatter(PCT)
@@ -967,9 +989,9 @@ def c29():
     ax.legend([Line2D([], [], color=S1, lw=2.2), Line2D([], [], color=S2, lw=2.2),
                Line2D([], [], color=S3, lw=2.2)], ["NDIF", "NASDAQ-100", "S&P 500"],
               loc="lower center", ncol=3, bbox_to_anchor=(0.5, -0.14))
-    fig.suptitle("Best on five of six risk-adjusted measures", x=0.02, y=1.06,
+    suptitle(fig, "Best on five of six risk-adjusted measures", x=0.02, y=1.06,
                  ha="left", fontsize=15.5, fontweight="bold", color=INK)
-    fig.text(0.02, 1.005, "Each axis scaled to the best of the three · larger is better on every spoke",
+    figtext(fig, 0.02, 1.005, "Each axis scaled to the best of the three · larger is better on every spoke",
              fontsize=11, color=INK2)
     save(fig, "29_radar.png")
 
@@ -1015,12 +1037,12 @@ def c31():
 def c32():
     fig, ax = plt.subplots(figsize=(11.4, 5.6))
     cum = (1 + STK).cumprod()
-    focus = {"MSFT": S1, "SLB": S8, "ILMN": S2, "NEE": S3}
+    focus = {"MSFT": S1, "SLB": LOSS, "ILMN": S2, "NEE": S4}
     items = []
     for t in TICK:
         if t in focus:
             continue
-        ax.plot(DATES, cum[t], color="#d5d4cf", lw=1.4, zorder=2)
+        ax.plot(DATES, cum[t], color=FAINT, lw=1.4, zorder=2)
         items.append(dict(x=DATES[-1], y=cum[t].iloc[-1], text=t, color=INK3,
                           size=9, weight="normal", radius=2, priority=0))
     for t, c in focus.items():
