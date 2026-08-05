@@ -261,7 +261,7 @@ digital transformation across the whole economy, and do it with discipline. Toda
 book on that mandate.
 
 The headline is on the right of your screen. That hundred million is now two hundred and
-seventy-nine million — a hundred and seventy-nine per cent cumulative, or eighteen point seven per
+seventy-nine million, a hundred and seventy-nine per cent cumulative, or eighteen point seven per
 cent a year, through a trade war, a pandemic, the fastest bear market in history, and the sharpest
 rate shock in forty years.
 
@@ -293,7 +293,7 @@ for num, head, sub in items:
 notes(s, """
 Six sections.
 
-Where we started — the mandate, and whether we stuck to it. The economy — three regimes in six
+Where we started, the mandate, and whether we stuck to it. The economy, three regimes in six
 years, and an honest mark against the scenarios we published in 2016. What the fund returned, and
 how it behaved in the two moments that mattered. How much risk we took. Then the section I care
 most about: was any of this skill? And finally the verdict, the fees, and my recommendation.
@@ -330,14 +330,14 @@ Top left: a hundred and seventy-nine per cent cumulative. The S&P 500 returned n
 window; the NASDAQ-100, our primary benchmark and the harder test, returned a hundred and
 thirty-five. Annualised, eighteen point seven per cent against a target of eight to ten.
 
-But look at the second row as much as the first. A Sharpe ratio of nought point nine four — the
+But look at the second row as much as the first. A Sharpe ratio of nought point nine four, the
 highest of every comparator I tested. A maximum drawdown of minus twenty-four point nine per cent,
 shallower than the NASDAQ-100's thirty-two point six. We didn't simply take more risk to get more
 return.
 
 And the number I'd draw your attention to above all: six point six per cent annualised alpha on a
 five-factor model, t-statistic three point zero six. The probability that's luck is about two in a
-thousand — with a beta of one, so it wasn't leverage either.
+thousand, with a beta of one, so it wasn't leverage either.
 
 I'll earn every one of those claims.
 """)
@@ -348,7 +348,7 @@ s = section("Where we started", "01",
             "faithful to the brief")
 
 # =============================================================================== 5
-s = slide("The mandate you funded", "Nothing in the strategy changed over six years — the discipline "
+s = slide("The mandate you funded", "Nothing in the strategy changed over six years. The discipline "
           "was in the rules, not in the reacting")
 rows = [["Mandate parameter", "What we committed to in January 2016"],
         ["Capital", "US$100 million, six-year fund life (Jan 2017 – Dec 2022)"],
@@ -364,37 +364,37 @@ rows = [["Mandate parameter", "What we committed to in January 2016"],
 table(s, ML, Inches(1.86), CW, rows, col_w=[27, 73], size=11.5, row_h=Inches(0.40),
       align=[PP_ALIGN.LEFT, PP_ALIGN.LEFT])
 notes(s, """
-This is the contract, unedited, because the first test of a manager isn't performance — it's
+This is the contract, unedited, because the first test of a manager isn't performance. It's
 whether the thing you bought is the thing you got.
 
 An active, high-conviction thematic equity fund. The theme: digital transformation. Eleven
-holdings, one per GICS sector — a pure technology fund would have been an easier story to sell, but
+holdings, one per GICS sector, a pure technology fund would have been an easier story to sell, but
 it would have failed the diversification requirement, and as you'll see, it would have hurt badly
 in 2022.
 
 Two hard constraints on the weights: a five per cent floor in every sector, and a sixteen per cent
 cap on the largest position. Quarterly rebalancing with a five-point drift threshold.
 
-And the target: eight to ten per cent net a year. Hold that number — I'm going to mark ourselves
+And the target: eight to ten per cent net a year. Hold that number, I'm going to mark ourselves
 against it at the end.
 """)
 
 # =============================================================================== 6
 s = slide("Eleven sectors, one idea",
-          "The theme was expressed through conviction tiers — never through abandoning a sector")
+          "The theme was expressed through conviction tiers, never by abandoning a sector")
 fit(s, "26_weights_donut.png", Inches(1.64), Inches(6.62), left=ML, right=ML + Inches(5.15))
 tx = ML + Inches(5.42)
 textbox(s, tx, Inches(1.72), Inches(7.0), Inches(0.35), "HOW THE BOOK WAS BUILT",
         size=10.5, color=GOLD, bold=True)
 bullets(s, tx, Inches(2.10), Inches(6.98), [
-    ("Tier 1 — 42%.", "Microsoft, Alphabet and Amazon: the platform companies where the cloud, "
+    ("Tier 1, 42%.", "Microsoft, Alphabet and Amazon: the platform companies where the cloud, "
      "advertising and e-commerce theses all compound at once. Highest conviction, largest weights."),
-    ("Tier 2 — 34%.", "Visa, Equinix, Illumina and Rockwell: the enablers. Each monetises "
+    ("Tier 2, 34%.", "Visa, Equinix, Illumina and Rockwell: the enablers. Each monetises "
      "digitisation in one specific channel — payments, data centres, genomics, factory automation."),
-    ("Tier 3 — 24%.", "NextEra, Costco, Albemarle and Schlumberger: diversification and ballast, "
+    ("Tier 3, 24%.", "NextEra, Costco, Albemarle and Schlumberger: diversification and ballast, "
      "each still carrying an innovation or recovery angle."),
     ("The floor mattered.", "Energy at 5% and Materials at 6% looked like drag for five years. "
-     "In 2022 they were the two reasons our drawdown was ten points shallower than the NASDAQ's."),
+     "In 2022 they were the two reasons our drawdown ran ten points shallower than the NASDAQ's."),
 ], size=12, gap=Inches(0.22))
 notes(s, """
 The book, coloured by conviction tier.
@@ -415,7 +415,7 @@ didn't just drop the sector. We didn't, because the mandate said every sector ke
 
 # =============================================================================== 7
 s = slide("We rebalanced. That was a decision, and it paid.",
-          "Quarterly rebalancing added 1.3 percentage points a year over simply letting the winners run")
+          "Quarterly rebalancing added 1.3 percentage points a year over letting the winners run")
 fit(s, "21_weight_drift.png", Inches(1.66), Inches(5.74))
 rows = [["", "Cumulative", "CAGR", "Sharpe", "Max drawdown", "Terminal on $100m"],
         ["Quarterly rebalanced (as run)", pct(ST[N]["cum_return"]), pct(ST[N]["cagr"]),
@@ -436,9 +436,9 @@ longer resembled the mandate you signed.
 
 On the right: what we actually did.
 
-And look at the table. Rebalancing wasn't governance theatre — it was worth eighteen million
+And look at the table. Rebalancing wasn't governance theatre, it was worth eighteen million
 dollars. Two seventy-nine versus two sixty-one. One point three points a year of extra return, a
-higher Sharpe, and a drawdown three points shallower — because rebalancing systematically trimmed
+higher Sharpe, and a drawdown three points shallower, because rebalancing systematically trimmed
 winners at highs and topped up laggards at lows.
 """)
 
@@ -458,14 +458,14 @@ We opened in January 2017 with the Dow crossing twenty thousand. Through 2017 th
 forty per cent, driven by the December tax reform and by cloud adoption accelerating exactly as
 we'd argued.
 
-2018 was our first hard year — the trade war escalated and the fourth quarter was brutal. We lost
+2018 was our first hard year, the trade war escalated and the fourth quarter was brutal. We lost
 nine point six per cent in October and nine point eight in December, and still finished up three
 point seven while the S&P fell four and a half.
 
 2019 was the recovery on the Fed's pivot to cutting. Then March 2020, which I'll come back to.
 
-The peak is November 2021 at three hundred and sixty-one million dollars. That's also the month the
-rate regime turned, and 2022 gave a chunk of it back.
+The fund peaked in December 2021 at three hundred and sixty million dollars, within weeks of the
+Fed abandoning the word "transitory". 2022 gave a chunk of it back.
 """)
 
 # ============================================================================== 10
@@ -502,12 +502,12 @@ for hd, sub, col, items in heads:
 notes(s, """
 Some economic narrative, because you're not paying me to read a line chart to you.
 
-The first three years were broadly the world we said we expected — moderate growth, contained
+The first three years were broadly the world we said we expected: moderate growth, contained
 inflation, a gradual Fed, and spending shifting steadily toward cloud, mobile and payments. 2018
 was the exception: the trade war was a risk we'd flagged but sized wrongly.
 
-The second three years are more interesting. If you go back to our 2016 Scenario C, we wrote — and
-I quote — "another systemic disruption such as a global pandemic." We put twenty per cent on it.
+The second three years are more interesting. If you go back to our 2016 Scenario C, we wrote, and
+I quote, "another systemic disruption such as a global pandemic." We put twenty per cent on it.
 It happened.
 
 And here's the part we got right for the right reason. We argued that even in a recession, cloud
@@ -516,12 +516,12 @@ theme. It accelerated it by years.
 
 2022 tested the diversification rather than the theme. When the discount rate goes from zero to
 four and a quarter, long-duration growth equity is repriced. There was nowhere to hide inside the
-theme — only the ballast helped.
+theme, only the ballast helped.
 """)
 
 # ============================================================================== 11
 s = slide("Marking our 2016 scenarios to market",
-          "We were right about direction in five of six years — and consistently too conservative "
+          "We were right about direction in five of six years, and consistently too conservative "
           "about magnitude")
 fit(s, "25_scenario.png", Inches(1.66), Inches(5.44))
 rows = [["Scenario (as published, Jan 2016)", "Assigned probability", "Assumed return p.a.",
@@ -536,13 +536,13 @@ table(s, ML, Inches(5.58), CW, rows, col_w=[27, 15, 13, 23, 22], size=10.5,
       row_h=Inches(0.30), first_bold=True,
       align=[PP_ALIGN.LEFT, PP_ALIGN.CENTER, PP_ALIGN.CENTER, PP_ALIGN.LEFT, PP_ALIGN.LEFT])
 notes(s, """
-Something most managers avoid: holding up our own forecast and marking it against reality.
+Most managers avoid this next slide. It holds up our own forecast and marks it against reality.
 
 In 2016 we published three scenarios with explicit probabilities and returns. The pale bars are
 what we said. The dark bars are what happened.
 
 Two honest observations. We got the direction right in five of six years. But we were
-systematically too conservative about magnitude in both directions — in 2017 we assumed eighteen
+systematically too conservative about magnitude in both directions. In 2017 we assumed eighteen
 per cent and delivered forty; in 2019 we thought we were in a stagnation world worth nine and
 delivered thirty-seven; and in 2022 we'd assumed a recession would cost four per cent, and it cost
 twenty-two and a half.
@@ -558,7 +558,7 @@ s = section("What the fund returned", "03",
 
 # ============================================================================== 13
 s = slide("A $100m mandate became $279m",
-          "Ahead of the S&P 500 by 89 percentage points and ahead of our own theme-aligned "
+          "Ahead of the S&P 500 by 89 percentage points, and ahead of our own theme-aligned "
           "benchmark by 44")
 fit(s, "01_growth.png", Inches(1.66), Inches(5.14))
 rows = [["", "Cumulative", "CAGR", "Terminal value on $100m", "Value added vs NDIF"],
@@ -574,16 +574,15 @@ rows = [["", "Cumulative", "CAGR", "Terminal value on $100m", "Value added vs ND
 table(s, ML, Inches(5.28), CW, rows, col_w=[34, 15, 12, 21, 18], size=11,
       row_h=Inches(0.30), first_bold=True)
 notes(s, """
-The most important chart in the deck.
+This is the chart the whole review rests on.
 
 Blue is the fund, orange the NASDAQ-100, green the S&P 500.
 
 Three things. First, we're above the NASDAQ-100 for essentially the whole period, and the gap
-widens rather than narrows. Second, look at where the lines separate most — the right-hand end, in
-2022. On the way up we tracked the benchmark closely; on the way down we fell much less. That
+widens rather than narrows. Second, look at where the lines separate most: the right-hand end, in 2022. On the way up we tracked the benchmark closely; on the way down we fell much less. That
 asymmetry is the whole argument for the construction.
 
-Third, the table. Against the S&P 500 — which any of you could have bought for nine basis points —
+Third, the table. Against the S&P 500, which any of you could have bought for nine basis points —
 we added eighty-nine million dollars. Against the NASDAQ-100, the tougher test because it shares
 our theme, forty-four million. Against a conventional sixty-forty, a hundred and twenty-seven
 million.
@@ -593,7 +592,7 @@ I'm not going to pretend all of that is skill. Section five separates the two pr
 
 # ============================================================================== 14
 s = slide("Beat the S&P 500 in five of six years",
-          "Including 2018 and 2022 — the two years the market fell")
+          "Including 2018 and 2022, the two years the market fell")
 fit(s, "04_annual_bars.png", Inches(1.66), Inches(5.14))
 yr_rows = [["Calendar year", "2017", "2018", "2019", "2020", "2021", "2022"],
            ["NDIF"] + [pct(ANN[N][y], 1) for y in ANN.index],
@@ -605,7 +604,7 @@ table(s, ML, Inches(5.28), CW, yr_rows, col_w=[24, 12.7, 12.7, 12.7, 12.7, 12.7,
 notes(s, """
 Annual returns.
 
-The pattern to take away isn't the size of the good years — it's the shape of the bad ones. In a
+The pattern to take away isn't the size of the good years. It's the shape of the bad ones. In a
 bull market a technology-tilted fund is supposed to have good years; there's nothing clever about
 that.
 
@@ -613,12 +612,12 @@ The interesting years are 2018 and 2022. In 2018 the S&P lost four point six per
 NASDAQ-100 was flat; we made three point seven. In 2022 the S&P lost eighteen and the NASDAQ-100
 lost thirty-two point six; we lost twenty-two and a half.
 
-Now — we underperformed the S&P by four points that year, and I won't dress that up. A
+Now, we underperformed the S&P by four points that year, and I won't dress that up. A
 technology-tilted fund should lag the broad market when growth de-rates. But against our own theme
 benchmark we outperformed by ten full points.
 
 The only year we lagged the NASDAQ-100 was 2020, because concentration was rewarded and our sector
-floors held us back. That's the cost of diversification — and 2022 is where you got paid for it.
+floors held us back. That's the cost of diversification, and 2022 is where you got paid for it.
 """)
 
 # ============================================================================== 15
@@ -639,13 +638,13 @@ The orange line tells you something you won't get anywhere else. Against the NAS
 roughly flat for the first four and a half years. We only decisively pulled ahead from November
 2021.
 
-Let me be direct about what that means. For most of this fund's life we did not beat our primary
-benchmark — we tracked it. All of the outperformance against it was earned in the 2022 drawdown, by
+Be clear about what that means. For most of this fund's life we did not beat our primary
+benchmark, we tracked it. All of the outperformance against it was earned in the 2022 drawdown, by
 falling less.
 
 Some managers would present that as a weakness. I'd argue the opposite. Anyone can hold technology
 stocks in a technology bull market. Capital preservation when the regime turns is the part that
-requires an actual discipline — and 2022 is the year the fee earned itself.
+requires an actual discipline, and 2022 is the year the fee earned itself.
 """)
 
 # ============================================================================== 16
@@ -663,13 +662,13 @@ rows = [["", "Maximum drawdown", "Peak month", "Trough month", "Calmar ratio",
 table(s, ML, Inches(5.58), CW, rows, col_w=[18, 18, 15, 15, 16, 18], size=11,
       row_h=Inches(0.30), first_bold=True)
 notes(s, """
-Drawdown determines whether an investor stays in a fund, so let me address it directly.
+Drawdown determines whether an investor stays in a fund, so I will take it head on.
 
 Our worst peak-to-trough loss was twenty-four point nine per cent, from November 2021 to September
 2022. The NASDAQ-100 lost thirty-two point six. The S&P lost twenty-three point nine.
 
-So we sat between the two — worse than the broad market, materially better than our own benchmark.
-For a fund with a deliberate technology tilt, that's the right place to be.
+So we sat between the two, worse than the broad market, materially better than our own benchmark.
+For a fund with a deliberate technology tilt, that is the right place to be.
 
 The Calmar ratio in the table is return per unit of maximum drawdown: nought point seven five for
 us against nought point four seven for both indices. A sixty per cent improvement in return per
@@ -678,8 +677,8 @@ unit of worst-case pain.
 
 # ============================================================================== 17
 s = slide("Stress test one: COVID-19",
-          "Scenario C arrived in March 2020 — the fund lost 12.6% in two months and had recovered "
-          "it by July")
+          "Scenario C arrived in March 2020. The fund lost 12.6% in two months and had recovered it "
+          "within eight weeks")
 fit(s, "28_covid.png", Inches(1.66), Inches(5.94))
 textbox(s, ML, Inches(6.06), CW, Inches(0.72),
         "Our 2016 document had explicitly named “a systemic disruption such as a global "
@@ -694,11 +693,11 @@ February and March 2020 cost us twelve point six per cent. It felt considerably 
 because these are month-end figures.
 
 Then look what happens. April 2020 was the best month in the fund's history at plus fourteen and a
-half per cent. By July we were above the pre-COVID high, and 2020 finished up thirty-seven per
+half per cent. By May we were back above the January high, and 2020 finished up thirty-seven per
 cent.
 
-Two things worth saying. First, our 2016 document had literally named a global pandemic as a
-Scenario C trigger. I'm not claiming we predicted COVID — I'm claiming that a framework which
+Two things follow from that. First, our 2016 document had literally named a global pandemic as a
+Scenario C trigger. I'm not claiming we predicted COVID, I'm claiming that a framework which
 forces you to name tail events stops you building a portfolio that only survives the base case.
 
 Second, and more substantive: our core assumption was that digital transformation is cost-saving
@@ -708,7 +707,7 @@ designed, and the answer came back emphatically.
 
 # ============================================================================== 18
 s = slide("Stress test two: the 2022 rate shock",
-          "Down 22.5% against a NASDAQ-100 down 32.6% — and the ballast is the entire reason why")
+          "Down 22.5% against a NASDAQ-100 down 32.6%, and the ballast is the entire reason why")
 fit(s, "24_2022.png", Inches(1.66), Inches(5.94))
 textbox(s, ML, Inches(6.06), CW, Inches(0.72),
         "Schlumberger — the fund's worst holding over the full six years at −23.5% — returned "
@@ -719,7 +718,7 @@ textbox(s, ML, Inches(6.06), CW, Inches(0.72),
 notes(s, """
 The second stress test, and the more instructive one.
 
-2022 was the sharpest tightening since 1981 — the Fed raised four hundred and twenty-five basis
+2022 was the sharpest tightening since 1981, the Fed raised four hundred and twenty-five basis
 points in a calendar year. When the discount rate moves that fast, long-duration growth equity gets
 repriced, and there's no clever way around it.
 
@@ -734,7 +733,7 @@ Now look at the top. Schlumberger, plus eighty-one per cent. Visa down three. Al
 Schlumberger was, over six years, the worst holding in this fund. For five years it was the
 position I was asked to justify most often. It was there for one reason: the mandate said every
 sector gets a floor. In the worst year of the fund's life, that unloved five per cent returned
-eighty-one per cent. That's what diversification is — and it's why the constraint was written into
+eighty-one per cent. That's what diversification is, and it's why the constraint was written into
 the mandate rather than left to my discretion.
 """)
 
@@ -745,7 +744,7 @@ s = section("How much risk we took", "04",
 
 # ============================================================================== 20
 s = slide("The shape of our returns",
-          "Close to normal, with a mild left tail — 72 monthly observations, Jan 2017 – Dec 2022")
+          "Close to normal, with a mild left tail. 72 monthly observations, Jan 2017 to Dec 2022")
 fit(s, "05_histogram.png", Inches(1.72), Inches(6.40), left=ML, right=Inches(8.92))
 tx = Inches(9.05)
 rect(s, tx, Inches(1.86), Inches(3.66), Inches(4.32), WHITE, RULE)
@@ -768,18 +767,18 @@ for k, v in dstats:
             bold=True, align=PP_ALIGN.RIGHT)
     yy = yy + Inches(0.355)
 notes(s, """
-The quantitative section. I want to start with the raw distribution, because a summary statistic
-can hide a lot.
+The quantitative section. Start with the raw distribution rather than a summary statistic, because a
+summary statistic can hide a lot.
 
 Seventy-two observations. Mean monthly return one point five nine per cent, median two point seven
 three. The median well above the mean tells you immediately there's a left tail.
 
-Skewness confirms it at minus nought point four seven — mild negative skew, normal for equities.
+Skewness confirms it at minus nought point four seven, mild negative skew, normal for equities.
 Excess kurtosis is essentially zero, so no fat tails. And Jarque-Bera returns a p-value of nought
 point two eight, meaning we can't reject normality.
 
-That matters practically: the parametric risk measures — standard deviation, Sharpe, normal-based
-VaR — are trustworthy for this fund. That isn't true of every strategy.
+That matters practically: the parametric risk measures, standard deviation, Sharpe, normal-based
+VaR, are trustworthy for this fund. That isn't true of every strategy.
 
 Best month, April 2020, plus fourteen and a half. Worst, April 2022, minus twelve point one. Fifty
 of seventy-two months positive.
@@ -787,8 +786,7 @@ of seventy-two months positive.
 
 # ============================================================================== 21
 s = slide("Risk-adjusted, we beat every comparator",
-          "Highest Sharpe, highest Sortino, highest Calmar, highest Treynor — and the highest "
-          "information ratio")
+          "Highest Sharpe, Sortino, Calmar and Treynor, and the highest information ratio")
 rows = [["Measure", "NDIF", "NASDAQ-100", "S&P 500", "Equal weight", "60/40",
          "What it tells you"],
         ["Annualised return", pct(ST[N]["cagr"]), pct(ST[Q]["cagr"]), pct(ST[S]["cagr"]),
@@ -822,12 +820,12 @@ textbox(s, ML, Inches(6.26), CW, Inches(0.5),
         "period). All ratios are computed on the same 72 monthly observations and annualised by √12.",
         size=10.5, color=INK3, line=1.2)
 notes(s, """
-The scorecard slide — the one I'd print out if you kept only one.
+If you keep one slide from today, keep this one.
 
 Read down the NDIF column against the benchmarks.
 
 Sharpe: nought point nine four against nought point seven five and nought point six five. Sortino,
-which penalises only downside volatility: one point five one against one point one eight — a bigger
+which penalises only downside volatility: one point five one against one point one eight, a bigger
 improvement than on Sharpe, which tells you our volatility was disproportionately upside
 volatility. Treynor highest. Calmar sixty per cent better than both indices.
 
@@ -864,14 +862,14 @@ for k, v in tail:
             bold=True, align=PP_ALIGN.RIGHT)
     yy = yy + Inches(0.50)
 notes(s, """
-Value-at-risk and expected shortfall — what your risk committees will ask for.
+Value-at-risk and expected shortfall, what your risk committees will ask for.
 
 Our ninety-five per cent one-month VaR is minus eight point eight two per cent. In the worst month
 in twenty we'd expect to lose at least that. On two hundred and seventy-nine million, a
 twenty-four point six million dollar month.
 
 Note the historical, parametric and Cornish-Fisher estimates all cluster between seven and nine per
-cent — another confirmation the distribution is close to normal.
+cent, another confirmation the distribution is close to normal.
 
 The number I'd actually watch is CVaR, because VaR only tells you the threshold, not how bad it
 gets beyond it. Ours is minus ten point two per cent.
@@ -883,14 +881,14 @@ diversification rather than anything clever in timing.
 
 # ============================================================================== 23
 s = slide("Where in the calendar the money was made",
-          "Seasonality across 72 months — six observations per calendar month, so read this as "
-          "description, not as a tradeable signal")
+          "Seasonality across 72 months. Six observations per calendar month, so read this as "
+          "description rather than a tradeable signal")
 fit(s, "10_seasonality.png", Inches(1.66), Inches(4.98))
 tx1, tw = ML, Inches(3.94)
 cards = [("July  +5.8%", "The strongest month, on the back of six positive Julys out of six — "
           "including +13.1% in July 2022 during the bear-market rally.", AQUA),
-         ("September  −2.8%", "The weakest month, negative in four of six years. September 2022 "
-          "alone cost 9.3%.", RED),
+         ("September  −2.8%", "The weakest month. Negative in three of six years, but heavily so: "
+          "September 2022 alone cost 9.3%.", RED),
          ("2020 and 2022 were the extremes", "April 2020 was the best month on record at +14.5%; "
           "April 2022 the worst at −12.1%. Both sit inside the same two-year window.", BLUE)]
 x = ML
@@ -903,18 +901,19 @@ for hd, body, col in cards:
             size=11, color=INK2, line=1.2)
     x = x + tw + Inches(0.26)
 notes(s, """
-Seasonality — and I want to frame this carefully, because it's easy to over-read.
+Seasonality, and I will frame this carefully, because seasonality is easy to over-read.
 
 Blue is positive, red negative, intensity is magnitude.
 
 July was our strongest month at plus five point eight per cent average, positive in all six years.
-September was weakest at minus two point eight, negative in four of six.
+September was weakest at minus two point eight, dragged there by three heavy losses in 2020,
+2021 and 2022.
 
 But here's why I wouldn't build a strategy on it. Six observations per calendar month is nowhere
-near enough to separate a real seasonal effect from noise — the standard error on any monthly mean
+near enough to separate a real seasonal effect from noise, the standard error on any monthly mean
 is over two per cent. Almost none of these differences would survive a significance test.
 
-What the grid is genuinely useful for is the concentration of extremes. Look at the 2020 and 2022
+What the grid does show usefully is the concentration of extremes. Look at the 2020 and 2022
 rows. The best month in the fund's history and the worst sit within twenty-four months of each
 other. That's the volatility regime we were managing through.
 """)
@@ -926,7 +925,7 @@ s = section("Was it skill?", "05",
 
 # ============================================================================== 25
 s = slide("Jensen's alpha: significant on every model we ran",
-          "Excess return regressed on risk factors, 72 monthly observations, Newey–West standard "
+          "Excess return regressed on risk factors. 72 monthly observations, Newey–West standard "
           "errors with four lags")
 rows = [["Model", "Annualised alpha", "Alpha t-stat", "p-value", "Market beta", "Adjusted R²",
          "Interpretation"],
@@ -950,15 +949,14 @@ table(s, ML, Inches(1.90), CW, rows, col_w=[21, 13, 10, 9, 10, 10, 27], size=11,
       row_h=Inches(0.48), first_bold=True,
       align=[PP_ALIGN.LEFT] + [PP_ALIGN.RIGHT] * 5 + [PP_ALIGN.LEFT])
 textbox(s, ML, Inches(5.10), CW, Inches(1.4),
-        "The test that matters:  after controlling for the market, size, value, profitability, "
+        "The test that matters. After controlling for the market, size, value, profitability, "
         "investment and momentum factors, the fund still delivered 6.6% a year that those factors "
-        "cannot explain — with a t-statistic of 3.06 (p = 0.002). Applying the same test to the "
-        "NASDAQ-100 produces an alpha of 2.4% that is not statistically distinguishable from zero. "
-        "In other words, the benchmark's excess return is explained by its factor exposures; ours "
-        "is not.", size=13, color=INK, line=1.3)
+        "cannot explain, with a t-statistic of 3.06 (p = 0.002). The same test applied to the "
+        "NASDAQ-100 returns an alpha of 2.4% that is statistically indistinguishable from zero. "
+        "The benchmark's excess return is explained by its factor exposures. Ours is not.", size=13, color=INK, line=1.3)
 notes(s, """
-This is the slide that answers the question you should be asking: was this skill, or did we simply
-own high-beta growth stocks in a decade that rewarded them?
+Now the question you should be asking: was this skill, or did we simply own high-beta growth
+stocks in a decade that rewarded them?
 
 You answer that with a factor regression. Take the fund's excess return, regress it on known risk
 factors, and see what's left over. That leftover is Jensen's alpha.
@@ -973,7 +971,7 @@ With momentum, unchanged.
 Ninety-two per cent of our variance is explained by the factors. The remaining six point six per
 cent a year is not.
 
-Now the bottom row — the one I'd spend most time on. I ran the same test on the NASDAQ-100 itself.
+Now the bottom row, the one I'd spend most time on. I ran the same test on the NASDAQ-100 itself.
 Its alpha is two point four per cent with a t of one point four one: statistically
 indistinguishable from zero.
 
@@ -983,37 +981,35 @@ difference is what you paid a management fee for.
 
 # ============================================================================== 26
 s = slide("What the factor loadings say about us",
-          "A large-cap growth fund with market-like beta — the profile is exactly what the mandate "
-          "described")
+          "A large-cap growth fund with market-like beta, which is the profile the mandate described")
 fit(s, "18_factors.png", Inches(1.72), Inches(6.40), left=ML, right=Inches(8.92))
 tx = Inches(9.05)
 textbox(s, tx, Inches(1.90), Inches(3.7), Inches(0.3), "READING THE COEFFICIENTS",
         size=10, color=GOLD, bold=True)
 ey = bullets(s, tx, Inches(2.26), Inches(3.66), [
-    ("Market +1.05.", "Essentially one-for-one with the market — we were not levered."),
+    ("Market +1.05.", "Essentially one-for-one with the market. We were not levered."),
     ("Size −0.22.", "Significantly negative: a large-cap fund, as intended."),
     ("Value −0.19.", "Significantly negative: a growth fund, as intended."),
-    ("Profitability −0.11, Investment −0.05.", "Neither is significant — no hidden quality tilt."),
-    ("Momentum +0.02.", "Effectively zero: not a momentum-chasing strategy."),
+    ("Profitability −0.11, Investment −0.05.", "Neither is significant, so no hidden quality tilt."),
+    ("Momentum +0.02.", "Effectively zero. This was not a momentum-chasing strategy."),
 ], size=11, gap=Inches(0.15))
 rect(s, tx, ey + Inches(0.16), Inches(3.66), Inches(0.02), RULE)
 textbox(s, tx, ey + Inches(0.34), Inches(3.66), Inches(1.0),
-        "Every loading is where the January-2016 mandate said it would be. There are no "
-        "unexplained exposures hiding in this portfolio.", size=11, color=NAVY, bold=True,
+        "Every loading sits where the January-2016 mandate said it would. There are no unexplained "
+        "exposures hiding in this portfolio.", size=11, color=NAVY, bold=True,
         line=1.25)
 notes(s, """
 Those five coefficients describe the fund more honestly than any marketing document could.
 
-Market loading, one point zero five — one-for-one with the market. Not levered.
+Market loading, one point zero five, one-for-one with the market. Not levered.
 
 Size, minus nought point two two and significant: large-cap. Value, minus nought point one nine and
 significant: growth. Both correct and intended.
 
-Profitability and investment are both small and insignificant. That's worth noting, because a
-common criticism of "technology alpha" is that it's really a quality tilt in disguise. Here it
-isn't.
+Profitability and investment are both small and insignificant. That matters, because a common criticism of
+"technology alpha" is that it is really a quality tilt in disguise. Here it is not.
 
-Momentum is effectively zero — this wasn't a momentum-chasing strategy that would blow up on the
+Momentum is effectively zero, this wasn't a momentum-chasing strategy that would blow up on the
 first reversal.
 
 So: a large-cap growth fund with market-like beta, no leverage, no hidden factor bets. Precisely
@@ -1040,48 +1036,49 @@ below zero.
 Alpha was earned in the growth years of 2017 to 2019, and in the very different windows dominated
 by 2020's crash-and-recovery and 2022's rate shock.
 
-There is a shape worth noticing, though. It declines through the middle of the sample and recovers
+The shape of the line is worth a moment. It declines through the middle of the sample and recovers
 at the right. The middle windows are 2020 and 2021, when the NASDAQ-100 was extremely hard to beat.
 The recovery at the right is 2022.
 
-So the source of alpha changed character — security selection early, downside protection late.
+So the source of alpha changed character, security selection early, downside protection late.
 That's healthy rather than worrying: it means the fund wasn't dependent on one market regime.
 """)
 
 # ============================================================================== 28
-s = slide("Eight of eleven picks beat their own sector",
-          "Each holding measured against the GICS sector ETF it sits in — the fairest test of "
-          "stock selection")
+s = slide("Nine of eleven picks beat their own sector",
+          "Each holding measured against the GICS sector ETF it sits in, which is the fairest test "
+          "of stock selection")
 fit(s, "13_stock_vs_sector.png", Inches(1.66), Inches(6.06))
 textbox(s, ML, Inches(6.20), CW, Inches(0.6),
-        "The three that lagged their sector: Illumina (−60 pts vs XLV), Amazon (−55 pts vs XLY) and "
-        "Schlumberger (−77 pts vs XLE). Microsoft (+142 pts vs XLK), Alphabet (+122 pts vs XLC) and "
-        "NextEra (+146 pts vs XLU) were the standouts.",
+        "Only two picks lagged: Illumina, 60 points behind XLV, and Schlumberger, 77 points behind "
+        "XLE. The standouts were Costco at 152 points ahead of XLP, NextEra 146 ahead of XLU and "
+        "Microsoft 142 ahead of XLK. XLC did not exist until June 2018, so the Communication "
+        "Services sleeve is spliced with XLK before that date.",
         size=11, color=INK2, line=1.22)
 notes(s, """
 Let's get underneath the portfolio number, because ultimately you hired me to pick eleven stocks.
 
-The fairest test isn't whether a pick went up. It's whether it beat the sector it sits in — because
+The fairest test isn't whether a pick went up. It's whether it beat the sector it sits in, because
 if I pick a technology stock in a decade when all technology stocks rose, I've demonstrated
 nothing.
 
 Blue is the stock, orange is its sector ETF. Eight of eleven picks beat their sector.
 
-The standouts: Microsoft beat the technology sector by a hundred and forty-two points — in our
-largest position, which is the most valuable place to be right. NextEra beat utilities by a hundred
-and forty-six. Alphabet beat communication services by a hundred and twenty-two.
+The standouts: Costco beat consumer staples by a hundred and fifty-two points, NextEra beat
+utilities by a hundred and forty-six, and Microsoft beat the technology sector by a hundred and
+forty-two. That last one matters most, because it happened in our largest position.
 
-The three misses: Illumina, where the thesis was right but the GRAIL acquisition destroyed value;
-Amazon, which beat in absolute terms but lagged its sector; and Schlumberger, which lost money
-against an energy sector that gained fifty-four per cent.
+Two misses. Illumina, where the thesis was right but the GRAIL acquisition and the regulatory
+fight around it destroyed value. And Schlumberger, which lost money against an energy sector that
+gained fifty-four per cent.
 
-I own those three. But eight of eleven, weighted toward our largest positions, is why the portfolio
+I own both. But nine of eleven, weighted toward our largest positions, is why the portfolio
 worked.
 """)
 
 # ============================================================================== 29
 s = slide("Where the 179% came from",
-          "Compounded contribution to cumulative return by holding — Microsoft alone delivered "
+          "Compounded contribution to cumulative return by holding. Microsoft alone delivered "
           "nearly a quarter of it")
 fit(s, "12_contribution.png", Inches(1.72), Inches(6.50), left=ML, right=Inches(9.02))
 tx = Inches(9.15)
@@ -1109,7 +1106,7 @@ twenty-three per cent of everything the fund made, from a sixteen per cent posit
 highest-conviction idea largest is the most consequential decision a manager makes, and this is
 what it looks like when it goes right.
 
-Alphabet twenty-two points, Albemarle twenty-one — the surprise, a six per cent materials position
+Alphabet twenty-two points, Albemarle twenty-one, the surprise, a six per cent materials position
 riding the lithium and EV supply chain. Illumina is the clear disappointment: eight per cent of the
 book delivered under two points.
 
@@ -1130,7 +1127,7 @@ tx = Inches(9.05)
 textbox(s, tx, Inches(1.92), Inches(3.66), Inches(0.3), "DECOMPOSITION", size=10,
         color=GOLD, bold=True)
 ey = bullets(s, tx, Inches(2.26), Inches(3.66), [
-    ("Allocation +1.8 pts.", "The sector tilts — overweight technology, underweight energy — "
+    ("Allocation +1.8 pts.", "The sector tilts, overweight technology and underweight energy, "
      "contributed very little."),
     ("Selection +41.4 pts.", "Almost all of the active return came from picking better stocks "
      "than the sector average."),
@@ -1147,24 +1144,24 @@ Brinson attribution answers a specific question: how much came from being in the
 how much from picking the right stocks within them?
 
 To isolate that, I built a benchmark with exactly our sector coverage at neutral weights and no
-stock selection — an equal-weight portfolio of the eleven sector ETFs. It returned eighty-five per
+stock selection, an equal-weight portfolio of the eleven sector ETFs. It returned eighty-five per
 cent against our hundred and seventy-nine.
 
-Allocation — our sector tilts — contributed one point eight points. Almost nothing. Selection
+Allocation, our sector tilts, contributed one point eight points. Almost nothing. Selection
 contributed forty-one point four. Interaction, one.
 
 So ninety-four per cent of our active return came from security selection.
 
 Why that matters for your decision: allocation skill is a macro forecasting call, and the evidence
-that anyone repeats macro calls is weak. Selection skill is the output of a research process — you
-can describe it, staff it and repeat it. If our outperformance had come from sector timing, I'd be
+that anyone repeats macro calls is weak. Selection skill is the output of a research process. You
+can describe it, staff it, and repeat it. If our outperformance had come from sector timing, I'd be
 much less confident recommending this fund continue.
 """)
 
 # ============================================================================== 31
 s = slide("Would an optimiser have done better?",
-          "A mean-variance model given three years of pre-launch data would have added 1.1% a "
-          "year — and taken concentration risk we were not permitted to take")
+          "A mean-variance model given three years of pre-launch data would have added 1.1% a year, "
+          "by taking concentration risk we were not permitted to take")
 fit(s, "27_variants.png", Inches(1.72), Inches(6.50), left=ML, right=Inches(8.92))
 tx = Inches(9.05)
 rows = [["Construction rule", "CAGR", "Sharpe"],
@@ -1189,17 +1186,18 @@ notes(s, """
 The obvious challenge to everything I've said is: fine, but a model could have done better. So I
 tested it.
 
-I took three years of data ending December 2016 — the information a manager genuinely had at launch
-— fed it to a mean-variance optimiser, and ran the weights forward with the same rebalancing.
+I took three years of data ending December 2016, which is the information a manager actually had
+at launch. I fed it to a mean-variance optimiser and ran the weights forward on the same
+rebalancing rule.
 
 The result: nineteen point seven per cent a year against our eighteen point seven. So yes, it wins,
 by a point a year.
 
-But look at what it had to do. Twenty-five per cent in Equinix and twenty-five in NextEra — both
+But look at what it had to do. Twenty-five per cent in Equinix and twenty-five in NextEra, both
 breaching our sixteen per cent cap. And zero in Alphabet, Visa, Albemarle and Schlumberger,
 breaching the sector floor four times over.
 
-The optimiser didn't beat our strategy. It declined to run it — it bought a better backtest by
+The optimiser didn't beat our strategy. It declined to run it, it bought a better backtest by
 discarding the constraints that, as we saw in 2022, protected you. And there's a known reason to
 distrust it anyway: DeMiguel, Garlappi and Uppal showed in 2009 that naive equal weighting
 frequently beats optimisation out of sample, because small input errors produce wildly concentrated
@@ -1211,8 +1209,8 @@ nine per cent. We captured eighty-two per cent of a number nobody could have kno
 
 # ============================================================================== 32
 s = slide("120% of the upside, 97% of the downside",
-          "The asymmetry that produced the result — captured most of the market's gains while "
-          "avoiding most of its losses")
+          "The asymmetry that produced the result: most of the market's gains, without most of "
+          "its losses")
 fit(s, "19_capture.png", Inches(1.72), Inches(6.40), left=ML, right=Inches(8.92))
 tx = Inches(9.05)
 textbox(s, tx, Inches(1.92), Inches(3.66), Inches(0.3), "THE ASYMMETRY", size=10,
@@ -1220,14 +1218,14 @@ textbox(s, tx, Inches(1.92), Inches(3.66), Inches(0.3), "THE ASYMMETRY", size=10
 ey = bullets(s, tx, Inches(2.26), Inches(3.66), [
     ("Upside capture 120%.", "In months the S&P 500 rose, we rose 20% more than it did."),
     ("Downside capture 97%.", "In months it fell, we fell slightly less."),
-    ("The NASDAQ-100, by contrast,", "captured 118% of the upside but 108% of the downside — "
-     "more of the gains and more of the losses."),
+    ("The NASDAQ-100, by contrast,", "captured 118% of the upside but 108% of the downside: "
+     "more of the gains, and more of the losses."),
     ("50 positive months of 72.", "A 69.4% hit rate against 65.3% for the NASDAQ-100."),
 ], size=11, gap=Inches(0.16))
 rect(s, tx, ey + Inches(0.16), Inches(3.66), Inches(0.02), RULE)
 textbox(s, tx, ey + Inches(0.34), Inches(3.66), Inches(1.6),
-        "This single pair of numbers — 120 up, 97 down — is the compact statement of what the "
-        "fund did. Everything else in this deck elaborates on it.",
+        "Those two numbers, 120 up and 97 down, are the compact statement of what the fund did. "
+        "Everything else in this deck elaborates on them.",
         size=11, color=NAVY, bold=True, line=1.3)
 notes(s, """
 If I had to reduce this whole presentation to two numbers, it would be these.
@@ -1239,7 +1237,7 @@ That asymmetry is the engine of the result. You don't need to be right about mar
 compound at eighteen per cent a year if you participate disproportionately in the good months and
 proportionately in the bad ones.
 
-Contrast the NASDAQ-100: a hundred and eighteen per cent of the upside — very similar — but a
+Contrast the NASDAQ-100: a hundred and eighteen per cent of the upside, very similar, but a
 hundred and eight per cent of the downside. More of the gains and more of the losses. That
 eleven-point difference, compounded over seventy-two months, is essentially the entire gap between
 our two seventy-nine and its two thirty-five.
@@ -1256,15 +1254,15 @@ s = slide("Marking ourselves against the 2016 objective",
           "actually delivered")
 rows = [["What we committed to in January 2016", "Target", "Delivered", "Verdict"],
         ["Net annualised return", "8–10% p.a.", "17.5% p.a. net of all fees", "Exceeded"],
-        ["Cumulative net return over the fund life", "55–70%", "161% net", "Exceeded"],
+        ["Cumulative net return over the fund life", "55–70%", "163% net", "Exceeded"],
         ["Outperform the S&P 500", "~2% p.a. net", "+6.2% p.a. net", "Exceeded"],
         ["Outperform the NASDAQ-100 (primary benchmark)", "Beat it", "+3.4% p.a. gross", "Met"],
         ["Maintain all eleven GICS sectors, 5% floor", "No sector abandoned", "Held throughout, "
          "all 24 quarters", "Met"],
-        ["Cap the largest position at 16%", "16% cap", "Never breached; MSFT peaked at 17.4% "
-         "intra-quarter", "Met"],
+        ["Cap the largest position at 16%", "16% cap", "Held at every rebalance; MSFT drifted to a "
+         "peak of 17.6% within a quarter", "Met"],
         ["Rebalance quarterly with a 5-point drift rule", "24 rebalances", "24 executed; drift "
-         "rule triggered twice", "Met"],
+         "never exceeded 2.9 pts, so the rule never fired", "Met"],
         ["Deliver a mid-life strategic review at end-2019", "Formal review", "Conducted; target "
          "weights reconfirmed", "Met"],
         ["Keep the drawdown below the theme benchmark's", "Beat NASDAQ-100", "−24.9% vs −32.6%",
@@ -1278,15 +1276,16 @@ notes(s, """
 The accountability slide. Ten commitments, marked against what happened.
 
 We said eight to ten per cent net a year; we delivered seventeen and a half net. We said fifty-five
-to seventy per cent cumulative; we delivered a hundred and sixty-one.
+to seventy per cent cumulative; we delivered a hundred and sixty-three.
 
 I'll be careful how I present that, because doubling your target isn't automatically a compliment
 to the manager. Part of it is that this was an unusually strong period for our theme. The honest
 framing: our central estimate was reasonable and our distribution around it was too narrow.
 
 Then the process commitments, which matter as much. All eleven sectors held through all twenty-four
-quarters. The sixteen per cent cap never breached at a rebalance date. Twenty-four rebalances
-executed. The mid-life review delivered at the end of 2019.
+quarters. Twenty-four rebalances executed on schedule. The largest drift we ever ran was two point
+nine points, comfortably inside the five-point threshold, so the drift rule never had to fire. And
+the mid-life review was delivered at the end of 2019.
 
 Ten commitments. Four exceeded, six met, none missed.
 """)
@@ -1297,18 +1296,20 @@ s = slide("Gross to net: what you actually kept",
           "high-water mark")
 fit(s, "33_fees.png", Inches(1.72), Inches(6.50), left=ML, right=Inches(8.92))
 tx = Inches(9.05)
-rows = [["", "p.a.", "6-year"],
+_net = 0.1751
+rows = [["", "p.a.", "Over six years"],
         ["Gross return", pct(ST[N]["cagr"]), pct(ST[N]["cum_return"], 0)],
         ["Management fee", "−0.90%", "−5.3%"],
         ["Performance fee", "−0.25%", "−1.5%"],
-        ["Net to investors", "17.51%", "161%"]]
+        ["Net to investors", pct(_net, 2), pct((1 + _net) ** 6 - 1, 0)]]
 table(s, tx, Inches(1.92), Inches(3.66), rows, col_w=[46, 27, 27], size=11,
       row_h=Inches(0.34), first_bold=True)
 textbox(s, tx, Inches(3.80), Inches(3.66), Inches(2.7),
         "Total fee load was 1.15% a year — 0.90% base plus 0.25% of performance fee, because the "
         "hurdle is the NASDAQ-100 rather than zero and we only cleared it by 2.5 points a year.\n\n"
-        "A passive NASDAQ-100 ETF at 0.20% would have cost you less and returned $235m. We cost "
-        "0.95% more a year and returned $279m — a net gain of roughly $40m after every fee.",
+        "A passive NASDAQ-100 ETF at 0.20% would have cost $5.7m less over the six years and "
+        "returned $235m. We returned $279m, so investors kept $38.7m after paying for active "
+        "management.",
         size=11, color=INK2, line=1.28)
 notes(s, """
 Fees in full, because you're entitled to see the bridge.
@@ -1317,23 +1318,23 @@ Gross, the fund compounded at eighteen point seven per cent. The management fee 
 points, flat.
 
 The performance fee is where the structure earns its keep. We charge ten per cent of returns above
-the hurdle — and the hurdle is the NASDAQ-100, not zero. Because that benchmark itself returned
-fifteen point three per cent a year, we only cleared it by two and a half points, so the
-performance fee is twenty-five basis points rather than the one point eight per cent a
-zero-hurdle fund would have taken.
+the hurdle, and the hurdle is the NASDAQ-100, not zero. Because that benchmark itself returned fifteen point three per cent a year, we cleared it by
+only two and a half points. So the performance fee is twenty-five basis points, against the one
+point eight per cent a zero-hurdle fund would have charged.
 
 Total load: one point one five per cent a year. Net to you, seventeen point five one per cent a
-year, or a hundred and sixty-one per cent cumulative.
+year, or a hundred and sixty-three per cent cumulative.
 
 The honest alternative: a NASDAQ-100 ETF at twenty basis points would have returned two hundred and
-thirty-five million. After paying us every dollar of fee, you're roughly forty million ahead of the
-cheap passive option. That's the only fee test that matters, and we pass it.
+thirty-five million and cost five point seven million less. After paying us every dollar of fee you
+are thirty-eight point seven million ahead of the cheap passive option. That is the only fee test
+that matters, and we pass it.
 """)
 
 # ============================================================================== 36
 s = slide("Our recommendation: the fund should continue",
-          "With three specific changes to the mandate, which we would want your agreement on before "
-          "raising the successor vehicle")
+          "With three changes to the mandate, which we would want your agreement on before raising "
+          "the successor vehicle")
 left_w = Inches(6.05)
 rect(s, ML, Inches(1.84), left_w, Inches(4.62), WHITE, RULE)
 rect(s, ML, Inches(1.84), left_w, Inches(0.055), AQUA)
@@ -1359,8 +1360,9 @@ bullets(s, right_x + Inches(0.28), Inches(2.48), right_w - Inches(0.56), [
      "22.5%. The framework identified the regime correctly and sized it badly."),
     ("Add a valuation discipline to the entry rule.", "Illumina, our worst selection decision, was "
      "a correct thesis bought without a price constraint."),
-    ("Review the position cap upward, carefully.", "The 16% cap forced us to trim Microsoft — our "
-     "best decision — eleven times. We would seek 20%, with the sector floors untouched."),
+    ("Review the position cap upward, carefully.", "The 16% cap forced us to trim Microsoft, our "
+     "single best decision, at 19 of the 24 rebalances. We would seek 20%, with the sector "
+     "floors untouched."),
 ], size=12, gap=Inches(0.22))
 notes(s, """
 So: should this fund continue?
@@ -1368,7 +1370,7 @@ So: should this fund continue?
 My recommendation is yes, for three specific reasons rather than a general expression of
 confidence.
 
-First, the alpha is real and repeatable — six point six per cent a year that five established
+First, the alpha is real and repeatable, six point six per cent a year that five established
 factors can't explain, and ninety-four per cent of it from selection rather than sector timing.
 Selection skill is a process; macro timing is a guess.
 
@@ -1379,11 +1381,12 @@ Third, the construction discipline was tested by the two hardest events in twent
 
 But I'd be doing you a disservice if I asked for renewal without saying what I'd change.
 
-We need wider tail-scenario assumptions — we said a recession would cost four per cent; it cost
+We need wider tail-scenario assumptions. We said a recession would cost four per cent; it cost
 twenty-two and a half. We need a valuation discipline on entry: Illumina was a correct thesis
-bought with no margin of safety. And I'd ask you to consider raising the position cap from sixteen
-to twenty per cent, because that cap forced us to trim Microsoft — our best decision — eleven
-times. The sector floors I would leave entirely untouched, because those are what saved us.
+bought with no margin of safety. And I would ask you to consider raising the position cap from
+sixteen to twenty per cent. That cap forced us to trim Microsoft, our single best decision, at
+nineteen of the twenty-four rebalances. The sector floors I would leave untouched, because those
+are what saved us.
 """)
 
 # ============================================================================== 37
@@ -1415,7 +1418,7 @@ by anything other than the decisions we made.
 
 I recommend the fund continues, with the three mandate changes I've set out.
 
-Happy to take questions — and there's a substantial appendix if you want to go deeper on the
+Happy to take questions, and there's a substantial appendix if you want to go deeper on the
 methodology, the holdings or the regressions. Thank you for six years of patient capital.
 """)
 
@@ -1463,7 +1466,7 @@ have flattered us by roughly two per cent a year. Using the ETFs makes it apples
 investable.
 
 Second, these returns are gross of transaction costs and taxes. With twenty-four rebalances of
-eleven liquid mega-caps, realistic round-trip costs are a few basis points a year — immaterial, but
+eleven liquid mega-caps, realistic round-trip costs are a few basis points a year, immaterial, but
 I'd rather state it than have it discovered.
 """)
 
@@ -1497,7 +1500,7 @@ notes(s, """
 The complete metric table.
 
 The comparison I'd encourage you to make is NDIF against equal weight, in the first two data
-columns — a genuinely hard benchmark.
+columns, a hard benchmark to beat.
 
 We beat it on cumulative return, annualised return, Sharpe, Sortino, Treynor and information ratio.
 Equal weight beat us on maximum drawdown and Calmar, because it held less in the mega-caps that
@@ -1530,22 +1533,22 @@ rows.append(["NDIF", "All eleven", "100%", pct(ST[N]["cum_return"], 0), pct(ST[N
 table(s, ML, Inches(1.84), CW, rows, col_w=[7, 12, 7, 9.5, 8, 9, 7, 8.5, 6.5, 9.5, 7, 9],
       size=9.5, row_h=Inches(0.335), first_bold=True)
 textbox(s, ML, Inches(6.16), CW, Inches(0.5),
-        "Only Microsoft and NextEra produced individually significant CAPM alphas (t > 1.96). The "
-        "portfolio's alpha is larger and more significant than almost every constituent's — the "
-        "diversification benefit is doing real statistical work.",
+        "Only Microsoft (t = 2.76) and NextEra (t = 3.14) clear the 1.96 threshold on their own; "
+        "Costco misses it by a whisker at 1.95. The portfolio's alpha is more significant than any "
+        "constituent's, which is the diversification benefit doing real statistical work.",
         size=11, color=INK2, line=1.25)
 notes(s, """
 Every holding on the same basis as the portfolio.
 
-The point I want to make is in the last two columns and the bottom row.
+The interesting part is in the last two columns and the bottom row.
 
-Only two individual holdings — Microsoft and NextEra — produced a statistically significant CAPM
-alpha on their own. Everything else has a t-statistic below two.
+Only two holdings, Microsoft and NextEra, produced a statistically significant CAPM alpha on their
+own. Costco misses the threshold by a whisker at one point nine five. Everything else is below two.
 
 But the portfolio's alpha has a t of two point one nine on the CAPM and three point zero six on the
 five-factor. The portfolio is more significant than almost every stock in it.
 
-That's not a paradox — it's diversification. Combining eleven imperfectly correlated positions
+That's not a paradox, it's diversification. Combining eleven imperfectly correlated positions
 cancels idiosyncratic noise while retaining the common component of the selection skill. The signal
 survives; much of the noise doesn't.
 """)
@@ -1588,35 +1591,35 @@ notes(s, """
 The full regression output.
 
 Read across the alpha row: seven point two, five point nine, six point six, six point five. Stable
-across specifications — an alpha that collapses when you add a factor was never alpha, it was an
+across specifications, an alpha that collapses when you add a factor was never alpha, it was an
 unmeasured exposure.
 
 Market loading between one and one point zero five in every model, always with a t above fifteen.
 
 Size and value significantly negative throughout. Profitability, investment and momentum all
-insignificant — a meaningful negative result, because it means our excess return isn't a repackaged
+insignificant, a meaningful negative result, because it means our excess return isn't a repackaged
 quality factor.
 
 Adjusted R-squared runs from nought point eight seven to nought point nine one five. Newey-West
-standard errors with four lags throughout, which is the conservative choice — ordinary OLS errors
+standard errors with four lags throughout, which is the conservative choice, ordinary OLS errors
 would have produced higher t-statistics.
 """)
 
 # A5
 s = slide("A5 · Correlation structure of the holdings",
-          "Average pairwise correlation of 0.40 — genuine diversification inside a single theme")
+          "Average pairwise correlation of 0.40, which is real diversification inside a single theme")
 fit(s, "09_corr.png", Inches(1.62), Inches(6.72))
 notes(s, """
 The correlation matrix.
 
-Average pairwise correlation is nought point four zero, which for eleven stocks inside a single
-theme is genuinely low.
+Average pairwise correlation is nought point four zero. For eleven stocks inside a single theme
+that is low.
 
-The structure is intuitive. The three platforms cluster tightly — Microsoft and Alphabet at nought
+The structure is intuitive. The three platforms cluster tightly. Microsoft and Alphabet at nought
 point seven four. That's the concentration risk in tier one, and why the position cap mattered.
 
 At the other end, the genuine diversifiers: NextEra against Schlumberger is minus nought point one
-two — actually negatively correlated. That bottom-right corner is where the ballast lives, and
+two, actually negatively correlated. That bottom-right corner is where the ballast lives, and
 those low correlations produced the ten-point drawdown advantage in 2022.
 
 It's also why the portfolio's volatility of nineteen per cent sits well below the average
@@ -1630,14 +1633,15 @@ fit(s, "08_riskreturn.png", Inches(1.62), Inches(6.72))
 notes(s, """
 The risk-return scatter, each bubble sized by target weight.
 
-The most important feature is where the star sits — upper-left of almost every individual holding.
+The most important feature is where the star sits, upper-left of almost every individual holding.
 
 Only Microsoft, NextEra and Costco sit above the portfolio on return, all at comparable or higher
 volatility. Meanwhile Schlumberger at forty-nine per cent volatility and Albemarle at forty-four
 are far out to the right.
 
-The portfolio has lower volatility than eight of its own eleven constituents. That's the argument
-for diversification in one picture.
+The portfolio ran lower volatility than every one of its eleven constituents. Combining assets
+that individually carried twenty to forty-nine per cent volatility produced something that carried
+nineteen. That is the argument for diversification in one picture.
 """)
 
 # A7
@@ -1646,10 +1650,11 @@ s = slide("A7 · The efficient frontier of our own holdings",
 fit(s, "17_frontier.png", Inches(1.62), Inches(6.72))
 notes(s, """
 The ex-post efficient frontier from the eleven stocks we owned. Nobody could have known this in
-advance — it exists only because we now know the answers.
+advance, it exists only because we now know the answers.
 
 The fund sits below and slightly right of it, which is where a real portfolio should sit. The
-vertical distance is roughly four points of annual return: the cost of not having known the future.
+vertical distance at our realised volatility is about seven points of annual return. That is the
+price of not having known the future.
 
 What I find more informative is that the fund, equal weight and the ex-ante optimiser all cluster
 in the same small region. Three different construction philosophies converged on nearly the same
@@ -1671,12 +1676,12 @@ benchmarks, our interquartile range is tighter than the NASDAQ-100's, and our wh
 contained relative to it.
 
 The lower chart shows dispersion across the eleven holdings. The range runs from minus twenty-four
-per cent to plus three hundred and nineteen — in an eleven-stock portfolio, in a single theme, over
+per cent to plus three hundred and nineteen, in an eleven-stock portfolio, in a single theme, over
 six years.
 
 That dispersion is exactly why the position cap mattered. Had we been permitted a thirty per cent
-position and chosen Illumina rather than Microsoft for it — and in 2016 the genomics thesis was
-every bit as compelling as the cloud thesis — this would be a very different presentation.
+position and chosen Illumina rather than Microsoft for it, and in 2016 the genomics thesis was
+every bit as compelling as the cloud thesis, this would be a very different presentation.
 """)
 
 # A9
@@ -1693,7 +1698,7 @@ common and destructive pattern in growth funds.
 
 Rolling twelve-month volatility below shows the regime: calm through 2017, the COVID spike, a quiet
 2021, then the sustained rise through 2022. Our line sits below the NASDAQ-100's for most of the
-sample. Less total risk than our own benchmark, more return — which is the argument this entire
+sample. Less total risk than our own benchmark, more return, which is the argument this entire
 deck has been making.
 """)
 
@@ -1701,36 +1706,40 @@ deck has been making.
 s = slide("A10 · Month-of-year seasonality and the fee comparison",
           "Supporting detail on the seasonality discussion and the fee benchmarking")
 fit(s, "11_month_avg.png", Inches(1.70), Inches(4.16))
+def fee6(rate):
+    return f"${rate * 100e6 * 6 / 1e6:,.2f}m"
 rows = [["Comparator", "Fee p.a.", "6-year fee on $100m", "Return delivered", "Terminal value"],
-        ["Passive S&P 500 ETF", "0.09%", "$0.6m", pct(ST[S]["cum_return"], 0),
+        ["Passive S&P 500 ETF (SPY)", "0.0945%", fee6(0.000945), pct(ST[S]["cum_return"], 0),
          f"${ST[S]['terminal']/1e6:,.0f}m"],
-        ["Passive NASDAQ-100 ETF", "0.20%", "$1.3m", pct(ST[Q]["cum_return"], 0),
+        ["Passive NASDAQ-100 ETF (QQQ)", "0.20%", fee6(0.0020), pct(ST[Q]["cum_return"], 0),
          f"${ST[Q]['terminal']/1e6:,.0f}m"],
-        ["Typical active equity fund", "1.25%", "$8.4m", "—", "—"],
-        ["Northpoint Digital Innovation Fund", "1.15% all-in", "$7.7m",
+        ["Typical active equity fund", "1.25%", fee6(0.0125), "—", "—"],
+        ["Northpoint Digital Innovation Fund", "1.15% all-in", fee6(0.0115),
          pct(ST[N]["cum_return"], 0), f"${ST[N]['terminal']/1e6:,.0f}m"]]
 table(s, ML, Inches(4.36), CW, rows, col_w=[30, 15, 19, 17, 19], size=10.5,
       row_h=Inches(0.34), first_bold=True,
       align=[PP_ALIGN.LEFT] + [PP_ALIGN.RIGHT] * 4)
 textbox(s, ML, Inches(6.18), CW, Inches(0.5),
-        "Fees estimated on static AUM for comparability. The all-in Northpoint load of 1.15% p.a. "
-        "is 0.95 points above a passive NASDAQ-100 ETF and delivered $44m of additional terminal "
-        "value — a net gain of roughly $38m after the incremental fee.",
+        "Fees are calculated on a static $100m for comparability. Northpoint's all-in load of 1.15% "
+        "sits 0.95 points above a passive NASDAQ-100 ETF, which costs $5.7m more over six years. "
+        "The fund delivered $44.4m of additional terminal value, so investors kept $38.7m after "
+        "paying for active management.",
         size=11, color=INK2, line=1.25)
 notes(s, """
 Two pieces of supporting detail.
 
-The chart is the month-of-year seasonality — July strongest, September weakest. Six observations per
+The chart is the month-of-year seasonality. July strongest, September weakest. Six observations per
 month, so description rather than signal.
 
 The table is the fee benchmarking. A passive S&P 500 ETF costs nine basis points and returned
 ninety per cent. A NASDAQ-100 ETF costs twenty and returned a hundred and thirty-five. We cost one
 point one five per cent all-in and returned a hundred and seventy-nine.
 
-The arithmetic: we cost six point four million more than the NASDAQ ETF and delivered forty-four
-million more in terminal value. A net gain of thirty-eight million after every dollar of fee.
+The arithmetic: we cost five point seven million more than the NASDAQ ETF and delivered
+forty-four point four million more in terminal value. Investors kept thirty-eight point seven
+million after every dollar of fee.
 
-I put this in the appendix deliberately — a manager should be prepared to defend a fee on request,
+I put this in the appendix deliberately, a manager should be prepared to defend a fee on request,
 not only when it flatters them.
 """)
 

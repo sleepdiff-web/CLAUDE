@@ -30,8 +30,32 @@ was written by hand.
 | Terminal value on $100m | **$279.2m** | $234.7m | $190.0m |
 
 Jensen's alpha, Fama–French five-factor: **+6.63% p.a., t = 3.06, p = 0.002** (Newey–West, 4 lags).
-The same test applied to the NASDAQ-100 gives +2.4% p.a. with t = 1.41 — not significant. Brinson–
-Fachler attribution puts **94% of the active return in security selection**, not sector allocation.
+The same test applied to the NASDAQ-100 gives +2.4% p.a. with t = 1.41, which is not significant.
+Brinson–Fachler attribution puts **94% of the active return in security selection** rather than
+sector allocation. Nine of the eleven holdings beat their own GICS sector over the six years.
+
+## Verification
+
+`code/audit.py` is an independent check on the finished presentation. It opens the built `.pptx`,
+recomputes the return, risk and regression figures from the monthly series without reference to
+`results.json`, and asserts that every headline claim matches. It also scans every slide and table
+for one-decimal percentages and fails if any of them cannot be traced to a computed value.
+
+```
+$ python audit.py
+  distinct 1-dp percentages on slides: 140
+  not traceable to a computed value:   0
+  RESULT: 77 checks passed, 0 failed
+```
+
+Spot-checks against published index returns agree to within 4 basis points (SPY 2017–2022 by year,
+QQQ 2017/2019/2022, MSFT and AMZN 2022).
+
+One data treatment is worth stating plainly. XLC, the Communication Services sector ETF, did not
+exist until June 2018, so its standalone six-year return covers only part of the sample. The
+Communication Services sleeve is therefore spliced with XLK before that date, both in the
+Brinson attribution and in the stock-versus-sector comparison, and the splice is disclosed on the
+chart itself.
 
 ## Method
 
@@ -59,13 +83,11 @@ cd code
 python fetch_data.py     # downloads prices; writes prices_daily.csv + returns_monthly.csv
 python analysis.py       # metrics, regressions, attribution -> results.json + tables/
 python charts.py         # 33 charts -> charts/
-python deck.py           # the .pptx
+python deck.py           # the .pptx (slide text and speaker notes both live here)
 python workbook.py       # the .xlsx
 python notes_doc.py      # the presenter script .docx
+python audit.py          # re-checks every figure in the built deck against the data
 ```
-
-`trim_notes.py` holds the speaker-note text and rewrites it into `deck.py`; run it before `deck.py`
-if you edit the narration.
 
 Chart colours use a colourblind-safe categorical palette validated against CVD separation and
 contrast thresholds; sequential encodings are single-hue and diverging encodings use a neutral grey

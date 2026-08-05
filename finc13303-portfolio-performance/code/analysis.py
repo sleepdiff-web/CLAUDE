@@ -222,13 +222,15 @@ CONTRIB = (contrib.mul(growth, axis=0)).sum()          # $ contribution per $1 i
 CONTRIB_PCT = CONTRIB / CONTRIB.sum()
 
 stock_total = (1 + STK).prod() - 1
-etf_total = pd.Series({t: (1 + R[SECTOR_ETF[t]].dropna()).prod() - 1 for t in TICKERS})
-etf_start = {t: R[SECTOR_ETF[t]].dropna().index[0] for t in TICKERS}
 
-# Brinson-Fachler vs equal-weight sector-ETF benchmark (11 sectors, 1/11 each)
+# Sector benchmark series. XLC did not exist until June 2018, so the Communication
+# Services sleeve is spliced with XLK before that date; without the splice the sector
+# return would cover only part of the sample and would not be comparable to the stock.
 bench_w = pd.Series(1 / 11, index=TICKERS)
 sect_r = pd.DataFrame({t: R[SECTOR_ETF[t]] for t in TICKERS}).reindex(periods)
-sect_r["GOOGL"] = sect_r["GOOGL"].fillna(R["XLK"])      # XLC only from Jun-2018
+sect_r["GOOGL"] = sect_r["GOOGL"].fillna(R["XLK"])
+etf_total = (1 + sect_r).prod() - 1
+etf_spliced = {"GOOGL": "XLC spliced with XLK before Jun-2018"}
 bench_ret = (sect_r * bench_w).sum(axis=1)
 alloc = ((wpath - bench_w) * (sect_r.sub(bench_ret, axis=0))).sum().sum()
 selec = (bench_w * (STK - sect_r)).sum().sum()
@@ -276,6 +278,7 @@ results = clean({
     "reg_stock_capm": REG_STOCK, "reg_stock_ff5": REG_STOCK5,
     "contrib": CONTRIB.to_dict(), "contrib_pct": CONTRIB_PCT.to_dict(),
     "stock_total": stock_total.to_dict(), "etf_total": etf_total.to_dict(),
+    "etf_notes": etf_spliced,
     "attrib": ATTRIB,
     "weights_target": WEIGHTS.to_dict(), "weights_mv": W_MV.to_dict(),
     "weights_mv_is": W_MV_IS.to_dict(),

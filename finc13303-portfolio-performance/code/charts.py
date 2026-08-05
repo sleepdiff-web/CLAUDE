@@ -214,14 +214,15 @@ def c01():
     save(fig, "01_growth.png")
 
 # ======================================================== 02 growth with event map
+#                period      label                               label height ($m)
 EVENTS = [
-    ("2017-01", "DJIA tops\n20,000", 1),
-    ("2017-12", "US tax reform\ncuts corporate rate", -1),
-    ("2018-10", "Trade-war\nescalation", -1),
-    ("2020-03", "COVID-19\ncrash", -1),
-    ("2020-11", "Vaccine news\n+ stimulus", 1),
-    ("2021-11", "Growth peak\nrates turn", 1),
-    ("2022-06", "Fed hikes\n75bp; CPI 9.1%", -1),
+    ("2017-01", "DJIA tops\n20,000",                  470),
+    ("2017-12", "US tax reform\ncuts corporate rate",  408),
+    ("2018-10", "Trade-war\nescalation",               346),
+    ("2020-03", "COVID-19\ncrash",                     470),
+    ("2020-11", "Vaccine news\n+ stimulus",            408),
+    ("2021-12", "Portfolio peaks\nat $360m",           545),
+    ("2022-06", "Fed hikes\n75bp; CPI 9.1%",           470),
 ]
 def c02():
     """Events sit in a clean band above the series; leaders drop to the point."""
@@ -230,12 +231,11 @@ def c02():
     ax.plot(DATES, w, color=S1, lw=2.6, zorder=3)
     ax.fill_between(DATES, 60e6, w, color=S1, alpha=0.07, zorder=1)
     ax.axhline(100e6, color=INK3, lw=0.9, zorder=2)
-    lo, hi = 60e6, 560e6
-    rows = [470e6, 408e6, 346e6]                    # three stagger heights in the band
-    for i, (per, lab, _) in enumerate(EVENTS):
+    lo, hi = 60e6, 625e6
+    for per, lab, row in EVENTS:
         p = pd.Period(per, "M")
         x = p.to_timestamp(how="end"); y = w.loc[p]
-        yt = rows[i % 3]
+        yt = row * 1e6
         ax.annotate("", xy=(x, y), xytext=(x, yt - 8e6),
                     arrowprops=dict(arrowstyle="-", color=INK3, lw=0.9, alpha=0.55,
                                     shrinkA=0, shrinkB=6))
@@ -535,8 +535,13 @@ def c13():
     frame(ax)
     ax.legend([Patch(color=S1), Patch(color=S2)],
               ["Our holding", "Its GICS sector ETF"], loc="upper right", ncol=2)
-    title(ax, "Eight of eleven picks beat their own sector",
-          "Cumulative total return 2017–2022 · labels show the stock's excess over its sector, in points")
+    ax.annotate("XLC launched Jun-2018; the Communication Services sleeve is spliced with XLK "
+                "before that date.", xy=(0, -0.20), xycoords="axes fraction", fontsize=9,
+                color=INK3)
+    nbeat = int((stot > etot).sum())
+    words = {8: "Eight", 9: "Nine", 10: "Ten", 11: "Eleven"}
+    title(ax, f"{words.get(nbeat, nbeat)} of eleven picks beat their own sector",
+          "Cumulative total return 2017–2022 · labels show each stock's excess over its sector, in points")
     save(fig, "13_stock_vs_sector.png")
 
 # ============================================================== 14 rolling 12m return
@@ -621,7 +626,7 @@ def c17():
     ax.set_xlabel("Annualised volatility"); ax.set_ylabel("Annualised return")
     ax.set_xlim(0.12, 0.545); ax.set_ylim(-0.085, 0.315)
     frame(ax, xgrid=True)
-    title(ax, "Close to efficient — and beaten only with hindsight",
+    title(ax, "Close to efficient, and beaten only with hindsight",
           "Realised risk and return, 2017–2022, against the ex-post frontier of the same eleven stocks")
     place_labels(fig, ax, items)
     save(fig, "17_frontier.png")
@@ -906,7 +911,7 @@ def c27():
     ax.set_xticks([pd.Timestamp(f"{y}-01-01") for y in range(2017, 2024)])
     ax.set_xticklabels(range(2017, 2024))
     frame(ax)
-    title(ax, "Would a model have done better? Marginally — and only on paper",
+    title(ax, "Would a model have done better? Marginally, and only on paper",
           "Growth of $100m under four construction rules, same eleven stocks")
     end_labels(ax, DATES[-1], ents, x_text=DATES[-1] + pd.Timedelta(days=150),
                min_gap_frac=0.075)
@@ -930,7 +935,7 @@ def c28():
     ax.yaxis.set_major_formatter(PCT)
     ax.set_xlim(pd.Timestamp("2020-01-01"), pd.Timestamp("2021-04-15"))
     frame(ax)
-    title(ax, "Scenario C arrived in March 2020 — and the fund recovered by July",
+    title(ax, "Scenario C arrived in March 2020; the fund was whole again by May",
           "Cumulative return through calendar 2020")
     save(fig, "28_covid.png")
 
