@@ -45,8 +45,9 @@ para("Northpoint Digital Innovation Fund", 24, False, PINE, after=2, font="Georg
 para("Six-year performance review — presenter script", 14, False, GREY, after=14)
 para("Callum O'Connor  ·  Student ID 14053836  ·  FINC13-303 Portfolio Analysis and "
      "Investments  ·  Assignment 2, Part 1", 10, False, GREY, after=6)
-para("Target delivery: 22–26 minutes at a measured pace, plus questions. Slide titles below "
-     "match the deck exactly. Bold slide numbers correspond to the on-screen page numbers.",
+para("This is the same text that sits in the PowerPoint notes pane, so you can read it here or "
+     "from the teleprompter in PowerPoint's recording studio. It is written to be spoken, not "
+     "read off the page \u2014 short sentences, contractions, no colons or dashes to trip over.",
      10, False, GREY, italic=True, after=16)
 
 def slide_title(s):
@@ -94,20 +95,22 @@ for i, s in enumerate(prs.slides, start=1):
 
 doc.add_page_break()
 para("Delivery notes", 18, False, PINE, after=8, font="Georgia")
-para(f"Main body (slides 1–37): {main_words:,} words — about {main_words/160:.0f} minutes at a "
-     f"brisk 160 words per minute, {main_words/150:.0f} minutes at a measured 150. "
-     f"Appendix (slides 38–49): {total_words-main_words:,} words, spoken only if a question "
-     f"takes you there.", 11, after=10)
+para(f"Main body, slides 1 to 37: {main_words:,} words. That is about "
+     f"{main_words/165:.0f} minutes at a brisk 165 words a minute, {main_words/155:.0f} at a "
+     f"normal rehearsed 155, and {main_words/145:.0f} at a slow, deliberate 145. The submission "
+     f"window is 15 to 30 minutes, so rehearse once with a stopwatch and find your own rate "
+     f"before you record. Appendix, slides 38 to 49: {total_words-main_words:,} words, spoken "
+     f"only if a question takes you there.", 11, after=10)
 for t in [
     ("Pace.", "The script is written to be spoken, not read. Do not read it verbatim on "
      "camera — know the two or three numbers on each slide and let the rest come out in "
      "your own words."),
-    ("If you are running long.", "The submission window is 15–30 minutes. The main body is "
-     "written to land at roughly 29 minutes, so you have very little slack. The safest cuts, in "
-     "order: slide 8 (macro regimes) down to two sentences per regime, slide 18 (seasonality) "
-     "down to the July/September contrast, and slide 11 (2016 scenarios) down to the single "
-     "\u201cright about direction, wrong about magnitude\u201d point. That recovers about "
-     "three minutes without touching any of the four slides that carry the grade."),
+    ("If you are running long.", "Drop these three passages, in this order, and you recover "
+     "roughly three minutes without touching anything the rubric rewards. First, on slide 10, "
+     "the 2019 and 2021 sentences \u2014 keep 2017, 2018, 2020 and 2022. Second, on slide 18, "
+     "everything after \u201cSix observations per calendar month is nowhere near enough\u201d. "
+     "Third, on slide 25, the DeMiguel sentence and the perfect-foresight paragraph. Never cut "
+     "from slides 3, 21, 25 or 30."),
     ("The four slides that carry the grade.", "Slide 3 (the six-year result), slide 21 "
      "(the risk-adjusted scorecard), slide 25 (Jensen's alpha) and slide 30 (attribution). "
      "If you are running long, compress elsewhere and give these their full time."),
