@@ -378,8 +378,8 @@ digital transformation across the whole economy, and do it with discipline. Toda
 book on that mandate.
 
 The headline is on the right of your screen. That hundred million is now two hundred and
-seventy-nine million, a hundred and seventy-nine per cent cumulative, or eighteen point seven per
-cent a year, through a trade war, a pandemic, the fastest bear market in history, and the sharpest
+seventy-nine million. A hundred and seventy-nine per cent cumulative, or eighteen point seven per
+cent a year, through a trade war, a pandemic, the fastest bear market in history and the sharpest
 rate shock in forty years.
 
 Over the next twenty-five minutes I'll show you where that money came from, how much risk we took
@@ -485,8 +485,8 @@ This is the contract, unedited, because the first test of a manager isn't perfor
 whether the thing you bought is the thing you got.
 
 An active, high-conviction thematic equity fund. The theme: digital transformation. Eleven
-holdings, one per GICS sector, a pure technology fund would have been an easier story to sell, but
-it would have failed the diversification requirement, and as you'll see, it would have hurt badly
+holdings, one per GICS sector. A pure technology fund would have been an easier story to sell, but
+it would have failed the diversification requirement, and as you'll see it would have hurt badly
 in 2022.
 
 Two hard constraints on the weights: a five per cent floor in every sector, and a sixteen per cent
@@ -552,7 +552,7 @@ longer resembled the mandate you signed.
 
 On the right: what we actually did.
 
-And look at the table. Rebalancing wasn't governance theatre, it was worth eighteen million
+And look at the table. Rebalancing wasn't governance theatre. It was worth eighteen million
 dollars. Two seventy-nine versus two sixty-one. One point three points a year of extra return, a
 higher Sharpe, and a drawdown three points shallower, because rebalancing systematically trimmed
 winners at highs and topped up laggards at lows.
@@ -1695,9 +1695,9 @@ textbox(s, ML, Inches(6.10), CW, Inches(0.5),
 notes(s, """
 The full regression output.
 
-Read across the alpha row: seven point two, five point nine, six point six, six point five. Stable
-across specifications, an alpha that collapses when you add a factor was never alpha, it was an
-unmeasured exposure.
+Read across the alpha row: seven point two, five point nine, six point six, six point five. The alpha is stable across
+specifications, and that matters: an alpha that collapses when you add a factor was never alpha.
+It was an unmeasured exposure.
 
 Market loading between one and one point zero five in every model, always with a t above fifteen.
 
@@ -1784,9 +1784,10 @@ The lower chart shows dispersion across the eleven holdings. The range runs from
 per cent to plus three hundred and nineteen, in an eleven-stock portfolio, in a single theme, over
 six years.
 
-That dispersion is exactly why the position cap mattered. Had we been permitted a thirty per cent
-position and chosen Illumina rather than Microsoft for it, and in 2016 the genomics thesis was
-every bit as compelling as the cloud thesis, this would be a very different presentation.
+That dispersion is exactly why the position cap mattered. Suppose we had been permitted a thirty
+per cent position and had put it into Illumina rather than Microsoft. In 2016 the genomics thesis
+was every bit as compelling as the cloud thesis, so that was a live possibility. This would be a
+very different presentation.
 """)
 
 # A9
