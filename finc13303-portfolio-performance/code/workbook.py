@@ -51,7 +51,7 @@ GICS = {"MSFT": "Information Technology", "GOOGL": "Communication Services",
 COMPANY = {"MSFT": "Microsoft", "GOOGL": "Alphabet", "AMZN": "Amazon", "V": "Visa",
            "EQIX": "Equinix", "ILMN": "Illumina", "ROK": "Rockwell Automation",
            "NEE": "NextEra Energy", "COST": "Costco", "ALB": "Albemarle",
-           "SLB": "Schlumberger (SLB)"}
+           "SLB": "Schlumberger"}
 TIER = {"MSFT": 1, "GOOGL": 1, "AMZN": 1, "V": 2, "EQIX": 2, "ILMN": 2, "ROK": 2,
         "NEE": 3, "COST": 3, "ALB": 3, "SLB": 3}
 SECTOR_ETF = {"MSFT": "XLK", "GOOGL": "XLC", "AMZN": "XLY", "V": "XLF", "EQIX": "XLRE",
@@ -114,6 +114,7 @@ info = [["Item", "Detail"],
         ["Risk factors", "Kenneth R. French Data Library — Mkt-RF, SMB, HML, RMW, CMA, MOM"],
         ["Regression method", "OLS with Newey–West (HAC) standard errors, 4 lags"],
         ["Price basis", "Dividend- and split-adjusted monthly closing prices"],
+        ["Sector benchmarks", "The eleven SPDR GICS sector ETFs. XLC launched June 2018, so XLK stands in for Communication Services before that date"],
         ["Excluded", "Transaction costs, market impact, taxes, cash drag"],
         ["", ""],
         ["Sheet", "Contents"],
@@ -153,6 +154,8 @@ write_table(ws, 4, rows, widths=[9, 20, 22, 7, 12, 12, 9, 11, 8, 8, 13, 7, 14, 1
 ws.cell(row=4 + len(rows) + 1, column=1,
         value="Contribution is the compounded contribution of each holding to the fund's "
               "179.2% cumulative return, using the realised weight path.").font = NOTE
+ws.cell(row=4 + len(rows) + 2, column=1,
+        value="XLC, the Communication Services sector ETF, launched in June 2018. The Communication Services sleeve is spliced with XLK before that date, so the Alphabet sector comparison and the Brinson attribution both cover the full 72 months.").font = NOTE
 
 # ----------------------------------------------------- 3. Performance summary
 ws = sheet("Performance summary", "Full performance and risk metrics",
@@ -268,6 +271,8 @@ for t in sorted(TICK, key=lambda x: -R["contrib"][x]):
     rows3.append([t, COMPANY[t], R["contrib"][t], R["contrib_pct"][t],
                   R["stock_total"][t], R["etf_total"][t]])
 write_table(ws, end + 2, rows3, pcts=[2, 3, 4, 5])
+ws.cell(row=end + 2 + len(rows3) + 1, column=1,
+        value="XLC, the Communication Services sector ETF, launched in June 2018. The Communication Services sleeve is spliced with XLK before that date, so the Alphabet sector comparison and the Brinson attribution both cover the full 72 months.").font = NOTE
 
 # --------------------------------------------------------------- 7. Seasonality
 ws = sheet("Seasonality", "Seasonality of fund returns",
