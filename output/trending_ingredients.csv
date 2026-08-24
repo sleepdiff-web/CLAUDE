@@ -1,61 +1,61 @@
 rank,ingredient,score,is_breakout,is_new,growth_pct,mean_recent,acceleration,sustained,source,discovered_context,kalodata_url,google_trends_url
-1,meaning,36.04,False,False,-0.15,81.5,1.26,True,trends,supplement meaning,https://www.kalodata.com/product?keyword=meaning,https://trends.google.com/trends/explore?q=meaning
-2,niacinamide,35.54,False,False,26.35,49.75,2.48,True,trends,niacinamide,https://www.kalodata.com/product?keyword=niacinamide,https://trends.google.com/trends/explore?q=niacinamide
-3,remedy,31.84,False,False,3.4,76.0,-0.09,True,trends,anxiety natural remedy,https://www.kalodata.com/product?keyword=remedy,https://trends.google.com/trends/explore?q=remedy
-4,nootropic pouches,30.47,False,True,13.57,28.25,3.46,True,trends,best nootropic pouches,https://www.kalodata.com/product?keyword=nootropic+pouches,https://trends.google.com/trends/explore?q=nootropic+pouches
-5,nootropics,29.21,False,False,11.48,49.75,0.95,True,trends,nootropics,https://www.kalodata.com/product?keyword=nootropics,https://trends.google.com/trends/explore?q=nootropics
-6,ultra pouches,29.05,False,False,5.57,40.25,2.22,True,trends,ultra pouches,https://www.kalodata.com/product?keyword=ultra+pouches,https://trends.google.com/trends/explore?q=ultra+pouches
-7,nootropic,28.86,False,False,37.97,32.25,0.79,True,trends,nootropic supplement,https://www.kalodata.com/product?keyword=nootropic,https://trends.google.com/trends/explore?q=nootropic
-8,whey protein,28.12,False,False,16.33,50.75,0.08,True,trends,whey protein,https://www.kalodata.com/product?keyword=whey+protein,https://trends.google.com/trends/explore?q=whey+protein
-9,magnesium glycinate,28.05,False,False,7.94,34.0,2.29,True,trends,magnesium glycinate,https://www.kalodata.com/product?keyword=magnesium+glycinate,https://trends.google.com/trends/explore?q=magnesium+glycinate
-10,magnesium,25.61,False,False,3.2,32.25,1.8,True,trends,magnesium supplement,https://www.kalodata.com/product?keyword=magnesium,https://trends.google.com/trends/explore?q=magnesium
-11,omega 3,24.94,False,False,-0.34,73.0,-2.32,True,trends,omega 3 supplement,https://www.kalodata.com/product?keyword=omega+3,https://trends.google.com/trends/explore?q=omega+3
-12,fiber,23.98,False,False,-0.56,44.0,0.19,True,trends,fiber supplement,https://www.kalodata.com/product?keyword=fiber,https://trends.google.com/trends/explore?q=fiber
-13,superfood greens,23.66,False,True,54.29,13.5,-0.5,True,trends,superfood greens,https://www.kalodata.com/product?keyword=superfood+greens,https://trends.google.com/trends/explore?q=superfood+greens
-14,superfood cleanser,23.54,False,False,40.0,8.75,0.88,True,trends,superfood cleanser,https://www.kalodata.com/product?keyword=superfood+cleanser,https://trends.google.com/trends/explore?q=superfood+cleanser
-15,superfood,22.7,False,False,19.35,37.0,-0.91,True,trends,superfood powder,https://www.kalodata.com/product?keyword=superfood,https://trends.google.com/trends/explore?q=superfood
-16,vitamin d3,22.64,False,False,2.5,30.75,0.81,True,trends,vitamin d3,https://www.kalodata.com/product?keyword=vitamin+d3,https://trends.google.com/trends/explore?q=vitamin+d3
-17,store,22.57,False,False,20.98,31.0,-0.47,True,trends,supplement store,https://www.kalodata.com/product?keyword=store,https://trends.google.com/trends/explore?q=store
-18,probiotics,22.36,False,False,1.34,37.75,0.08,True,trends,probiotics,https://www.kalodata.com/product?keyword=probiotics,https://trends.google.com/trends/explore?q=probiotics
-19,superfoods,19.73,False,False,14.55,15.75,0.35,True,trends,superfoods,https://www.kalodata.com/product?keyword=superfoods,https://trends.google.com/trends/explore?q=superfoods
-20,nmn,19.35,False,False,10.0,13.75,0.7,True,trends,nmn supplement,https://www.kalodata.com/product?keyword=nmn,https://trends.google.com/trends/explore?q=nmn
-21,adaptogen drinks,18.77,False,True,140.0,4.5,0.24,False,trends,adaptogen drinks,https://www.kalodata.com/product?keyword=adaptogen+drinks,https://trends.google.com/trends/explore?q=adaptogen+drinks
-22,zinc,17.79,False,True,0.0,18.5,0.27,True,trends,zinc supplement,https://www.kalodata.com/product?keyword=zinc,https://trends.google.com/trends/explore?q=zinc
-23,herbal,17.62,False,False,9.36,64.25,-15.54,True,trends,herbal supplements,https://www.kalodata.com/product?keyword=herbal,https://trends.google.com/trends/explore?q=herbal
-24,anti inflammatory,16.18,False,False,0.0,10.75,0.4,True,trends,natural anti inflammatory supplement,https://www.kalodata.com/product?keyword=anti+inflammatory,https://trends.google.com/trends/explore?q=anti+inflammatory
-25,longevity,16.09,False,False,1.77,28.75,-1.56,True,trends,best longevity supplement,https://www.kalodata.com/product?keyword=longevity,https://trends.google.com/trends/explore?q=longevity
-26,elemis superfood,15.63,False,False,12.94,12.0,-0.81,True,trends,elemis superfood,https://www.kalodata.com/product?keyword=elemis+superfood,https://trends.google.com/trends/explore?q=elemis+superfood
-27,vitamin k2,15.47,False,False,1.15,11.0,0.01,True,trends,vitamin k2,https://www.kalodata.com/product?keyword=vitamin+k2,https://trends.google.com/trends/explore?q=vitamin+k2
-28,berberine,15.46,False,False,-1.41,17.5,-0.57,True,trends,berberine,https://www.kalodata.com/product?keyword=berberine,https://trends.google.com/trends/explore?q=berberine
-29,garnier superfood,14.65,False,True,100.0,0.5,0.0,False,trends,garnier superfood,https://www.kalodata.com/product?keyword=garnier+superfood,https://trends.google.com/trends/explore?q=garnier+superfood
-30,superfood salad,14.17,False,True,100.0,0.75,-0.41,False,trends,superfood salad,https://www.kalodata.com/product?keyword=superfood+salad,https://trends.google.com/trends/explore?q=superfood+salad
-31,probiotic,13.66,False,False,8.09,46.75,-4.75,True,trends,probiotic supplement,https://www.kalodata.com/product?keyword=probiotic,https://trends.google.com/trends/explore?q=probiotic
-32,adaptogen,12.12,False,True,-15.65,48.5,-6.51,True,trends,what is adaptogen,https://www.kalodata.com/product?keyword=adaptogen,https://trends.google.com/trends/explore?q=adaptogen
-33,green superfood,11.65,False,True,60.0,2.0,0.12,False,trends,green superfood,https://www.kalodata.com/product?keyword=green+superfood,https://trends.google.com/trends/explore?q=green+superfood
-34,laird superfood,10.43,False,False,-10.34,13.0,-2.13,True,trends,laird superfood,https://www.kalodata.com/product?keyword=laird+superfood,https://trends.google.com/trends/explore?q=laird+superfood
-35,vitamin e oil,10.07,False,True,41.18,3.0,0.01,False,trends,vitamin e oil,https://www.kalodata.com/product?keyword=vitamin+e+oil,https://trends.google.com/trends/explore?q=vitamin+e+oil
-36,urolithin a,9.07,False,True,27.27,1.75,0.26,False,trends,urolithin a supplement,https://www.kalodata.com/product?keyword=urolithin+a,https://trends.google.com/trends/explore?q=urolithin+a
-37,collagen,8.86,False,False,25.0,1.25,0.3,False,trends,collagen supplement,https://www.kalodata.com/product?keyword=collagen,https://trends.google.com/trends/explore?q=collagen
-38,creatine,8.86,False,False,25.0,1.25,0.3,False,trends,creatine supplement,https://www.kalodata.com/product?keyword=creatine,https://trends.google.com/trends/explore?q=creatine
-39,nze pouches,8.81,False,True,20.0,3.75,0.34,False,trends,nze pouches,https://www.kalodata.com/product?keyword=nze+pouches,https://trends.google.com/trends/explore?q=nze+pouches
-40,probiotics gut,7.74,False,False,16.67,1.75,-0.09,False,trends,probiotics gut health,https://www.kalodata.com/product?keyword=probiotics+gut,https://trends.google.com/trends/explore?q=probiotics+gut
-41,world,7.54,False,False,-2.13,5.75,0.45,False,trends,supplement world,https://www.kalodata.com/product?keyword=world,https://trends.google.com/trends/explore?q=world
-42,fenugreek,7.01,False,True,-2.04,6.0,0.01,False,trends,fenugreek herbal supplement,https://www.kalodata.com/product?keyword=fenugreek,https://trends.google.com/trends/explore?q=fenugreek
-43,source,6.47,False,False,0.0,1.25,0.05,False,trends,supplement source,https://www.kalodata.com/product?keyword=source,https://trends.google.com/trends/explore?q=source
-44,superfood complete,6.46,False,True,-3.57,6.75,-0.51,False,trends,superfood complete,https://www.kalodata.com/product?keyword=superfood+complete,https://trends.google.com/trends/explore?q=superfood+complete
-45,superfood smoothie,6.38,False,False,0.0,1.0,0.0,False,trends,superfood smoothie,https://www.kalodata.com/product?keyword=superfood+smoothie,https://trends.google.com/trends/explore?q=superfood+smoothie
-46,dog gut,6.38,False,False,0.0,1.0,0.0,False,trends,dog gut health,https://www.kalodata.com/product?keyword=dog+gut,https://trends.google.com/trends/explore?q=dog+gut
-47,remedy headache,6.38,False,True,0.0,1.0,0.0,False,trends,natural remedy headache,https://www.kalodata.com/product?keyword=remedy+headache,https://trends.google.com/trends/explore?q=remedy+headache
-48,nootropic meaning,6.24,False,True,-33.33,0.5,-0.06,False,trends,nootropic meaning,https://www.kalodata.com/product?keyword=nootropic+meaning,https://trends.google.com/trends/explore?q=nootropic+meaning
-49,nicotine nootropic,6.16,False,True,-25.0,0.75,-0.15,False,trends,nicotine nootropic,https://www.kalodata.com/product?keyword=nicotine+nootropic,https://trends.google.com/trends/explore?q=nicotine+nootropic
-50,calcium,6.02,False,False,-9.09,1.25,-0.31,False,trends,calcium supplement,https://www.kalodata.com/product?keyword=calcium,https://trends.google.com/trends/explore?q=calcium
-51,adaptogen whey,5.97,False,True,-25.0,0.75,-0.3,False,trends,adaptogen whey,https://www.kalodata.com/product?keyword=adaptogen+whey,https://trends.google.com/trends/explore?q=adaptogen+whey
-52,nootropic blend,5.97,False,True,-25.0,0.75,-0.3,False,trends,nootropic blend,https://www.kalodata.com/product?keyword=nootropic+blend,https://trends.google.com/trends/explore?q=nootropic+blend
-53,adaptogen creatina,5.89,False,True,-45.45,0.75,-0.36,False,trends,adaptogen creatina,https://www.kalodata.com/product?keyword=adaptogen+creatina,https://trends.google.com/trends/explore?q=adaptogen+creatina
-54,adaptogen isolado,5.86,False,True,-42.86,1.5,-0.46,False,trends,adaptogen isolado,https://www.kalodata.com/product?keyword=adaptogen+isolado,https://trends.google.com/trends/explore?q=adaptogen+isolado
-55,semax nootropic,5.81,False,True,-50.0,0.5,-0.4,False,trends,semax nootropic,https://www.kalodata.com/product?keyword=semax+nootropic,https://trends.google.com/trends/explore?q=semax+nootropic
-56,improve gut,5.76,False,False,-24.24,6.25,-1.01,False,trends,improve gut health,https://www.kalodata.com/product?keyword=improve+gut,https://trends.google.com/trends/explore?q=improve+gut
-57,chocomaltine adaptogen,5.06,False,True,-68.42,1.5,-1.1,False,trends,chocomaltine adaptogen,https://www.kalodata.com/product?keyword=chocomaltine+adaptogen,https://trends.google.com/trends/explore?q=chocomaltine+adaptogen
-58,nootropic source,5.0,False,True,-46.67,1.0,-1.1,False,trends,nootropic source,https://www.kalodata.com/product?keyword=nootropic+source,https://trends.google.com/trends/explore?q=nootropic+source
-59,adaptogen meaning,4.9,False,True,0.0,1.0,-1.18,False,trends,adaptogen meaning,https://www.kalodata.com/product?keyword=adaptogen+meaning,https://trends.google.com/trends/explore?q=adaptogen+meaning
-60,dietary,2.97,False,False,-32.61,7.75,-3.4,False,trends,dietary supplement,https://www.kalodata.com/product?keyword=dietary,https://trends.google.com/trends/explore?q=dietary
+1,meaning,38.71,False,False,-1.34,83.0,2.18,True,trends,supplement meaning,https://www.kalodata.com/product?keyword=meaning,https://trends.google.com/trends/explore?q=meaning
+2,herbal,38.12,False,False,-23.64,52.5,7.67,True,trends,herbal supplements,https://www.kalodata.com/product?keyword=herbal,https://trends.google.com/trends/explore?q=herbal
+3,remedy,37.07,False,False,-3.55,71.25,2.7,True,trends,natural remedy for,https://www.kalodata.com/product?keyword=remedy,https://trends.google.com/trends/explore?q=remedy
+4,store,29.36,False,False,-13.01,63.5,0.4,True,trends,supplement store,https://www.kalodata.com/product?keyword=store,https://trends.google.com/trends/explore?q=store
+5,magnesium glycinate,27.05,False,False,3.32,35.0,2.1,True,trends,magnesium glycinate,https://www.kalodata.com/product?keyword=magnesium+glycinate,https://trends.google.com/trends/explore?q=magnesium+glycinate
+6,omega 3,25.42,False,False,-4.68,73.75,-2.21,True,trends,omega 3 supplement,https://www.kalodata.com/product?keyword=omega+3,https://trends.google.com/trends/explore?q=omega+3
+7,fenugreek,25.21,False,True,-4.99,45.25,0.56,True,trends,fenugreek herbal supplement,https://www.kalodata.com/product?keyword=fenugreek,https://trends.google.com/trends/explore?q=fenugreek
+8,nootropics,25.12,False,False,-9.33,42.5,0.8,True,trends,nootropics,https://www.kalodata.com/product?keyword=nootropics,https://trends.google.com/trends/explore?q=nootropics
+9,probiotics,24.1,False,False,-11.78,32.75,1.36,True,trends,probiotics,https://www.kalodata.com/product?keyword=probiotics,https://trends.google.com/trends/explore?q=probiotics
+10,ashwagandha,23.52,False,False,-0.45,55.75,-1.17,True,trends,ashwagandha adaptogen,https://www.kalodata.com/product?keyword=ashwagandha,https://trends.google.com/trends/explore?q=ashwagandha
+11,probiotic,22.88,False,False,-20.55,36.25,0.53,True,trends,probiotic supplement,https://www.kalodata.com/product?keyword=probiotic,https://trends.google.com/trends/explore?q=probiotic
+12,alpha gpc,21.3,False,True,-11.68,21.75,1.35,True,trends,alpha gpc,https://www.kalodata.com/product?keyword=alpha+gpc,https://trends.google.com/trends/explore?q=alpha+gpc
+13,beef protein,21.14,False,True,-13.21,34.5,0.0,True,trends,beef protein,https://www.kalodata.com/product?keyword=beef+protein,https://trends.google.com/trends/explore?q=beef+protein
+14,growth,20.3,False,False,-26.48,29.5,0.17,True,trends,growth,https://www.kalodata.com/product?keyword=growth,https://trends.google.com/trends/explore?q=growth
+15,superfood,19.77,False,False,-7.0,46.5,-1.74,True,trends,superfood powder,https://www.kalodata.com/product?keyword=superfood,https://trends.google.com/trends/explore?q=superfood
+16,nootropics depot,18.44,False,True,-3.14,19.25,0.45,True,trends,nootropics depot,https://www.kalodata.com/product?keyword=nootropics+depot,https://trends.google.com/trends/explore?q=nootropics+depot
+17,nac,17.79,False,True,-12.41,30.0,-0.89,True,trends,nac supplement,https://www.kalodata.com/product?keyword=nac,https://trends.google.com/trends/explore?q=nac
+18,nootropic,17.78,False,False,-17.31,32.25,-1.11,True,trends,what is a nootropic,https://www.kalodata.com/product?keyword=nootropic,https://trends.google.com/trends/explore?q=nootropic
+19,ultra pouches,17.26,False,False,-14.4,52.75,-3.37,True,trends,ultra pouches,https://www.kalodata.com/product?keyword=ultra+pouches,https://trends.google.com/trends/explore?q=ultra+pouches
+20,longevity,16.43,False,False,-25.23,20.75,-0.5,True,trends,best longevity supplement,https://www.kalodata.com/product?keyword=longevity,https://trends.google.com/trends/explore?q=longevity
+21,vitamin d3,16.0,False,False,-0.52,23.75,-0.97,True,trends,vitamin d3,https://www.kalodata.com/product?keyword=vitamin+d3,https://trends.google.com/trends/explore?q=vitamin+d3
+22,spirulina,11.79,False,True,-5.88,14.0,-1.68,True,trends,spirulina,https://www.kalodata.com/product?keyword=spirulina,https://trends.google.com/trends/explore?q=spirulina
+23,elemis,11.68,False,False,-4.81,44.5,-4.78,True,trends,elemis,https://www.kalodata.com/product?keyword=elemis,https://trends.google.com/trends/explore?q=elemis
+24,green superfood,8.86,False,True,26.32,3.0,0.04,False,trends,green superfood,https://www.kalodata.com/product?keyword=green+superfood,https://trends.google.com/trends/explore?q=green+superfood
+25,adaptogen meaning,8.75,False,True,50.0,0.75,-0.58,False,trends,adaptogen meaning,https://www.kalodata.com/product?keyword=adaptogen+meaning,https://trends.google.com/trends/explore?q=adaptogen+meaning
+26,superfood aruba,7.8,False,True,-35.06,12.5,-3.13,True,trends,superfood aruba,https://www.kalodata.com/product?keyword=superfood+aruba,https://trends.google.com/trends/explore?q=superfood+aruba
+27,anti inflammatory,7.64,False,False,-1.59,7.75,0.34,False,trends,natural anti inflammatory supplement,https://www.kalodata.com/product?keyword=anti+inflammatory,https://trends.google.com/trends/explore?q=anti+inflammatory
+28,l-theanine,7.28,False,True,0.0,24.25,-4.51,True,trends,l-theanine,https://www.kalodata.com/product?keyword=l-theanine,https://trends.google.com/trends/explore?q=l-theanine
+29,magnesium,7.16,False,False,0.0,5.25,0.2,False,trends,magnesium,https://www.kalodata.com/product?keyword=magnesium,https://trends.google.com/trends/explore?q=magnesium
+30,headache remedy,7.16,False,False,5.88,2.25,0.11,False,trends,natural headache remedy,https://www.kalodata.com/product?keyword=headache+remedy,https://trends.google.com/trends/explore?q=headache+remedy
+31,vitamin e oil,7.03,False,True,-10.0,2.25,0.4,False,trends,vitamin e oil,https://www.kalodata.com/product?keyword=vitamin+e+oil,https://trends.google.com/trends/explore?q=vitamin+e+oil
+32,fiber,7.01,False,False,-18.64,6.0,0.01,False,trends,fiber supplement,https://www.kalodata.com/product?keyword=fiber,https://trends.google.com/trends/explore?q=fiber
+33,superfood greens,6.95,False,False,6.67,2.0,-0.08,False,trends,superfood greens,https://www.kalodata.com/product?keyword=superfood+greens,https://trends.google.com/trends/explore?q=superfood+greens
+34,whey protein,6.9,False,False,-12.73,6.0,-0.08,False,trends,whey protein,https://www.kalodata.com/product?keyword=whey+protein,https://trends.google.com/trends/explore?q=whey+protein
+35,zinc,6.67,False,False,-12.0,2.75,0.06,False,trends,zinc supplement,https://www.kalodata.com/product?keyword=zinc,https://trends.google.com/trends/explore?q=zinc
+36,alpha brain,6.62,False,True,-29.41,3.0,0.0,False,trends,alpha brain,https://www.kalodata.com/product?keyword=alpha+brain,https://trends.google.com/trends/explore?q=alpha+brain
+37,world,6.55,False,False,-2.22,5.5,-0.31,False,trends,supplement world,https://www.kalodata.com/product?keyword=world,https://trends.google.com/trends/explore?q=world
+38,laird superfood,6.5,False,False,0.0,2.0,0.0,False,trends,laird superfood,https://www.kalodata.com/product?keyword=laird+superfood,https://trends.google.com/trends/explore?q=laird+superfood
+39,calcium,6.49,False,False,-33.33,1.0,0.1,False,trends,calcium supplement,https://www.kalodata.com/product?keyword=calcium,https://trends.google.com/trends/explore?q=calcium
+40,urolithin a,6.46,False,True,-23.08,1.25,0.04,False,trends,urolithin a supplement,https://www.kalodata.com/product?keyword=urolithin+a,https://trends.google.com/trends/explore?q=urolithin+a
+41,probiotics gut,6.43,False,False,-42.86,1.0,0.05,False,trends,probiotics gut health,https://www.kalodata.com/product?keyword=probiotics+gut,https://trends.google.com/trends/explore?q=probiotics+gut
+42,superfood smoothie,6.39,False,False,-11.11,1.0,0.01,False,trends,superfood smoothie,https://www.kalodata.com/product?keyword=superfood+smoothie,https://trends.google.com/trends/explore?q=superfood+smoothie
+43,superfood complete,6.38,False,True,0.0,1.0,0.0,False,trends,superfood complete,https://www.kalodata.com/product?keyword=superfood+complete,https://trends.google.com/trends/explore?q=superfood+complete
+44,superfood cleanser,6.38,False,False,0.0,1.0,0.0,False,trends,superfood cleanser,https://www.kalodata.com/product?keyword=superfood+cleanser,https://trends.google.com/trends/explore?q=superfood+cleanser
+45,nausea remedy,6.38,False,False,0.0,1.0,0.0,False,trends,natural nausea remedy,https://www.kalodata.com/product?keyword=nausea+remedy,https://trends.google.com/trends/explore?q=nausea+remedy
+46,dog gut,6.36,False,False,-11.11,1.0,-0.01,False,trends,dog gut health,https://www.kalodata.com/product?keyword=dog+gut,https://trends.google.com/trends/explore?q=dog+gut
+47,source,6.33,False,False,-55.56,0.5,0.01,False,trends,supplement source,https://www.kalodata.com/product?keyword=source,https://trends.google.com/trends/explore?q=source
+48,collagen,6.33,False,False,-27.27,1.0,-0.04,False,trends,collagen supplement,https://www.kalodata.com/product?keyword=collagen,https://trends.google.com/trends/explore?q=collagen
+49,dietary,6.29,False,False,-69.23,0.5,-0.02,False,trends,dietary supplement,https://www.kalodata.com/product?keyword=dietary,https://trends.google.com/trends/explore?q=dietary
+50,nze pouches,6.25,False,True,-17.65,3.5,-0.35,False,trends,nze pouches,https://www.kalodata.com/product?keyword=nze+pouches,https://trends.google.com/trends/explore?q=nze+pouches
+51,creatine,6.15,False,False,-27.27,1.0,-0.18,False,trends,creatine supplement,https://www.kalodata.com/product?keyword=creatine,https://trends.google.com/trends/explore?q=creatine
+52,curcumin,6.08,False,False,-12.2,4.5,-0.59,False,trends,curcumin supplement,https://www.kalodata.com/product?keyword=curcumin,https://trends.google.com/trends/explore?q=curcumin
+53,elemis superfood,6.0,False,False,0.0,1.75,-0.37,False,trends,elemis superfood,https://www.kalodata.com/product?keyword=elemis+superfood,https://trends.google.com/trends/explore?q=elemis+superfood
+54,nootropic coffee,6.0,False,True,0.0,0.75,-0.28,False,trends,nootropic coffee,https://www.kalodata.com/product?keyword=nootropic+coffee,https://trends.google.com/trends/explore?q=nootropic+coffee
+55,garnier superfood,5.97,False,True,-25.0,0.75,-0.3,False,trends,garnier superfood,https://www.kalodata.com/product?keyword=garnier+superfood,https://trends.google.com/trends/explore?q=garnier+superfood
+56,nicotine nootropic,5.97,False,True,-25.0,0.75,-0.3,False,trends,nicotine nootropic,https://www.kalodata.com/product?keyword=nicotine+nootropic,https://trends.google.com/trends/explore?q=nicotine+nootropic
+57,superfood salad,5.84,False,True,-38.89,16.5,-4.31,True,trends,superfood salad,https://www.kalodata.com/product?keyword=superfood+salad,https://trends.google.com/trends/explore?q=superfood+salad
+58,nootropic pouches,5.84,False,False,-9.09,6.25,-0.95,False,trends,best nootropic pouches,https://www.kalodata.com/product?keyword=nootropic+pouches,https://trends.google.com/trends/explore?q=nootropic+pouches
+59,nootropic drinks,5.81,False,True,-50.0,0.5,-0.4,False,trends,nootropic drinks,https://www.kalodata.com/product?keyword=nootropic+drinks,https://trends.google.com/trends/explore?q=nootropic+drinks
+60,whey isolado,5.68,False,True,-31.43,3.0,-0.75,False,trends,whey isolado,https://www.kalodata.com/product?keyword=whey+isolado,https://trends.google.com/trends/explore?q=whey+isolado
