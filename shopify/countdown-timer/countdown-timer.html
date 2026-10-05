@@ -1,0 +1,62 @@
+<!-- 1) Fonts (put once in <head>, e.g. theme.liquid) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700&family=Poppins:wght@600&display=swap" rel="stylesheet">
+
+<!-- 2) Markup (same structure/classes/ids as the reference) -->
+<div class="count-wrapper">
+  <div class="left-text">
+    <h2>SUMMER SALE</h2>
+    <p>Shop Now and Get Up To 70% Off</p>
+  </div>
+  <div class="right-timer">
+    <div class="hrs-main">
+      <span id="hrs">01</span>
+      <label>Hrs</label>
+    </div>
+    <div class="min-main">
+      <span id="mins">59</span>
+      <label>Mins</label>
+    </div>
+    <div class="secs-main">
+      <span id="secs">53</span>
+      <label>Secs</label>
+    </div>
+  </div>
+</div>
+
+<!-- 3) Countdown: evergreen 2-hour timer that restarts when it hits zero -->
+<script>
+  (function () {
+    var DURATION = 2 * 60 * 60 * 1000; // 2 hours
+    var KEY = 'summer_sale_timer_end';
+    var hrs = document.getElementById('hrs');
+    var mins = document.getElementById('mins');
+    var secs = document.getElementById('secs');
+    var end = 0;
+
+    try { end = parseInt(localStorage.getItem(KEY), 10) || 0; } catch (e) {}
+    if (end < Date.now()) {
+      end = Date.now() + DURATION;
+      try { localStorage.setItem(KEY, end); } catch (e) {}
+    }
+
+    function pad(n) { return (n < 10 ? '0' : '') + n; }
+
+    function tick() {
+      var left = end - Date.now();
+      if (left <= 0) {
+        end = Date.now() + DURATION;
+        try { localStorage.setItem(KEY, end); } catch (e) {}
+        left = DURATION;
+      }
+      var s = Math.floor(left / 1000);
+      hrs.textContent = pad(Math.floor(s / 3600));
+      mins.textContent = pad(Math.floor((s % 3600) / 60));
+      secs.textContent = pad(s % 60);
+    }
+
+    tick();
+    setInterval(tick, 1000);
+  })();
+</script>
