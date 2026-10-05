@@ -1,3 +1,3 @@
-# Breakout ingredients — 2026-09-28
+# Breakout ingredients — 2026-10-05
 
 _No breakouts this week._
