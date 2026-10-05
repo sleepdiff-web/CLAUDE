@@ -1,0 +1,85 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700&family=Poppins:wght@600&display=swap" rel="stylesheet">
+
+<style>
+  /* Full-width: remove the theme's page-width container around this block */
+  .page-width:has(> .count-wrapper) { max-width: none; padding: 0; }
+
+  /* Desktop */
+  .count-wrapper { display: flex; align-items: center; justify-content: center; gap: 32px; box-sizing: border-box; width: 100%; padding: 4px 15px; background: #C47245; font-family: 'Plus Jakarta Sans', sans-serif; }
+  .count-wrapper .left-text { text-align: center; }
+  .count-wrapper .left-text h2 { margin: 0; padding: 0; font-family: 'Poppins', sans-serif; font-size: 25px; font-weight: 600; line-height: 28px; letter-spacing: 0; text-transform: none; color: #FFFFFF; }
+  .count-wrapper .left-text p { margin: 0; padding: 0; font-size: 15px; font-weight: 400; line-height: 20px; letter-spacing: 0; color: #F9F1ED; }
+  .count-wrapper .right-timer { display: flex; gap: 16px; }
+  .count-wrapper .right-timer > div { display: flex; flex-direction: column; align-items: center; }
+  .count-wrapper .right-timer span { font-size: 26px; font-weight: 700; line-height: 24px; letter-spacing: 0; color: #F9F1ED; }
+  .count-wrapper .right-timer label { margin: 0; padding: 0; font-size: 12px; font-weight: 500; line-height: 10px; letter-spacing: 0; text-transform: none; color: #F9F1ED; }
+
+  /* Mobile */
+  @media screen and (max-width: 749px) {
+    .count-wrapper { gap: 14px; padding: 6px 12px; }
+    .count-wrapper .left-text h2 { font-size: 18px; line-height: 22px; }
+    .count-wrapper .left-text p { font-size: 12px; line-height: 16px; }
+    .count-wrapper .right-timer { gap: 10px; }
+    .count-wrapper .right-timer span { font-size: 20px; line-height: 20px; }
+    .count-wrapper .right-timer label { font-size: 10px; line-height: 9px; }
+  }
+
+  /* Small phones */
+  @media screen and (max-width: 359px) {
+    .count-wrapper { gap: 10px; padding: 6px 8px; }
+    .count-wrapper .left-text h2 { font-size: 16px; line-height: 20px; }
+    .count-wrapper .left-text p { font-size: 11px; line-height: 15px; }
+    .count-wrapper .right-timer { gap: 8px; }
+    .count-wrapper .right-timer span { font-size: 18px; line-height: 18px; }
+    .count-wrapper .right-timer label { font-size: 9px; line-height: 8px; }
+  }
+</style>
+
+<div class="count-wrapper">
+  <div class="left-text">
+    <h2>SUMMER SALE</h2>
+    <p>Shop Now and Get Up To 70% Off</p>
+  </div>
+  <div class="right-timer">
+    <div class="hrs-main"><span id="hrs">01</span><label>Hrs</label></div>
+    <div class="min-main"><span id="mins">59</span><label>Mins</label></div>
+    <div class="secs-main"><span id="secs">53</span><label>Secs</label></div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    var DURATION = 2 * 60 * 60 * 1000; // evergreen 2-hour timer, restarts at zero
+    var KEY = 'summer_sale_timer_end';
+    var hrs = document.getElementById('hrs');
+    var mins = document.getElementById('mins');
+    var secs = document.getElementById('secs');
+    var end = 0;
+
+    try { end = parseInt(localStorage.getItem(KEY), 10) || 0; } catch (e) {}
+    if (end < Date.now()) {
+      end = Date.now() + DURATION;
+      try { localStorage.setItem(KEY, end); } catch (e) {}
+    }
+
+    function pad(n) { return (n < 10 ? '0' : '') + n; }
+
+    function tick() {
+      var left = end - Date.now();
+      if (left <= 0) {
+        end = Date.now() + DURATION;
+        try { localStorage.setItem(KEY, end); } catch (e) {}
+        left = DURATION;
+      }
+      var s = Math.floor(left / 1000);
+      hrs.textContent = pad(Math.floor(s / 3600));
+      mins.textContent = pad(Math.floor((s % 3600) / 60));
+      secs.textContent = pad(s % 60);
+    }
+
+    tick();
+    setInterval(tick, 1000);
+  })();
+</script>
