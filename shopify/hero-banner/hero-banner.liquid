@@ -1,0 +1,51 @@
+{%- comment -%} EDIT THESE 2 LINES: your image URL (Content > Files > copy link) and your product URL {%- endcomment -%}
+{%- assign hero_img = 'PASTE_YOUR_IMAGE_URL_HERE' -%}
+{%- assign hero_link = '/products/your-product' -%}
+{%- assign q = '?' -%}{%- if hero_img contains '?' -%}{%- assign q = '&' -%}{%- endif -%}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Poppins:wght@400;600&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Poppins:wght@400;600&display=swap"></noscript>
+
+<style>
+.page-width:has(>.mb-hero){max-width:none;padding:0}
+.mb-hero{background:#fbe8d4;padding:0 0 24px;font-family:'Plus Jakarta Sans',system-ui,sans-serif;font-size:15px;line-height:1.8;letter-spacing:.6px}
+.mb-hero__wrap{box-sizing:border-box;max-width:1400px;margin:0 auto;padding:0 15px}
+.mb-hero__inner{display:flex;flex-direction:column;gap:8px}
+.mb-hero__content{order:2;text-align:center}
+.mb-hero__image-col{order:1;margin:0 -15px;aspect-ratio:3/2;background:#f4d6bb}
+.mb-hero__image-col img{display:block;width:100%;height:auto}
+.mb-sp{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px 12px;margin-bottom:8px;padding:4px 8px;border-radius:8px}
+.mb-sp__stars{color:#c47245;font-size:13px;letter-spacing:2px;line-height:1}
+.mb-sp__label{font-size:12px;font-weight:600;color:#7a6a5a;line-height:1.3}
+.mb-hero__heading{margin:0 0 12px;padding:0;font-family:Poppins,system-ui,sans-serif;font-size:26px;font-weight:400;line-height:1.15;letter-spacing:0;color:#1a1a1a}
+.mb-hero__lead{margin:1em 0 24px;font-size:14px;font-weight:400;line-height:1.7;color:#333}
+.mb-hero__btn{display:block;box-sizing:border-box;width:100%;margin-top:4px;padding:16px 36px;border:2px solid #c47245;border-radius:8px;background:#c47245;color:#fff;font-size:15px;font-weight:700;letter-spacing:.02em;text-align:center;text-decoration:none;cursor:pointer;transition:background-color .2s ease,border-color .2s ease}
+.mb-hero__btn:hover{background:#a35b32;border-color:#a35b32}
+.mb-hero__subcta{display:block;margin-top:10px;font-size:13px;line-height:1.5;color:#7a6a5a}
+@media screen and (min-width:750px){
+.mb-hero{padding:0;font-size:16px}
+.mb-hero__wrap{padding:0 50px}
+.mb-hero__inner{flex-direction:row;align-items:center;gap:56px}
+.mb-hero__content{flex:1 1 0;min-width:0;order:1;text-align:left}
+.mb-hero__image-col{flex:0 0 50%;max-width:50%;order:2;margin:0}
+.mb-sp{justify-content:flex-start;margin-bottom:12px}
+.mb-hero__heading{font-size:44px}
+.mb-hero__lead{font-size:16px}
+.mb-hero__btn{display:inline-block;width:auto;text-align:left}
+}
+</style>
+
+<section class="mb-hero" aria-label="Steady Blood Sugar. Steady Energy. Every Day.">
+<div class="mb-hero__wrap"><div class="mb-hero__inner">
+<div class="mb-hero__content">
+<div class="mb-sp"><span class="mb-sp__stars" aria-hidden="true">★★★★★</span><span class="mb-sp__label">Trusted by 100,000+ customers</span></div>
+<h1 class="mb-hero__heading">Steady Blood Sugar. Steady Energy. Every Day.</h1>
+<p class="mb-hero__lead">7,200mg of authentic Ceylon Cinnamon in a clean MCT oil softgel, studied for blood sugar and metabolic support.</p>
+<a href="{{ hero_link }}" class="mb-hero__btn">Shop Metabolae Now</a>
+<span class="mb-hero__subcta">90-Day Money-Back Guarantee</span>
+</div>
+<div class="mb-hero__image-col"><img src="{{ hero_img }}{{ q }}width=900" srcset="{{ hero_img }}{{ q }}width=400 400w, {{ hero_img }}{{ q }}width=600 600w, {{ hero_img }}{{ q }}width=750 750w, {{ hero_img }}{{ q }}width=900 900w, {{ hero_img }}{{ q }}width=1300 1300w" sizes="(min-width:1400px) 650px, (min-width:750px) calc((100vw - 100px) / 2), 100vw" width="900" height="600" alt="" loading="eager" fetchpriority="high" decoding="async"></div>
+</div></div>
+</section>
