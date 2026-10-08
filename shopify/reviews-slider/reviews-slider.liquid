@@ -1,0 +1,126 @@
+{%- comment -%}
+  EDIT YOUR REVIEWS BELOW. One review = headline | review text | customer name
+  Put @@ on its own line between reviews. Use real reviews from your own customers.
+{%- endcomment -%}
+{%- assign mb_title = 'Your section heading' -%}
+{%- assign mb_sub = 'A short line about what customers say' -%}
+{%- capture mb_data -%}
+Review headline one | Replace this text with a real review from one of your customers. Longer reviews are shortened to a few lines on phones with a Read more button, so you can paste the full review here without it taking over the screen. Tap Read more on a phone to see the full text. | Customer name
+@@
+Review headline two | Replace this text with a real review from one of your customers. | Customer name
+@@
+Review headline three | Replace this text with a real review from one of your customers. | Customer name
+@@
+Review headline four | Replace this text with a real review from one of your customers. | Customer name
+@@
+Review headline five | Replace this text with a real review from one of your customers. | Customer name
+@@
+Review headline six | Replace this text with a real review from one of your customers. | Customer name
+{%- endcapture -%}
+{%- assign mb_reviews = mb_data | split: '@@' -%}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Poppins:wght@400;600&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Poppins:wght@400;600&display=swap"></noscript>
+
+<style>
+.page-width:has(>.mb-rv){max-width:none;padding:0}
+.mb-rv{--w:min(370px,86vw);--accent:#c47245;--ink:#1a1a1a;--muted:#7a6a5a;--card:#fbe8d4;background:#fff;padding:48px 0 40px;font-family:'Plus Jakarta Sans',system-ui,sans-serif;font-size:14px;line-height:1.6;letter-spacing:.6px;color:#333;content-visibility:auto;contain-intrinsic-size:auto 600px}
+.mb-rv__head{padding:0 15px;margin-bottom:28px;text-align:center}
+.mb-rv__title{margin:0 0 10px;padding:0;font-family:Poppins,system-ui,sans-serif;font-size:26px;font-weight:400;line-height:1.2;letter-spacing:0;color:var(--ink)}
+.mb-rv__sub{margin:0;font-size:14px;color:var(--muted)}
+.mb-rv__slider{position:relative}
+.mb-rv__track{position:relative;display:flex;gap:20px;overflow-x:auto;padding:0 calc((100% - var(--w)) / 2);scroll-snap-type:x mandatory;overscroll-behavior-x:contain;scrollbar-width:none;cursor:grab}
+.mb-rv__track::-webkit-scrollbar{display:none}
+.mb-rv__track.is-drag{scroll-snap-type:none;cursor:grabbing;user-select:none}
+.mb-rv__card{flex:0 0 var(--w);box-sizing:border-box;display:flex;flex-direction:column;justify-content:space-between;gap:20px;padding:24px;border-radius:16px;background:var(--card);scroll-snap-align:center;scroll-snap-stop:always}
+.mb-rv__stars{display:block;width:90px;height:16px;margin-bottom:12px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 16'%3E%3Cpath fill='%23c47245' d='m9 .6 2.3 5 5.4.6-4 3.7 1.1 5.3L9 12.5l-4.8 2.7 1.1-5.3-4-3.7 5.4-.6z'/%3E%3C/svg%3E") repeat-x 0 0/18px 16px}
+.mb-rv__h{margin:0 0 8px;font-size:16px;font-weight:700;line-height:1.4;color:var(--ink)}
+.mb-rv__text{margin:0}
+.mb-rv__more{display:none;margin:8px 0 0;padding:0;border:0;background:none;font:inherit;font-weight:600;letter-spacing:inherit;color:var(--accent);text-decoration:underline;cursor:pointer}
+.mb-rv__author{margin:0;font-weight:700;color:var(--ink)}
+.mb-rv__verified{display:flex;align-items:center;gap:6px;margin-top:2px;font-size:12px;color:var(--accent)}
+.mb-rv__verified svg{width:16px;height:16px;flex:none}
+.mb-rv__btn{display:none;position:absolute;top:50%;z-index:1;width:44px;height:44px;margin-top:-22px;padding:0;border:0;border-radius:50%;background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.14);cursor:pointer;place-items:center}
+.mb-rv__btn svg{width:24px;height:24px;fill:#1c1b1e}
+.mb-rv__prev{left:24px}
+.mb-rv__next{right:24px}
+.mb-rv__next svg{transform:rotate(180deg)}
+.mb-rv__dots{display:flex;justify-content:center;gap:8px;margin-top:22px}
+.mb-rv__dot{position:relative;width:8px;height:8px;padding:0;border:0;border-radius:50%;background:#d9cbbd;cursor:pointer}
+.mb-rv__dot::after{content:"";position:absolute;inset:-8px}
+.mb-rv__dot.is-on{background:var(--accent)}
+@media screen and (max-width:749px){
+.mb-rv__text{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:5;overflow:hidden}
+.mb-rv__card.is-open .mb-rv__text{display:block;overflow:visible}
+.mb-rv__more{display:inline-block}
+}
+@media screen and (min-width:750px){
+.mb-rv{padding:72px 0 56px}
+.mb-rv__head{margin-bottom:40px}
+.mb-rv__title{font-size:40px}
+.mb-rv__sub{font-size:16px}
+.mb-rv__btn{display:grid}
+}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+<symbol id="mbr-check" viewBox="0 0 16 16"><circle cx="8" cy="8" r="8" fill="currentColor" opacity=".15"/><path d="M4.5 8.5 6.5 10.5 11.5 5.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="mbr-chev" viewBox="0 0 24 24"><path d="M14 17a1 1 0 0 1-.707-.293l-4-4a1 1 0 0 1 0-1.414l4-4a1 1 0 1 1 1.414 1.414L11.414 12l3.293 3.293A1 1 0 0 1 14 17Z"/></symbol>
+</defs></svg>
+
+<section class="mb-rv" aria-roledescription="carousel" aria-label="{{ mb_title | escape }}">
+<div class="mb-rv__head"><h2 class="mb-rv__title">{{ mb_title }}</h2><p class="mb-rv__sub">{{ mb_sub }}</p></div>
+<div class="mb-rv__slider">
+<div class="mb-rv__track" tabindex="0">
+{%- for r in mb_reviews -%}
+{%- assign f = r | split: '|' -%}
+<div class="mb-rv__card" role="group" aria-roledescription="slide" aria-label="{{ forloop.index }} / {{ forloop.length }}"><div><span class="mb-rv__stars" role="img" aria-label="5 out of 5 stars"></span><p class="mb-rv__h">{{ f[0] | strip }}</p><p class="mb-rv__text">{{ f[1] | strip }}</p>{%- if f[1].size > 190 -%}<button type="button" class="mb-rv__more" aria-expanded="false">Read more</button>{%- endif -%}</div><div><p class="mb-rv__author">{{ f[2] | strip }}</p><span class="mb-rv__verified"><svg aria-hidden="true"><use href="#mbr-check"/></svg>Verified Customer</span></div></div>
+{%- endfor -%}
+</div>
+<button type="button" class="mb-rv__btn mb-rv__prev" aria-label="Previous slide"><svg aria-hidden="true"><use href="#mbr-chev"/></svg></button>
+<button type="button" class="mb-rv__btn mb-rv__next" aria-label="Next slide"><svg aria-hidden="true"><use href="#mbr-chev"/></svg></button>
+<div class="mb-rv__dots"></div>
+</div>
+</section>
+
+<script>
+(function(){
+var r=document.currentScript.previousElementSibling;
+if(!r||!r.classList.contains('mb-rv'))return;
+var t=r.querySelector('.mb-rv__track'),d=r.querySelector('.mb-rv__dots'),re=[].slice.call(t.children),n=re.length,c=0,p=0,act=-1,go=0,raf=0,tm=0,touch=0,dots=[];
+var sm=matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth';
+function all(){return t.children}
+function cur(){var a=all();return Math.round((t.scrollLeft+t.clientWidth/2-(a[0].offsetLeft+a[0].offsetWidth/2))/p)}
+function to(i,b){var e=all()[i];if(e)t.scrollTo({left:e.offsetLeft-(t.clientWidth-e.offsetWidth)/2,behavior:b})}
+function upd(){var k=((cur()-c)%n+n)%n;if(k!==act){if(dots[act]){dots[act].classList.remove('is-on');dots[act].removeAttribute('aria-current')}dots[k].classList.add('is-on');dots[k].setAttribute('aria-current','true');act=k}}
+function jump(x){t.style.scrollSnapType='none';t.scrollLeft+=x;t.style.scrollSnapType=''}
+function settle(){if(touch||t.classList.contains('is-drag')){tm=setTimeout(settle,140);return}var i=cur();if(i<c)jump(n*p);else if(i>=c+n)jump(-n*p)}
+function mk(e){var x=e.cloneNode(true),b=x.querySelectorAll('button'),i;x.setAttribute('aria-hidden','true');x.removeAttribute('role');x.removeAttribute('aria-label');for(i=0;i<b.length;i++)b[i].tabIndex=-1;return x}
+function init(){
+if(go||n<2)return;go=1;c=Math.min(n,3);
+var f=document.createDocumentFragment(),g=document.createDocumentFragment(),i,b;
+for(i=0;i<c;i++){f.appendChild(mk(re[n-c+i]));g.appendChild(mk(re[i]))}
+t.insertBefore(f,t.firstChild);t.appendChild(g);
+for(i=0;i<n;i++){b=document.createElement('button');b.type='button';b.className='mb-rv__dot';b.setAttribute('aria-label','Go to slide '+(i+1));b.setAttribute('data-i',i);d.appendChild(b);dots.push(b)}
+p=all()[1].offsetLeft-all()[0].offsetLeft;
+to(c,'auto');upd();
+t.addEventListener('scroll',function(){if(!raf)raf=requestAnimationFrame(function(){raf=0;upd()});clearTimeout(tm);tm=setTimeout(settle,140)},{passive:true});
+t.addEventListener('touchstart',function(){touch=1},{passive:true});
+t.addEventListener('touchend',function(){touch=0},{passive:true});
+t.addEventListener('touchcancel',function(){touch=0},{passive:true});
+r.querySelector('.mb-rv__prev').addEventListener('click',function(){to(cur()-1,sm)});
+r.querySelector('.mb-rv__next').addEventListener('click',function(){to(cur()+1,sm)});
+d.addEventListener('click',function(e){var x=e.target.closest('.mb-rv__dot');if(x)to(c+(+x.getAttribute('data-i')),sm)});
+t.addEventListener('keydown',function(e){if(e.key==='ArrowRight')to(cur()+1,sm);else if(e.key==='ArrowLeft')to(cur()-1,sm)});
+var rt;addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(function(){p=all()[1].offsetLeft-all()[0].offsetLeft;to(c+act,'auto')},150)},{passive:true});
+t.addEventListener('mousedown',function(e){if(e.button||e.target.closest('button'))return;var sx=e.pageX,sl=t.scrollLeft;t.classList.add('is-drag');
+function mv(e){t.scrollLeft=sl-(e.pageX-sx)}
+function up(){removeEventListener('mousemove',mv);removeEventListener('mouseup',up);t.classList.remove('is-drag');to(cur(),sm)}
+addEventListener('mousemove',mv);addEventListener('mouseup',up)});
+}
+t.addEventListener('click',function(e){var b=e.target.closest('.mb-rv__more');if(!b)return;var k=b.closest('.mb-rv__card'),o=k.classList.toggle('is-open');b.textContent=o?'Read less':'Read more';b.setAttribute('aria-expanded',o)});
+if('IntersectionObserver' in window){var io=new IntersectionObserver(function(e){if(e[0].isIntersecting){io.disconnect();init()}},{rootMargin:'400px'});io.observe(r)}else init();
+})();
+</script>
