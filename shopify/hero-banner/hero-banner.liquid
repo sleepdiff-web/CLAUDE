@@ -1,7 +1,9 @@
-{%- comment -%} EDIT THESE 2 LINES: your image URL (Content > Files > copy link) and your product URL {%- endcomment -%}
-{%- assign hero_img = 'PASTE_YOUR_IMAGE_URL_HERE' -%}
+{%- comment -%} EDIT THESE: your image URL, the image's real pixel size (Content > Files > click the image), and your product URL {%- endcomment -%}
+{%- assign hero_img = 'https://cdn.shopify.com/s/files/1/0695/1007/0343/files/exec-006129d8-3699-4969-b04b-d283460d4966_ea95f0fe-7f1d-4d75-a93f-a266fa3115b3.png?v=1791423523' -%}
+{%- assign hero_w = 900 -%}
+{%- assign hero_h = 600 -%}
 {%- assign hero_link = '/products/your-product' -%}
-{%- assign q = '?' -%}{%- if hero_img contains '?' -%}{%- assign q = '&' -%}{%- endif -%}
+{%- assign q = '?' -%}{%- if hero_img contains '?' -%}{%- assign q = '&amp;' -%}{%- endif -%}
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,7 +16,7 @@
 .mb-hero__wrap{box-sizing:border-box;max-width:1400px;margin:0 auto;padding:0 15px}
 .mb-hero__inner{display:flex;flex-direction:column;gap:8px}
 .mb-hero__content{order:2;text-align:center}
-.mb-hero__image-col{order:1;margin:0 -15px;aspect-ratio:3/2;background:#f4d6bb}
+.mb-hero__image-col{order:1;margin:0 -15px;background:#f4d6bb}
 .mb-hero__image-col img{display:block;width:100%;height:auto}
 .mb-sp{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px 12px;margin-bottom:8px;padding:4px 8px;border-radius:8px}
 .mb-sp__stars{color:#c47245;font-size:13px;letter-spacing:2px;line-height:1}
@@ -46,6 +48,6 @@
 <a href="{{ hero_link }}" class="mb-hero__btn">Shop Metabolae Now</a>
 <span class="mb-hero__subcta">90-Day Money-Back Guarantee</span>
 </div>
-<div class="mb-hero__image-col"><img src="{{ hero_img }}{{ q }}width=900" srcset="{{ hero_img }}{{ q }}width=400 400w, {{ hero_img }}{{ q }}width=600 600w, {{ hero_img }}{{ q }}width=750 750w, {{ hero_img }}{{ q }}width=900 900w, {{ hero_img }}{{ q }}width=1300 1300w" sizes="(min-width:1400px) 650px, (min-width:750px) calc((100vw - 100px) / 2), 100vw" width="900" height="600" alt="" loading="eager" fetchpriority="high" decoding="async"></div>
+<div class="mb-hero__image-col" style="aspect-ratio:{{ hero_w }}/{{ hero_h }}"><img src="{{ hero_img }}{{ q }}width=900" srcset="{{ hero_img }}{{ q }}width=400 400w, {{ hero_img }}{{ q }}width=600 600w, {{ hero_img }}{{ q }}width=750 750w, {{ hero_img }}{{ q }}width=900 900w, {{ hero_img }}{{ q }}width=1300 1300w" sizes="(min-width:1400px) 650px, (min-width:750px) calc((100vw - 100px) / 2), 100vw" width="{{ hero_w }}" height="{{ hero_h }}" alt="" loading="eager" fetchpriority="high" decoding="async"></div>
 </div></div>
 </section>
