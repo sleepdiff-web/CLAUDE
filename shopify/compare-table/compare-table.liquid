@@ -4,31 +4,32 @@
     yes        gold tick (use it in either column)
     no         "not available" icon
     pills:3    three grey pill shapes with the caption "3 pills" (any number)
-    any text   shows as gold italic text in your column (e.g. 1 Capsule)
+    pills:3:3x per day   same, but with your own caption after the second colon
+    any text   shows as gold italic text in your column (e.g. 1 Capsule), plain dark text in the other column
   Images: Content > Files > copy link. Leave empty to show no image.
   Do not use | or a straight apostrophe (') inside the text (use &#39; instead).
 {%- endcomment -%}
-{%- assign mb_rating = 'Add your review line here' -%}
-{%- assign mb_heading = 'How Your Brand Compares' -%}
-{%- assign mb_sub = 'Replace this with a short line comparing your product with the alternatives.' -%}
-{%- assign mb_col1 = 'Your Brand' -%}
+{%- assign mb_rating = '4.7/5 from 10,000+ verified reviews' -%}
+{%- assign mb_heading = 'How Purge Berberine Compares' -%}
+{%- assign mb_sub = 'See how a four-ingredient formula compares to the plain berberine supplements that left you feeling nothing.' -%}
+{%- assign mb_col1 = 'Purge Berberine' -%}
 {%- assign mb_col2 = 'Other Brands' -%}
 {%- assign mb_img1 = '' -%}
 {%- assign mb_img2 = '' -%}
 {%- capture mb_data -%}
-Feature one | yes | no
+Black pepper extract for real absorption | yes | no
 @@
-Feature two | yes | no
+Four metabolic ingredients in one formula | yes | no
 @@
-Feature three | yes | no
+Authentic Ceylon cinnamon, not Cassia | yes | no
 @@
-Feature four | yes | no
+Targets all four hormonal locks | yes | no
 @@
-Feature five | yes | no
+Named doses, no proprietary blend | yes | no
 @@
-Easy daily routine | 1 Capsule | pills:3
+Easy daily routine | 2 Capsules | pills:3:3x per day
 @@
-Feature seven | yes | no
+Formulated for hormonal changes in women over 40 | yes | no
 {%- endcapture -%}
 {%- assign mb_rows = mb_data | split: '@@' -%}
 
@@ -71,6 +72,7 @@ Feature seven | yes | no
 .mb-cmp__pill{display:block;width:8px;height:18px;border-radius:10px;background-color:#aaa}
 .mb-cmp__pc{margin-top:4px;font-size:11px;color:#000}
 .mb-cmp__tx{font-size:18px;font-style:italic;font-weight:600;color:#daa544}
+.mb-cmp__tx--c{font-size:14px;font-style:normal;color:#000}
 @media screen and (min-width:750px){
 .mb-cmp{font-size:16px}
 .mb-cmp__wrap{padding:0 50px}
@@ -88,6 +90,7 @@ Feature seven | yes | no
 .mb-cmp__ok{width:24px;height:23px}
 .mb-cmp__ch.mb-cmp__p{padding-top:10px}
 .mb-cmp__r td{padding:16px 8px}
+.mb-cmp__tx{font-size:14px}
 }
 </style>
 
@@ -113,8 +116,8 @@ Feature seven | yes | no
 <td{% if i == 1 %} class="mb-cmp__p"{% endif %}>
 {%- if v == 'yes' -%}<span class="mb-cmp__ok" role="img" aria-label="Yes"><svg viewBox="0 0 14 14" aria-hidden="true"><use href="#mb-cmp-y"/></svg></span>
 {%- elsif v == 'no' -%}<span class="mb-cmp__no" role="img" aria-label="No"><svg viewBox="0 0 24 23" aria-hidden="true"><use href="#mb-cmp-n"/></svg></span>
-{%- elsif v contains 'pills:' -%}{%- assign n = v | remove: 'pills:' | strip | plus: 0 -%}<div><div class="mb-cmp__pills" aria-hidden="true">{%- for k in (1..n) -%}<span class="mb-cmp__pill"></span>{%- endfor -%}</div><div class="mb-cmp__pc">{{ n }} pills</div></div>
-{%- elsif v != blank -%}<span class="mb-cmp__tx">{{ v }}</span>
+{%- elsif v contains 'pills:' -%}{%- assign pp = v | remove: 'pills:' | split: ':' -%}{%- assign n = pp[0] | strip | plus: 0 -%}<div><div class="mb-cmp__pills" aria-hidden="true">{%- for k in (1..n) -%}<span class="mb-cmp__pill"></span>{%- endfor -%}</div><div class="mb-cmp__pc">{%- if pp[1] != blank -%}{{ pp[1] | strip }}{%- else -%}{{ n }} pills{%- endif -%}</div></div>
+{%- elsif v != blank -%}<span class="mb-cmp__tx{% if i == 2 %} mb-cmp__tx--c{% endif %}">{{ v }}</span>
 {%- endif -%}
 </td>
 {%- endfor -%}
