@@ -1,0 +1,135 @@
+{%- comment -%}
+  EDIT YOUR CONTENT BELOW. One phase = title | week label | point ;; point ;; point ;; point
+  Put @@ on its own line between phases. Separate the bullet points with ;; (two semicolons).
+  Add as many phases as you like. Do not use | or ;; or a straight apostrophe (') inside the text (use ’ instead).
+{%- endcomment -%}
+{%- assign mb_heading = 'What To Expect, Week By Week.' -%}
+{%- assign mb_sub = 'Replace this with a short line about how customers can expect to progress as they stay consistent.' -%}
+{%- assign mb_btn = 'Start My Routine' -%}
+{%- assign mb_link = '/products/your-product' -%}
+{%- assign mb_guarantee = 'Money-back guarantee' -%}
+{%- capture mb_data -%}
+Phase one | Week 1-2 | Replace this with your first point ;; Add a second point ;; Add a third point ;; Add a fourth point
+@@
+Phase two | Week 3-4 | Replace this with your first point ;; Add a second point ;; Add a third point ;; Add a fourth point
+@@
+Phase three | Week 5-6 | Replace this with your first point ;; Add a second point ;; Add a third point ;; Add a fourth point
+@@
+Phase four | Week 7-8+ | Replace this with your first point ;; Add a second point ;; Add a third point ;; Add a fourth point
+{%- endcapture -%}
+{%- assign mb_phases = mb_data | split: '@@' -%}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;700&family=Poppins:wght@400;500;600&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;700&family=Poppins:wght@400;500;600&display=swap"></noscript>
+
+<style>
+.page-width:has(>.mb-wbw){max-width:none;padding:0}
+.mb-wbw{padding:80px 0;background:#fff;font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:500;line-height:1.8;letter-spacing:.6px;color:rgba(18,18,18,.75)}
+.mb-wbw__wrap{box-sizing:border-box;display:flex;align-items:flex-start;gap:60px;max-width:1400px;margin:0 auto;padding:0 10px}
+.mb-wbw__left{flex:0 0 540px;position:sticky;top:40px}
+.mb-wbw__h{max-width:390px;margin:0;padding:0;font-family:Poppins,sans-serif;font-size:42px;font-style:normal;font-weight:400;line-height:100%;letter-spacing:-.42px;text-transform:capitalize;word-break:break-word;color:#1a1a1a}
+.mb-wbw__sub{margin:0;padding:14px 0 24px;font-size:18px;font-style:normal;font-weight:400;line-height:23.2px;letter-spacing:-.36px;color:#000}
+.mb-wbw__btn{display:inline-block;box-sizing:border-box;width:371px;padding:16px;border:0;border-radius:44px;background:#c47245;font-size:18px;font-weight:700;text-align:center;text-decoration:none;color:#fff;cursor:pointer;transition:transform .3s ease}
+.mb-wbw__btn:hover{transform:scale(1.05)}
+.mb-wbw__g{display:flex;align-items:center;justify-content:center;gap:4px;width:371px;margin-top:10px;font-size:14px;font-style:normal;font-weight:500;line-height:136%;letter-spacing:-.28px;text-align:center;color:#000}
+.mb-wbw__g svg{flex:none;width:19px;height:19px}
+.mb-wbw__cta--m{display:none}
+.mb-wbw__right{flex:1;position:relative}
+.mb-wbw__tl{position:relative;list-style:none;margin:0;padding:0}
+.mb-wbw__tl::before{content:'';position:absolute;left:8px;top:12px;bottom:12px;width:2px;background:linear-gradient(to bottom,#daa544 0%,#daa544 var(--p,0%),#f4e8dd var(--p,0%),#f4e8dd 100%);z-index:0;transition:background .4s ease}
+.mb-wbw__ph{position:relative;margin-bottom:20px;padding-left:34px}
+.mb-wbw__ph:last-child{margin-bottom:0}
+.mb-wbw__dot{position:absolute;left:0;top:13px;z-index:1;width:16px;height:16px;border-radius:50%;background:#f4e8dd;transition:background .4s ease,transform .3s ease}
+.mb-wbw__ph.is-active .mb-wbw__dot{background:#daa544;transform:scale(1.2)}
+.mb-wbw__ph.in-viewport .mb-wbw__dot{background:#f4e8dd;transform:scale(1.15)}
+.mb-wbw__ph.is-active.in-viewport .mb-wbw__dot{background:#daa544;transform:scale(1.2)}
+.mb-wbw__hd{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-radius:4px;background-color:#f4e8dd;transition:background-color .4s ease}
+.mb-wbw__ph.is-active .mb-wbw__hd{background-color:#894c2b}
+.mb-wbw__t{font-size:20px;font-style:normal;font-weight:400;line-height:18px;letter-spacing:-.4px;color:#000;transition:color .4s ease}
+.mb-wbw__ph.is-active .mb-wbw__t{color:#fff}
+.mb-wbw__wk{font-size:20px;font-style:normal;font-weight:500;line-height:18px;letter-spacing:.11px;color:#000;transition:color .4s ease}
+.mb-wbw__ph.is-active .mb-wbw__wk{color:#fff}
+.mb-wbw__bd{margin-top:14px;padding:0}
+.mb-wbw__bd ul{list-style:none;margin:0;padding:0}
+.mb-wbw__bd li{display:flex;align-items:flex-start;gap:5px;margin-bottom:6px;font-size:16px;font-style:normal;font-weight:500;line-height:24px;letter-spacing:-.32px;color:#000}
+.mb-wbw__bd li::before{content:'✓';flex-shrink:0;margin-top:1px;font-weight:700;color:#894c2b}
+@media screen and (min-width:750px){
+.mb-wbw{font-size:16px}
+.mb-wbw__wrap{padding:0 50px}
+}
+@media screen and (max-width:767px){
+.mb-wbw{padding:52px 0}
+.mb-wbw__wrap{flex-direction:column;gap:22px}
+.mb-wbw__left{flex:none;position:static;width:100%}
+.mb-wbw__h{max-width:330px;font-size:36px}
+.mb-wbw__sub{padding:20px 0 0}
+.mb-wbw__btn,.mb-wbw__g{width:100%}
+.mb-wbw__cta--d{display:none}
+.mb-wbw__cta--m{display:block;margin:16px 16px 0}
+.mb-wbw__right{align-self:stretch}
+.mb-wbw__tl{padding-left:30px}
+.mb-wbw__dot{left:-27px;width:13px;height:13px}
+.mb-wbw__ph{margin-bottom:8px;padding:16px;border-radius:8px;background:linear-gradient(102deg,#EFE1D6 4.69%,#FFF8EE 50.14%,#EFE1D6 95.6%)}
+.mb-wbw__ph.is-active .mb-wbw__hd{background-color:transparent}
+.mb-wbw__hd{flex-direction:row-reverse;gap:12px;justify-content:start;padding:0;border-radius:8px 8px 0 0;background-color:transparent}
+.mb-wbw__t{font-size:16px}
+.mb-wbw__ph.is-active .mb-wbw__t{color:inherit}
+.mb-wbw__wk{padding:4px 10px;border-radius:4px;font-size:16px;background:linear-gradient(45deg,#7C4527 -9.5%,#9F5933 58.07%,#7C4527 93.16%),#0096FF;color:#fff}
+.mb-wbw__bd{margin-top:0;border-radius:0;padding:0;background-color:transparent}
+.mb-wbw__bd ul{display:block;margin-top:14px}
+.mb-wbw__bd li{font-size:16px;font-weight:400;line-height:22px}
+.mb-wbw__ph.in-viewport .mb-wbw__dot{background:#daa544}
+}
+</style>
+
+<section class="mb-wbw" aria-label="{{ mb_heading | strip_html | escape }}">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><linearGradient id="mb-wbw-g" x1="15.0193" y1=".748649" x2="-5.57189" y2="16.0393" gradientUnits="userSpaceOnUse"><stop stop-color="#FFD383"/><stop offset=".484204" stop-color="#DAA544"/></linearGradient><symbol id="mb-wbw-s" viewBox="0 0 20 19"><path d="M9.5955 17.9266L5.71852 15.8594C4.61327 15.2714 3.68899 14.3935 3.04489 13.32C2.40079 12.2464 2.06118 11.0178 2.0625 9.76586V1.60511C2.06284 1.27223 2.19523 0.953083 2.43061 0.717702C2.66598 0.482321 2.98513 0.349941 3.318 0.349609H15.873C16.2059 0.349941 16.5251 0.482321 16.7604 0.717702C16.9958 0.953083 17.1282 1.27223 17.1285 1.60511V9.76586C17.1298 11.0178 16.7902 12.2464 16.1461 13.32C15.502 14.3935 14.5777 15.2714 13.4725 15.8594L9.5955 17.9266Z" fill="url(#mb-wbw-g)"/><path d="M8.24758 9.53621L6.50393 7.7925L5.55469 8.74175L8.24758 11.4346L13.6334 6.04885L12.6842 5.09961L8.24758 9.53621Z" fill="#FBFBFB"/></symbol></defs></svg>
+<div class="mb-wbw__wrap">
+<div class="mb-wbw__left">
+<h2 class="mb-wbw__h">{{ mb_heading }}</h2>
+<p class="mb-wbw__sub">{{ mb_sub }}</p>
+<div class="mb-wbw__cta--d"><a href="{{ mb_link }}" class="mb-wbw__btn">{{ mb_btn }}</a>
+<div class="mb-wbw__g"><svg viewBox="0 0 20 19" aria-hidden="true"><use href="#mb-wbw-s"/></svg><span>{{ mb_guarantee }}</span></div></div>
+</div>
+<div class="mb-wbw__right"><ul class="mb-wbw__tl">
+{%- for p in mb_phases -%}
+{%- assign f = p | split: '|' -%}
+{%- assign pts = f[2] | split: ';;' -%}
+<li class="mb-wbw__ph{% if forloop.first %} is-active{% endif %}"><span class="mb-wbw__dot"></span><div class="mb-wbw__hd"><span class="mb-wbw__t">{{ f[0] | strip }}</span><span class="mb-wbw__wk">{{ f[1] | strip }}</span></div><div class="mb-wbw__bd"><ul>
+{%- for pt in pts -%}<li>{{ pt | strip }}</li>{%- endfor -%}
+</ul></div></li>
+{%- endfor -%}
+</ul></div>
+</div>
+<div class="mb-wbw__cta--m"><a href="{{ mb_link }}" class="mb-wbw__btn">{{ mb_btn }}</a>
+<div class="mb-wbw__g"><svg viewBox="0 0 20 19" aria-hidden="true"><use href="#mb-wbw-s"/></svg><span>{{ mb_guarantee }}</span></div></div>
+</section>
+
+<script>
+(function(){
+var r=document.currentScript.previousElementSibling;
+if(!r||!r.classList.contains('mb-wbw'))return;
+var tl=r.querySelector('.mb-wbw__tl'),ph=tl?tl.children:[],n=ph.length,seen=[],nSeen=0,max=0,act=0,lit=0;
+if(!n)return;
+function run(){
+var h=innerHeight,desk=innerWidth>=768,i,rc=[],t,p,mid,best,bd,d;
+if(max>=100&&nSeen===n&&(!desk||act===n-1))return;
+t=tl.getBoundingClientRect();
+if(t.top>=h)return;
+for(i=0;i<n;i++)rc[i]=ph[i].getBoundingClientRect();
+for(i=0;i<n;i++)if(!seen[i]&&rc[i].top<h){seen[i]=1;nSeen++;ph[i].classList.add('in-viewport')}
+if(t.height){p=Math.round(Math.max(0,Math.min(1,(h/2-t.top)/t.height))*100);if(p>max){max=p;tl.style.setProperty('--p',p+'%')}}
+if(desk){
+mid=h/2;best=act;bd=1/0;
+for(i=0;i<n;i++){d=Math.abs(rc[i].top+rc[i].height/2-mid);if(d<bd){bd=d;best=i}}
+if(best>act)act=best;
+while(lit<act)ph[++lit].classList.add('is-active');
+}
+}
+addEventListener('scroll',run,{passive:true});
+addEventListener('resize',run,{passive:true});
+run();
+})();
+</script>
