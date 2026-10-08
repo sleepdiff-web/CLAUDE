@@ -1,58 +1,55 @@
+{%- comment -%}
+  cd_end: leave empty for an evergreen 2-hour timer that restarts when it reaches zero,
+  or set a REAL sale end date, e.g. '2026-10-31T23:59:59-04:00', to count down to it.
+{%- endcomment -%}
+{%- assign cd_end = '' -%}
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Poppins:wght@400;500;600&display=swap" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Poppins:wght@400;500;600&display=swap"></noscript>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;700&family=Poppins:wght@400;500;600&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;700&family=Poppins:wght@400;500;600&display=swap"></noscript>
 
 <style>
-.page-width:has(>.count-wrapper){max-width:none;padding:0}
-.count-wrapper{display:flex;align-items:center;justify-content:center;gap:32px;box-sizing:border-box;width:100%;padding:4px 15px;background:#C47245;font-family:'Plus Jakarta Sans',system-ui,sans-serif}
+.page-width:has(>.countdown-banner){max-width:none;padding:0}
+.countdown-banner{box-sizing:border-box;width:100%;padding:8px 0;background:#C47245;color:#fff;font-family:'Plus Jakarta Sans',system-ui,sans-serif;font-weight:500;letter-spacing:.6px}
+.count-wrapper{box-sizing:border-box;display:flex;align-items:center;justify-content:center;gap:30px;max-width:1500px;margin:0 auto;padding:0 15px}
 .count-wrapper .left-text{text-align:center}
-.count-wrapper h2{margin:0;padding:0;font-family:Poppins,system-ui,sans-serif;font-size:25px;font-weight:600;line-height:28px;letter-spacing:0;text-transform:none;color:#fff}
-.count-wrapper p{margin:0;padding:0;font-size:15px;font-weight:400;line-height:20px;letter-spacing:0;color:#F9F1ED}
-.count-wrapper .right-timer{display:flex;gap:16px}
+.count-wrapper h2{margin:0;padding:0;border:0;font-family:Poppins,system-ui,sans-serif;font-size:24px;font-weight:600;line-height:1;letter-spacing:.6px;text-align:center;text-transform:capitalize;text-decoration:none;color:#fff}
+.count-wrapper p{margin:5px 0 0;padding:0;font-size:14px;font-weight:300;line-height:1;opacity:.9}
+.count-wrapper .right-timer{display:flex;align-items:center;gap:15px}
 .count-wrapper .right-timer>div{display:flex;flex-direction:column;align-items:center}
-.count-wrapper span{font-size:26px;font-weight:700;line-height:24px;letter-spacing:0;color:#F9F1ED}
-.count-wrapper label{margin:0;padding:0;font-size:12px;font-weight:500;line-height:10px;letter-spacing:0;text-transform:none;color:#F9F1ED}
-@media screen and (max-width:749px){
-.count-wrapper{gap:14px;padding:6px 12px}
-.count-wrapper h2{font-size:18px;line-height:22px}
-.count-wrapper p{font-size:12px;line-height:16px}
-.count-wrapper .right-timer{gap:10px}
-.count-wrapper span{font-size:20px;line-height:20px}
-.count-wrapper label{font-size:10px;line-height:9px}
-}
-@media screen and (max-width:359px){
-.count-wrapper{gap:10px;padding:6px 8px}
-.count-wrapper h2{font-size:16px;line-height:20px}
-.count-wrapper p{font-size:11px;line-height:15px}
-.count-wrapper .right-timer{gap:8px}
-.count-wrapper span{font-size:18px;line-height:18px}
-.count-wrapper label{font-size:9px;line-height:8px}
+.count-wrapper span{font-size:24px;font-weight:700;line-height:1;letter-spacing:2px;opacity:.9;color:#fff}
+.count-wrapper label{margin:0;padding:0;font-size:12px;font-weight:300;line-height:1;letter-spacing:0;text-transform:none;color:#fff}
+@media screen and (max-width:919px){
+.count-wrapper h2{font-size:15px}
+.count-wrapper p{margin-top:2px;font-size:10px}
+.count-wrapper span{font-size:15px}
+.count-wrapper label{font-size:8px}
 }
 </style>
 
-<div class="count-wrapper"><div class="left-text"><h2>SUMMER SALE</h2><p>Shop Now and Get Up To 70% Off</p></div><div class="right-timer"><div class="hrs-main"><span id="hrs">01</span><label>Hrs</label></div><div class="min-main"><span id="mins">59</span><label>Mins</label></div><div class="secs-main"><span id="secs">53</span><label>Secs</label></div></div></div>
+<div class="countdown-banner"><div class="count-wrapper"><div class="left-text"><h2>SUMMER SALE</h2><p>Shop Now and Get Up To 70% Off</p></div><div class="right-timer"><div class="hrs-main"><span id="hrs">02</span><label>Hrs</label></div><div class="min-main"><span id="mins">00</span><label>Mins</label></div><div class="secs-main"><span id="secs">00</span><label>Secs</label></div></div></div></div>
 
 <script>
 (function(){
 var h=document.getElementById('hrs'),m=document.getElementById('mins'),s=document.getElementById('secs');
 if(!h||!m||!s)return;
-var D=72e5,K='summer_sale_timer_end',end=0,t,ph,pm,ps;
-try{end=+localStorage.getItem(K)||0}catch(e){}
+var D=72e5,K='summer_sale_timer_end',E=Date.parse('{{ cd_end }}'),fixed=E==E,end=fixed?E:0,t,ph,pm,ps;
+if(!fixed){try{end=+localStorage.getItem(K)||0}catch(e){}}
 function reset(){end=Date.now()+D;try{localStorage.setItem(K,end)}catch(e){}}
 function p(n){return n<10?'0'+n:''+n}
 function tick(){
 clearTimeout(t);
 if(!h.isConnected)return;
 var left=end-Date.now();
-if(left<=0){reset();left=D-1}
+if(left<=0){if(fixed)left=0;else{reset();left=D-1}}
 var q=left/1e3|0,a=p(q/3600|0),b=p(q%3600/60|0),c=p(q%60);
 if(a!==ph)h.textContent=ph=a;
 if(b!==pm)m.textContent=pm=b;
 if(c!==ps)s.textContent=ps=c;
-if(!document.hidden)t=setTimeout(tick,left%1e3+5);
+if(!document.hidden&&left>0)t=setTimeout(tick,left%1e3+5);
 }
-if(end<=Date.now())reset();
+if(!fixed&&end<=Date.now())reset();
 document.addEventListener('visibilitychange',tick);
 tick();
 })();
