@@ -1,0 +1,85 @@
+{%- comment -%}
+  EDIT YOUR CONTENT BELOW. One item = question | answer
+  Put @@ on its own line between items. Add as many items as you like.
+  Do not use | or a straight apostrophe (') inside the text (use &#39; instead).
+  To split an answer into paragraphs write: first paragraph</p><p>second paragraph
+{%- endcomment -%}
+{%- assign mb_heading = 'Frequently Asked Questions' -%}
+{%- capture mb_data -%}
+Your first question? | Replace this with the answer to your first question.
+@@
+Your second question? | Replace this with the answer to your second question.
+@@
+Your third question? | Replace this with the answer to your third question.
+@@
+Your fourth question? | Replace this with the answer to your fourth question.
+@@
+Your fifth question? | Replace this with the answer to your fifth question.
+@@
+Your sixth question? | Replace this with the answer to your sixth question.
+{%- endcapture -%}
+{%- assign mb_items = mb_data | split: '@@' -%}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600&display=swap"></noscript>
+
+<style>
+.page-width:has(>.mb-faq){max-width:none;padding:0}
+.mb-faq{padding:40px 0;background:#fff;font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:500;line-height:1.8;letter-spacing:.6px;color:rgba(18,18,18,.75);content-visibility:auto;contain-intrinsic-size:auto 560px}
+.mb-faq__wrap{box-sizing:border-box;max-width:1400px;margin:0 auto;padding:0 12px}
+.mb-faq__head{margin-bottom:36px;text-align:center}
+.mb-faq__h{margin:0;padding:0;font-family:Poppins,sans-serif;font-size:26px;font-weight:500;line-height:1.05;letter-spacing:0;word-break:break-word;color:#2b2118}
+.mb-faq__list{display:flex;flex-direction:column;gap:0}
+.mb-faq__item{border-bottom:1px solid #ede0d4}
+.mb-faq__item:first-child{border-top:1px solid #ede0d4}
+.mb-faq__q{display:flex;align-items:center;justify-content:space-between;gap:16px;width:100%;padding:18px 0;border:none;background:none;font-size:17px;font-weight:600;line-height:1.4;text-align:left;color:#2b2118;cursor:pointer;transition:color .2s}
+.mb-faq__q:hover,.mb-faq__q[aria-expanded="true"]{color:#c47245}
+.mb-faq__qt{flex:1}
+.mb-faq__i{display:flex;flex-shrink:0;align-items:center;justify-content:center;width:20px;height:20px;font-size:20px;line-height:1;color:#c47245;transition:transform .25s ease,color .2s}
+.mb-faq__q[aria-expanded="true"] .mb-faq__i{color:#2b2118;transform:rotate(45deg)}
+.mb-faq__a{overflow:hidden;max-height:0;transition:max-height 300ms ease}
+.mb-faq__ai{padding-bottom:20px;font-size:15px;line-height:1.7;color:#5c4b3a}
+.mb-faq__ai p{margin:0}
+.mb-faq__ai p+p{margin-top:12px}
+@media screen and (min-width:750px){
+.mb-faq{padding:48px 0 64px}
+.mb-faq__wrap{padding:0 50px}
+.mb-faq__head{margin-bottom:44px}
+.mb-faq__h{font-size:32px}
+.mb-faq__q{padding:22px 0;font-size:18px}
+.mb-faq__i{width:22px;height:22px;font-size:22px}
+.mb-faq__ai{padding-bottom:24px;font-size:16px}
+}
+</style>
+
+<section class="mb-faq" aria-label="{{ mb_heading | strip_html | escape }}"><div class="mb-faq__wrap">
+<div class="mb-faq__head"><h2 class="mb-faq__h">{{ mb_heading }}</h2></div>
+<div class="mb-faq__list">
+{%- for it in mb_items -%}
+{%- assign f = it | split: '|' -%}
+<div class="mb-faq__item"><button type="button" class="mb-faq__q" aria-expanded="false" aria-controls="mb-faq-{{ section.id }}-{{ forloop.index }}"><span class="mb-faq__qt">{{ f[0] | strip }}</span><span class="mb-faq__i" aria-hidden="true">+</span></button><div class="mb-faq__a" id="mb-faq-{{ section.id }}-{{ forloop.index }}"><div class="mb-faq__ai"><p>{{ f[1] | strip }}</p></div></div></div>
+{%- endfor -%}
+</div>
+</div></section>
+
+<script>
+(function(){
+var r=document.currentScript.previousElementSibling,cur=null,raf=0;
+if(!r||!r.classList.contains('mb-faq'))return;
+function fit(b){var a=b.nextElementSibling;a.style.maxHeight=a.scrollHeight+'px'}
+function open(b){b.setAttribute('aria-expanded','true');fit(b);cur=b}
+function shut(b){b.setAttribute('aria-expanded','false');b.nextElementSibling.style.maxHeight='0';if(cur===b)cur=null}
+r.addEventListener('click',function(e){
+var b=e.target.closest('.mb-faq__q'),was;
+if(!b)return;
+was=b===cur;
+if(cur&&!was)shut(cur);
+if(was)shut(b);else open(b);
+});
+addEventListener('resize',function(){
+if(cur&&!raf)raf=requestAnimationFrame(function(){raf=0;if(cur)fit(cur)});
+},{passive:true});
+})();
+</script>
