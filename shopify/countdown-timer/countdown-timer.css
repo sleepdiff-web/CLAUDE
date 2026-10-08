@@ -1,7 +1,7 @@
 /* ==========================================================================
    Summer Sale countdown bar
    Fonts:  h2 -> Poppins 600   |   everything else -> Plus Jakarta Sans
-   Colors: bar #C47245 · heading #FFFFFF · sub-text / digits / labels #F9F1ED
+   Colors: bar #943434 · heading #FFFFFF · sub-text / digits / labels #F9F1ED
    Desktop values are measured 1:1 from the reference (bar = 56px tall).
    ========================================================================== */
 
@@ -14,7 +14,7 @@
   box-sizing: border-box;
   width: 100%;
   padding: 4px 15px;
-  background: #C47245;
+  background: #943434;
   font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
