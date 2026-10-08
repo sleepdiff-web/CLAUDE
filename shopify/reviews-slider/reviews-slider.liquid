@@ -1,11 +1,14 @@
 {%- comment -%}
   EDIT YOUR REVIEWS BELOW. One review = headline | review text | customer name
   Put @@ on its own line between reviews. Use real reviews from your own customers.
+  mb_readmore: false = exact copy of the original (long reviews are cut at 40 words on phones/tablets with no way to expand)
+               true  = adds a working "Read more / Read less" link
 {%- endcomment -%}
 {%- assign mb_title = 'Your section heading' -%}
 {%- assign mb_sub = 'A short line about what customers say' -%}
+{%- assign mb_readmore = false -%}
 {%- capture mb_data -%}
-Review headline one | Replace this text with a real review from one of your customers. Longer reviews are shortened to a few lines on phones with a Read more button, so you can paste the full review here without it taking over the screen. Tap Read more on a phone to see the full text. | Customer name
+Review headline one | Replace this text with a real review from one of your customers. Reviews longer than 40 words are shortened on phones and tablets, and shown in full on desktop. Keep adding words here so you can see how a long review is shortened with three dots at the end of the card text. | Customer name
 @@
 Review headline two | Replace this text with a real review from one of your customers. | Customer name
 @@
@@ -21,47 +24,69 @@ Review headline six | Replace this text with a real review from one of your cust
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Poppins:wght@400;600&display=swap" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Poppins:wght@400;600&display=swap"></noscript>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Poppins:wght@400;500;600&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Poppins:wght@400;500;600&display=swap"></noscript>
 
 <style>
 .page-width:has(>.mb-rv){max-width:none;padding:0}
-.mb-rv{--w:min(370px,86vw);--accent:#c47245;--ink:#1a1a1a;--muted:#7a6a5a;--card:#fbe8d4;background:#fff;padding:48px 0 40px;font-family:'Plus Jakarta Sans',system-ui,sans-serif;font-size:14px;line-height:1.6;letter-spacing:.6px;color:#333;content-visibility:auto;contain-intrinsic-size:auto 600px}
-.mb-rv__head{padding:0 15px;margin-bottom:28px;text-align:center}
-.mb-rv__title{margin:0 0 10px;padding:0;font-family:Poppins,system-ui,sans-serif;font-size:26px;font-weight:400;line-height:1.2;letter-spacing:0;color:var(--ink)}
-.mb-rv__sub{margin:0;font-size:14px;color:var(--muted)}
-.mb-rv__slider{position:relative}
-.mb-rv__track{position:relative;display:flex;gap:20px;overflow-x:auto;padding:0 calc((100% - var(--w)) / 2);scroll-snap-type:x mandatory;overscroll-behavior-x:contain;scrollbar-width:none;cursor:grab}
+.mb-rv{background:#faf7f5;overflow:hidden;padding:45px 0;font-family:'Plus Jakarta Sans',system-ui,sans-serif;font-size:15px;font-weight:500;line-height:1.8;letter-spacing:.6px;color:rgba(18,18,18,.75);content-visibility:auto;contain-intrinsic-size:auto 600px}
+.mb-rv :where(p){margin:0}
+.mb-rv__head{padding:0 15px}
+.mb-rv__title{margin:0;padding:0;font-family:Poppins,system-ui,sans-serif;font-size:26px;font-weight:500;line-height:130%;letter-spacing:.6px;text-align:center;text-transform:none;word-break:break-word;color:#1a1a1a}
+.mb-rv__sub{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:10px;margin-top:21px}
+.mb-rv__sub p{font-size:14px;line-height:130%;color:#3a3a3a}
+.mb-rv__slider{position:relative;margin-top:27px;container-type:inline-size}
+.mb-rv__track{--w:calc((100cqw - 34px) / 1.2);position:relative;display:flex;gap:20px;overflow-x:auto;margin:-30px 0 -36px;padding:30px calc((100cqw - var(--w)) / 2) 36px;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;scrollbar-width:none;cursor:grab}
 .mb-rv__track::-webkit-scrollbar{display:none}
 .mb-rv__track.is-drag{scroll-snap-type:none;cursor:grabbing;user-select:none}
-.mb-rv__card{flex:0 0 var(--w);box-sizing:border-box;display:flex;flex-direction:column;justify-content:space-between;gap:20px;padding:24px;border-radius:16px;background:var(--card);scroll-snap-align:center;scroll-snap-stop:always}
-.mb-rv__stars{display:block;width:90px;height:16px;margin-bottom:12px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 16'%3E%3Cpath fill='%23c47245' d='m9 .6 2.3 5 5.4.6-4 3.7 1.1 5.3L9 12.5l-4.8 2.7 1.1-5.3-4-3.7 5.4-.6z'/%3E%3C/svg%3E") repeat-x 0 0/18px 16px}
-.mb-rv__h{margin:0 0 8px;font-size:16px;font-weight:700;line-height:1.4;color:var(--ink)}
-.mb-rv__text{margin:0}
-.mb-rv__more{display:none;margin:8px 0 0;padding:0;border:0;background:none;font:inherit;font-weight:600;letter-spacing:inherit;color:var(--accent);text-decoration:underline;cursor:pointer}
-.mb-rv__author{margin:0;font-weight:700;color:var(--ink)}
-.mb-rv__verified{display:flex;align-items:center;gap:6px;margin-top:2px;font-size:12px;color:var(--accent)}
-.mb-rv__verified svg{width:16px;height:16px;flex:none}
-.mb-rv__btn{display:none;position:absolute;top:50%;z-index:1;width:44px;height:44px;margin-top:-22px;padding:0;border:0;border-radius:50%;background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.14);cursor:pointer;place-items:center}
-.mb-rv__btn svg{width:24px;height:24px;fill:#1c1b1e}
-.mb-rv__prev{left:24px}
-.mb-rv__next{right:24px}
-.mb-rv__next svg{transform:rotate(180deg)}
-.mb-rv__dots{display:flex;justify-content:center;gap:8px;margin-top:22px}
-.mb-rv__dot{position:relative;width:8px;height:8px;padding:0;border:0;border-radius:50%;background:#d9cbbd;cursor:pointer}
-.mb-rv__dot::after{content:"";position:absolute;inset:-8px}
-.mb-rv__dot.is-on{background:var(--accent)}
-@media screen and (max-width:749px){
-.mb-rv__text{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:5;overflow:hidden}
-.mb-rv__card.is-open .mb-rv__text{display:block;overflow:visible}
-.mb-rv__more{display:inline-block}
+.mb-rv__card{flex:0 0 var(--w);min-width:0;box-sizing:border-box;display:flex;flex-direction:column;justify-content:space-between;gap:12px;padding:24px;border-radius:8px;border:1px solid rgba(0,0,0,.06);background:#fff;box-shadow:0 6px 24px rgba(0,0,0,.05),0 0 0 1px rgba(0,0,0,.08);opacity:.5;transition:transform .25s,opacity .25s;scroll-snap-align:center;scroll-snap-stop:always}
+.mb-rv__card.is-on{opacity:1}
+.mb-rv__card:hover{transform:translateY(-6px);box-shadow:0 8px 15px rgba(0,0,0,.12)}
+.mb-rv__track.is-drag .mb-rv__card:hover{transform:none}
+.mb-rv__static .mb-rv__top{padding-bottom:12px}
+.mb-rv__stars{display:block;width:100px;height:16px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 21 16'%3E%3Cpath fill='%23F2AB1A' d='m8 .5 2.1 4.6 5 .6-3.7 3.4 1 5-4.4-2.5-4.4 2.5 1-5L.9 5.7l5-.6z'/%3E%3C/svg%3E") repeat-x 0 0/21px 16px}
+.mb-rv__h{margin-top:16px;font-size:14px;font-weight:700;line-height:130%;color:#1a1a1a}
+.mb-rv__text{margin-top:16px;font-size:14px;line-height:150%;color:#3a3a3a}
+.mb-rv__full{display:none}
+.mb-rv__card.is-open .mb-rv__short{display:none}
+.mb-rv__card.is-open .mb-rv__full{display:inline}
+.mb-rv__more{display:block;margin:10px 0 0;padding:0;border:0;background:none;font:inherit;font-size:14px;font-weight:700;line-height:150%;letter-spacing:inherit;color:#1a1a1a;text-align:left;cursor:pointer}
+.mb-rv__bottom{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.mb-rv__author{font-size:14px;line-height:130%;color:#1a1a1a}
+.mb-rv__verified{display:flex;align-items:center;gap:4px;flex-shrink:0;font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;white-space:nowrap;color:#00b67a}
+.mb-rv__verified svg{width:11px;height:11px;flex:none}
+.mb-rv__btn{position:absolute;top:50%;z-index:2;display:flex;align-items:center;justify-content:center;width:50px;height:50px;margin-top:-25px;padding:0;border:0;border-radius:50%;background:#fff;box-shadow:0 0 10px rgba(0,0,0,.15);cursor:pointer}
+.mb-rv__btn svg{width:28px;height:28px;fill:#1c1b1e}
+.mb-rv__prev{left:15px}
+.mb-rv__next{right:15px}
+.mb-rv__prev svg{margin-left:-2px}
+.mb-rv__next svg{margin-left:2px;transform:rotate(180deg)}
+.mb-rv__dots{display:flex;justify-content:center;align-items:center;min-height:8px;margin-top:20px}
+.mb-rv__dot{box-sizing:border-box;width:8px;height:8px;margin:0 4px;padding:0;border:2px solid #585858;border-radius:50%;background:transparent;opacity:.6;cursor:pointer}
+.mb-rv__dot.is-on{opacity:1;background:#585858}
+@media screen and (min-width:750px){.mb-rv{font-size:16px}}
+@media screen and (min-width:768px){
+.mb-rv__track{--w:calc((100cqw - 50px) / 2);padding-left:15px;padding-right:15px}
+.mb-rv__card{scroll-snap-align:start}
+.mb-rv__track{scroll-padding-left:15px}
+.mb-rv__card.is-vis{opacity:1}
 }
-@media screen and (min-width:750px){
-.mb-rv{padding:72px 0 56px}
-.mb-rv__head{margin-bottom:40px}
-.mb-rv__title{font-size:40px}
-.mb-rv__sub{font-size:16px}
-.mb-rv__btn{display:grid}
+@media screen and (min-width:1024px){
+.mb-rv{padding:60px 0}
+.mb-rv__head{padding:0 50px}
+.mb-rv__title{font-size:32px}
+.mb-rv__sub{margin-top:24px}
+.mb-rv__sub p{font-size:16px}
+.mb-rv__slider{margin-top:36px}
+.mb-rv__track{--w:calc((.8 * (100cqw - 100px) - 40px) / 3);padding-left:calc((100cqw - var(--w)) / 2);padding-right:calc((100cqw - var(--w)) / 2);scroll-padding-left:0}
+.mb-rv__card{gap:16px;padding:32px 40px;scroll-snap-align:center}
+.mb-rv__full{display:inline}
+.mb-rv__short,.mb-rv__more{display:none}
+.mb-rv__static .mb-rv__top{padding-bottom:0}
+.mb-rv__verified{font-size:12px}
+.mb-rv__verified svg{width:12px;height:12px}
+.mb-rv__prev{left:calc(10% + 15px)}
+.mb-rv__next{right:calc(10% + 15px)}
 }
 </style>
 
@@ -70,13 +95,15 @@ Review headline six | Replace this text with a real review from one of your cust
 <symbol id="mbr-chev" viewBox="0 0 24 24"><path d="M14 17a1 1 0 0 1-.707-.293l-4-4a1 1 0 0 1 0-1.414l4-4a1 1 0 1 1 1.414 1.414L11.414 12l3.293 3.293A1 1 0 0 1 14 17Z"/></symbol>
 </defs></svg>
 
-<section class="mb-rv" aria-roledescription="carousel" aria-label="{{ mb_title | escape }}">
-<div class="mb-rv__head"><h2 class="mb-rv__title">{{ mb_title }}</h2><p class="mb-rv__sub">{{ mb_sub }}</p></div>
+<section class="mb-rv{% unless mb_readmore %} mb-rv__static{% endunless %}" aria-roledescription="carousel" aria-label="{{ mb_title | escape }}">
+<div class="mb-rv__head"><h2 class="mb-rv__title">{{ mb_title }}</h2><div class="mb-rv__sub"><p>{{ mb_sub }}</p></div></div>
 <div class="mb-rv__slider">
 <div class="mb-rv__track" tabindex="0">
 {%- for r in mb_reviews -%}
 {%- assign f = r | split: '|' -%}
-<div class="mb-rv__card" role="group" aria-roledescription="slide" aria-label="{{ forloop.index }} / {{ forloop.length }}"><div><span class="mb-rv__stars" role="img" aria-label="5 out of 5 stars"></span><p class="mb-rv__h">{{ f[0] | strip }}</p><p class="mb-rv__text">{{ f[1] | strip }}</p>{%- if f[1].size > 190 -%}<button type="button" class="mb-rv__more" aria-expanded="false">Read more</button>{%- endif -%}</div><div><p class="mb-rv__author">{{ f[2] | strip }}</p><span class="mb-rv__verified"><svg aria-hidden="true"><use href="#mbr-check"/></svg>Verified Customer</span></div></div>
+{%- assign full = f[1] | strip -%}
+{%- assign short = full | truncatewords: 40 -%}
+<div class="mb-rv__card" role="group" aria-roledescription="slide" aria-label="{{ forloop.index }} / {{ forloop.length }}"><div class="mb-rv__top"><span class="mb-rv__stars" role="img" aria-label="5 out of 5 stars"></span><p class="mb-rv__h">{{ f[0] | strip }}</p><p class="mb-rv__text">{%- if short != full -%}<span class="mb-rv__full">{{ full }}</span><span class="mb-rv__short">{{ short }}</span>{%- else -%}{{ full }}{%- endif -%}</p>{%- if mb_readmore and short != full -%}<button type="button" class="mb-rv__more" aria-expanded="false">Read more</button>{%- endif -%}</div><div class="mb-rv__bottom"><p class="mb-rv__author">{{ f[2] | strip }}</p><span class="mb-rv__verified"><svg aria-hidden="true"><use href="#mbr-check"/></svg>Verified Customer</span></div></div>
 {%- endfor -%}
 </div>
 <button type="button" class="mb-rv__btn mb-rv__prev" aria-label="Previous slide"><svg aria-hidden="true"><use href="#mbr-chev"/></svg></button>
@@ -89,12 +116,19 @@ Review headline six | Replace this text with a real review from one of your cust
 (function(){
 var r=document.currentScript.previousElementSibling;
 if(!r||!r.classList.contains('mb-rv'))return;
-var t=r.querySelector('.mb-rv__track'),d=r.querySelector('.mb-rv__dots'),re=[].slice.call(t.children),n=re.length,c=0,p=0,act=-1,go=0,raf=0,tm=0,touch=0,dots=[];
+var t=r.querySelector('.mb-rv__track'),d=r.querySelector('.mb-rv__dots'),re=[].slice.call(t.children),n=re.length,c=0,p=0,base=0,start=0,act=-1,go=0,raf=0,tm=0,touch=0,dots=[],st=[];
 var sm=matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth';
 function all(){return t.children}
-function cur(){var a=all();return Math.round((t.scrollLeft+t.clientWidth/2-(a[0].offsetLeft+a[0].offsetWidth/2))/p)}
-function to(i,b){var e=all()[i];if(e)t.scrollTo({left:e.offsetLeft-(t.clientWidth-e.offsetWidth)/2,behavior:b})}
-function upd(){var k=((cur()-c)%n+n)%n;if(k!==act){if(dots[act]){dots[act].classList.remove('is-on');dots[act].removeAttribute('aria-current')}dots[k].classList.add('is-on');dots[k].setAttribute('aria-current','true');act=k}}
+function off(e){return start?15:(t.clientWidth-e.offsetWidth)/2}
+function pos(i){var e=all()[i];return e.offsetLeft-off(e)}
+function measure(){var a=all();start=/start/.test(getComputedStyle(a[0]).scrollSnapAlign)?1:0;p=a[1].offsetLeft-a[0].offsetLeft;base=pos(0)}
+function cur(){return Math.round((t.scrollLeft-base)/p)}
+function to(i,b){if(all()[i])t.scrollTo({left:pos(i),behavior:b})}
+function upd(){
+var a=all(),w=t.clientWidth,L=t.scrollLeft,i=cur(),k=((i-c)%n+n)%n,cw=innerWidth>=1024?.8*(w-100):w-30,vl=(w-cw)/2,vr=vl+cw,j,x,y,s;
+for(j=0;j<a.length;j++){x=a[j].offsetLeft-L;y=x+a[j].offsetWidth;s=(j===i?1:0)|((x<vr&&y>vl)?2:0);if(st[j]!==s){st[j]=s;a[j].classList.toggle('is-on',!!(s&1));a[j].classList.toggle('is-vis',!!(s&2))}}
+if(k!==act){if(dots[act])dots[act].classList.remove('is-on');dots[k].classList.add('is-on');dots[k].setAttribute('aria-current','true');if(dots[act])dots[act].removeAttribute('aria-current');act=k}
+}
 function jump(x){t.style.scrollSnapType='none';t.scrollLeft+=x;t.style.scrollSnapType=''}
 function settle(){if(touch||t.classList.contains('is-drag')){tm=setTimeout(settle,140);return}var i=cur();if(i<c)jump(n*p);else if(i>=c+n)jump(-n*p)}
 function mk(e){var x=e.cloneNode(true),b=x.querySelectorAll('button'),i;x.setAttribute('aria-hidden','true');x.removeAttribute('role');x.removeAttribute('aria-label');for(i=0;i<b.length;i++)b[i].tabIndex=-1;return x}
@@ -104,8 +138,7 @@ var f=document.createDocumentFragment(),g=document.createDocumentFragment(),i,b;
 for(i=0;i<c;i++){f.appendChild(mk(re[n-c+i]));g.appendChild(mk(re[i]))}
 t.insertBefore(f,t.firstChild);t.appendChild(g);
 for(i=0;i<n;i++){b=document.createElement('button');b.type='button';b.className='mb-rv__dot';b.setAttribute('aria-label','Go to slide '+(i+1));b.setAttribute('data-i',i);d.appendChild(b);dots.push(b)}
-p=all()[1].offsetLeft-all()[0].offsetLeft;
-to(c,'auto');upd();
+measure();to(c,'auto');upd();
 t.addEventListener('scroll',function(){if(!raf)raf=requestAnimationFrame(function(){raf=0;upd()});clearTimeout(tm);tm=setTimeout(settle,140)},{passive:true});
 t.addEventListener('touchstart',function(){touch=1},{passive:true});
 t.addEventListener('touchend',function(){touch=0},{passive:true});
@@ -114,7 +147,7 @@ r.querySelector('.mb-rv__prev').addEventListener('click',function(){to(cur()-1,s
 r.querySelector('.mb-rv__next').addEventListener('click',function(){to(cur()+1,sm)});
 d.addEventListener('click',function(e){var x=e.target.closest('.mb-rv__dot');if(x)to(c+(+x.getAttribute('data-i')),sm)});
 t.addEventListener('keydown',function(e){if(e.key==='ArrowRight')to(cur()+1,sm);else if(e.key==='ArrowLeft')to(cur()-1,sm)});
-var rt;addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(function(){p=all()[1].offsetLeft-all()[0].offsetLeft;to(c+act,'auto')},150)},{passive:true});
+var rt;addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(function(){st=[];measure();to(c+act,'auto');upd()},150)},{passive:true});
 t.addEventListener('mousedown',function(e){if(e.button||e.target.closest('button'))return;var sx=e.pageX,sl=t.scrollLeft;t.classList.add('is-drag');
 function mv(e){t.scrollLeft=sl-(e.pageX-sx)}
 function up(){removeEventListener('mousemove',mv);removeEventListener('mouseup',up);t.classList.remove('is-drag');to(cur(),sm)}
