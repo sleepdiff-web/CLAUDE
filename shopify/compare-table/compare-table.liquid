@@ -1,0 +1,125 @@
+{%- comment -%}
+  EDIT YOUR CONTENT BELOW. One row = feature | your product | other brands
+  Put @@ on its own line between rows. For the two value columns write:
+    yes        gold tick (use it in either column)
+    no         "not available" icon
+    pills:3    three grey pill shapes with the caption "3 pills" (any number)
+    any text   shows as gold italic text in your column (e.g. 1 Capsule)
+  Images: Content > Files > copy link. Leave empty to show no image.
+  Do not use | or a straight apostrophe (') inside the text (use &#39; instead).
+{%- endcomment -%}
+{%- assign mb_rating = 'Add your review line here' -%}
+{%- assign mb_heading = 'How Your Brand Compares' -%}
+{%- assign mb_sub = 'Replace this with a short line comparing your product with the alternatives.' -%}
+{%- assign mb_col1 = 'Your Brand' -%}
+{%- assign mb_col2 = 'Other Brands' -%}
+{%- assign mb_img1 = '' -%}
+{%- assign mb_img2 = '' -%}
+{%- capture mb_data -%}
+Feature one | yes | no
+@@
+Feature two | yes | no
+@@
+Feature three | yes | no
+@@
+Feature four | yes | no
+@@
+Feature five | yes | no
+@@
+Easy daily routine | 1 Capsule | pills:3
+@@
+Feature seven | yes | no
+{%- endcapture -%}
+{%- assign mb_rows = mb_data | split: '@@' -%}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600&display=swap"></noscript>
+
+<style>
+.page-width:has(>.mb-cmp){max-width:none;padding:0}
+.mb-cmp{padding:80px 0;background:linear-gradient(102deg,rgba(239,225,214,1) 4.69%,rgba(255,248,238,1) 50.14%,rgba(239,225,214,1) 95.6%);font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:500;line-height:1.8;letter-spacing:0;color:rgba(18,18,18,.75);content-visibility:auto;contain-intrinsic-size:auto 830px}
+.mb-cmp__wrap{box-sizing:border-box;max-width:1400px;margin:0 auto;padding:0 12px}
+.mb-cmp__box{max-width:858px;margin:0 auto}
+.mb-cmp__top{margin-bottom:40px;text-align:center}
+.mb-cmp__rate{display:flex;align-items:center;justify-content:center;gap:6px}
+.mb-cmp__stars{color:#daa544;font-size:16px;letter-spacing:2px;line-height:0}
+.mb-cmp__rt{margin:0;font-size:16px;font-style:normal;font-weight:500;line-height:normal;text-align:center;color:#000}
+.mb-cmp__h{margin:0;padding:16px 0;font-family:Poppins,sans-serif;font-size:42px;font-style:normal;font-weight:400;line-height:100%;letter-spacing:-.42px;text-align:center;text-transform:capitalize;word-break:break-word;color:#000}
+.mb-cmp__sub{max-width:628px;margin:0 auto;font-size:18px;font-style:normal;font-weight:400;line-height:normal;text-align:center;color:#000}
+.mb-cmp__tw{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.mb-cmp__tb{width:100%;border-collapse:collapse;table-layout:fixed;overflow:hidden}
+.mb-cmp__ch{padding:0 10px 20px;text-align:center;vertical-align:bottom}
+.mb-cmp__ch.mb-cmp__p{padding-top:20px;border-radius:8px 8px 0 0;background-color:#7c4527}
+.mb-cmp__ch img{display:block;max-width:90px;max-height:110px;margin:0 auto 10px;object-fit:contain}
+.mb-cmp__ch .mb-cmp__cl{display:block;font-size:16px;font-style:normal;font-weight:500;line-height:16.8px;letter-spacing:-.16px;text-align:center;text-transform:capitalize;color:#000}
+.mb-cmp__ch.mb-cmp__p .mb-cmp__cl{color:#fff}
+.mb-cmp__lc{width:44%}
+.mb-cmp__cl--1{padding:4px;border-radius:4px;background:#fff;color:#000!important}
+.mb-cmp__cl--2{max-width:123px;margin:0 auto}
+.mb-cmp__r td{padding:20px 10px;border-bottom:1px dotted #ccc;text-align:center;vertical-align:middle}
+.mb-cmp__r td.mb-cmp__fl{padding-left:0;font-size:18px;font-style:normal;font-weight:600;line-height:27px;letter-spacing:-.18px;text-align:left;color:#000}
+.mb-cmp__r td.mb-cmp__p{background-color:#7c4527}
+.mb-cmp__r:last-child td.mb-cmp__p{border-radius:0 0 8px 8px}
+.mb-cmp__r:last-child td{border-bottom:0}
+.mb-cmp__ok{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background-color:#daa544}
+.mb-cmp__ok svg{width:14px;height:14px}
+.mb-cmp__no{display:inline-flex;align-items:center;justify-content:center}
+.mb-cmp__no svg{width:24px;height:24px;color:#000}
+.mb-cmp__pills{display:inline-flex;flex-wrap:wrap;justify-content:center;gap:3px;max-width:50px}
+.mb-cmp__pill{display:block;width:8px;height:18px;border-radius:10px;background-color:#aaa}
+.mb-cmp__pc{margin-top:4px;font-size:11px;color:#000}
+.mb-cmp__tx{font-size:18px;font-style:italic;font-weight:600;color:#daa544}
+@media screen and (min-width:750px){
+.mb-cmp{font-size:16px}
+.mb-cmp__wrap{padding:0 50px}
+}
+@media screen and (max-width:767px){
+.mb-cmp{padding:52px 0}
+.mb-cmp__top{margin-bottom:28px;text-align:left}
+.mb-cmp__rt{font-size:14px}
+.mb-cmp__h{font-size:36px}
+.mb-cmp__sub{margin:0;font-size:18px}
+.mb-cmp__lc{width:48%}
+.mb-cmp__ch img{max-width:70px;max-height:90px}
+.mb-cmp__ch .mb-cmp__cl{font-size:11px;line-height:13px}
+.mb-cmp__r td.mb-cmp__fl{font-size:16px;font-weight:500;line-height:21px}
+.mb-cmp__ok{width:24px;height:23px}
+.mb-cmp__ch.mb-cmp__p{padding-top:10px}
+.mb-cmp__r td{padding:16px 8px}
+}
+</style>
+
+{%- assign q = '?' -%}
+<section class="mb-cmp" aria-label="{{ mb_heading | strip_html | escape }}">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><linearGradient id="mb-cmp-g" x1="17.2" y1=".454047" x2="-7.02527" y2="21.4415" gradientUnits="userSpaceOnUse"><stop stop-color="#FFD383"/><stop offset=".484204" stop-color="#DAA544"/></linearGradient><path id="mb-cmp-s" d="M9.32355 2.08189C9.53647 1.4266 10.4635 1.4266 10.6764 2.08189L12.0855 6.41836C12.1807 6.71142 12.4538 6.90983 12.7619 6.90983H17.3215C18.0105 6.90983 18.297 7.79152 17.7396 8.19651L14.0508 10.8766C13.8015 11.0577 13.6972 11.3788 13.7924 11.6718L15.2014 16.0083C15.4143 16.6636 14.6643 17.2085 14.1069 16.8035L10.4181 14.1234C10.1688 13.9423 9.83122 13.9423 9.58193 14.1234L5.89311 16.8035C5.33569 17.2085 4.58568 16.6636 4.79859 16.0083L6.2076 11.6718C6.30282 11.3788 6.19851 11.0577 5.94922 10.8766L2.2604 8.19651C1.70297 7.79152 1.98945 6.90983 2.67847 6.90983H7.2381C7.54624 6.90983 7.81933 6.71142 7.91455 6.41836L9.32355 2.08189Z" fill="url(#mb-cmp-g)"/><path id="mb-cmp-y" d="M2 7L5.5 10.5L12 3.5" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><g id="mb-cmp-n" fill="none" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18.3642 17.7529L5.63672 5.02539"/><path d="M12 20.3887C16.9706 20.3887 21 16.3593 21 11.3887C21 6.41811 16.9706 2.38867 12 2.38867C7.02944 2.38867 3 6.41811 3 11.3887C3 16.3593 7.02944 20.3887 12 20.3887Z" stroke-miterlimit="10"/></g></defs></svg>
+<div class="mb-cmp__wrap"><div class="mb-cmp__box">
+<div class="mb-cmp__top">
+<div class="mb-cmp__rate"><span class="mb-cmp__stars" aria-hidden="true"><svg width="100" height="20" viewBox="0 0 100 20"><use href="#mb-cmp-s"/><use href="#mb-cmp-s" x="20"/><use href="#mb-cmp-s" x="40"/><use href="#mb-cmp-s" x="60"/><use href="#mb-cmp-s" x="80"/></svg></span><span class="mb-cmp__rt">{{ mb_rating }}</span></div>
+<h2 class="mb-cmp__h">{{ mb_heading }}</h2>
+<p class="mb-cmp__sub">{{ mb_sub }}</p>
+</div>
+<div class="mb-cmp__tw"><table class="mb-cmp__tb">
+<thead><tr><th class="mb-cmp__lc" scope="col"></th>
+<th class="mb-cmp__ch mb-cmp__p" scope="col">{%- if mb_img1 != blank -%}{%- if mb_img1 contains '?' -%}{%- assign q = '&amp;' -%}{%- endif -%}<img src="{{ mb_img1 }}{{ q }}width=200" srcset="{{ mb_img1 }}{{ q }}width=90 90w, {{ mb_img1 }}{{ q }}width=180 180w, {{ mb_img1 }}{{ q }}width=270 270w" sizes="(max-width:767px) 70px, 90px" alt="{{ mb_col1 | escape }}" loading="lazy" decoding="async">{%- endif -%}<span class="mb-cmp__cl mb-cmp__cl--1">{{ mb_col1 }}</span></th>
+<th class="mb-cmp__ch" scope="col">{%- assign q = '?' -%}{%- if mb_img2 != blank -%}{%- if mb_img2 contains '?' -%}{%- assign q = '&amp;' -%}{%- endif -%}<img src="{{ mb_img2 }}{{ q }}width=200" srcset="{{ mb_img2 }}{{ q }}width=90 90w, {{ mb_img2 }}{{ q }}width=180 180w, {{ mb_img2 }}{{ q }}width=270 270w" sizes="(max-width:767px) 70px, 90px" alt="{{ mb_col2 | escape }}" loading="lazy" decoding="async">{%- endif -%}<span class="mb-cmp__cl mb-cmp__cl--2">{{ mb_col2 }}</span></th></tr></thead>
+<tbody>
+{%- for r in mb_rows -%}
+{%- assign f = r | split: '|' -%}
+<tr class="mb-cmp__r"><td class="mb-cmp__fl">{{ f[0] | strip }}</td>
+{%- for i in (1..2) -%}
+{%- assign v = f[i] | strip -%}
+<td{% if i == 1 %} class="mb-cmp__p"{% endif %}>
+{%- if v == 'yes' -%}<span class="mb-cmp__ok" role="img" aria-label="Yes"><svg viewBox="0 0 14 14" aria-hidden="true"><use href="#mb-cmp-y"/></svg></span>
+{%- elsif v == 'no' -%}<span class="mb-cmp__no" role="img" aria-label="No"><svg viewBox="0 0 24 23" aria-hidden="true"><use href="#mb-cmp-n"/></svg></span>
+{%- elsif v contains 'pills:' -%}{%- assign n = v | remove: 'pills:' | strip | plus: 0 -%}<div><div class="mb-cmp__pills" aria-hidden="true">{%- for k in (1..n) -%}<span class="mb-cmp__pill"></span>{%- endfor -%}</div><div class="mb-cmp__pc">{{ n }} pills</div></div>
+{%- elsif v != blank -%}<span class="mb-cmp__tx">{{ v }}</span>
+{%- endif -%}
+</td>
+{%- endfor -%}
+</tr>
+{%- endfor -%}
+</tbody></table></div>
+</div></div>
+</section>
