@@ -3,14 +3,14 @@
   Put @@ on its own line between cards. Leave the image URL empty to show a plain tinted box.
   Image URL: Content > Files > copy link. Add as many cards as you like.
 {%- endcomment -%}
-{%- assign mb_eyebrow = '3 Reasons why' -%}
-{%- assign mb_heading = 'Your section heading' -%}
+{%- assign mb_eyebrow = '3 Reasons Why' -%}
+{%- assign mb_heading = 'Purge Berberine is Different From What You&#39;ve Tried Before' -%}
 {%- capture mb_data -%}
- | Reason one headline | Replace this with a short explanation of your first reason.
+ | The Absorption Problem Plain Berberine Never Solves. | Your gut lining has proteins called P-glycoproteins that act like bouncers, blocking most berberine before it ever reaches your bloodstream. Studies suggest less than 1% of plain berberine actually absorbs without help. Purge Berberine includes black pepper extract, which contains piperine — a compound that disables those bouncers and increases absorption by up to 20 times. That is the missing step that turns a month of nothing into a week one that works.
 @@
- | Reason two headline | Replace this with a short explanation of your second reason.
+ | Plain Berberine Opens One Lock. You Need Four. | When estrogen drops, four separate metabolic systems break down at once — insulin response, blood sugar spikes, cellular energy uptake, and inflammation. Plain berberine only targets the first one. Purge Berberine adds Ceylon cinnamon, chromium, and turmeric specifically for the other three. Four ingredients assigned to four specific locks is why women who felt nothing on plain berberine notice a difference here.
 @@
- | Reason three headline | Replace this with a short explanation of your third reason.
+ | Built for the Belly Estrogen Creates. Not the One Calories Create. | Most berberine supplements were designed for general blood sugar management, not for the hormonal belly fat that appears after 40. That belly does not respond to calorie cutting because its cause is hormonal, not dietary. Purge Berberine was formulated specifically for the metabolic shifts that come with perimenopause and menopause. The women it works for have usually already tried everything else.
 {%- endcapture -%}
 {%- assign mb_cards = mb_data | split: '@@' -%}
 
@@ -55,7 +55,7 @@
 }
 </style>
 
-<section class="mb-pl" aria-label="{{ mb_heading | escape }}"><div class="mb-pl__wrap">
+<section class="mb-pl" aria-label="{{ mb_heading | strip_html }}"><div class="mb-pl__wrap">
 <div class="mb-pl__head"><span class="mb-pl__eyebrow">{{ mb_eyebrow }}</span><h2 class="mb-pl__title">{{ mb_heading }}</h2></div>
 <div class="mb-pl__grid">
 {%- for c in mb_cards -%}
