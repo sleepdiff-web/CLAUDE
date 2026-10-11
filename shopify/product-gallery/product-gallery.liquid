@@ -1,0 +1,392 @@
+{%- comment -%}
+  Product image gallery: thumbnail strip + arrows, styled like the original page.
+  Put this in a Custom Liquid section (or block) on the PRODUCT page. It draws nothing itself, it only styles
+  and wires up the theme's own gallery, so it works on any product page whose gallery is the standard Dawn one.
+  In the theme editor, open the Product information section and set:
+    Desktop layout = Thumbnail carousel, Mobile layout = Show thumbnails (Image zoom = None matches the original).
+  mb_active_color = outline colour of the selected thumbnail.
+  Set the section's top and bottom padding to 0 so it leaves no gap.
+{%- endcomment -%}
+{%- assign mb_active_color = '#c47245' -%}
+<style>
+/* --- Main Image Slider Arrows --- */
+:is(#mb-gv,media-gallery [id^="GalleryViewer-"]) {
+  position: relative;
+}
+
+:is(#mb-gv,media-gallery [id^="GalleryViewer-"]) .slider-buttons {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex !important; /* Force display on mobile, overriding small-hide */
+  justify-content: space-between;
+  align-items: center;
+  pointer-events: none; /* Let clicks pass through to the image */
+  z-index: 10;
+  padding: 0;
+}
+
+/* Hide the slider counter in the overlay */
+:is(#mb-gv,media-gallery [id^="GalleryViewer-"]) .slider-buttons .slider-counter {
+  display: none !important;
+}
+
+/* Main image navigation buttons overlay styling */
+:is(#mb-gv,media-gallery [id^="GalleryViewer-"]) .slider-buttons .slider-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: auto; /* Enable clicks on the buttons */
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #121212 !important; /* Force caret color to be visible */
+  transition: opacity 0.3s ease, background-color 0.2s ease, transform 0.2s ease;
+}
+
+/* Center the SVG chevron inside the circular button */
+:is(#mb-gv,media-gallery [id^="GalleryViewer-"]) .slider-buttons .slider-button .svg-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+:is(#mb-gv,media-gallery [id^="GalleryViewer-"]) .slider-buttons .slider-button svg {
+  width: 10px;
+  height: 10px;
+}
+
+:is(#mb-gv,media-gallery [id^="GalleryViewer-"]) .slider-buttons .slider-button:not([disabled]):hover {
+  background-color: rgba(255, 255, 255, 0.95);
+  transform: translateY(-50%) scale(1.05);
+}
+
+/* Smooth fade out when button is disabled or inactive (e.g. start/end of slider) */
+:is(#mb-gv,media-gallery [id^="GalleryViewer-"]) .slider-buttons .slider-button[disabled],
+:is(#mb-gv,media-gallery [id^="GalleryViewer-"]) .slider-buttons .slider-button[data-inactive="true"] {
+  opacity: 0.35 !important;
+  pointer-events: none !important;
+}
+
+:is(#mb-gv,media-gallery [id^="GalleryViewer-"]) .slider-buttons .slider-button--prev {
+  left: 12px;
+}
+
+:is(#mb-gv,media-gallery [id^="GalleryViewer-"]) .slider-buttons .slider-button--next {
+  right: 12px;
+}
+
+/* On Desktop (min-width: 750px), show arrows on hover over the gallery viewer */
+@media screen and (min-width: 750px) {
+  /* Force main slider buttons to show on desktop since Dawn hides them by default */
+  .product__media-wrapper :is(#mb-gv,media-gallery [id^="GalleryViewer-"]) .slider-buttons .slider-button {
+    display: flex !important;
+    opacity: 0 !important; /* Hide by default on desktop when not hovered */
+  }
+  
+  :is(#mb-gv,media-gallery [id^="GalleryViewer-"]):hover .slider-buttons .slider-button {
+    opacity: 1 !important; /* Show active buttons on hover */
+  }
+
+  :is(#mb-gv,media-gallery [id^="GalleryViewer-"]):hover .slider-buttons .slider-button[disabled],
+  :is(#mb-gv,media-gallery [id^="GalleryViewer-"]):hover .slider-buttons .slider-button[data-inactive="true"] {
+    opacity: 0.35 !important; /* Show disabled/inactive buttons at 35% opacity on hover */
+  }
+}
+
+/* --- Thumbnail Gallery --- */
+
+/* Hide thumbnail slider navigation arrows completely on both desktop and mobile */
+:is(#mb-gt,media-gallery [id^="GalleryThumbnails-"]) .slider-button {
+  display: none !important;
+}
+
+/* Remove aspect ratio pseudo-element spacer to allow exact size matching */
+:is(#mb-gt,media-gallery [id^="GalleryThumbnails-"]) .thumbnail-list__item::before {
+  content: none !important;
+}
+
+/* Mobile Thumbnails styling (max-width: 749px) */
+@media screen and (max-width: 749px) {
+  :is(#mb-gv,media-gallery [id^="GalleryViewer-"]) .product__media-list {
+    margin-bottom: 0 !important;
+  }
+
+  :is(#mb-gt,media-gallery [id^="GalleryThumbnails-"]) {
+    margin-top: 16px !important;
+  }
+
+  :is(#mb-gt,media-gallery [id^="GalleryThumbnails-"]) .thumbnail-list.slider {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch !important;
+    padding: 0.5rem 0 !important;
+    margin: 0 !important;
+    gap: 12px !important;
+    scroll-padding-left: 16px !important;
+  }
+
+  :is(#mb-gt,media-gallery [id^="GalleryThumbnails-"]) .thumbnail-list__item.slider__slide {
+    width: 126px !important;
+    height: 126px !important;
+    flex: 0 0 126px !important;
+    max-width: 126px !important;
+    scroll-snap-align: start !important;
+    position: relative !important;
+  }
+
+  :is(#mb-gt,media-gallery [id^="GalleryThumbnails-"]) .thumbnail-list__item.slider__slide:first-child {
+    margin-left: 16px !important;
+  }
+}
+
+/* Desktop Thumbnails styling (min-width: 750px) */
+@media screen and (min-width: 750px) {
+  /* Make featured image full-bleed in the container on desktop */
+  :is(#mb-mg,media-gallery[id^="MediaGallery-"]) .product-media-container.constrain-height.media-fit-contain {
+    width: 100% !important;
+  }
+  :is(#mb-mg,media-gallery[id^="MediaGallery-"]) .product__media img {
+    object-fit: cover !important;
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  /* Make desktop navigation arrows larger and centered */
+  .product__media-wrapper :is(#mb-gv,media-gallery [id^="GalleryViewer-"]) .slider-buttons .slider-button {
+    width: 48px !important;
+    height: 48px !important;
+  }
+  .product__media-wrapper :is(#mb-gv,media-gallery [id^="GalleryViewer-"]) .slider-buttons .slider-button svg {
+    width: 14px !important;
+    height: 14px !important;
+  }
+
+  :is(#mb-gt,media-gallery [id^="GalleryThumbnails-"]) .thumbnail-list {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch !important;
+    justify-content: flex-start !important;
+    gap: 12px !important;
+    padding: 0.5rem 0 !important;
+    scrollbar-width: none; /* Firefox */
+    cursor: grab;
+  }
+
+  :is(#mb-gt,media-gallery [id^="GalleryThumbnails-"]) .thumbnail-list:active {
+    cursor: grabbing;
+  }
+
+  :is(#mb-gt,media-gallery [id^="GalleryThumbnails-"]) .thumbnail-list::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
+
+  :is(#mb-gt,media-gallery [id^="GalleryThumbnails-"]) .thumbnail-list__item.slider__slide {
+    width: 126px !important;
+    height: 126px !important;
+    flex: 0 0 126px !important;
+    max-width: 126px !important;
+    position: relative !important;
+    scroll-snap-align: start !important;
+  }
+}
+
+/* Active Thumbnail Outline styling */
+:is(#mb-gt,media-gallery [id^="GalleryThumbnails-"]) .thumbnail[aria-current] {
+  box-shadow: 0 0 0 2px {{ mb_active_color }} !important;
+  border-radius: 4px;
+}
+
+:is(#mb-gt,media-gallery [id^="GalleryThumbnails-"]) .thumbnail {
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+/* Prevent default image drag from breaking custom mouse drag-scroll */
+:is(#mb-gt,media-gallery [id^="GalleryThumbnails-"]) img {
+  user-select: none !important;
+  -webkit-user-drag: none !important;
+}
+</style>
+
+<script>
+(function() {
+  const initceylonGalleryArrows = () => {
+    const viewer = document.querySelector('media-gallery [id^="GalleryViewer-"]');
+    if (!viewer) return;
+
+    const prevBtn = viewer.querySelector('button[name="previous"]');
+    const nextBtn = viewer.querySelector('button[name="next"]');
+    const slider = viewer.querySelector('[id^="Slider-"]');
+
+    if (!prevBtn || !nextBtn || !slider) return;
+
+    // Desktop logic: active thumbnail detection and custom click handling
+    function updateDesktopArrows() {
+      if (window.innerWidth < 750) return;
+
+      const items = Array.from(document.querySelectorAll('media-gallery [id^="Slider-Thumbnails-"] .thumbnail-list__item'));
+      if (items.length <= 1) {
+        prevBtn.setAttribute('data-inactive', 'true');
+        nextBtn.setAttribute('data-inactive', 'true');
+        return;
+      }
+
+      const activeIndex = items.findIndex(item => item.querySelector('button[aria-current="true"]'));
+
+      if (activeIndex <= 0) {
+        prevBtn.setAttribute('data-inactive', 'true');
+      } else {
+        prevBtn.removeAttribute('data-inactive');
+      }
+
+      if (activeIndex >= items.length - 1) {
+        nextBtn.setAttribute('data-inactive', 'true');
+      } else {
+        nextBtn.removeAttribute('data-inactive');
+      }
+    }
+
+    // Mobile logic: standard scroll position detection
+    function updateArrowStates() {
+      if (window.innerWidth < 750) {
+        const scrollLeft = slider.scrollLeft;
+        const maxScroll = slider.scrollWidth - slider.clientWidth;
+
+        if (scrollLeft <= 40) {
+          prevBtn.setAttribute('data-inactive', 'true');
+        } else {
+          prevBtn.removeAttribute('data-inactive');
+        }
+
+        if (scrollLeft >= maxScroll - 40) {
+          nextBtn.setAttribute('data-inactive', 'true');
+        } else {
+          nextBtn.removeAttribute('data-inactive');
+        }
+      } else {
+        updateDesktopArrows();
+      }
+    }
+
+    // Custom desktop clicks
+    prevBtn.addEventListener('click', (e) => {
+      if (window.innerWidth >= 750) {
+        e.preventDefault();
+        e.stopPropagation();
+        const items = Array.from(document.querySelectorAll('media-gallery [id^="Slider-Thumbnails-"] .thumbnail-list__item'));
+        const activeIndex = items.findIndex(item => item.querySelector('button[aria-current="true"]'));
+        if (activeIndex > 0) {
+          const btn = items[activeIndex - 1].querySelector('button');
+          if (btn) btn.click();
+          updateDesktopArrows();
+        }
+      }
+    });
+
+    nextBtn.addEventListener('click', (e) => {
+      if (window.innerWidth >= 750) {
+        e.preventDefault();
+        e.stopPropagation();
+        const items = Array.from(document.querySelectorAll('media-gallery [id^="Slider-Thumbnails-"] .thumbnail-list__item'));
+        const activeIndex = items.findIndex(item => item.querySelector('button[aria-current="true"]'));
+        if (activeIndex !== -1 && activeIndex < items.length - 1) {
+          const btn = items[activeIndex + 1].querySelector('button');
+          if (btn) btn.click();
+          updateDesktopArrows();
+        }
+      }
+    });
+
+    // Listen to thumbnail button clicks to update arrows state
+    document.querySelectorAll('media-gallery [id^="Slider-Thumbnails-"] button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        setTimeout(updateDesktopArrows, 50);
+      });
+    });
+
+    // Attach listeners for scroll and resize
+    slider.addEventListener('scroll', updateArrowStates, { passive: true });
+    window.addEventListener('resize', updateArrowStates, { passive: true });
+
+    // Initial check runs
+    updateArrowStates();
+    setTimeout(updateArrowStates, 100);
+    setTimeout(updateArrowStates, 300);
+    setTimeout(updateArrowStates, 600);
+    setTimeout(updateArrowStates, 1000);
+  };
+
+  // Drag-to-scroll for desktop thumbnails
+  const initDragScroll = () => {
+    const slider = document.querySelector('media-gallery [id^="Slider-Thumbnails-"]');
+    if (!slider) return;
+
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+    let hasMoved = false;
+
+    slider.addEventListener('mousedown', (e) => {
+      if (window.innerWidth < 750) return; // Only drag on desktop
+      isDown = true;
+      hasMoved = false;
+      startX = e.pageX - slider.offsetLeft;
+      scrollLeft = slider.scrollLeft;
+    });
+
+    slider.addEventListener('mouseleave', () => {
+      isDown = false;
+    });
+
+    slider.addEventListener('mouseup', () => {
+      isDown = false;
+    });
+
+    slider.addEventListener('mousemove', (e) => {
+      if (!isDown) return;
+      const x = e.pageX - slider.offsetLeft;
+      const walk = (x - startX) * 1.5;
+      if (Math.abs(x - startX) > 5) {
+        hasMoved = true;
+      }
+      slider.scrollLeft = scrollLeft - walk;
+    });
+
+    // Capture and prevent thumbnail click if dragging happened
+    slider.addEventListener('click', (e) => {
+      if (hasMoved) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    }, true);
+  };
+
+  const initAll = () => {
+    initceylonGalleryArrows();
+    initDragScroll();
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAll);
+  } else {
+    initAll();
+  }
+})();
+</script>
