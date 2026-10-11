@@ -1,0 +1,6 @@
+@media(max-width:749px){
+[id^=GalleryViewer-] .product__media-list{gap:0!important;margin:0!important;scroll-padding:0!important}
+[id^=GalleryViewer-] .product__media-item{flex:0 0 100%!important;width:100%!important;max-width:100%!important;margin:0!important;padding:0!important}
+[id^=GalleryViewer-] :is(.global-media-settings,.product-media-container,.product__media,.media,img){border-radius:0!important}
+}
+@media(min-width:750px){[id^=MainProduct-]{padding-top:36px!important}}
