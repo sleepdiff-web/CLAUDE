@@ -1,0 +1,155 @@
+{%- comment -%}
+  "Why This Formula Actually Works" card carousel. Phones: swipe/drag carousel (1.3 cards in view) with dots and two arrow buttons. Tablets and desktop (750px and up): four cards in a row, no controls.
+  EDIT YOUR CARDS BELOW. One card = title ||| text ||| image link. Put @@ on its own line between cards.
+  The image links start as Metabolae's own files so the section is an exact copy straight away.
+  Before you go live, download them, upload them to your own store (Content > Files) and paste your links here instead, so they keep working and are yours. Also replace the text, because it describes Metabolae's product.
+  mb_title = the heading. mb_accent = the colour of the hover border and the active dot (Metabolae's orange; use #943434 for your red). mb_title_color = heading and card titles. mb_text_color = card text. mb_bg = section background. These colours are locked, so the theme cannot turn them black.
+  Do not use a straight apostrophe (') in the text, use &#39; instead. Do not type three | in a row inside a card except as the separators.
+{%- endcomment -%}
+{%- assign mb_title = 'Why This Ceylon Cinnamon Formula Actually Works' -%}
+{%- assign mb_accent = '#c47245' -%}
+{%- assign mb_title_color = '#000000' -%}
+{%- assign mb_text_color = '#444444' -%}
+{%- assign mb_bg = '#ffffff' -%}
+{%- capture mb_cards -%}
+Genuine Ceylon, Not Cassia ||| Each softgel contains Cinnamomum verum, the authentic Ceylon variety, harvested in Sri Lanka and concentrated 12:1 to equal 7,200 mg of raw cinnamon per dose. Unlike Cassia, it&#39;s naturally low in coumarin, which matters if you&#39;re 50+ and taking it daily for years, not just weeks. ||| https://metabolae.com/cdn/shop/files/metabolae-genuine-ceylon-1.webp?v=1784642517
+@@
+7,200 mg Potency, One Softgel ||| Most cinnamon supplements underdose you, a few hundred milligrams of powder isn&#39;t enough to matter. One Metabolae softgel delivers a full therapeutic-level dose in a single serving, so you&#39;re not swallowing a handful of capsules or stirring powder into your coffee just to get a meaningful amount. ||| https://metabolae.com/cdn/shop/files/metabolae-7200mg-potency-2.webp?v=1784642518
+@@
+MCT-Powered Absorption ||| Cinnamon&#39;s active compounds are fat-soluble, which most people don&#39;t realize. Without a fat carrier, they largely pass through your digestive system unused, and that effect only gets worse as digestion slows with age. MCT oil solves this by carrying the extract directly into your bloodstream, where it can actually go to work. ||| https://metabolae.com/cdn/shop/files/metabolae-mct-powered-3.webp?v=1784642517
+@@
+Third-Party Lab Verified ||| Every batch is sent to an independent lab, not as a formality, but because you deserve to know exactly what you&#39;re putting in your body. Each batch is verified free of coumarin, GMOs, gluten, and artificial fillers, so there&#39;s nothing hidden in what you&#39;re taking every day. ||| https://metabolae.com/cdn/shop/files/metabolae-third-party-4.webp?v=1784642518
+{%- endcapture -%}
+{%- assign mb_items = mb_cards | split: '@@' -%}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600&display=swap"></noscript>
+
+<style>
+.page-width:has(>.mb-rc){max-width:none;padding:0}
+.mb-rc,.mb-rc *,.mb-rc *::before,.mb-rc *::after{box-sizing:border-box}
+.mb-rc{padding:36px 0 12px;background:var(--mb-rc-bg,#fff);font-family:'Plus Jakarta Sans',system-ui,sans-serif;font-size:15px;font-weight:500;line-height:1.8;letter-spacing:.6px;text-align:left}
+.mb-rc__w{max-width:1200px;margin:0 auto;padding:0 15px;text-align:center}
+.mb-rc__h{margin:0 auto 32px;padding:0;max-width:800px;font-family:Poppins,system-ui,sans-serif;font-size:24px;font-style:normal;font-weight:400!important;line-height:1.25;letter-spacing:-.02em;text-align:center;text-transform:none;word-break:break-word}
+.mb-rc__sc{position:relative;width:100%;margin-bottom:8px;overflow:hidden;container-type:inline-size;touch-action:pan-y;cursor:grab}
+.mb-rc__sc.is-drag{cursor:grabbing;-webkit-user-select:none;user-select:none}
+.mb-rc__row{display:flex;padding:10px 4px 8px;text-align:left;transition-property:transform}
+.mb-rc__c{display:flex;flex-direction:column;flex-shrink:0;width:calc((100cqw - 4.8px) / 1.3);height:auto;margin-right:16px;overflow:hidden;border:1.5px solid #eaeaea;border-radius:10px;background:#fff;box-shadow:none;transition:transform .2s ease,border-color .2s ease}
+.mb-rc__c:hover{transform:translateY(-2px);border-color:var(--mb-rc-ac,#c47245)}
+.mb-rc__i{position:relative;width:100%;aspect-ratio:16 / 12;overflow:hidden;background:#f2efec}
+.mb-rc__i img{display:block;width:100%;height:100%;object-fit:cover;border-radius:10px 10px 0 0!important}
+.mb-rc__b{display:flex;flex-direction:column;align-items:center;flex-grow:1;padding:24px 10px;background:#fff;text-align:center}
+.mb-rc__t{margin:0 0 12px;padding:0;font-family:Poppins,system-ui,sans-serif;font-size:17px;font-style:normal;font-weight:500!important;line-height:1.3;letter-spacing:.6px;text-align:center;text-transform:none;word-break:break-word}
+.mb-rc__d{margin:0;font-size:15px;font-weight:400!important;line-height:1.55;text-align:center}
+.mb-rc .mb-rc__h,.mb-rc .mb-rc__t{color:var(--mb-rc-tt,#000)!important;-webkit-text-fill-color:var(--mb-rc-tt,#000)!important}
+.mb-rc .mb-rc__d{color:var(--mb-rc-tx,#444)!important;-webkit-text-fill-color:var(--mb-rc-tx,#444)!important}
+.mb-rc__ctl{display:flex;flex-direction:column;align-items:center;gap:24px;margin:10px 0 12px}
+.mb-rc__dots{display:flex;justify-content:center;align-items:center;gap:8px;width:100%}
+.mb-rc__dot{width:8px;height:8px;margin:0;padding:0;border:0;border-radius:50%;background:#ccc;cursor:pointer;transition:background-color .25s ease,width .25s ease,border-radius .25s ease}
+.mb-rc__dot.is-on{width:24px;border-radius:4px;background:var(--mb-rc-ac,#c47245)}
+.mb-rc__arr{display:flex;gap:12px}
+.mb-rc__btn{display:flex;align-items:center;justify-content:center;width:36px;height:36px;margin:0;padding:0;border:0;border-radius:50%;background:#eceae6;color:#3b3b3b;cursor:pointer;transition:background-color .2s ease,transform .2s ease}
+.mb-rc__btn:hover{background:#ddd9d2}
+.mb-rc__btn:active{transform:scale(.95)}
+.mb-rc__btn.is-off{opacity:.35!important;cursor:default!important;pointer-events:none!important;background:#eceae6!important}
+.mb-rc__btn svg{display:block;width:18px;height:18px}
+.mb-rc.is-lock .mb-rc__dots,.mb-rc.is-lock .mb-rc__arr{display:none}
+@media screen and (min-width:750px){
+.mb-rc{padding:48px 0;font-size:16px}
+.mb-rc__h{font-size:clamp(20px,2.8vw,30px)}
+.mb-rc__sc{max-width:1000px;margin:0 auto 24px;cursor:auto}
+.mb-rc__row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;width:100%;padding:10px 4px 20px;transform:none!important}
+.mb-rc__c{width:auto;margin-right:0}
+.mb-rc__ctl{display:none!important}
+}
+</style>
+
+<div class="mb-rc" style="--mb-rc-ac:{{ mb_accent }};--mb-rc-tt:{{ mb_title_color }};--mb-rc-tx:{{ mb_text_color }};--mb-rc-bg:{{ mb_bg }}">
+<div class="mb-rc__w">
+<h2 class="mb-rc__h">{{ mb_title }}</h2>
+<div class="mb-rc__sc">
+<div class="mb-rc__row" aria-live="polite">
+{%- for it in mb_items -%}
+{%- assign f = it | split: '|||' -%}
+{%- assign ttl = f[0] | strip -%}
+{%- assign img = f[2] | strip -%}
+{%- assign iq = '?' -%}{%- if img contains '?' -%}{%- assign iq = '&amp;' -%}{%- endif -%}
+<div class="mb-rc__c" role="group" aria-label="{{ forloop.index }} / {{ forloop.length }}"><div class="mb-rc__i">{%- if img != blank -%}<img src="{{ img }}{{ iq }}width=600" alt="{{ ttl | escape_once }}" loading="lazy" width="400" height="250">{%- endif -%}</div><div class="mb-rc__b"><h3 class="mb-rc__t">{{ ttl }}</h3><p class="mb-rc__d">{{ f[1] | strip }}</p></div></div>
+{%- endfor -%}
+</div>
+</div>
+<div class="mb-rc__ctl">
+<div class="mb-rc__dots">{%- for it in mb_items -%}<button type="button" class="mb-rc__dot{% if forloop.first %} is-on{% endif %}" aria-label="Go to slide {{ forloop.index }}"{% if forloop.first %} aria-current="true"{% endif %}></button>{%- endfor -%}</div>
+<div class="mb-rc__arr">
+<button type="button" class="mb-rc__btn mb-rc__prev is-off" aria-label="Previous slide" disabled tabindex="-1" aria-disabled="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+<button type="button" class="mb-rc__btn mb-rc__next" aria-label="Next slide" aria-disabled="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+</div>
+</div>
+</div>
+</div>
+<script>
+(function(){
+var r=document.currentScript.previousElementSibling;
+if(!r||!r.classList.contains('mb-rc'))return;
+var sc=r.querySelector('.mb-rc__sc'),row=r.querySelector('.mb-rc__row'),cs=[].slice.call(row.children),n=cs.length,ds=r.querySelector('.mb-rc__dots'),pv=r.querySelector('.mb-rc__prev'),nx=r.querySelector('.mb-rc__next'),mq=matchMedia('(min-width:750px)'),
+dots=[].slice.call(ds.children),grid=[0],snap=[0],tr=0,si=0,down=0,pid=0,moved=0,pass=0,sx=0,sy=0,t0=0,st=0,dir=0,scr,rid='mb-rc-'+Math.random().toString(36).slice(2,8);
+if(n<2){r.classList.add('is-lock');return}
+row.id=rid;pv.setAttribute('aria-controls',rid);nx.setAttribute('aria-controls',rid);
+function off(b,o){b.disabled=o;b.classList.toggle('is-off',o);b.setAttribute('aria-disabled',o);b.tabIndex=o?-1:0}
+function nav(){off(pv,tr>-1);off(nx,tr<-snap[snap.length-1]+1)}
+function put(x,d){tr=x;row.style.transitionDuration=d+'ms';row.style.transform='translate3d('+x+'px,0px,0px)';nav()}
+function act(){for(var i=0;i<dots.length;i++){var on=i===si;dots[i].classList.toggle('is-on',on);if(on)dots[i].setAttribute('aria-current','true');else dots[i].removeAttribute('aria-current')}}
+function go(i,d){si=Math.max(0,Math.min(i,snap.length-1));put(-snap[si],d==null?300:d);act()}
+function build(){ds.textContent='';dots=[];for(var i=0;i<snap.length;i++){var b=document.createElement('button');b.type='button';b.className='mb-rc__dot';b.setAttribute('aria-label','Go to slide '+(i+1));ds.appendChild(b);dots.push(b)}}
+function measure(){
+var W=sc.clientWidth;if(!W||mq.matches)return 0;
+var a=cs[0].getBoundingClientRect().width,g=parseFloat(getComputedStyle(cs[0]).marginRight)||0,v=n*a+(n-1)*g-W,i;
+grid=[];snap=[];
+for(i=0;i<n;i++){grid.push(i*(a+g));if(i*(a+g)<=v)snap.push(i*(a+g))}
+if(!snap.length)snap=[0];
+if(Math.floor(v)-Math.floor(snap[snap.length-1])>1)snap.push(v);
+return 1}
+function upd(){
+if(!measure())return;
+if(dots.length!==snap.length)build();
+r.classList.toggle('is-lock',snap.length<2);
+go(Math.min(si,snap.length-1),0)}
+function curT(){var m=getComputedStyle(row).transform;if(!m||m==='none')return 0;try{return new DOMMatrixReadOnly(m).m41}catch(e){return tr}}
+sc.addEventListener('pointerdown',function(e){
+if(mq.matches||down||snap.length<2||(e.pointerType==='mouse'&&e.button))return;
+down=1;pid=e.pointerId;moved=0;pass=0;scr=undefined;dir=0;sx=e.clientX;sy=e.clientY;t0=Date.now()});
+sc.addEventListener('pointermove',function(e){
+if(!down||e.pointerId!==pid)return;
+var dx=e.clientX-sx,dy=e.clientY-sy,c,lim=snap[snap.length-1];
+if(scr===undefined){if(dy===0)scr=false;else if(dx*dx+dy*dy>=25)scr=Math.atan2(Math.abs(dy),Math.abs(dx))*180/Math.PI>45}
+if(scr){down=0;return}
+if(!moved){moved=1;st=curT();row.style.transitionDuration='0ms'}
+dir=dx>0?-1:1;
+if(!pass){if(Math.abs(dx)>5){pass=1;sx=e.clientX;sy=e.clientY;sc.classList.add('is-drag');try{sc.setPointerCapture(pid)}catch(x){}}return}
+dx=e.clientX-sx;dir=dx>0?-1:1;
+c=dx+st;
+if(dx>0){if(c>0)c=-1+Math.pow(st+dx,.85)}
+else if(dx<0){if(c<-lim)c=-lim+1-Math.pow(-lim-st-dx,.85)}
+put(c,0)});
+function end(e){
+if(!down||e.pointerId!==pid)return;
+down=0;sc.classList.remove('is-drag');
+if(!moved||!pass||!dir||tr===st)return;
+var pos=-tr,stop=0,gs=grid[1]-grid[0],i,ratio,dt=Date.now()-t0;
+for(i=0;i<n;i++){if(grid[i+1]!==undefined){if(pos>=grid[i]&&pos<grid[i+1]){stop=i;gs=grid[i+1]-grid[i]}}else if(pos>=grid[i]){stop=i;gs=grid[n-1]-grid[n-2]}}
+ratio=(pos-grid[stop])/gs;
+if(dt>300)go(dir>0?(ratio>=.5?stop+1:stop):(ratio>.5?stop+1:stop));
+else go(dir>0?stop+1:stop)}
+sc.addEventListener('pointerup',end);
+sc.addEventListener('pointercancel',end);
+sc.addEventListener('dragstart',function(e){e.preventDefault()});
+pv.addEventListener('click',function(){go(si-1)});
+nx.addEventListener('click',function(){go(si+1)});
+ds.addEventListener('click',function(e){var i=dots.indexOf(e.target.closest('.mb-rc__dot'));if(i>-1)go(i)});
+if('ResizeObserver' in window)new ResizeObserver(upd).observe(sc);else addEventListener('resize',upd);
+(mq.addEventListener?mq.addEventListener('change',upd):mq.addListener(upd));
+upd();
+})();
+</script>
