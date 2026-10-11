@@ -1,0 +1,162 @@
+{%- comment -%}
+  Customer reviews carousel: white cards with rating, title, review, name, "Verified Customer" and two tags. Desktop (768px and up): 3 cards per page. Phones: 1 card per page. Arrows, dots and finger swipe.
+  EDIT YOUR REVIEWS BELOW. One review = rating ||| title ||| review text ||| name ||| photo link ||| tags
+  The tags are separated by a single |  (for example: Stable Sugar | Steady Energy). Leave the photo link empty for a grey person icon. Put @@ on its own line between reviews.
+  The photo links start as Metabolae's own files so the section is an exact copy straight away. Before you go live, upload your own customer photos (Content > Files), paste your links here, and replace the review texts with real reviews from your own customers.
+  mb_per_page = cards per page on desktop. mb_accent = stars, Verified Customer, tags and the active dot (Metabolae's orange; use #943434 for your red). mb_tag_bg = the tag background (the accent colour with 12% opacity: #c472451f for orange, #9434341f for #943434). mb_text_color = rating, title and review. mb_name_color = the name. mb_bg = section background.
+  These colours are locked, so the theme cannot turn them black.
+  Do not use a straight apostrophe (') in the text, use &#39; instead. Do not type three | in a row except as the separators.
+{%- endcomment -%}
+{%- assign mb_per_page = 3 -%}
+{%- assign mb_accent = '#c47245' -%}
+{%- assign mb_tag_bg = '#c472451f' -%}
+{%- assign mb_text_color = '#000000' -%}
+{%- assign mb_name_color = '#6e6e6e' -%}
+{%- assign mb_bg = '#faf5f2' -%}
+{%- capture mb_reviews -%}
+5.0 ||| Finally Back in Control! ||| For years my blood sugar was all over the place and every reading stressed me out. I felt like no matter how clean I ate or how hard I tried, my numbers never stayed consistent. Since starting Metabolae, everything feels steadier and those afternoon crashes don’t control me anymore. My energy lasts through the day and I’m not constantly reaching for caffeine or sugar. For the first time in a long time, I feel like I’m back in charge of my health. ||| Jacob M. ||| https://metabolae.com/cdn/shop/files/metabolae_ugc_male-3.webp?v=1776668273 ||| Stable Sugar | Steady Energy
+@@
+5.0 ||| Mornings Finally Feel Clear ||| I used to start every morning tired, foggy, and already worrying about what my numbers would look like. I tried every so-called ‘healthy fix’ but nothing really moved the needle. With Metabolae, my mornings feel clear, my cravings are under control, and my energy is steady throughout the day. I’m not dealing with those late-night sugar crashes anymore and I finally feel balanced. It feels good knowing I’ve found something simple that actually works. ||| David L. ||| https://metabolae.com/cdn/shop/files/metabolae_ugc_male-5.webp?v=1776668274 ||| Morning Clarity | Balanced Cravings
+@@
+5.0 ||| My Doctor Asked What I Changed! ||| I was skeptical about another cinnamon supplement because I&#39;d tried so many that did nothing. But my neighbor insisted this Ceylon one was different because it&#39;s concentrated and in oil form instead of powder. After 8 weeks, my doctor noticed my numbers were more stable and asked what I&#39;d changed. I told him about the Ceylon cinnamon and he said whatever I&#39;m doing, keep it up. No stomach issues like the other brands gave me either. ||| Margaret R. ||| https://metabolae.com/cdn/shop/files/metabolae_ugc_female-2.webp?v=1776668273 ||| Doctor Approved | Gentle Digestion
+@@
+4.9 ||| Wish I&#39;d Known About Ceylon vs Cassia Years Ago! ||| My husband had been taking cinnamon capsules from the drugstore for blood sugar support, but they weren’t doing much and sometimes caused heartburn. I researched and learned most store brands use Cassia cinnamon, which can stress your liver. Metabolae uses real Ceylon cinnamon. Within a month, his energy was steadier and his morning readings improved from the 140s to consistent 120s. The softgels are much easier on his stomach too. ||| Patricia S. ||| https://metabolae.com/cdn/shop/files/metabolae_ugc_female-4.webp?v=1776668273 ||| True Ceylon | Stomach Friendly
+@@
+5.0 ||| Quality You Can Actually Feel Working! ||| As a retired nurse, I&#39;m very particular about supplements. Most are cheap fillers with barely any active ingredients. Metabolae Ceylon Cinnamon is clearly premium — you can tell by the MCT oil delivery system and 12-to-1 concentration from authentic Sri Lankan Ceylon bark. I&#39;ve been taking it for 3 months and my energy levels are the most stable they&#39;ve been in years. No more 2 PM sugar cravings, no digestive upset, and my labs showed improvements. Worth every penny. ||| Joyce T. ||| https://metabolae.com/cdn/shop/files/metabolae_ugc_female-3.webp?v=1776668274 ||| Premium Quality | Stable Energy
+@@
+5.0 ||| The First Thing That Works ||| I’ve thrown away so much money on powders, gummies, and sugar support blends that made big promises but never delivered. Nothing ever stuck and I just kept feeling more frustrated. Metabolae was different from the start — one softgel a day actually gave me the steady energy I’d been missing for years. My focus is sharper, I don’t hit the wall in the afternoons, and I finally feel consistent. It’s the first product I can honestly say has changed my daily routine. ||| Michael T. ||| https://metabolae.com/cdn/shop/files/metabolae_ugc_male-3.webp?v=1776668273 ||| Daily Focus | Lasting Energy
+{%- endcapture -%}
+{%- assign mb_items = mb_reviews | split: '@@' -%}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600&display=swap"></noscript>
+
+<style>
+.page-width:has(>.mb-rr){max-width:none;padding:0}
+.mb-rr,.mb-rr *,.mb-rr *::before,.mb-rr *::after{box-sizing:border-box}
+.mb-rr{padding:30px 0 48px;background-color:var(--mb-rr-bg,#faf5f2)!important;font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:500;line-height:1.8;letter-spacing:.6px;text-align:left}
+.mb-rr__w{max-width:1300px;margin:0 auto;padding:0 20px}
+.mb-rr__vp{position:relative;width:100%;overflow:hidden}
+.mb-rr__tk{display:flex;transition:transform .42s cubic-bezier(.25,.46,.45,.94);will-change:transform}
+.mb-rr__sl{display:flex;flex:0 0 calc(100% / var(--mb-rr-n,3));padding:0 10px}
+.mb-rr__cd{display:flex;flex-direction:column;width:100%;padding:24px;border:2px solid #d5d5d5;border-radius:10px;background-color:#fff;box-shadow:none!important}
+.mb-rr__rt{display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.mb-rr__num{font-size:15px;font-weight:700}
+.mb-rr__st{display:inline-block;font-size:18px;letter-spacing:2px;line-height:1}
+.mb-rr__ti{margin:0 0 10px;padding:0;font-family:Poppins,sans-serif;font-size:15px;font-style:normal;font-weight:600;line-height:1.3;letter-spacing:.6px;text-transform:none;word-break:break-word}
+.mb-rr__tx{flex:1;margin:0 0 24px;font-size:14.5px;font-weight:300;line-height:1.6}
+.mb-rr__au{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;padding-top:16px;border-top:1px solid #f2f2f2}
+.mb-rr__al{display:flex;align-items:center;gap:10px}
+.mb-rr__av{display:block;width:28px;height:28px;border-radius:50%;object-fit:cover}
+.mb-rr__ph{display:flex;align-items:flex-end;justify-content:center;width:28px;height:28px;overflow:hidden;border-radius:50%;background:#e2e2e2}
+.mb-rr__ph svg{width:14px;height:14px;margin-bottom:-1px;fill:#a0a0a0}
+.mb-rr__nm{font-size:11px;font-weight:500;letter-spacing:.04em;text-transform:uppercase;white-space:nowrap}
+.mb-rr__vf{display:flex;align-items:center;gap:4px;font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;white-space:nowrap}
+.mb-rr__vf svg{width:12px;height:12px;stroke-width:2.5}
+.mb-rr__tg{display:flex;flex-wrap:wrap;gap:8px}
+.mb-rr__pl{display:inline-flex;align-items:center;justify-content:center;min-height:32px;padding:7px 16px!important;border:1px solid var(--mb-rr-ac,#c47245)!important;border-radius:20px;background-color:var(--mb-rr-tb,#c472451f)!important;color:var(--mb-rr-ac,#c47245)!important;-webkit-text-fill-color:var(--mb-rr-ac,#c47245)!important;font-family:Satoshi,sans-serif;font-size:12px!important;font-weight:400!important;line-height:1.5;text-transform:capitalize}
+.mb-rr .mb-rr__num,.mb-rr .mb-rr__ti,.mb-rr .mb-rr__tx{color:var(--mb-rr-tx,#000)!important;-webkit-text-fill-color:var(--mb-rr-tx,#000)!important}
+.mb-rr .mb-rr__nm{color:var(--mb-rr-nm,#6e6e6e)!important;-webkit-text-fill-color:var(--mb-rr-nm,#6e6e6e)!important}
+.mb-rr .mb-rr__st,.mb-rr .mb-rr__vf{color:var(--mb-rr-ac,#c47245)!important;-webkit-text-fill-color:var(--mb-rr-ac,#c47245)!important}
+.mb-rr__ct{display:flex;flex-direction:column;align-items:center;gap:16px;margin-top:30px}
+.mb-rr__ar{display:flex;gap:12px}
+.mb-rr__bt{display:flex;align-items:center;justify-content:center;width:36px;height:36px;margin:0;padding:0 0 4px;border:0;border-radius:50%;background-color:#eceae6;color:#3b3b3b;font-size:24px;font-weight:300;line-height:1;cursor:pointer;-webkit-user-select:none;user-select:none;transition:background-color .2s ease,transform .2s ease}
+.mb-rr__bt:hover{background-color:#ddd9d2}
+.mb-rr__bt:active{transform:scale(.95)}
+.mb-rr__bt.is-disabled{opacity:.35!important;cursor:default!important;pointer-events:none!important;background-color:#eceae6!important}
+.mb-rr__ds{display:flex;justify-content:center;align-items:center;gap:8px}
+.mb-rr__dt{display:block;width:8px;height:8px;margin:0;padding:0;border:0;border-radius:50%;background-color:#ccc;cursor:pointer;transition:background-color .25s ease,width .25s ease,border-radius .25s ease}
+.mb-rr__dt.is-active{width:24px;border-radius:4px;background-color:var(--mb-rr-ac,#c47245)!important}
+@media (max-width:767px){
+.mb-rr{padding:20px 0 36px!important}
+.mb-rr__w{padding:0 20px!important}
+.mb-rr__sl{flex:0 0 100%!important;width:100%!important;max-width:100%!important;padding:0!important}
+.mb-rr__cd{width:100%!important;padding:24px 20px!important}
+.mb-rr__st{font-size:20px!important}
+.mb-rr__num{font-size:17px!important}
+.mb-rr__tx{font-size:16px}
+.mb-rr__nm{font-size:12px}
+.mb-rr__pl{flex:1 1 0%!important;max-width:calc(50% - 4px)!important;padding:7px 10px!important;white-space:nowrap!important}
+.mb-rr__tg{display:flex!important;flex-wrap:nowrap!important;justify-content:space-between!important;gap:8px!important}
+}
+</style>
+
+<section class="mb-rr" aria-label="Customer reviews" style="--mb-rr-n:{{ mb_per_page }};--mb-rr-ac:{{ mb_accent }};--mb-rr-tb:{{ mb_tag_bg }};--mb-rr-tx:{{ mb_text_color }};--mb-rr-nm:{{ mb_name_color }};--mb-rr-bg:{{ mb_bg }}" data-per="{{ mb_per_page }}">
+<div class="mb-rr__w">
+<div class="mb-rr__vp">
+<div class="mb-rr__tk" style="transform:translateX(0px)">
+{%- for it in mb_items -%}
+{%- assign f = it | split: '|||' -%}
+{%- assign nm = f[3] | strip -%}
+{%- assign av = f[4] | strip -%}
+{%- assign aq = '?' -%}{%- if av contains '?' -%}{%- assign aq = '&amp;' -%}{%- endif -%}
+{%- assign rate = f[0] | strip -%}
+<div class="mb-rr__sl"><div class="mb-rr__cd">
+<div class="mb-rr__rt"><span class="mb-rr__num">{{ rate }}</span><span class="mb-rr__st" aria-label="{{ rate }} out of 5 stars">★★★★★</span></div>
+<h3 class="mb-rr__ti">{{ f[1] | strip }}</h3>
+<p class="mb-rr__tx">{{ f[2] | strip }}</p>
+<div class="mb-rr__au"><div class="mb-rr__al">{%- if av != blank -%}<img src="{{ av }}{{ aq }}width=120" alt="{{ nm | escape_once }}" class="mb-rr__av" loading="lazy" width="36" height="36">{%- else -%}<span class="mb-rr__ph" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10zm0 2c-4.4 0-8 2.2-8 5v3h16v-3c0-2.8-3.6-5-8-5z"/></svg></span>{%- endif -%}<strong class="mb-rr__nm">{{ nm }}</strong></div><span class="mb-rr__vf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>Verified Customer</span></div>
+{%- assign tags = f[5] | strip | split: '|' -%}
+{%- if tags.size > 0 and f[5] != blank -%}<div class="mb-rr__tg">{%- for t in tags -%}<span class="mb-rr__pl">{{ t | strip }}</span>{%- endfor -%}</div>{%- endif -%}
+</div></div>
+{%- endfor -%}
+</div>
+</div>
+<div class="mb-rr__ct" role="navigation" aria-label="Reviews carousel navigation">
+<div class="mb-rr__ds" role="tablist">{%- for it in mb_items -%}<button type="button" class="mb-rr__dt{% if forloop.first %} is-active{% endif %}" role="tab" aria-label="Go to page {{ forloop.index }}" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}" data-idx="{{ forloop.index0 }}"></button>{%- endfor -%}</div>
+<div class="mb-rr__ar">
+<button type="button" class="mb-rr__bt mb-rr__pv is-disabled" aria-label="Previous reviews" disabled>‹</button>
+<button type="button" class="mb-rr__bt mb-rr__nx" aria-label="Next reviews">›</button>
+</div>
+</div>
+</div>
+</section>
+<script>
+(function(){
+var r=document.currentScript.previousElementSibling;
+if(!r||!r.classList.contains('mb-rr'))return;
+var vp=r.querySelector('.mb-rr__vp'),tk=r.querySelector('.mb-rr__tk'),dw=r.querySelector('.mb-rr__ds'),pv=r.querySelector('.mb-rr__pv'),nx=r.querySelector('.mb-rr__nx'),
+TOTAL=tk.children.length,PER=parseInt(r.getAttribute('data-per'),10)||3,cur=0;
+function mob(){return window.innerWidth<768}
+function cpv(){return mob()?1:PER}
+function pages(){return Math.ceil(TOTAL/cpv())}
+function btns(){
+var n=pages();
+pv.disabled=cur===0;pv.classList.toggle('is-disabled',cur===0);
+nx.disabled=cur===n-1;nx.classList.toggle('is-disabled',cur===n-1)}
+function build(){
+dw.innerHTML='';
+var n=pages();
+if(n<=1){pv.style.display='none';nx.style.display='none';return}
+pv.style.display='flex';nx.style.display='flex';
+for(var i=0;i<n;i++){
+var b=document.createElement('button');
+b.type='button';
+b.className='mb-rr__dt'+(i===cur?' is-active':'');
+b.setAttribute('role','tab');
+b.setAttribute('aria-label','Go to page '+(i+1));
+b.setAttribute('aria-selected',i===cur?'true':'false');
+b.dataset.idx=i;
+b.addEventListener('click',function(){go(parseInt(this.dataset.idx,10))});
+dw.appendChild(b)}}
+function sync(){
+var d=dw.querySelectorAll('.mb-rr__dt');
+for(var i=0;i<d.length;i++){var a=i===cur;d[i].classList.toggle('is-active',a);d[i].setAttribute('aria-selected',a?'true':'false')}}
+function go(i){
+var n=pages();
+if(n<=1){tk.style.transform='translateX(0px)';return}
+cur=Math.max(0,Math.min(i,n-1));
+tk.style.transform='translateX(-'+cur*vp.offsetWidth+'px)';
+sync();btns()}
+pv.addEventListener('click',function(){go(cur-1)});
+nx.addEventListener('click',function(){go(cur+1)});
+var sx=0;
+tk.addEventListener('touchstart',function(e){sx=e.touches[0].clientX},{passive:true});
+tk.addEventListener('touchend',function(e){var d=sx-e.changedTouches[0].clientX;if(Math.abs(d)>50)go(cur+(d>0?1:-1))},{passive:true});
+var rt;
+addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(function(){cur=0;build();go(0)},200)});
+build();go(0);
+})();
+</script>
