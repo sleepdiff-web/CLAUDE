@@ -1,14 +1,14 @@
 {%- comment -%}
   EDIT YOUR CONTENT BELOW. One bullet per entry, put @@ on its own line between bullets.
   Add or remove bullets freely. Do not use a straight apostrophe (') inside the text (use &#39; instead).
-  mb_icon      = optional image URL for the tick (any square image, shown 16px wide). Leave '' to use the built-in round tick.
+  mb_icon      = optional image URL for the tick (any square image, shown 16px wide). Leave '' to use the built-in round tick (then mb_icon_color applies).
   mb_icon_color = colour of the built-in round tick.
   mb_text_color = colour of the bullet text.
   mb_top / mb_top_mobile / mb_bottom = space above the list (desktop / phone) and below it. In the original page this space
   comes from the product title&#39;s bottom margin (12px / 16px) and the next block&#39;s top margin (16px). Margins merge with
   neighbouring blocks, so a title that already has space is not doubled. Set to 0 to remove.
 {%- endcomment -%}
-{%- assign mb_icon = '' -%}
+{%- assign mb_icon = 'https://cdn.shopify.com/s/files/1/0695/1007/0343/files/exec-18f10466-3b19-4d94-bdb9-205c33f98f4f.png?v=1791682406' -%}
 {%- assign mb_icon_color = '#c47245' -%}
 {%- assign mb_text_color = '#444444' -%}
 {%- assign mb_top = '12px' -%}
@@ -44,7 +44,7 @@ Supports Steady Energy
 <div class="mb-sp" role="list" style="--mb-sp-ic:{{ mb_icon_color }};--mb-sp-tx:{{ mb_text_color }};--mb-sp-mt:{{ mb_top }};--mb-sp-mtm:{{ mb_top_mobile }};--mb-sp-mb:{{ mb_bottom }}">
 {%- for it in mb_items -%}
 <div class="mb-sp__it" role="listitem">
-{%- if mb_icon != blank -%}<img class="mb-sp__ic" src="{{ mb_icon }}" width="16" height="16" alt="" loading="lazy" decoding="async">{%- else -%}{{ mb_svg }}{%- endif -%}
+{%- if mb_icon != blank -%}<img class="mb-sp__ic" src="{{ mb_icon }}" width="16" height="16" alt="" decoding="async">{%- else -%}{{ mb_svg }}{%- endif -%}
 <div class="mb-sp__t"><span>{{ it | strip }}</span></div></div>
 {%- endfor -%}
 </div>
