@@ -154,6 +154,11 @@
   }
 }
 
+/* Never shrink the main image to the window height. The theme's "constrain media to screen height" option would otherwise cap the image box on a short window while the rules below force the picture to full width, which crops the top and bottom. */
+:is(#mb-mg,media-gallery[id^="MediaGallery-"]) .product-media-container.constrain-height {
+  --constrained-height: 99999px;
+}
+
 /* Desktop Thumbnails styling (min-width: 750px) */
 @media screen and (min-width: 750px) {
   /* Make featured image full-bleed in the container on desktop */
