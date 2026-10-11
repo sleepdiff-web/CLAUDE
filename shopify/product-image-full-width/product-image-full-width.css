@@ -1,0 +1,29 @@
+/* Product page (mobile): make the product image edge-to-edge, no white side borders.
+   Paste in: Online Store > Themes > Customize > Theme settings > Custom CSS
+   (or inside <style> tags in a Custom Liquid section on the product page).
+   Dawn keeps 1.5rem of side padding around the page on phones; --mb-gutter must match it. */
+@media screen and (max-width: 749px) {
+  .product:not(.featured-product) .product__media-wrapper {
+    --mb-gutter: 1.5rem;
+    margin-left: calc(-1 * var(--mb-gutter)) !important;
+    margin-right: calc(-1 * var(--mb-gutter)) !important;
+    width: calc(100% + 2 * var(--mb-gutter)) !important;
+    max-width: none !important;
+  }
+
+  /* square corners so the image meets the screen edges cleanly (remove this block to keep rounded corners) */
+  .product:not(.featured-product) .product__media-wrapper [id^="GalleryViewer-"] .global-media-settings,
+  .product:not(.featured-product) .product__media-wrapper [id^="GalleryViewer-"] .product-media-container,
+  .product:not(.featured-product) .product__media-wrapper [id^="GalleryViewer-"] .product__media,
+  .product:not(.featured-product) .product__media-wrapper [id^="GalleryViewer-"] .media,
+  .product:not(.featured-product) .product__media-wrapper [id^="GalleryViewer-"] img {
+    border-radius: 0 !important;
+  }
+
+  /* keep the thumbnail strip inset like the rest of the page */
+  .product:not(.featured-product) .product__media-wrapper .thumbnail-slider {
+    box-sizing: border-box;
+    padding-left: var(--mb-gutter);
+    padding-right: var(--mb-gutter);
+  }
+}
