@@ -4,15 +4,15 @@
   mb_icon      = optional image URL for the tick (any square image, shown 16px wide). Leave '' to use the built-in round tick (then mb_icon_color applies).
   mb_icon_color = colour of the built-in round tick.
   mb_text_color = colour of the bullet text.
-  mb_top / mb_top_mobile / mb_bottom = space above the list (desktop / phone) and below it. In the original page this space
-  comes from the product title&#39;s bottom margin (12px / 16px) and the next block&#39;s top margin (16px). Margins merge with
-  neighbouring blocks, so a title that already has space is not doubled. Set to 0 to remove.
+  mb_top / mb_top_mobile / mb_bottom = space above the list (desktop / phone) and below it. Margins merge with neighbouring
+  blocks, so if the block above already has its own bottom space, the larger of the two is used. To tighten further than
+  that, use a negative value, for example -8px. Set to 0 to remove.
 {%- endcomment -%}
 {%- assign mb_icon = 'https://cdn.shopify.com/s/files/1/0695/1007/0343/files/exec-18f10466-3b19-4d94-bdb9-205c33f98f4f.png?v=1791682406' -%}
 {%- assign mb_icon_color = '#c47245' -%}
 {%- assign mb_text_color = '#444444' -%}
-{%- assign mb_top = '12px' -%}
-{%- assign mb_top_mobile = '16px' -%}
+{%- assign mb_top = '4px' -%}
+{%- assign mb_top_mobile = '6px' -%}
 {%- assign mb_bottom = '16px' -%}
 {%- capture mb_data -%}
 Restores Insulin Sensitivity
