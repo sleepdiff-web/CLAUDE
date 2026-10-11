@@ -1,0 +1,4 @@
+/* Product page: 36px of space above the product section on desktop (750px and wider), like Metabolae.
+   Phones keep whatever padding the section already has (Metabolae uses 0 on phones).
+   Paste in the product section's Custom CSS box, or Theme settings > Custom CSS. */
+@media(min-width:750px){[id^=MainProduct-]{padding-top:36px!important}}
