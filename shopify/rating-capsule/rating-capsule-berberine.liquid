@@ -3,15 +3,15 @@
   mb_stars = the star characters (type as many ★ as you want). Set it to '' for text only, with no stars.
   mb_text = the text next to the stars. To make part of it bold, wrap it in <strong>...</strong>.
   mb_star_color = colour of the stars. mb_text_color = colour of the text. Both are locked, so the theme cannot turn them black.
-  mb_top / mb_top_mobile / mb_bottom / mb_bottom_mobile = space above and below the line (desktop / phone).
+  mb_top / mb_top_mobile / mb_bottom / mb_bottom_mobile = space above and below the line (desktop / phone). The top is 0px so the line sits tight under the thumbnails (the theme's own gap above it is switched off too); raise mb_top / mb_top_mobile if you want space there.
   Do not use a straight apostrophe (') inside mb_text (use &#39; instead).
 {%- endcomment -%}
 {%- assign mb_stars = '★★★★★' -%}
 {%- assign mb_text = 'Berberine Metabolic Support Complex (500mg)' -%}
 {%- assign mb_star_color = '#943434' -%}
 {%- assign mb_text_color = '#121212' -%}
-{%- assign mb_top = '18px' -%}
-{%- assign mb_top_mobile = '14px' -%}
+{%- assign mb_top = '0px' -%}
+{%- assign mb_top_mobile = '0px' -%}
 {%- assign mb_bottom = '12px' -%}
 {%- assign mb_bottom_mobile = '8px' -%}
 
@@ -21,7 +21,7 @@
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600&display=swap"></noscript>
 
 <style>
-.mb-rt{display:block;font-family:'Plus Jakarta Sans',sans-serif;font-size:16px;font-weight:500;line-height:1.8;letter-spacing:.6px;text-align:left}
+.mb-rt{display:flex;margin-top:0!important;font-family:'Plus Jakarta Sans',sans-serif;font-size:16px;font-weight:500;line-height:1.8;letter-spacing:.6px;text-align:left}
 .mb-rt__c{display:inline-flex;align-items:center;gap:8px;background:transparent;padding:0;margin:var(--mb-rt-mt,18px) 0 var(--mb-rt-mb,12px)}
 .mb-rt__s{font-size:18px;letter-spacing:1.5px;line-height:1}
 .mb-rt__t{font-size:13px;line-height:1.2;font-weight:400;letter-spacing:.1px;white-space:nowrap}
