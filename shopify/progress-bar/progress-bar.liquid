@@ -1,17 +1,21 @@
 {%- comment -%}
-  "93% Sold" progress bar. The bar fills and the number counts up when it scrolls into view.
-  The bar is shown full by default, so it still looks right if the animation script cannot run.
+  "93% Sold" progress bar.
+  The bar is drawn full in the HTML itself (width written on the element, colours forced with !important),
+  so it always shows even if the animation script does not run. The script is only an extra: it replays
+  the fill + count-up when the bar scrolls into view. Set mb_animate to false for a plain static bar.
   mb_percent = the number (0 to 100). mb_label = text after the % sign.
-  Colours: mb_color = bar fill and text, mb_track = empty part of the bar, mb_bg = card background.
+  mb_color = bar fill, mb_text_color = the "93%Sold" text, mb_track = empty part of the bar, mb_bg = card background.
   mb_top / mb_bottom = space above / below the card (merges with neighbouring blocks, never doubled).
 {%- endcomment -%}
 {%- assign mb_percent = 93 -%}
 {%- assign mb_label = 'Sold' -%}
-{%- assign mb_color = '#c47245' -%}
+{%- assign mb_color = '#943434' -%}
+{%- assign mb_text_color = '#943434' -%}
 {%- assign mb_track = '#ebebef' -%}
 {%- assign mb_bg = '#ffffff' -%}
 {%- assign mb_top = '16px' -%}
 {%- assign mb_bottom = '16px' -%}
+{%- assign mb_animate = true -%}
 {%- assign mb_percent = mb_percent | at_least: 0 | at_most: 100 -%}
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -21,24 +25,45 @@
 
 <style>
 .mb-pg{display:flex;align-items:center;gap:16px;box-sizing:border-box;margin:var(--mb-pg-mt,16px) 0 var(--mb-pg-mb,16px);padding:16px 20px;border-radius:12px;background-color:var(--mb-pg-bg,#fff);box-shadow:0 5px 18px rgba(0,0,0,.08);font-family:'Plus Jakarta Sans',sans-serif;font-weight:500;line-height:1.8;letter-spacing:.6px;text-align:left}
-.mb-pg__bar{position:relative;flex:1;height:8px;border-radius:4px;overflow:hidden;background-color:var(--mb-pg-tr,#ebebef)}
-.mb-pg__fill{height:100%;border-radius:4px;background-color:var(--mb-pg-c,#c47245);transition:width 1.2s cubic-bezier(.1,.8,.3,1)}
-.mb-pg__txt{font-size:15px;font-weight:700;white-space:nowrap;color:var(--mb-pg-c,#c47245)}
+.mb-pg__bar{display:block;position:relative;flex:1;height:8px;border-radius:4px;overflow:hidden;background-color:var(--mb-pg-tr,#ebebef)!important}
+.mb-pg__fill{display:block;height:100%;border-radius:4px;background-color:var(--mb-pg-c,#943434)!important;transition:width 1.2s cubic-bezier(.1,.8,.3,1)}
+.mb-pg__txt{font-size:15px;font-weight:700;white-space:nowrap;color:var(--mb-pg-tx,#943434)}
 @media screen and (max-width:749px){
 .mb-pg{padding:14px 16px}
 .mb-pg__txt{font-size:13.5px}
 }
 </style>
 
-<div class="mb-pg" style="--mb-pg-c:{{ mb_color }};--mb-pg-tr:{{ mb_track }};--mb-pg-bg:{{ mb_bg }};--mb-pg-mt:{{ mb_top }};--mb-pg-mb:{{ mb_bottom }}"><div class="mb-pg__bar"><div class="mb-pg__fill" style="width:{{ mb_percent }}%"></div></div><span class="mb-pg__txt"><span class="mb-pg__n" data-target="{{ mb_percent }}">{{ mb_percent }}</span>%{{ mb_label }}</span></div>
+<div class="mb-pg" style="--mb-pg-c:{{ mb_color }};--mb-pg-tx:{{ mb_text_color }};--mb-pg-tr:{{ mb_track }};--mb-pg-bg:{{ mb_bg }};--mb-pg-mt:{{ mb_top }};--mb-pg-mb:{{ mb_bottom }}"><div class="mb-pg__bar" role="progressbar" aria-valuenow="{{ mb_percent }}" aria-valuemin="0" aria-valuemax="100" aria-label="{{ mb_percent }}%{{ mb_label }}"><span class="mb-pg__fill" style="width:{{ mb_percent }}%"></span></div><span class="mb-pg__txt"><span class="mb-pg__n" data-target="{{ mb_percent }}">{{ mb_percent }}</span>%{{ mb_label }}</span></div>
+{%- if mb_animate %}
 <script>
 (function(){
 function init(r){
 if(r.getAttribute('data-mb-on'))return;
 r.setAttribute('data-mb-on','1');
-var f=r.querySelector('.mb-pg__fill'),c=r.querySelector('.mb-pg__n'),t=parseInt(c.getAttribute('data-target'),10)||0,io,raf=0;
-if(!f||!c||!('IntersectionObserver' in window)||(window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches))return;
+var f=r.querySelector('.mb-pg__fill'),c=r.querySelector('.mb-pg__n'),t=parseInt(c&&c.getAttribute('data-target'),10)||0,io,raf=0,q=0;
+if(!f||!c||t<=0||(window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches))return;
+function seen(){
+var b=r.getBoundingClientRect(),h=window.innerHeight||document.documentElement.clientHeight;
+return b.height>0&&Math.min(b.bottom,h)-Math.max(b.top,0)>=b.height*.1;
+}
+function chk(){q=0;if(seen())go()}
+function sc(){if(!q)q=requestAnimationFrame(chk)}
+function stop(){
+if(io){io.disconnect();io=0}
+document.removeEventListener('scroll',sc,true);
+removeEventListener('resize',sc);removeEventListener('load',sc);
+cancelAnimationFrame(q);q=0;
+}
+function reset(){
+cancelAnimationFrame(raf);
+r.classList.remove('js-animated');
+f.style.transition='none';f.style.width='0%';c.textContent='0';
+void f.offsetWidth;
+f.style.transition='';
+}
 function go(){
+stop();
 r.classList.add('js-animated');
 f.style.width=t+'%';
 var s=performance.now();
@@ -49,21 +74,24 @@ if(p<1)raf=requestAnimationFrame(tick);
 }
 raf=requestAnimationFrame(tick);
 }
-function arm(){
-cancelAnimationFrame(raf);
-r.classList.remove('js-animated');
-f.style.transition='none';f.style.width='0%';c.textContent='0';
-void f.offsetWidth;
-f.style.transition='';
+function start(){
+var b=r.getBoundingClientRect();
+if(b.height>0&&b.bottom<=0)return;
+reset();
+if(seen()){go();return}
+if('IntersectionObserver' in window){
 io=new IntersectionObserver(function(e){
-for(var i=0;i<e.length;i++)if(e[i].isIntersecting){io.disconnect();go();break}
+for(var i=0;i<e.length;i++)if(e[i].isIntersecting){go();break}
 },{threshold:.1});
 io.observe(r);
 }
-arm();
+document.addEventListener('scroll',sc,{capture:true,passive:true});
+addEventListener('resize',sc,{passive:true});addEventListener('load',sc);
+}
+start();
 ['shopify:section:select','shopify:block:select'].forEach(function(n){
 document.addEventListener(n,function(e){
-if(e.target&&(e.target.contains(r)||r.contains(e.target))){if(io)io.disconnect();arm()}
+if(e.target&&(e.target.contains(r)||r.contains(e.target))){stop();start()}
 });
 });
 }
@@ -75,3 +103,4 @@ run();
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);
 })();
 </script>
+{%- endif %}
