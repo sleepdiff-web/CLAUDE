@@ -3,14 +3,14 @@
   mb_title = the title text.
   mb_color = text colour (locked, so the theme cannot change it).
   mb_tag = h1 for a real page heading, or div if the page already has a heading elsewhere. It looks identical either way.
-  mb_top / mb_top_mobile / mb_bottom / mb_bottom_mobile = space above and below (desktop / phone). The top is 0px so the title sits tight under the line above it (the theme's own gap above it is switched off too); raise mb_top / mb_top_mobile if you want space there. Margins merge with neighbouring blocks.
+  mb_top / mb_top_mobile / mb_bottom / mb_bottom_mobile = space above and below (desktop / phone). The top is a small 10px (8px on phones) under the line above it; the theme's own gap above it is switched off. Set mb_top / mb_top_mobile to 0px to sit tight, or raise them for more space. Margins merge with neighbouring blocks.
   Do not use a straight apostrophe (') inside mb_title (use &#39; instead).
 {%- endcomment -%}
 {%- assign mb_title = 'Berberine Metabolic Support Complex (500mg)' -%}
 {%- assign mb_color = '#121212' -%}
 {%- assign mb_tag = 'h1' -%}
-{%- assign mb_top = '0px' -%}
-{%- assign mb_top_mobile = '0px' -%}
+{%- assign mb_top = '10px' -%}
+{%- assign mb_top_mobile = '8px' -%}
 {%- assign mb_bottom = '12px' -%}
 {%- assign mb_bottom_mobile = '16px' -%}
 
