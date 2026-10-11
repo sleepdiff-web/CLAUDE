@@ -1,0 +1,136 @@
+{%- comment -%}
+  Stats hero: big percentages on the left, heading and button on the right, over a photo with a colour wash. Stacks on phones.
+  EDIT YOUR CONTENT BELOW. mb_stats = one block per stat, put @@ on its own line between blocks. In each block, the big number comes first, then |||, then the text under it.
+  The text can use <br> for a line break and <strong>...</strong>. Do not use @@ or ||| inside the text.
+  mb_bg_img = a photo for the background (Content > Files > upload > copy link). Leave '' for a plain colour background.
+  mb_bg_color = background colour (shows behind the photo). mb_overlay = the colour wash laid over the photo. mb_text_color = text colour (locked). mb_desc_color = colour of the small text under each number.
+  mb_btn_bg / mb_btn_color = button background and text colour. mb_target = what the button scrolls to (a CSS selector for your buy box).
+  mb_top / mb_bottom = space above and below. The section runs the full width of the screen.
+  Do not use a straight apostrophe (') inside the text, use &#39; instead.
+{%- endcomment -%}
+{%- assign mb_heading = 'What Customers Report After Using Metabolae' -%}
+{%- assign mb_btn = 'Try Risk-Free Today' -%}
+{%- assign mb_sub = '90-day money back guarantee' -%}
+{%- assign mb_target = 'product-info, .product__info-container, .product-form' -%}
+{%- assign mb_bg_img = '' -%}
+{%- assign mb_bg_color = '#c47245' -%}
+{%- assign mb_overlay = 'rgba(196, 114, 69, 0.75)' -%}
+{%- assign mb_text_color = '#ffffff' -%}
+{%- assign mb_desc_color = 'rgba(255, 255, 255, 0.9)' -%}
+{%- assign mb_btn_bg = '#ffffff' -%}
+{%- assign mb_btn_color = '#121212' -%}
+{%- assign mb_top = '0' -%}
+{%- assign mb_bottom = '0' -%}
+{%- capture mb_stats -%}
+86%|||Said they would continue using Metabolae Ceylon Cinnamon as part of their daily routine
+@@
+72%|||Reported feeling more stable energy <br> and better  day-to-day balance*
+@@
+91%|||Noticed better tolerance compared to other cinnamon supplements, <br>with no aftertaste or digestive discomfort.*
+@@
+79%|||Said they were satisfied with the overall product quality and would recommend it to others*
+{%- endcapture -%}
+{%- assign mb_stat_items = mb_stats | split: '@@' -%}
+{%- assign q = '?' -%}{%- if mb_bg_img contains '?' -%}{%- assign q = '&amp;' -%}{%- endif -%}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600&display=swap"></noscript>
+
+<style>
+.page-width:has(>.mb-sh){max-width:none;padding:0}
+.mb-sh{position:relative;width:100%;margin:var(--mb-sh-mt,0) 0 var(--mb-sh-mb,0);overflow:hidden;background-color:var(--mb-sh-bg,#c47245);background-size:cover;background-position:center;background-repeat:no-repeat;font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:500;line-height:1.8;letter-spacing:.6px;text-align:left}
+.mb-sh__ct{position:relative;z-index:2;box-sizing:border-box;max-width:1200px;margin:0 auto;padding:90px 15px}
+.mb-sh__g{display:grid;grid-template-columns:repeat(2,1fr);gap:40px 24px;position:relative}
+.mb-sh__c{display:flex;flex-direction:column;gap:8px;text-align:left}
+.mb-sh__p{font-size:clamp(36px,5vw,48px);font-weight:800;line-height:1;letter-spacing:-.02em}
+.mb-sh__d{margin:0;padding:0;font-size:14px;font-weight:400;line-height:1.45;letter-spacing:.6px}
+.mb-sh__d strong{display:inline-block;margin-bottom:2px;font-weight:500}
+.mb-sh__r{display:flex;flex-direction:column;align-items:center;text-align:center}
+.mb-sh__h{margin:0 auto 42px;padding:0;font-family:Poppins,sans-serif;font-size:clamp(28px,4vw,36px);font-style:normal;font-weight:400;line-height:1.25;letter-spacing:-.02em;text-transform:none;word-break:break-word}
+.mb-sh__cw{display:flex;flex-direction:column;align-items:center;width:100%}
+.mb-sh__btn{display:inline-block;box-sizing:border-box;width:100%;max-width:480px;padding:24px 48px;border:none;border-radius:40px;background-color:var(--mb-sh-bb,#fff);box-shadow:0 4px 15px rgba(0,0,0,.1);font-size:20px;font-weight:400;text-align:center;text-decoration:none;cursor:pointer;transition:opacity .2s ease,transform .15s ease}
+.mb-sh__btn:hover{opacity:.95;transform:scale(1.02)}
+.mb-sh__s{display:inline-flex;align-items:center;gap:6px;margin-top:14px;font-size:12px;opacity:.95}
+.mb-sh__s svg{width:14px;height:14px}
+.mb-sh .mb-sh__p,.mb-sh .mb-sh__h,.mb-sh .mb-sh__s,.mb-sh .mb-sh__s *{color:var(--mb-sh-tx,#fff)!important;-webkit-text-fill-color:var(--mb-sh-tx,#fff)!important}
+.mb-sh .mb-sh__d{color:var(--mb-sh-dc,rgba(255,255,255,.9))!important;-webkit-text-fill-color:var(--mb-sh-dc,rgba(255,255,255,.9))!important}
+.mb-sh .mb-sh__d strong{color:var(--mb-sh-tx,#fff)!important;-webkit-text-fill-color:var(--mb-sh-tx,#fff)!important}
+.mb-sh .mb-sh__btn{color:var(--mb-sh-bc,#121212)!important;-webkit-text-fill-color:var(--mb-sh-bc,#121212)!important}
+@media screen and (min-width:900px){
+.mb-sh__ct{display:grid;grid-template-columns:1.15fr 1fr;gap:80px;align-items:center;padding:120px 20px}
+.mb-sh__g:after{content:"";position:absolute;left:0;right:0;top:50%;height:1px;background-color:rgba(255,255,255,.3);transform:translateY(-50%)}
+}
+@media screen and (max-width:899px){
+.mb-sh__ct{display:grid;grid-template-columns:1fr;grid-template-areas:"heading-desc" "stats-grid" "cta-wrap";gap:24px;padding-top:32px;padding-bottom:32px}
+.mb-sh__l{grid-area:stats-grid}
+.mb-sh__r{display:contents}
+.mb-sh__hd{grid-area:heading-desc;text-align:center}
+.mb-sh__h{margin-bottom:30px;font-size:26px}
+.mb-sh__cw{grid-area:cta-wrap;text-align:center}
+.mb-sh__btn{padding:20px 36px;border-radius:35px;font-size:18px}
+.mb-sh__s{margin-top:10px;font-size:13px}
+.mb-sh__g{grid-template-columns:1fr;gap:0}
+.mb-sh__c{gap:4px;padding:16px 0}
+.mb-sh__c:not(:last-child){border-bottom:1px solid rgba(255,255,255,.15)}
+.mb-sh__p{font-size:36px;font-weight:500}
+.mb-sh__d{font-size:16px;line-height:1.4}
+}
+</style>
+
+<div class="mb-sh" style="--mb-sh-mt:{{ mb_top }};--mb-sh-mb:{{ mb_bottom }};--mb-sh-bg:{{ mb_bg_color }};--mb-sh-tx:{{ mb_text_color }};--mb-sh-dc:{{ mb_desc_color }};--mb-sh-bb:{{ mb_btn_bg }};--mb-sh-bc:{{ mb_btn_color }}{%- if mb_bg_img != blank -%};background-image:linear-gradient(0deg,{{ mb_overlay }},{{ mb_overlay }}),url('{{ mb_bg_img }}{{ q }}width=2000'){%- endif -%}">
+<div class="mb-sh__ct">
+<div class="mb-sh__l"><div class="mb-sh__g">
+{%- for it in mb_stat_items -%}
+{%- assign parts = it | split: '|||' -%}
+<div class="mb-sh__c"><span class="mb-sh__p" data-value="{{ parts[0] | strip }}">{{ parts[0] | strip }}</span><p class="mb-sh__d">{{ parts[1] | strip }}</p></div>
+{%- endfor -%}
+</div></div>
+<div class="mb-sh__r">
+<div class="mb-sh__hd"><h2 class="mb-sh__h">{{ mb_heading }}</h2></div>
+<div class="mb-sh__cw"><button type="button" class="mb-sh__btn" data-target="{{ mb_target | escape }}">{{ mb_btn }}</button><div class="mb-sh__s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 11 11 13 15 9"/></svg><span>{{ mb_sub }}</span></div></div>
+</div>
+</div>
+</div>
+
+<script>
+(function(){
+function init(w){
+if(w.getAttribute('data-on'))return;
+w.setAttribute('data-on','1');
+var b=w.querySelector('.mb-sh__btn');
+if(b)b.addEventListener('click',function(){
+var t=document.querySelector(b.getAttribute('data-target'));
+if(t)t.scrollIntoView({behavior:'smooth',block:'start'});
+});
+var cs=[].slice.call(w.querySelectorAll('.mb-sh__p'));
+if(!cs.length||!('IntersectionObserver' in window)||(window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches))return;
+if(w.getBoundingClientRect().bottom<0)return;
+var st=cs.map(function(el){
+var raw=el.getAttribute('data-value')||el.textContent.trim(),m=raw.match(/^([^0-9\.]*)([0-9\.]+)(.*)$/);
+if(!m)return null;
+var s={el:el,raw:raw,pre:m[1]||'',val:parseFloat(m[2]),suf:m[3]||'',fl:m[2].indexOf('.')>-1};
+el.textContent=s.pre+(s.fl?'0.0':'0')+s.suf;
+return s;
+});
+function run(s){
+var t0=performance.now();
+function up(t){
+var p=Math.max(0,Math.min((t-t0)/1200,1)),e=p*(2-p),v=e*s.val;
+s.el.textContent=s.pre+(s.fl?v.toFixed(1):Math.floor(v).toString())+s.suf;
+if(p<1)requestAnimationFrame(up);else s.el.textContent=s.raw;
+}
+requestAnimationFrame(up);
+}
+var io=new IntersectionObserver(function(es,o){
+es.forEach(function(e){
+if(e.isIntersecting){var s=st[cs.indexOf(e.target)];if(s)run(s);o.unobserve(e.target)}
+});
+},{threshold:.1,rootMargin:'0px 0px -50px 0px'});
+cs.forEach(function(c){io.observe(c)});
+}
+document.querySelectorAll('.mb-sh').forEach(init);
+document.addEventListener('shopify:section:load',function(){document.querySelectorAll('.mb-sh').forEach(init)});
+})();
+</script>
