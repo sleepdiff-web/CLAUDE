@@ -3,14 +3,14 @@
   mb_title = the title text.
   mb_color = text colour (locked, so the theme cannot change it).
   mb_tag = h1 for a real page heading, or div if the page already has a heading elsewhere. It looks identical either way.
-  mb_top / mb_top_mobile / mb_bottom / mb_bottom_mobile = space above and below (desktop / phone). Margins merge with neighbouring blocks.
+  mb_top / mb_top_mobile / mb_bottom / mb_bottom_mobile = space above and below (desktop / phone). The top is 0px so the title sits tight under the line above it (the theme's own gap above it is switched off too); raise mb_top / mb_top_mobile if you want space there. Margins merge with neighbouring blocks.
   Do not use a straight apostrophe (') inside mb_title (use &#39; instead).
 {%- endcomment -%}
 {%- assign mb_title = 'Berberine Metabolic Support Complex (500mg)' -%}
 {%- assign mb_color = '#121212' -%}
 {%- assign mb_tag = 'h1' -%}
-{%- assign mb_top = '10px' -%}
-{%- assign mb_top_mobile = '6px' -%}
+{%- assign mb_top = '0px' -%}
+{%- assign mb_top_mobile = '0px' -%}
 {%- assign mb_bottom = '12px' -%}
 {%- assign mb_bottom_mobile = '16px' -%}
 
@@ -20,9 +20,9 @@
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600&display=swap"></noscript>
 
 <style>
-.mb-tt{display:block;margin:var(--mb-tt-mt,10px) 0 var(--mb-tt-mb,12px);padding:0;font-family:Poppins,sans-serif;font-size:26px;font-style:normal;font-weight:600;line-height:1.25;letter-spacing:normal;text-align:left;text-transform:none;word-break:break-word}
+.mb-tt{display:block;margin:var(--mb-tt-mt,0px) 0 var(--mb-tt-mb,12px);margin-top:var(--mb-tt-mt,0px)!important;padding:0;font-family:Poppins,sans-serif;font-size:26px;font-style:normal;font-weight:600;line-height:1.25;letter-spacing:normal;text-align:left;text-transform:none;word-break:break-word}
 @media screen and (max-width:749px){
-.mb-tt{font-size:21px;margin-top:var(--mb-tt-mtm,6px);margin-bottom:var(--mb-tt-mbm,16px)}
+.mb-tt{font-size:21px;margin-top:var(--mb-tt-mtm,0px)!important;margin-bottom:var(--mb-tt-mbm,16px)}
 }
 </style>
 
