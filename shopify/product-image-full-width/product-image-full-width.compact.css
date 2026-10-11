@@ -1,0 +1,5 @@
+@media(max-width:749px){
+.product__media-wrapper{margin-inline:-1.5rem!important;width:calc(100% + 3rem)!important;max-width:none!important}
+.product__media-wrapper [id^=GalleryViewer-] :is(.global-media-settings,.product-media-container,.product__media,.media,img){border-radius:0!important}
+.product__media-wrapper .thumbnail-slider{box-sizing:border-box;padding:0 1.5rem}
+}
