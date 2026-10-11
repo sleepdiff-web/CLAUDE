@@ -3,8 +3,9 @@
   EDIT YOUR CONTENT BELOW. mb_stats = one block per stat, put @@ on its own line between blocks. In each block, the big number comes first, then |||, then the text under it.
   The text can use <br> for a line break and <strong>...</strong>. Do not use @@ or ||| inside the text.
   mb_bg_img = a photo for the background (Content > Files > upload > copy link). Leave '' for a plain colour background.
-  mb_bg_color = background colour (shows behind the photo). mb_overlay = the colour wash laid over the photo. mb_text_color = text colour (locked). mb_desc_color = colour of the small text under each number.
+  mb_bg_color = background colour (shows while the photo loads). mb_overlay = a colour wash laid over the photo; it starts fully clear, so the photo shows as it is. For a wash use for example rgba(148, 52, 52, 0.75). mb_text_color = text colour (locked). mb_desc_color = colour of the small text under each number.
   mb_btn_bg / mb_btn_color = button background and text colour. mb_target = what the button scrolls to (a CSS selector for your buy box).
+  mb_respect_motion = false so the numbers always count up (like Metabolae); set it to true to skip the count-up for people whose device has animations turned off.
   mb_top / mb_bottom = space above and below. The section runs the full width of the screen.
   Do not use a straight apostrophe (') inside the text, use &#39; instead.
 {%- endcomment -%}
@@ -12,13 +13,14 @@
 {%- assign mb_btn = 'Try Risk-Free Today' -%}
 {%- assign mb_sub = '90-day money back guarantee' -%}
 {%- assign mb_target = 'product-info, .product__info-container, .product-form' -%}
-{%- assign mb_bg_img = '' -%}
-{%- assign mb_bg_color = '#c47245' -%}
-{%- assign mb_overlay = 'rgba(196, 114, 69, 0.75)' -%}
+{%- assign mb_bg_img = 'https://cdn.shopify.com/s/files/1/0695/1007/0343/files/0919087c-5832-48f0-a2b4-ae6bd7fe5fcd.png?v=1791711797' -%}
+{%- assign mb_bg_color = '#943434' -%}
+{%- assign mb_overlay = 'rgba(0, 0, 0, 0)' -%}
 {%- assign mb_text_color = '#ffffff' -%}
 {%- assign mb_desc_color = 'rgba(255, 255, 255, 0.9)' -%}
 {%- assign mb_btn_bg = '#ffffff' -%}
 {%- assign mb_btn_color = '#121212' -%}
+{%- assign mb_respect_motion = false -%}
 {%- assign mb_top = '0' -%}
 {%- assign mb_bottom = '0' -%}
 {%- capture mb_stats -%}
@@ -79,7 +81,7 @@
 }
 </style>
 
-<div class="mb-sh" style="--mb-sh-mt:{{ mb_top }};--mb-sh-mb:{{ mb_bottom }};--mb-sh-bg:{{ mb_bg_color }};--mb-sh-tx:{{ mb_text_color }};--mb-sh-dc:{{ mb_desc_color }};--mb-sh-bb:{{ mb_btn_bg }};--mb-sh-bc:{{ mb_btn_color }}{%- if mb_bg_img != blank -%};background-image:linear-gradient(0deg,{{ mb_overlay }},{{ mb_overlay }}),url('{{ mb_bg_img }}{{ q }}width=2000'){%- endif -%}">
+<div class="mb-sh" data-rm="{{ mb_respect_motion }}" style="--mb-sh-mt:{{ mb_top }};--mb-sh-mb:{{ mb_bottom }};--mb-sh-bg:{{ mb_bg_color }};--mb-sh-tx:{{ mb_text_color }};--mb-sh-dc:{{ mb_desc_color }};--mb-sh-bb:{{ mb_btn_bg }};--mb-sh-bc:{{ mb_btn_color }}{%- if mb_bg_img != blank -%};background-image:linear-gradient(0deg,{{ mb_overlay }},{{ mb_overlay }}),url('{{ mb_bg_img }}{{ q }}width=2000'){%- endif -%}">
 <div class="mb-sh__ct">
 <div class="mb-sh__l"><div class="mb-sh__g">
 {%- for it in mb_stat_items -%}
@@ -105,16 +107,19 @@ var t=document.querySelector(b.getAttribute('data-target'));
 if(t)t.scrollIntoView({behavior:'smooth',block:'start'});
 });
 var cs=[].slice.call(w.querySelectorAll('.mb-sh__p'));
-if(!cs.length||!('IntersectionObserver' in window)||(window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches))return;
+if(!cs.length||!('IntersectionObserver' in window))return;
+if(w.getAttribute('data-rm')==='true'&&window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches)return;
 if(w.getBoundingClientRect().bottom<0)return;
 var st=cs.map(function(el){
 var raw=el.getAttribute('data-value')||el.textContent.trim(),m=raw.match(/^([^0-9\.]*)([0-9\.]+)(.*)$/);
 if(!m)return null;
-var s={el:el,raw:raw,pre:m[1]||'',val:parseFloat(m[2]),suf:m[3]||'',fl:m[2].indexOf('.')>-1};
+var s={el:el,raw:raw,pre:m[1]||'',val:parseFloat(m[2]),suf:m[3]||'',fl:m[2].indexOf('.')>-1,go:0};
 el.textContent=s.pre+(s.fl?'0.0':'0')+s.suf;
 return s;
 });
 function run(s){
+if(!s||s.go)return;
+s.go=1;
 var t0=performance.now();
 function up(t){
 var p=Math.max(0,Math.min((t-t0)/1200,1)),e=p*(2-p),v=e*s.val;
@@ -125,10 +130,22 @@ requestAnimationFrame(up);
 }
 var io=new IntersectionObserver(function(es,o){
 es.forEach(function(e){
-if(e.isIntersecting){var s=st[cs.indexOf(e.target)];if(s)run(s);o.unobserve(e.target)}
+if(e.isIntersecting){run(st[cs.indexOf(e.target)]);o.unobserve(e.target)}
 });
 },{threshold:.1,rootMargin:'0px 0px -50px 0px'});
 cs.forEach(function(c){io.observe(c)});
+function sc(){
+var h=window.innerHeight||document.documentElement.clientHeight,left=0;
+cs.forEach(function(c,i){
+var s=st[i];
+if(!s||s.go)return;
+var b=c.getBoundingClientRect();
+if(b.height>0&&b.top<h-50-b.height*.1&&b.bottom>0)run(s);else left++;
+});
+if(!left){document.removeEventListener('scroll',sc,true);removeEventListener('resize',sc)}
+}
+document.addEventListener('scroll',sc,true);addEventListener('resize',sc);addEventListener('load',sc);
+setTimeout(sc,400);
 }
 document.querySelectorAll('.mb-sh').forEach(init);
 document.addEventListener('shopify:section:load',function(){document.querySelectorAll('.mb-sh').forEach(init)});
