@@ -1,0 +1,46 @@
+{%- comment -%}
+  Money-back guarantee box: seal on the left, heading and one line of text on the right.
+  mb_days = the number shown in the built-in seal. mb_img = your own seal image URL instead (Content > Files > copy link), leave '' for the built-in seal.
+  mb_heading / mb_lead / mb_body = the heading, the bold coloured start of the text, and the rest of the text.
+  mb_color = seal ring and the bold text colour. mb_color_dark = outer edge of the seal and the number in the middle.
+  mb_heading_color / mb_body_color = heading and text colours. mb_bg = box background. mb_border = dashed border colour.
+  mb_top / mb_bottom = space above and below (merges with neighbouring blocks, never doubled).
+  All text colours are locked, so the theme cannot turn them black. Do not use a straight apostrophe (') in the text, use &#39; instead.
+{%- endcomment -%}
+{%- assign mb_days = '60' -%}
+{%- assign mb_img = '' -%}
+{%- assign mb_heading = '60-Day Money Back Guarantee' -%}
+{%- assign mb_lead = 'Less than 1%' -%}
+{%- assign mb_body = 'of customers claim our 60-Days Money Back Guarantee.' -%}
+{%- assign mb_color = '#943434' -%}
+{%- assign mb_color_dark = '#612229' -%}
+{%- assign mb_heading_color = '#1a1a1a' -%}
+{%- assign mb_body_color = '#6b6b6b' -%}
+{%- assign mb_bg = '#fdfaf7' -%}
+{%- assign mb_border = '#e4cccc' -%}
+{%- assign mb_top = '15px' -%}
+{%- assign mb_bottom = '15px' -%}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600&display=swap"></noscript>
+
+<style>
+.mb-gb{display:flex;align-items:center;gap:14px;box-sizing:border-box;margin:var(--mb-gb-mt,15px) 0 var(--mb-gb-mb,15px);padding:14px 8px;border:1.5px dashed var(--mb-gb-bd,#e4cccc);border-radius:8px;background:var(--mb-gb-bg,#fdfaf7);font-family:'Plus Jakarta Sans',sans-serif;font-weight:500;letter-spacing:.6px;text-align:left}
+.mb-gb__badge{display:flex;flex-shrink:0;align-items:center;justify-content:center;width:60px;height:60px;border-radius:50%;overflow:hidden}
+.mb-gb__badge img,.mb-gb__badge svg{display:block;width:100%;height:100%}
+.mb-gb__badge img{object-fit:contain}
+.mb-gb__t{text-align:left}
+.mb-gb__h{margin:0 0 3px;padding:0;font-size:14px;font-weight:700;line-height:1.3;letter-spacing:.6px;text-transform:none}
+.mb-gb__b{margin:0;padding:0;font-size:12.5px;font-weight:500;line-height:1.35;letter-spacing:.6px;text-transform:none}
+.mb-gb__l{font-weight:700}
+</style>
+
+<div class="mb-gb" style="--mb-gb-mt:{{ mb_top }};--mb-gb-mb:{{ mb_bottom }};--mb-gb-bd:{{ mb_border }};--mb-gb-bg:{{ mb_bg }}">
+<div class="mb-gb__badge">{%- if mb_img != blank -%}<img src="{{ mb_img }}" width="60" height="60" alt="{{ mb_heading | escape }}" loading="lazy" decoding="async">{%- else -%}<svg viewBox="-3.3 -3.3 218.5 218.5" role="img" aria-label="{{ mb_heading | escape }}"><path d="M106.0 7.0L117.9 15.8L131.6 10.4L140.8 21.9L155.5 20.3L161.4 33.8L176.0 36.0L178.2 50.6L191.7 56.5L190.1 71.2L201.6 80.4L196.2 94.1L205.0 106.0L196.2 117.9L201.6 131.6L190.1 140.8L191.7 155.5L178.2 161.4L176.0 176.0L161.4 178.2L155.5 191.7L140.8 190.1L131.6 201.6L117.9 196.2L106.0 205.0L94.1 196.2L80.4 201.6L71.2 190.1L56.5 191.7L50.6 178.2L36.0 176.0L33.8 161.4L20.3 155.5L21.9 140.8L10.4 131.6L15.8 117.9L7.0 106.0L15.8 94.1L10.4 80.4L21.9 71.2L20.3 56.5L33.8 50.6L36.0 36.0L50.6 33.8L56.5 20.3L71.2 21.9L80.4 10.4L94.1 15.8Z" fill="{{ mb_color_dark }}" stroke="{{ mb_color_dark }}" stroke-width="3" stroke-linejoin="round"/><circle cx="106" cy="106" r="81.5" fill="{{ mb_color }}" stroke="#f3dede" stroke-width="2.2"/><path d="M106 106m-62 0a62 62 0 0 1 124 0" id="mb-gb-t" fill="none"/><path d="M106 106m-73 0a73 73 0 0 0 146 0" id="mb-gb-b" fill="none"/><g fill="#fff" font-family="'Plus Jakarta Sans',sans-serif" font-weight="700" font-size="17.5" letter-spacing="1.7"><text text-anchor="middle"><textPath href="#mb-gb-t" startOffset="50%">MONEY BACK</textPath></text><text text-anchor="middle"><textPath href="#mb-gb-b" startOffset="50%">GUARANTEE</textPath></text><circle cx="41.5" cy="89" r="3.4"/><circle cx="40.5" cy="109" r="3.4"/><circle cx="45.5" cy="128.5" r="3.4"/><circle cx="170.5" cy="89" r="3.4"/><circle cx="171.5" cy="109" r="3.4"/><circle cx="166.5" cy="128.5" r="3.4"/></g><circle cx="106" cy="106" r="48.5" fill="#fff" stroke="{{ mb_color_dark }}" stroke-width="2.4"/><g fill="{{ mb_color_dark }}" font-family="'Plus Jakarta Sans',sans-serif" text-anchor="middle"><text x="106" y="107" font-size="40" font-weight="700" letter-spacing="-1">{{ mb_days }}</text><text x="106" y="130" font-size="18.5" font-weight="700">DAYS</text></g></svg>{%- endif -%}</div>
+<div class="mb-gb__t">
+<p class="mb-gb__h" style="color:{{ mb_heading_color }}!important;-webkit-text-fill-color:{{ mb_heading_color }}!important">{{ mb_heading }}</p>
+<p class="mb-gb__b" style="color:{{ mb_body_color }}!important;-webkit-text-fill-color:{{ mb_body_color }}!important"><span class="mb-gb__l" style="color:{{ mb_color }}!important;-webkit-text-fill-color:{{ mb_color }}!important">{{ mb_lead }}</span> {{ mb_body }}</p>
+</div>
+</div>
