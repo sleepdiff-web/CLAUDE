@@ -1,0 +1,125 @@
+{%- comment -%}
+  Accordion boxes: tap a title to open or close it. Each box opens and closes on its own.
+  EDIT YOUR CONTENT BELOW. One box per entry, put @@ on its own line between boxes. In each box, the title comes first, then |||, then the text.
+  The text can use <p>, <ul><li>, <strong>, <em> and <a href="...">. Do not use @@ or ||| inside the text.
+  mb_open = number of the box that starts open (1, 2, 3 ...), or 0 to start with all boxes closed.
+  mb_title_color / mb_text_color = title and text colours (locked, so the theme cannot turn them black). mb_border / mb_border_hover = box border colour and its colour when hovered.
+  mb_open_bg = header background while a box is open. mb_focus_color = outline when a box is selected with the keyboard.
+  mb_top / mb_bottom = space above and below the whole section. Every box also has 16px under it, like the original (merges with neighbouring blocks, never doubled).
+{%- endcomment -%}
+{%- assign mb_open = 0 -%}
+{%- assign mb_title_color = '#121212' -%}
+{%- assign mb_text_color = '#2b2b2b' -%}
+{%- assign mb_border = '#ebebeb' -%}
+{%- assign mb_border_hover = '#d1d1d1' -%}
+{%- assign mb_open_bg = '#f5f5f5' -%}
+{%- assign mb_focus_color = '#c47245' -%}
+{%- assign mb_top = '0' -%}
+{%- assign mb_bottom = '0' -%}
+{%- capture mb_data -%}
+Clinically Supported Benefits|||<p>Supported by studies on true Ceylon cinnamon (<em>Cinnamomum verum</em>)</p><ul><li>Helps maintain blood sugar levels that are already in a healthy range</li><li>Promotes insulin sensitivity and efficient use of glucose by the body</li><li>Encourages healthy circulation and everyday metabolic function</li><li>Delivers antioxidant activity to help shield cells from oxidative damage</li><li>A mild, well-tolerated extract designed for consistent, long-term daily use</li><li>Virtually coumarin-free Ceylon cinnamon — a key distinction from common Cassia</li></ul><p><em>Findings drawn from clinical and observational research on g</em><em><strong>enuine Ceylon cinnamon,</strong></em><em> used regularly alongside a healthy lifestyle. Results vary by individual.</em></p>
+@@
+Key ingredients|||<p><strong>True Ceylon Cinnamon Extract (Cinnamomum verum)</strong></p><ul><li>Grown in Sri Lanka — <strong>not the cheaper Cassia variety</strong></li><li>A 1<strong>2:1 concentrated</strong> liquid extract</li><li>Every softgel provides the <strong>equivalent of 7,200 mg</strong> of raw Ceylon cinnamon</li><li>Naturally f<strong>ree of coumarin.</strong> Safe to take every day, long-term</li><li>Promotes healthy blood sugar, metabolic function, and circulation</li></ul><p><strong>🥥 MCT Oil (Medium-Chain Triglycerides)</strong></p><ul><li>Serves as a <strong>natural carrier to boost absorption</strong></li><li>Cinnamon's active compounds are fat-soluble. MCT oil gets them <strong>into your bloodstream effectively</strong></li><li>Enables the extract to be absorbed quickly rather than passing through without effect</li><li>Easy on your digestive system. No harsh powders, no stomach upset</li></ul><p><strong>Softgel Delivery System</strong></p><ul><li>Smooth softgels that go down easily</li><li>No chalky powder capsules</li><li>Made for comfortable daily use, just <strong>one softgel a day</strong></li></ul>
+@@
+How it works|||<p>Most cinnamon supplements don't work because they rely on <strong>cheap Cassia powder</strong> pressed into hard capsules that are difficult for your stomach to break down properly. The active compounds get stuck in fiber and move through your body largely untouched.</p><p><strong>Metabolae takes a different approach. </strong>We start with <strong>genuine Ceylon cinnamon from Sri Lanka</strong>, concentrate it <strong>12-to-1</strong> into a smooth liquid extract, then blend it with MCT oil and encase it in easy-to-swallow softgels.</p><p>Once the softgel dissolves, the extract is <strong>already suspended in oil,</strong> creating a highly bioavailable form your body can take in efficiently.</p><ul><li>No rough powder.</li><li>No cinnamon aftertaste hours afterward.</li><li>No active compounds going to waste.</li></ul><p><strong>MCT oil works as a natural transport system</strong>, carrying the concentrated Ceylon cinnamon compounds into your bloodstream to support healthy glucose metabolism, circulation, and cellular wellness.</p><p>A <strong>single softgel each day</strong> delivers the equivalent of 7<strong>,200 mg of Ceylon cinnamon</strong>. The potency that dozens of standard capsules try to match, in a form your body can genuinely absorb.</p><p>It's why so many adults over 50 who had written off cinnamon supplements entirely are finally feeling a genuine difference with <strong>Metabolae</strong>.</p>
+{%- endcapture -%}
+{%- assign mb_items = mb_data | split: '@@' -%}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600&display=swap"></noscript>
+
+<style>
+.mb-ac{margin:var(--mb-ac-mt,0) 0 var(--mb-ac-mb,0);font-family:'Plus Jakarta Sans',sans-serif;font-size:16px;font-weight:500;line-height:1.8;letter-spacing:.6px;text-align:left}
+.mb-ac__it{box-sizing:border-box;margin:0 0 16px;border:1.5px solid var(--mb-ac-bd,#ebebeb);border-radius:12px;overflow:hidden;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.02);transition:border-color .3s ease,box-shadow .3s ease}
+.mb-ac__it:hover{border-color:var(--mb-ac-bdh,#d1d1d1);box-shadow:0 4px 12px rgba(0,0,0,.04)}
+.mb-ac__d{display:block;margin:0;padding:0;border:0}
+.mb-ac__d>*{box-sizing:border-box}
+.mb-ac__s{display:flex;position:relative;align-items:center;justify-content:space-between;box-sizing:border-box;padding:18px 20px;border-bottom:1.5px solid transparent;background:#fff;line-height:1;list-style:none;cursor:pointer;user-select:none;-webkit-user-select:none;transition:background-color .3s ease,border-bottom-color .3s ease}
+.mb-ac__s::-webkit-details-marker{display:none}
+.mb-ac__d[open]>.mb-ac__s{border-bottom-color:var(--mb-ac-bd,#ebebeb);background:var(--mb-ac-ob,#f5f5f5)}
+.mb-ac__s:focus{outline:none}
+.mb-ac__s:focus-visible{outline:none;box-shadow:inset 0 0 0 2px var(--mb-ac-fc,#c47245)}
+.mb-ac__s::after{content:'';display:inline-block;flex-shrink:0;width:14px;height:14px;margin-left:16px;background:linear-gradient(#121212,#121212) no-repeat center/14px 1.5px,linear-gradient(#121212,#121212) no-repeat center/1.5px 14px;transition:transform .3s cubic-bezier(.4,0,.2,1)}
+.mb-ac__d[open]>.mb-ac__s::after{transform:rotate(45deg)}
+.mb-ac__st{display:flex;flex:1;align-items:center;gap:12px;margin:0}
+.mb-ac__h{display:inline-block;min-height:16px;max-width:calc(100% - 60px);margin:0 0 0 10px;padding:0;font-family:Poppins,sans-serif;font-size:16px;font-style:normal;font-weight:600;line-height:1.4;letter-spacing:.6px;text-transform:none;word-break:break-word}
+.mb-ac__c{box-sizing:border-box;max-height:0;margin:0;padding:0 20px;overflow:hidden;opacity:0;font-size:15px;font-weight:400;line-height:1.6;word-break:break-word;transition:max-height .35s cubic-bezier(.4,0,.2,1),opacity .35s cubic-bezier(.4,0,.2,1),padding .35s cubic-bezier(.4,0,.2,1)}
+.mb-ac__d[open]>.mb-ac__c{max-height:1200px;padding:20px 20px 24px;opacity:1}
+.mb-ac__c:after{content:'';display:block;clear:both}
+.mb-ac__c>:first-child{margin-top:0}
+.mb-ac__c>:last-child{margin-bottom:0}
+.mb-ac__c p{margin:1em 0;line-height:1.3}
+.mb-ac__c ul,.mb-ac__c ol{margin:1em 0;padding-left:20px;list-style-position:inside}
+.mb-ac__c li{list-style:inherit}
+.mb-ac__c li:last-child{margin-bottom:0}
+.mb-ac__c img{max-width:100%;height:auto}
+.mb-ac__c a{text-underline-offset:3px;text-decoration-thickness:1px}
+.mb-ac .mb-ac__h{color:var(--mb-ac-tt,#121212)!important;-webkit-text-fill-color:var(--mb-ac-tt,#121212)!important}
+.mb-ac .mb-ac__c,.mb-ac .mb-ac__c *{color:var(--mb-ac-tx,#2b2b2b)!important;-webkit-text-fill-color:var(--mb-ac-tx,#2b2b2b)!important}
+@media screen and (max-width:767px){
+.mb-ac__h{font-size:15.6px}
+}
+@media screen and (max-width:749px){
+.mb-ac__c{font-size:14px}
+}
+</style>
+
+<div class="mb-ac" style="--mb-ac-mt:{{ mb_top }};--mb-ac-mb:{{ mb_bottom }};--mb-ac-tt:{{ mb_title_color }};--mb-ac-tx:{{ mb_text_color }};--mb-ac-bd:{{ mb_border }};--mb-ac-bdh:{{ mb_border_hover }};--mb-ac-ob:{{ mb_open_bg }};--mb-ac-fc:{{ mb_focus_color }}">
+{%- for it in mb_items -%}
+{%- assign parts = it | split: '|||' -%}
+<div class="mb-ac__it"><details class="mb-ac__d"{% if forloop.index == mb_open %} open{% endif %}>
+<summary class="mb-ac__s" role="button" aria-expanded="{% if forloop.index == mb_open %}true{% else %}false{% endif %}"><div class="mb-ac__st"><h2 class="mb-ac__h">{{ parts[0] | strip }}</h2></div></summary>
+<div class="mb-ac__c">{{ parts[1] | strip }}</div>
+</details></div>
+{%- endfor -%}
+</div>
+
+<script>
+(function(){
+function init(){
+var n=window.mbAcN||0;
+document.querySelectorAll('.mb-ac__d').forEach(function(d){
+if(d.getAttribute('data-mb-on'))return;
+d.setAttribute('data-mb-on','1');
+var s=d.querySelector('.mb-ac__s'),c=d.querySelector('.mb-ac__c');
+if(!s||!c)return;
+c.id=c.id||'mb-ac-'+(++n);
+s.setAttribute('aria-controls',c.id);
+var busy=false;
+s.addEventListener('click',function(e){
+e.preventDefault();
+if(busy)return;
+busy=true;
+function done(prop){
+return function ev(x){
+if(x.propertyName!=='max-height')return;
+['max-height','opacity','padding-top','padding-bottom','transition'].forEach(function(p){c.style.removeProperty(p)});
+if(prop==='close'){d.removeAttribute('open');s.setAttribute('aria-expanded','false')}
+busy=false;
+c.removeEventListener('transitionend',ev);
+};
+}
+if(d.hasAttribute('open')){
+c.style.maxHeight=c.scrollHeight+'px';
+c.offsetHeight;
+c.style.transition='max-height .3s cubic-bezier(.4,0,.2,1),opacity .3s cubic-bezier(.4,0,.2,1),padding .3s ease';
+c.style.maxHeight='0px';c.style.opacity='0';c.style.paddingTop='0px';c.style.paddingBottom='0px';
+c.addEventListener('transitionend',done('close'));
+}else{
+c.style.maxHeight='0px';c.style.opacity='0';c.style.paddingTop='0px';c.style.paddingBottom='0px';
+d.setAttribute('open','true');s.setAttribute('aria-expanded','true');
+c.offsetHeight;
+c.style.transition='max-height .35s cubic-bezier(.4,0,.2,1),opacity .35s cubic-bezier(.4,0,.2,1),padding .35s ease';
+c.style.maxHeight=(c.scrollHeight+40)+'px';c.style.opacity='1';c.style.paddingTop='20px';c.style.paddingBottom='24px';
+c.addEventListener('transitionend',done('open'));
+}
+});
+});
+window.mbAcN=n;
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+document.addEventListener('shopify:section:load',init);
+})();
+</script>
