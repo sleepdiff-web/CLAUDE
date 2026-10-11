@@ -100,6 +100,21 @@ Third-Party Tested
 .mb-wt__it{gap:6px}
 .mb-wt__tx{font-size:14px;line-height:1.3}
 }
+@supports (width:1cqw){
+@media screen and (max-width:749px){
+.mb-wt{display:block;width:100%;container-type:inline-size}
+.mb-wt__card{--u:min(1px,calc(100cqw / 376));display:flex;flex-direction:column;justify-content:center;min-height:min(100cqw,420px)}
+.mb-wt__in{width:100%;padding:max(22px,calc(30 * var(--u))) max(10px,calc(15 * var(--u)))}
+.mb-wt__h{font-size:max(20px,calc(26 * var(--u)));margin-bottom:max(10px,calc(16 * var(--u)))}
+.mb-wt__row{gap:max(4px,calc(6 * var(--u)));margin:max(8px,calc(14 * var(--u))) 0 max(12px,calc(20 * var(--u)))}
+.mb-wt__bc{min-height:calc((100cqw - 2 * max(10px,calc(15 * var(--u))) - 3 * max(4px,calc(6 * var(--u)))) / 4);padding:calc(10 * var(--u)) 2px}
+.mb-wt__bi{width:max(18px,calc(24 * var(--u)));height:max(18px,calc(24 * var(--u)));margin-bottom:calc(6 * var(--u))}
+.mb-wt__bt{font-size:max(8.5px,calc(12 * var(--u)))}
+.mb-wt__g{gap:max(10px,calc(16 * var(--u)));margin-bottom:max(4px,calc(8 * var(--u)))}
+.mb-wt__ic{width:max(16px,calc(20 * var(--u)));height:max(16px,calc(20 * var(--u)))}
+.mb-wt__tx{font-size:max(11.5px,calc(14 * var(--u)))}
+}
+}
 </style>
 
 <div class="mb-wt" data-rm="{{ mb_respect_motion }}" style="--mb-wt-mt:{{ mb_top }};--mb-wt-mb:{{ mb_bottom }};--mb-wt-bg:{{ mb_bg_color }};--mb-wt-tx:{{ mb_text_color }}">
