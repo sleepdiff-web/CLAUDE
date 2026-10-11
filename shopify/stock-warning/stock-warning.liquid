@@ -1,0 +1,47 @@
+{%- comment -%}
+  Low stock warning box: red icon, bold title and a short message.
+  mb_title / mb_body = the title and the message. To bold or link part of the message, use <strong>...</strong> or <a href="...">...</a>.
+  mb_text_color = title and message colour. mb_bg = box background. mb_border = dashed border colour. mb_icon_color = colour of the round icon.
+  mb_top / mb_bottom = space above and below (merges with neighbouring blocks, never doubled).
+  All text colours are locked, so the theme cannot turn them black. Do not use a straight apostrophe (') in the text, use &#39; instead.
+  Only publish claims that are true for your store (stock levels, sell-out history, and so on).
+{%- endcomment -%}
+{%- assign mb_title = 'WARNING: Low Stock Notice' -%}
+{%- assign mb_body = 'This product sold out 12 times last year. We encourage you to take advantage of the limited sale and buy now. Subscribing protects you against future stockouts. PS: Only available here, don&#39;t buy fakes on Amazon/eBay.' -%}
+{%- assign mb_text_color = '#B91C1C' -%}
+{%- assign mb_bg = '#FFF5F5' -%}
+{%- assign mb_border = '#F87171' -%}
+{%- assign mb_icon_color = '#EF4444' -%}
+{%- assign mb_top = '14px' -%}
+{%- assign mb_bottom = '16px' -%}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600&display=swap"></noscript>
+
+<style>
+.mb-sw{margin:var(--mb-sw-mt,14px) 0 var(--mb-sw-mb,16px);font-family:'Plus Jakarta Sans',sans-serif;font-weight:500;letter-spacing:.6px;text-align:left}
+.mb-sw__box{display:flex;align-items:flex-start;gap:12px;box-sizing:border-box;padding:16px;border:1px dashed var(--mb-sw-bd,#F87171);border-radius:8px;background:var(--mb-sw-bg,#FFF5F5)}
+.mb-sw__ic{flex:0 0 auto;width:20px;height:20px;margin-top:1px}
+.mb-sw__ic svg{display:block;width:100%;height:100%}
+.mb-sw__c{display:flex;flex:1 1 auto;flex-direction:column;gap:6px}
+.mb-sw__t{margin:0;padding:0;font-family:Poppins,sans-serif;font-size:14px;font-style:normal;font-weight:600;line-height:1.25;letter-spacing:normal;text-transform:none;word-break:break-word}
+.mb-sw__b{margin:0;padding:0;font-size:12.5px;font-weight:400;line-height:1.4;letter-spacing:.6px;text-transform:none}
+.mb-sw__b p{margin:0;font-weight:400}
+@media screen and (max-width:749px){
+.mb-sw__box{padding:12px;gap:10px}
+.mb-sw__t{font-size:13px}
+.mb-sw__b{font-size:11.5px}
+}
+</style>
+
+<div class="mb-sw" style="--mb-sw-mt:{{ mb_top }};--mb-sw-mb:{{ mb_bottom }};--mb-sw-bd:{{ mb_border }};--mb-sw-bg:{{ mb_bg }}">
+<div class="mb-sw__box">
+<div class="mb-sw__ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" fill="{{ mb_icon_color }}"/><path d="M12 8V13M12 16H12.01" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+<div class="mb-sw__c">
+<h3 class="mb-sw__t" style="color:{{ mb_text_color }}!important;-webkit-text-fill-color:{{ mb_text_color }}!important">{{ mb_title }}</h3>
+<div class="mb-sw__b" style="color:{{ mb_text_color }}!important;-webkit-text-fill-color:{{ mb_text_color }}!important">{{ mb_body }}</div>
+</div>
+</div>
+</div>
