@@ -1,0 +1,41 @@
+{%- comment -%}
+  Star rating line: "★★★★★ Rated 4.9 • Thousands of 5-Star Reviews".
+  mb_stars = the star characters (type as many ★ as you want). Set it to '' for text only, with no stars.
+  mb_text = the text next to the stars. To make part of it bold, wrap it in <strong>...</strong>.
+  mb_star_color = colour of the stars. mb_text_color = colour of the text. Both are locked, so the theme cannot turn them black.
+  mb_top / mb_top_mobile / mb_bottom / mb_bottom_mobile = space above and below the line (desktop / phone).
+  Do not use a straight apostrophe (') inside mb_text (use &#39; instead).
+{%- endcomment -%}
+{%- assign mb_stars = '★★★★★' -%}
+{%- assign mb_text = 'Berberine Metabolic Support Complex (500mg)' -%}
+{%- assign mb_star_color = '#943434' -%}
+{%- assign mb_text_color = '#121212' -%}
+{%- assign mb_top = '18px' -%}
+{%- assign mb_top_mobile = '14px' -%}
+{%- assign mb_bottom = '12px' -%}
+{%- assign mb_bottom_mobile = '8px' -%}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600&display=swap"></noscript>
+
+<style>
+.mb-rt{display:block;font-family:'Plus Jakarta Sans',sans-serif;font-size:16px;font-weight:500;line-height:1.8;letter-spacing:.6px;text-align:left}
+.mb-rt__c{display:inline-flex;align-items:center;gap:8px;background:transparent;padding:0;margin:var(--mb-rt-mt,18px) 0 var(--mb-rt-mb,12px)}
+.mb-rt__s{font-size:18px;letter-spacing:1.5px;line-height:1}
+.mb-rt__t{font-size:13px;line-height:1.2;font-weight:400;letter-spacing:.1px;white-space:nowrap}
+.mb-rt__t strong{font-weight:700}
+@media screen and (max-width:749px){
+.mb-rt{font-size:15px}
+.mb-rt__c{gap:6px;margin-top:var(--mb-rt-mtm,14px);margin-bottom:var(--mb-rt-mbm,8px)}
+.mb-rt__s{font-size:14px;letter-spacing:1px}
+.mb-rt__t{font-size:11px}
+}
+@media screen and (max-width:359px){
+.mb-rt__c{max-width:100%}
+.mb-rt__t{white-space:normal}
+}
+</style>
+
+<div class="mb-rt"><div class="mb-rt__c" style="--mb-rt-mt:{{ mb_top }};--mb-rt-mtm:{{ mb_top_mobile }};--mb-rt-mb:{{ mb_bottom }};--mb-rt-mbm:{{ mb_bottom_mobile }}">{%- if mb_stars != blank -%}<div class="mb-rt__s" aria-hidden="true" style="color:{{ mb_star_color }}!important;-webkit-text-fill-color:{{ mb_star_color }}!important">{{ mb_stars }}</div>{%- endif -%}<div class="mb-rt__t" style="color:{{ mb_text_color }}!important;-webkit-text-fill-color:{{ mb_text_color }}!important">{{ mb_text }}</div></div></div>
