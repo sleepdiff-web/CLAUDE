@@ -1,0 +1,147 @@
+{%- comment -%}
+  Price + sale pill (e.g. "$59.99  $179.97  [Summer Sale - Save 67%]").
+  On a product page the prices come from the selected variant and update when the variant changes.
+  Anywhere else (no product) it shows the demo prices below, in cents (5999 = $59.99).
+  Colours: mb_badge_bg = pill, mb_price_color = sale price, mb_compare_color = crossed-out price.
+  mb_top / mb_bottom = space above / below. Margins merge with neighbouring blocks, so it is never doubled.
+  mb_kaching = true keeps the original page&#39;s sync with Kaching Bundles (reads the selected bundle price).
+  Set it to false if you do not use Kaching Bundles.
+{%- endcomment -%}
+{%- assign mb_label = 'Summer Sale - Save' -%}
+{%- assign mb_badge_bg = '#943434' -%}
+{%- assign mb_badge_color = '#ffffff' -%}
+{%- assign mb_price_color = '#943434' -%}
+{%- assign mb_compare_color = '#444444' -%}
+{%- assign mb_top = '16px' -%}
+{%- assign mb_bottom = '16px' -%}
+{%- assign mb_kaching = true -%}
+{%- assign mb_demo_price = 5999 -%}
+{%- assign mb_demo_compare = 17997 -%}
+
+{%- if product -%}
+  {%- assign mb_v = product.selected_or_first_available_variant -%}
+  {%- assign mb_price = mb_v.price -%}
+  {%- assign mb_compare = mb_v.compare_at_price | default: 0 -%}
+{%- else -%}
+  {%- assign mb_price = mb_demo_price -%}
+  {%- assign mb_compare = mb_demo_compare -%}
+{%- endif -%}
+{%- assign mb_sale = false -%}
+{%- if mb_compare > mb_price -%}{%- assign mb_sale = true -%}{%- endif -%}
+{%- assign mb_pct = 0 -%}
+{%- if mb_sale -%}{%- assign mb_pct = mb_compare | minus: mb_price | times: 100.0 | divided_by: mb_compare | round -%}{%- endif -%}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600&display=swap"></noscript>
+
+<style>
+.mb-bsw{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:var(--mb-bsw-mt,16px) 0 var(--mb-bsw-mb,16px);font-family:'Plus Jakarta Sans',sans-serif;font-weight:500;letter-spacing:.6px;text-align:left}
+.mb-bsw,.mb-bsw *,.mb-bsw *::before,.mb-bsw *::after{box-sizing:border-box}
+.mb-bsw__prices{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px}
+.mb-bsw__price{color:var(--mb-bsw-pc,#943434);font-size:17px;font-weight:600;line-height:1.2}
+.mb-bsw__compare{color:var(--mb-bsw-cc,#444);font-size:15px;font-weight:600;line-height:1.2;text-decoration:line-through}
+.mb-bsw__pill{display:inline-flex;align-items:center;padding:6px 10px;border-radius:6px;background-color:var(--mb-bsw-bg,#943434);color:var(--mb-bsw-tx,#fff);font-size:11px;font-weight:700;line-height:1;white-space:nowrap;transition:opacity .2s ease}
+.mb-bsw .mb-bsw__compare--hidden,.mb-bsw .mb-bsw__pill--hidden{display:none}
+@media screen and (min-width:750px){
+.mb-bsw__price{font-weight:700}
+.mb-bsw__pill{font-size:12px}
+}
+</style>
+
+<div class="mb-bsw" style="--mb-bsw-bg:{{ mb_badge_bg }};--mb-bsw-tx:{{ mb_badge_color }};--mb-bsw-pc:{{ mb_price_color }};--mb-bsw-cc:{{ mb_compare_color }};--mb-bsw-mt:{{ mb_top }};--mb-bsw-mb:{{ mb_bottom }}" aria-live="polite" aria-atomic="true"><div class="mb-bsw__prices"><span class="mb-bsw__price" data-badge-price>{{ mb_price | money }}</span><span class="mb-bsw__compare{% unless mb_sale %} mb-bsw__compare--hidden{% endunless %}" data-badge-compare>{% if mb_sale %}{{ mb_compare | money }}{% endif %}</span></div><span class="mb-bsw__pill{% unless mb_sale %} mb-bsw__pill--hidden{% endunless %}" data-badge-pill aria-hidden="{% if mb_sale %}false{% else %}true{% endif %}"><span data-badge-label>{{ mb_label }}</span>&nbsp;<span data-badge-pct>{{ mb_pct }}%</span></span></div>
+
+<script>
+(function(){
+var w=document.currentScript.previousElementSibling;
+if(!w||!w.classList.contains('mb-bsw'))return;
+var pr=w.querySelector('[data-badge-price]'),cp=w.querySelector('[data-badge-compare]'),pl=w.querySelector('[data-badge-pill]'),pc=w.querySelector('[data-badge-pct]'),
+fmt={{ shop.money_format | json }},V={ {%- if product -%}{%- for v in product.variants -%}"{{ v.id }}":[{{ v.price }},{{ v.compare_at_price | default: 0 }}]{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%}{%- endif -%} };
+function money(c){
+var a=(c/100).toFixed(2),n=String(Math.round(c/100));
+return fmt.replace(/\{\{\s*amount\s*\}\}/g,a).replace(/\{\{\s*amount_no_decimals\s*\}\}/g,n).replace(/\{\{\s*amount_with_comma_separator\s*\}\}/g,a.replace('.',',')).replace(/\{\{\s*amount_no_decimals_with_comma_separator\s*\}\}/g,n.replace('.',','));
+}
+function show(p,c){
+pr.textContent=money(p);
+if(c&&c>p){
+cp.textContent=money(c);cp.classList.remove('mb-bsw__compare--hidden');
+pc.textContent=Math.round((c-p)/c*100)+'%';
+pl.classList.remove('mb-bsw__pill--hidden');pl.setAttribute('aria-hidden','false');
+}else{
+cp.classList.add('mb-bsw__compare--hidden');pl.classList.add('mb-bsw__pill--hidden');pl.setAttribute('aria-hidden','true');
+}
+}
+function byVariant(v){if(v)show(v.price,v.compare_at_price||0)}
+function byId(id){var a=V[parseInt(id,10)];if(a)show(a[0],a[1])}
+document.addEventListener('variant:changed',function(e){if(e.detail&&e.detail.variant)byVariant(e.detail.variant)});
+document.addEventListener('product:variantChanged',function(e){if(e.detail&&e.detail.variant)byVariant(e.detail.variant)});
+document.addEventListener('change',function(e){
+var t=e.target;
+if(!t)return;
+if(t.name==='id')byId(t.value);
+{%- if mb_kaching %}
+if(t.name==='selling_plan')setTimeout(readK,250);
+{%- endif %}
+});
+var hid=document.querySelector('[data-product-form] input[name="id"],form[action*="/cart/add"] input[name="id"]');
+if(hid){
+var last=hid.value;
+var chk=function(){if(hid.value!==last){last=hid.value;byId(last)}};
+new MutationObserver(chk).observe(hid,{attributes:true,attributeFilter:['value']});
+setInterval(function(){if(!document.hidden)chk()},200);
+}
+{%- if mb_kaching %}
+/* Kaching Bundles: follow the price of the selected bundle */
+var kT=0,kP=-1,kC=-1;
+function cents(s){
+s=s.replace(/[^\d.,]/g,'');
+if(!s)return 0;
+if(/,\d{2}$/.test(s)&&s.indexOf('.')===-1)s=s.replace(',','.');else s=s.replace(/,/g,'');
+return Math.round(parseFloat(s)*100)||0;
+}
+function kEls(){
+var k=document.querySelector('.kaching-bundles'),r,bp,bf,i,list=['.kaching-bundles__bar--selected','.kaching-bundles__bar--active','.kaching-bundles__bar.is-selected','.kaching-bundles__bar.is-active','.kaching-bundles__bar.selected','.kaching-bundles__bar.active'];
+if(k){
+r=k.querySelector('input[type="radio"]:checked');
+r=r&&r.parentElement;
+while(r&&r!==k){
+bp=r.querySelector('.kaching-bundles__bar-price');bf=r.querySelector('.kaching-bundles__bar-full-price');
+if(bp&&bf)return[bp,bf];
+r=r.parentElement;
+}
+}
+for(i=0;i<list.length;i++){
+r=document.querySelector(list[i]);
+if(r){bp=r.querySelector('.kaching-bundles__bar-price');bf=r.querySelector('.kaching-bundles__bar-full-price');if(bp&&bf)return[bp,bf]}
+}
+return[document.querySelector('.kaching-bundles__bar-price'),document.querySelector('.kaching-bundles__bar-full-price')];
+}
+function readK(){
+clearTimeout(kT);
+kT=setTimeout(function(){
+var e=kEls(),a,b,p,c;
+if(!e[0]||!e[1])return;
+a=(e[0].innerText||'').trim();b=(e[1].innerText||'').trim();
+if(!a||!b)return;
+p=cents(a);c=cents(b);
+if(p<=0||c<=0||(p===kP&&c===kC))return;
+kP=p;kC=c;show(p,c);
+},50);
+}
+function attachK(){
+var a=document.querySelector('.kaching-bundles__bar-price'),b=document.querySelector('.kaching-bundles__bar-full-price'),o={subtree:true,childList:true,characterData:true},root,m;
+if(!a||!b)return false;
+readK();
+m=new MutationObserver(readK);m.observe(a,o);m.observe(b,o);
+root=document.querySelector('.kaching-bundles__bar-pricing')||document.querySelector('.kaching-bundles__bar-wrapper')||document.querySelector('.kaching-bundles')||document.querySelector('.product__info-container')||document.querySelector('[data-product-form]')||document.querySelector('main');
+if(root)new MutationObserver(readK).observe(root,o);
+return true;
+}
+if(!attachK()){
+var n=0,iv=setInterval(function(){if(attachK()||++n>=50)clearInterval(iv)},100);
+}
+['kaching:price:updated','kaching:bundle:selected','kaching:subscription:changed','kaching:subscription:toggled','kaching:autoship:changed','kaching:selling_plan:changed'].forEach(function(n){document.addEventListener(n,readK)});
+{%- endif %}
+})();
+</script>
