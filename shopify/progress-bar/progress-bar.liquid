@@ -1,5 +1,6 @@
 {%- comment -%}
   "93% Sold" progress bar. The bar fills and the number counts up when it scrolls into view.
+  The bar is shown full by default, so it still looks right if the animation script cannot run.
   mb_percent = the number (0 to 100). mb_label = text after the % sign.
   Colours: mb_color = bar fill and text, mb_track = empty part of the bar, mb_bg = card background.
   mb_top / mb_bottom = space above / below the card (merges with neighbouring blocks, never doubled).
@@ -11,16 +12,17 @@
 {%- assign mb_bg = '#ffffff' -%}
 {%- assign mb_top = '16px' -%}
 {%- assign mb_bottom = '16px' -%}
+{%- assign mb_percent = mb_percent | at_least: 0 | at_most: 100 -%}
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600&display=swap" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600&display=swap"><style>.mb-pg__fill{width:{{ mb_percent }}%!important}</style></noscript>
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600&display=swap"></noscript>
 
 <style>
 .mb-pg{display:flex;align-items:center;gap:16px;box-sizing:border-box;margin:var(--mb-pg-mt,16px) 0 var(--mb-pg-mb,16px);padding:16px 20px;border-radius:12px;background-color:var(--mb-pg-bg,#fff);box-shadow:0 5px 18px rgba(0,0,0,.08);font-family:'Plus Jakarta Sans',sans-serif;font-weight:500;line-height:1.8;letter-spacing:.6px;text-align:left}
 .mb-pg__bar{position:relative;flex:1;height:8px;border-radius:4px;overflow:hidden;background-color:var(--mb-pg-tr,#ebebef)}
-.mb-pg__fill{width:0;height:100%;border-radius:4px;background-color:var(--mb-pg-c,#c47245);transition:width 1.2s cubic-bezier(.1,.8,.3,1)}
+.mb-pg__fill{height:100%;border-radius:4px;background-color:var(--mb-pg-c,#c47245);transition:width 1.2s cubic-bezier(.1,.8,.3,1)}
 .mb-pg__txt{font-size:15px;font-weight:700;white-space:nowrap;color:var(--mb-pg-c,#c47245)}
 @media screen and (max-width:749px){
 .mb-pg{padding:14px 16px}
@@ -28,13 +30,14 @@
 }
 </style>
 
-<div class="mb-pg" style="--mb-pg-c:{{ mb_color }};--mb-pg-tr:{{ mb_track }};--mb-pg-bg:{{ mb_bg }};--mb-pg-mt:{{ mb_top }};--mb-pg-mb:{{ mb_bottom }}"><div class="mb-pg__bar"><div class="mb-pg__fill"></div></div><span class="mb-pg__txt"><span class="mb-pg__n" data-target="{{ mb_percent }}">{{ mb_percent }}</span>%{{ mb_label }}</span></div>
+<div class="mb-pg" style="--mb-pg-c:{{ mb_color }};--mb-pg-tr:{{ mb_track }};--mb-pg-bg:{{ mb_bg }};--mb-pg-mt:{{ mb_top }};--mb-pg-mb:{{ mb_bottom }}"><div class="mb-pg__bar"><div class="mb-pg__fill" style="width:{{ mb_percent }}%"></div></div><span class="mb-pg__txt"><span class="mb-pg__n" data-target="{{ mb_percent }}">{{ mb_percent }}</span>%{{ mb_label }}</span></div>
 <script>
 (function(){
-var r=document.currentScript.previousElementSibling;
-if(!r||!r.classList.contains('mb-pg'))return;
+function init(r){
+if(r.getAttribute('data-mb-on'))return;
+r.setAttribute('data-mb-on','1');
 var f=r.querySelector('.mb-pg__fill'),c=r.querySelector('.mb-pg__n'),t=parseInt(c.getAttribute('data-target'),10)||0,io,raf=0;
-function end(){f.style.width=t+'%';c.textContent=t}
+if(!f||!c||!('IntersectionObserver' in window)||(window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches))return;
 function go(){
 r.classList.add('js-animated');
 f.style.width=t+'%';
@@ -49,8 +52,9 @@ raf=requestAnimationFrame(tick);
 function arm(){
 cancelAnimationFrame(raf);
 r.classList.remove('js-animated');
-f.style.width='0%';c.textContent='0';
-if(!('IntersectionObserver' in window)||(window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches)){end();return}
+f.style.transition='none';f.style.width='0%';c.textContent='0';
+void f.offsetWidth;
+f.style.transition='';
 io=new IntersectionObserver(function(e){
 for(var i=0;i<e.length;i++)if(e[i].isIntersecting){io.disconnect();go();break}
 },{threshold:.1});
@@ -62,5 +66,12 @@ document.addEventListener(n,function(e){
 if(e.target&&(e.target.contains(r)||r.contains(e.target))){if(io)io.disconnect();arm()}
 });
 });
+}
+function run(){
+var l=document.querySelectorAll('.mb-pg'),i;
+for(i=0;i<l.length;i++)init(l[i]);
+}
+run();
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);
 })();
 </script>
