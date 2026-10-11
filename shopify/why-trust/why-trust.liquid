@@ -1,0 +1,153 @@
+{%- comment -%}
+  "Why Trust" card: heading, four small badge boxes and a two-column tick list, over a photo with a colour fade.
+  EDIT YOUR CONTENT BELOW. mb_badges = the four badge boxes and mb_list = the tick list, put @@ on its own line between entries.
+  mb_bg_img = a photo for the background (Content > Files > upload > copy link). Leave '' for a plain colour card.
+  mb_icon_1 to mb_icon_4 = your own badge icon image links (white line icons look best). Leave '' to use the built-in icons.
+  mb_bg_color = card colour behind the photo. mb_grad_top / mb_grad_bottom = the colour fade over the photo (top to bottom). mb_text_color = all text and icons.
+  mb_animate = true for the fade-in-on-scroll effect, false to show everything straight away.
+  mb_top / mb_bottom = space above and below (merges with neighbouring blocks, never doubled).
+  Do not use a straight apostrophe (') in the text, use &#39; instead.
+{%- endcomment -%}
+{%- assign mb_heading = 'Why Trust Metabolae' -%}
+{%- assign mb_bg_img = '' -%}
+{%- assign mb_bg_color = '#8e5539' -%}
+{%- assign mb_grad_top = 'rgba(142, 85, 57, 1)' -%}
+{%- assign mb_grad_bottom = 'rgba(212, 149, 117, .6)' -%}
+{%- assign mb_text_color = '#ffffff' -%}
+{%- assign mb_icon_1 = '' -%}
+{%- assign mb_icon_2 = '' -%}
+{%- assign mb_icon_3 = '' -%}
+{%- assign mb_icon_4 = '' -%}
+{%- assign mb_animate = true -%}
+{%- assign mb_top = '12px' -%}
+{%- assign mb_bottom = '12px' -%}
+{%- capture mb_badges -%}
+Clinically Backed Formulas
+@@
+Third-Party Tested
+@@
+Clean Formulas
+@@
+Globally Trusted Facilities
+{%- endcapture -%}
+{%- capture mb_list -%}
+True Ceylon Cinnamon
+@@
+12:1 Concentrated Extract
+@@
+MCT Oil Delivery System
+@@
+Gentle on the Stomach
+@@
+Non-GMO &amp; Gluten-Free
+@@
+Third-Party Tested
+{%- endcapture -%}
+{%- assign mb_badge_items = mb_badges | split: '@@' -%}
+{%- assign mb_list_items = mb_list | split: '@@' -%}
+{%- assign mb_icons = mb_icon_1 | append: '@@' | append: mb_icon_2 | append: '@@' | append: mb_icon_3 | append: '@@' | append: mb_icon_4 | split: '@@' -%}
+{%- assign q = '?' -%}{%- if mb_bg_img contains '?' -%}{%- assign q = '&amp;' -%}{%- endif -%}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600&display=swap"></noscript>
+
+<style>
+.mb-wt{margin:var(--mb-wt-mt,12px) 0 var(--mb-wt-mb,12px);font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:500;line-height:1.8;letter-spacing:.6px;text-align:left}
+.mb-wt__card{position:relative;box-sizing:border-box;border-radius:12px;overflow:hidden;background:var(--mb-wt-bg,#8e5539)}
+.mb-wt__bg{position:absolute;inset:0;display:block;width:100%;height:100%;max-width:none;object-fit:cover;object-position:center center;z-index:0}
+.mb-wt__ov{position:absolute;inset:0;z-index:1;background:linear-gradient(to bottom,var(--mb-wt-g1,rgba(142,85,57,1)),var(--mb-wt-g2,rgba(212,149,117,.6)))}
+.mb-wt__in{position:relative;z-index:2;box-sizing:border-box;padding:48px 24px;text-align:center}
+.mb-wt__h{margin:0 0 24px;padding:0;font-family:Poppins,sans-serif;font-size:32px;font-style:normal;font-weight:400;line-height:1.2;letter-spacing:.5px;text-transform:none;word-break:break-word}
+.mb-wt__row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin:32px 0 40px}
+.mb-wt__bc{display:flex;flex-direction:column;align-items:center;justify-content:center;box-sizing:border-box;padding:24px 12px;border:1px solid rgba(255,255,255,.4);border-radius:12px;background-color:rgba(255,255,255,.04);text-align:center}
+.mb-wt__bc:hover{background-color:rgba(255,255,255,.08);border-color:rgba(255,255,255,.8);transform:translateY(-2px)!important}
+.mb-wt__bi{display:flex;align-items:center;justify-content:center;width:44px;height:44px;margin-bottom:12px}
+.mb-wt__bi svg,.mb-wt__bi img{display:block;width:100%;height:100%}
+.mb-wt__bi img{object-fit:contain}
+.mb-wt__bt{font-size:11px;font-weight:500;line-height:1.35;letter-spacing:.8px;text-transform:uppercase}
+.mb-wt__g{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:0 0 16px;text-align:left}
+.mb-wt__it{display:flex;align-items:center;gap:12px}
+.mb-wt__ic{flex-shrink:0;width:20px;height:20px}
+.mb-wt__tx{font-size:18px;line-height:1.25;font-weight:500}
+.mb-wt .mb-wt__h,.mb-wt .mb-wt__bt,.mb-wt .mb-wt__tx,.mb-wt .mb-wt__bi,.mb-wt .mb-wt__ic{color:var(--mb-wt-tx,#fff)!important;-webkit-text-fill-color:var(--mb-wt-tx,#fff)!important}
+.mb-wt--js .mb-wt__h,.mb-wt--js .mb-wt__bc,.mb-wt--js .mb-wt__it{opacity:0;transform:translateY(20px);transition:opacity .8s cubic-bezier(.2,.8,.2,1),transform .8s cubic-bezier(.2,.8,.2,1)!important}
+.mb-wt--on .mb-wt__h,.mb-wt--on .mb-wt__bc,.mb-wt--on .mb-wt__it{opacity:1;transform:translateY(0)}
+.mb-wt--on .mb-wt__bc:nth-child(1){transition-delay:.1s!important}
+.mb-wt--on .mb-wt__bc:nth-child(2){transition-delay:.2s!important}
+.mb-wt--on .mb-wt__bc:nth-child(3){transition-delay:.3s!important}
+.mb-wt--on .mb-wt__bc:nth-child(4){transition-delay:.4s!important}
+.mb-wt--on .mb-wt__it:nth-child(1){transition-delay:.4s!important}
+.mb-wt--on .mb-wt__it:nth-child(2){transition-delay:.48s!important}
+.mb-wt--on .mb-wt__it:nth-child(3){transition-delay:.56s!important}
+.mb-wt--on .mb-wt__it:nth-child(4){transition-delay:.64s!important}
+.mb-wt--on .mb-wt__it:nth-child(5){transition-delay:.72s!important}
+.mb-wt--on .mb-wt__it:nth-child(6){transition-delay:.8s!important}
+@media screen and (min-width:750px){
+.mb-wt{font-size:16px}
+.mb-wt__g{max-width:620px;margin-left:auto;margin-right:auto;column-gap:48px;row-gap:20px}
+}
+@media screen and (max-width:749px){
+.mb-wt__in{padding:40px 15px}
+.mb-wt__h{margin-bottom:16px;font-size:26px}
+.mb-wt__row{gap:6px;margin:16px 0 24px}
+.mb-wt__bc{padding:10px 4px;border-radius:6px}
+.mb-wt__bi{width:24px;height:24px;margin-bottom:6px}
+.mb-wt__bt{font-size:12px;line-height:1.25;letter-spacing:.1px}
+.mb-wt__it{gap:6px}
+.mb-wt__tx{font-size:14px;line-height:1.3}
+}
+@media (prefers-reduced-motion:reduce){
+.mb-wt--js .mb-wt__h,.mb-wt--js .mb-wt__bc,.mb-wt--js .mb-wt__it{opacity:1;transform:none;transition:none!important}
+}
+</style>
+
+<div class="mb-wt" style="--mb-wt-mt:{{ mb_top }};--mb-wt-mb:{{ mb_bottom }};--mb-wt-bg:{{ mb_bg_color }};--mb-wt-g1:{{ mb_grad_top }};--mb-wt-g2:{{ mb_grad_bottom }};--mb-wt-tx:{{ mb_text_color }}">
+<div class="mb-wt__card">
+{%- if mb_bg_img != blank -%}<img class="mb-wt__bg" src="{{ mb_bg_img }}{{ q }}width=1000" srcset="{{ mb_bg_img }}{{ q }}width=400 400w, {{ mb_bg_img }}{{ q }}width=800 800w, {{ mb_bg_img }}{{ q }}width=1200 1200w" sizes="(min-width: 750px) 50vw, 100vw" alt="" loading="lazy" decoding="async">{%- endif -%}
+<div class="mb-wt__ov" aria-hidden="true"></div>
+<div class="mb-wt__in">
+<h2 class="mb-wt__h">{{ mb_heading }}</h2>
+<div class="mb-wt__row">
+{%- for b in mb_badge_items -%}
+{%- assign ico = mb_icons[forloop.index0] | strip -%}
+<div class="mb-wt__bc"><div class="mb-wt__bi">
+{%- if ico != blank -%}<img src="{{ ico }}" alt="" width="88" height="83" loading="lazy">
+{%- elsif forloop.index == 1 -%}<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 6v28a5 5 0 0 0 10 0V6M7 6h16M10 22h10"/><path d="M32 6v12L25.5 31a3 3 0 0 0 2.7 4.3h13.6a3 3 0 0 0 2.7-4.3L38 18V6M30 6h10"/><circle cx="33.5" cy="29" r="1.4"/><circle cx="38.5" cy="31.5" r="1"/></svg>
+{%- elsif forloop.index == 2 -%}<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 9l5-2 5 12-5 2zM18 21l4 10M12 41h24M14 36h14"/><path d="M26 22c6 1 9 5 8 11-.6 3-3 3.5-6 3.5"/><circle cx="37" cy="12" r="6.5"/><path d="M34 12l2.2 2.2L40.2 9.8"/></svg>
+{%- elsif forloop.index == 3 -%}<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 5h10M21 5v14L11 37a4 4 0 0 0 3.5 6h19a4 4 0 0 0 3.5-6L27 19V5M15 32h18"/><circle cx="21" cy="37" r="1.6"/><circle cx="27.5" cy="35.5" r="1.2"/><circle cx="24.5" cy="40.5" r="1"/></svg>
+{%- else -%}<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="24" cy="24" r="18"/><path d="M6 24h36M8.5 15h31M8.5 33h31M24 6c-7.5 8-7.5 28 0 36M24 6c7.5 8 7.5 28 0 36"/></svg>
+{%- endif -%}
+</div><div class="mb-wt__bt">{{ b | strip }}</div></div>
+{%- endfor -%}
+</div>
+<div class="mb-wt__g">
+{%- for t in mb_list_items -%}
+<div class="mb-wt__it"><svg class="mb-wt__ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M23 12l-2.44-2.79.34-3.69-3.61-.82-1.89-3.2L12 2.96 8.6 1.5 6.71 4.7 3.1 5.51l.34 3.69L1 12l2.44 2.79-.34 3.69 3.61.82 1.89 3.2 3.4-1.46 3.4 1.46 1.89-3.2 3.61-.82-.34-3.69L23 12z" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="mb-wt__tx">{{ t | strip }}</span></div>
+{%- endfor -%}
+</div>
+</div>
+</div>
+</div>
+{%- if mb_animate %}
+<script>
+(function(){
+function init(w){
+if(w.getAttribute('data-on'))return;
+w.setAttribute('data-on','1');
+w.classList.add('mb-wt--js');
+function show(){w.classList.add('mb-wt--on')}
+function seen(){var b=w.getBoundingClientRect(),h=window.innerHeight||document.documentElement.clientHeight;return b.height>0&&Math.min(b.bottom,h)-Math.max(b.top,0)>=b.height*.15}
+if(!('IntersectionObserver' in window)){show();return}
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){show();io.disconnect()}})},{threshold:.15});
+io.observe(w);
+function sc(){if(seen()){show();io.disconnect();document.removeEventListener('scroll',sc,true);removeEventListener('resize',sc)}}
+document.addEventListener('scroll',sc,true);addEventListener('resize',sc);addEventListener('load',sc);
+setTimeout(sc,300);
+}
+document.querySelectorAll('.mb-wt').forEach(init);
+document.addEventListener('shopify:section:load',function(){document.querySelectorAll('.mb-wt').forEach(init)});
+})();
+</script>
+{%- endif %}
