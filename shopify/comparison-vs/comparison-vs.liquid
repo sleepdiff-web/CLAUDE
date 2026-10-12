@@ -1,0 +1,175 @@
+{%- comment -%}
+  "Us vs. Other Brands" section: on the left a two-column table (your column is solid colour with small icons, the other brands column is white with grey crosses), on the right a heading, a tick list and a button with a guarantee line. On phones the heading comes first, then the table, then the button (the tick list is hidden, like the original).
+  EDIT YOUR CONTENT BELOW.
+  TABLE ROWS: one row = icon link ||| text in your column ||| text in the other column. Put @@ on its own line between rows.
+  TICK LIST: one line = bold start ||| rest of the line. Put @@ on its own line between lines. Put the dash in the bold part, like the original (Clinically Studied Ingredients— ||| Ingredients proven to work).
+  The picture links start as Metabolae's own files so the section is an exact copy straight away.
+  Before you go live, download them, upload them to your own store (Content > Files) and paste your links here instead, so they keep working and are yours. Also replace all the wording, because it describes Metabolae's product.
+  mb_img1 / mb_name1 = the picture above your column and its name. mb_img2 / mb_name2 = same for the other brands column. mb_img1_w / mb_img2_w = their width in pixels on desktop (phones use 90 and 75).
+  mb_bg = section background. mb_col_bg = your column. mb_check_color = the tick inside the white circles. mb_cross_bg = the grey circle behind each cross.
+  For your red: mb_bg #943434, mb_col_bg #612229, mb_check_color #943434.
+  The button scrolls to your Add to cart area. These colours are locked, so the theme cannot turn them black.
+  Do not use a straight apostrophe (') in the text, use &#39; instead. Do not type three | in a row inside a line except as the separators.
+{%- endcomment -%}
+{%- assign mb_heading = 'Metabolae vs. Other Brands' -%}
+{%- assign mb_button = 'Try Risk-Free Today' -%}
+{%- assign mb_note = '90-day money back guarantee' -%}
+{%- assign mb_bg = '#c47245' -%}
+{%- assign mb_col_bg = '#a23b13' -%}
+{%- assign mb_check_color = '#c47245' -%}
+{%- assign mb_cross_bg = '#786d6d' -%}
+{%- assign mb_name1 = 'Metabolae' -%}
+{%- assign mb_img1 = 'https://metabolae.com/cdn/shop/files/Object_2.png?v=1779290542&width=200' -%}
+{%- assign mb_img1_w = 120 -%}
+{%- assign mb_name2 = 'Other Brands' -%}
+{%- assign mb_img2 = 'https://metabolae.com/cdn/shop/files/Background_24.png?v=1779290625&width=200' -%}
+{%- assign mb_img2_w = 100 -%}
+{%- capture mb_rows_data -%}
+https://metabolae.com/cdn/shop/files/metabolae-clinically-backedv2.webp?v=1773607084&width=52 ||| Research-Backed ||| Chasing Trend Over Quality
+@@
+https://metabolae.com/cdn/shop/files/metabolae-3rd-party.webp?v=1773606638&width=52 ||| Independently Lab Tested ||| No Verified Testing
+@@
+https://metabolae.com/cdn/shop/files/metabolae-clean-formulav2.webp?v=1773607084&width=52 ||| Zero Coumarin, Clean Formula ||| Cheap Cassia High in Coumarin
+@@
+https://metabolae.com/cdn/shop/files/metabolae-check-mark-white.webp?v=1773606638&width=52 ||| Full-Strength 12:1 Extract ||| Weak Low-Dose Formulas
+@@
+https://metabolae.com/cdn/shop/files/metabolae-oil-infusedv2.webp?v=1773607084&width=52 ||| MCT Oil Enhanced ||| Does Not Get Absorbed Properly
+@@
+https://metabolae.com/cdn/shop/files/metabolae-softgelss.webp?v=1773607084&width=52 ||| High-Absorption Softgels ||| Hard-to-Swallow Capsules
+{%- endcapture -%}
+{%- capture mb_list_data -%}
+Clinically Studied Ingredients— ||| Ingredients proven to work
+@@
+Noticeable Support Within Weeks— ||| Feel a difference in weeks
+@@
+Built for Long-Term Use, Not Quick Fixes— ||| Not just symptom relief
+@@
+Clean & Pure Ingredients— ||| No fillers, GMOs, or unnecessary additives
+{%- endcapture -%}
+{%- assign mb_rows = mb_rows_data | split: '@@' -%}
+{%- assign mb_list = mb_list_data | split: '@@' -%}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600&display=swap"></noscript>
+
+<style>
+.page-width:has(>.mb-vs){max-width:none;padding:0}
+.mb-vs,.mb-vs *,.mb-vs *::before,.mb-vs *::after{box-sizing:border-box}
+.mb-vs{display:block;margin:0;padding:80px 24px;font-family:'Plus Jakarta Sans',system-ui,sans-serif;font-size:15px;font-weight:500;line-height:1.8;letter-spacing:.6px;text-align:left}
+@media screen and (min-width:750px){.mb-vs{font-size:16px}}
+.mb-vs .mb-vs__in{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;max-width:1080px;margin:0 auto}
+.mb-vs .mb-vs__tw{margin:72px 0 0;overflow:visible;border:none!important;background:transparent!important;box-shadow:none!important}
+.mb-vs .mb-vs__tb{width:calc(100% + 24px);margin:0 -12px;border-collapse:separate;border-spacing:12px 0;table-layout:fixed}
+.mb-vs .mb-vs__cl,.mb-vs .mb-vs__cr{width:50%}
+.mb-vs .mb-vs__tb,.mb-vs .mb-vs__tb thead,.mb-vs .mb-vs__tb tbody,.mb-vs .mb-vs__tb tr{background:transparent!important}
+.mb-vs .mb-vs__hl,.mb-vs .mb-vs__hr{box-sizing:border-box;padding:18px 12px 16px;text-align:center;vertical-align:bottom;font-weight:700;letter-spacing:.6px}
+.mb-vs .mb-vs__hl{border-radius:12px 12px 0 0!important;border:none!important;border-bottom:1px solid rgba(255,255,255,.6)!important}
+.mb-vs .mb-vs__hr{position:relative;border:1.5px solid #e2e2e2!important;border-radius:12px 12px 0 0!important}
+.mb-vs .mb-vs__hi{display:block;margin:0 auto 10px;border:0;object-fit:contain;position:relative!important;z-index:5!important}
+.mb-vs .mb-vs__hl .mb-vs__hi{width:120px;margin-top:-72px}
+.mb-vs .mb-vs__hr .mb-vs__hi{width:100px;margin-top:-72px}
+.mb-vs .mb-vs__cap{display:block;font-size:18px;font-weight:500;line-height:1.3;letter-spacing:.6px}
+.mb-vs .mb-vs__hr .mb-vs__cap{position:relative;z-index:2}
+.mb-vs .mb-vs__tb tbody tr td{box-sizing:border-box;padding:14px 12px;font-size:13.5px;font-weight:500;line-height:1.35;letter-spacing:.6px;text-align:center;vertical-align:middle}
+.mb-vs .mb-vs__tb tr:last-child td.mb-vs__dl{border-radius:0 0 12px 12px!important;border-bottom:none!important}
+.mb-vs .mb-vs__tb tr:last-child td.mb-vs__dr{border-radius:0 0 12px 12px!important;border:1.5px solid #e2e2e2!important;border-top:none!important}
+.mb-vs .mb-vs__dl{border:none!important;border-bottom:1px solid rgba(255,255,255,.6)!important}
+.mb-vs .mb-vs__dr{border:1.5px solid #e2e2e2!important;border-top:none!important}
+.mb-vs .mb-vs__ic{display:block;width:26px;height:26px;max-width:none;margin:0 auto 6px;border:0;opacity:.9}
+.mb-vs .mb-vs__info{display:flex;flex-direction:column;gap:20px}
+.mb-vs .mb-vs__h{margin:0;padding:0;font-family:Poppins,system-ui,sans-serif;font-size:clamp(22px,2.8vw,32px);font-style:normal;font-weight:500!important;line-height:1.25;letter-spacing:.6px;text-align:left;text-transform:none}
+.mb-vs .mb-vs__ck{display:flex;flex-direction:column;gap:14px;margin:0;padding:0;list-style:none}
+.mb-vs .mb-vs__ci{display:flex;align-items:flex-start;gap:12px;margin:0;padding:0;font-size:15px;line-height:1.5}
+.mb-vs .mb-vs__cic{display:flex;flex-shrink:0;align-items:center;justify-content:center;width:22px;height:22px;margin-top:1px;border-radius:50%;background:#fff!important}
+.mb-vs .mb-vs__cic svg{width:11px;height:11px;fill:none}
+.mb-vs .mb-vs__cic svg,.mb-vs .mb-vs__cic svg *{stroke:var(--mb-vs-ck)!important;fill:none!important}
+.mb-vs .mb-vs__cn{flex:1;font-weight:300!important}
+.mb-vs .mb-vs__cn strong{font-weight:700!important}
+.mb-vs .mb-vs__x{display:inline-flex;flex-shrink:0;align-items:center;justify-content:center;width:22px;height:22px;margin:0 auto 4px;border-radius:50%}
+.mb-vs .mb-vs__x svg{width:10px;height:10px;fill:none}
+.mb-vs .mb-vs__x svg,.mb-vs .mb-vs__x svg *{stroke:#fff!important;fill:none!important}
+.mb-vs .mb-vs__cta{display:flex;flex-direction:column;gap:10px}
+.mb-vs .mb-vs__bt{display:inline-block;box-sizing:border-box;width:100%;padding:17px 32px;border:none!important;border-radius:999px;font-size:16px;font-weight:500!important;text-align:center;text-decoration:none;cursor:pointer;background:#fff!important;color:#1a1a1a!important;-webkit-text-fill-color:#1a1a1a!important;transition:opacity .2s,transform .15s}
+.mb-vs .mb-vs__bt:hover{opacity:.88;transform:scale(1.02)}
+.mb-vs .mb-vs__gu{display:flex;align-items:center;justify-content:center;gap:6px;font-size:14.5px!important;font-weight:600!important;line-height:1.8;opacity:.9!important}
+.mb-vs .mb-vs__gu svg{flex-shrink:0;width:15px;height:15px}
+.mb-vs .mb-vs__gu svg,.mb-vs .mb-vs__gu svg *{fill:#fff!important;color:#fff!important;stroke:none!important}
+.mb-vs .mb-vs__hl .mb-vs__cap,.mb-vs .mb-vs__dl{color:#fff!important;-webkit-text-fill-color:#fff!important}
+.mb-vs .mb-vs__hr .mb-vs__cap{color:#555!important;-webkit-text-fill-color:#555!important}
+.mb-vs .mb-vs__dr{color:#000!important;-webkit-text-fill-color:#000!important}
+.mb-vs .mb-vs__h,.mb-vs .mb-vs__ci,.mb-vs .mb-vs__cn,.mb-vs .mb-vs__cn strong,.mb-vs .mb-vs__gu{color:#fff!important;-webkit-text-fill-color:#fff!important}
+@media screen and (max-width:767px){
+.mb-vs{padding:53px 16px}
+.mb-vs .mb-vs__in{display:flex;flex-direction:column;align-items:center;gap:8px!important}
+.mb-vs .mb-vs__info{display:contents}
+.mb-vs .mb-vs__h{order:1;width:100%;margin-bottom:12px;font-size:clamp(26px,5vw,28px);text-align:center}
+.mb-vs .mb-vs__tw{order:2;width:100%;margin-top:52px}
+.mb-vs .mb-vs__ck{display:none!important}
+.mb-vs .mb-vs__cta{order:3;width:100%;margin-top:12px}
+.mb-vs .mb-vs__hl .mb-vs__hi{width:90px;margin-top:-52px}
+.mb-vs .mb-vs__hr .mb-vs__hi{width:75px;margin-top:-52px}
+.mb-vs .mb-vs__tb tbody tr td{padding:12px 8px;font-size:12px}
+.mb-vs .mb-vs__ic{width:22px;height:22px}
+}
+</style>
+
+<section class="mb-vs" style="--mb-vs-ck:{{ mb_check_color }};background:{{ mb_bg }}!important">
+  <div class="mb-vs__in">
+    <div class="mb-vs__tw">
+      <table class="mb-vs__tb">
+        <thead>
+          <tr>
+            <th class="mb-vs__hl mb-vs__cl" style="background:{{ mb_col_bg }}!important"><img class="mb-vs__hi" src="{{ mb_img1 }}" alt="{{ mb_name1 | escape }}" loading="lazy" width="{{ mb_img1_w }}"><span class="mb-vs__cap">{{ mb_name1 }}</span></th>
+            <th class="mb-vs__hr mb-vs__cr" style="background:#fff!important"><img class="mb-vs__hi" src="{{ mb_img2 }}" alt="{{ mb_name2 | escape }}" loading="lazy" width="{{ mb_img2_w }}"><span class="mb-vs__cap">{{ mb_name2 }}</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          {%- for mb_row in mb_rows -%}
+            {%- assign mb_f = mb_row | split: '|||' -%}
+            {%- assign mb_icon = mb_f[0] | strip -%}
+            {%- assign mb_left = mb_f[1] | strip -%}
+            {%- assign mb_right = mb_f[2] | strip -%}
+          <tr>
+            <td class="mb-vs__dl" style="background:{{ mb_col_bg }}!important"><img class="mb-vs__ic" src="{{ mb_icon }}" alt="{{ mb_left | escape }}" loading="lazy" width="26">{{ mb_left }}</td>
+            <td class="mb-vs__dr" style="background:#fff!important"><span class="mb-vs__x" style="background:{{ mb_cross_bg }}!important"><svg viewBox="0 0 24 24" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span><br>{{ mb_right }}</td>
+          </tr>
+          {%- endfor -%}
+        </tbody>
+      </table>
+    </div>
+    <div class="mb-vs__info">
+      <h2 class="mb-vs__h">{{ mb_heading }}</h2>
+      <ul class="mb-vs__ck">
+        {%- for mb_line in mb_list -%}
+          {%- assign mb_f = mb_line | split: '|||' -%}
+          {%- assign mb_bold = mb_f[0] | strip -%}
+          {%- assign mb_rest = mb_f[1] | strip -%}
+        <li class="mb-vs__ci"><span class="mb-vs__cic"><svg viewBox="0 0 24 24" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg></span><span class="mb-vs__cn"><strong>{{ mb_bold }}</strong>{{ mb_rest }}</span></li>
+        {%- endfor -%}
+      </ul>
+      <div class="mb-vs__cta">
+        <button type="button" class="mb-vs__bt" data-mb-vs-cta>{{ mb_button }}</button>
+        <div class="mb-vs__gu">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 15l-4-4 1.41-1.41L10 13.17l6.59-6.59L18 8l-8 8z"></path></svg>
+          {{ mb_note }}
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+  (function () {
+    var s = document.currentScript, root = s && s.parentElement;
+    if (!root) return;
+    var btn = root.querySelector('[data-mb-vs-cta]');
+    if (btn) btn.addEventListener('click', function () {
+      var el = document.querySelector('.shopify-payment-button__button,[data-product-form],.product-form');
+      if (el) {
+        var sec = el.closest('section,[data-section-id]');
+        if (sec) sec.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    });
+  })();
+  </script>
+</section>
