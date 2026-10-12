@@ -6,6 +6,7 @@
   mb_title_color / mb_text_color = title and text colours (locked, so the theme cannot turn them black). mb_border / mb_border_hover = box border colour and its colour when hovered.
   mb_open_bg = header background while a box is open. mb_focus_color = outline when a box is selected with the keyboard.
   mb_top / mb_bottom = space above and below the whole section. Every box also has 16px under it, like the original (merges with neighbouring blocks, never doubled).
+  mb_place = gallery to move the boxes, on tablets and desktop (750px wide and up), to sit right under the product gallery thumbnails in the left column, directly above the video testimonial strip (like Metabolae); on phones they stay exactly where you put the block. Use here to leave them where you put the block on every screen size. Use this one block for all screens: do not also keep the phone-only accordion on the page or phones would show the boxes twice.
 {%- endcomment -%}
 {%- assign mb_open = 0 -%}
 {%- assign mb_title_color = '#121212' -%}
@@ -16,6 +17,7 @@
 {%- assign mb_focus_color = '#c47245' -%}
 {%- assign mb_top = '0' -%}
 {%- assign mb_bottom = '0' -%}
+{%- assign mb_place = 'gallery' -%}
 {%- capture mb_data -%}
 Clinically Supported Benefits|||<p>Supported by studies on Berberine HCl (Berberine Hydrochloride)</p><ul><li>Helps maintain blood sugar levels that are already in a healthy range</li><li>Promotes insulin sensitivity and the body's efficient use of glucose</li><li>Encourages healthy glucose metabolism and supports everyday metabolic function</li><li>Delivers antioxidant activity to help protect cells from oxidative stress</li><li>A well-researched, well-tolerated extract designed for consistent, long-term daily use</li><li>Berberine HCl, the hydrochloride salt form, chosen for its superior stability and absorption over standard berberine</li></ul><p><em>Findings drawn from clinical and observational research on berberine HCl, used regularly alongside a healthy lifestyle. Results vary by individual.</em></p>
 @@
@@ -64,9 +66,13 @@ How it works|||<p>Most berberine supplements don't work because they rely on sta
 @media screen and (max-width:749px){
 .mb-ac__c{font-size:14px}
 }
+@media screen and (min-width:750px){
+.mb-ac.is-moved{margin-top:25px;clear:both}
+.mb-ac.is-moved~.mb-ug.is-moved{margin-top:10px}
+}
 </style>
 
-<div class="mb-ac" style="--mb-ac-mt:{{ mb_top }};--mb-ac-mb:{{ mb_bottom }};--mb-ac-tt:{{ mb_title_color }};--mb-ac-tx:{{ mb_text_color }};--mb-ac-bd:{{ mb_border }};--mb-ac-bdh:{{ mb_border_hover }};--mb-ac-ob:{{ mb_open_bg }};--mb-ac-fc:{{ mb_focus_color }}">
+<div class="mb-ac" data-place="{{ mb_place }}" style="--mb-ac-mt:{{ mb_top }};--mb-ac-mb:{{ mb_bottom }};--mb-ac-tt:{{ mb_title_color }};--mb-ac-tx:{{ mb_text_color }};--mb-ac-bd:{{ mb_border }};--mb-ac-bdh:{{ mb_border_hover }};--mb-ac-ob:{{ mb_open_bg }};--mb-ac-fc:{{ mb_focus_color }}">
 {%- for it in mb_items -%}
 {%- assign parts = it | split: '|||' -%}
 <div class="mb-ac__it"><details class="mb-ac__d"{% if forloop.index == mb_open %} open{% endif %}>
@@ -78,6 +84,30 @@ How it works|||<p>Most berberine supplements don't work because they rely on sta
 
 <script>
 (function(){
+var wrap=document.currentScript&&document.currentScript.previousElementSibling;
+if(wrap&&wrap.classList&&wrap.classList.contains('mb-ac')&&wrap.getAttribute('data-place')==='gallery'){
+var home=document.createComment('mb-ac');
+wrap.parentNode.insertBefore(home,wrap);
+var deskQ=window.matchMedia('(min-width:750px)');
+var place=function(){
+var sec=wrap.closest('.product, product-info, [id^="shopify-section"]');
+/* Go inside the gallery element itself, not next to it, so a pinned (sticky) gallery carries the boxes along instead of sliding over them. */
+var gal=(sec&&(sec.querySelector('media-gallery')||sec.querySelector('.product__media-wrapper')))||document.querySelector('media-gallery')||document.querySelector('.product__media-wrapper');
+if(deskQ.matches&&gal){
+if(wrap.parentNode!==gal){
+var ug=null;
+for(var i=0;i<gal.children.length;i++){if(gal.children[i].classList.contains('mb-ug')){ug=gal.children[i];break}}
+gal.insertBefore(wrap,ug);
+}
+wrap.classList.add('is-moved');
+}else if(home.parentNode){
+if(wrap.previousSibling!==home)home.parentNode.insertBefore(wrap,home.nextSibling);
+wrap.classList.remove('is-moved');
+}
+};
+if(deskQ.addEventListener)deskQ.addEventListener('change',place);else deskQ.addListener(place);
+place();
+}
 function init(){
 var n=window.mbAcN||0;
 document.querySelectorAll('.mb-ac__d').forEach(function(d){
