@@ -1,5 +1,5 @@
 {%- comment -%}
-  "What our customers are saying" video strip: a heading, a row of tall video thumbnails you can swipe or drag (tap one to play it right in place, tap it again to stop), and two arrow buttons.
+  "What our customers are saying" video strip: a heading, a row of tall video thumbnails you can swipe or drag on phones (tap one to play it right in place, tap it again to stop), and two arrow buttons. From 750px wide upwards (tablets and desktop) the videos sit in three equal columns that fill the width of the space they are in, like Metabolae's desktop page (with more than three videos they wrap onto new rows).
   EDIT YOUR VIDEOS BELOW. One video = video link ||| picture link ||| description. Put @@ on its own line between videos.
   The links start as Metabolae's own files so the strip is an exact copy straight away.
   Before you go live, upload your own videos and pictures to your store (Content > Files) and paste your links here instead, so they keep working and are yours. Upload videos as MP4: Metabolae's video links (.m3u8) only play on iPhones, iPads and the newest Chrome, an MP4 plays everywhere. The picture is the cover shown before the video plays (tall, 9 by 16 is best).
@@ -52,6 +52,10 @@ https://metabolae.com/cdn/shop/videos/c/vp/0d54639cb1e647868fbee692231d7464/0d54
 .mb-ug .mb-ug__row{gap:10px!important;grid-auto-columns:180px}
 .mb-ug .mb-ug__t{width:180px}
 .mb-ug .mb-ug__h{font-size:18px!important}
+}
+@media screen and (min-width:750px){
+.mb-ug .mb-ug__row{display:grid!important;grid-auto-flow:unset!important;grid-template-columns:repeat(3,1fr)!important;overflow-x:visible!important}
+.mb-ug .mb-ug__w,.mb-ug .mb-ug__t{width:100%!important}
 }
 </style>
 
