@@ -4,6 +4,8 @@
   mb_bg_img = the background photo and mb_icon_1 to mb_icon_4 = the four badge icons. They start as Metabolae's own files so the card is an exact copy straight away.
   Before you go live, download them, upload them to your own store (Content > Files) and paste your links here instead, so they keep working and are yours. Leave '' for a plain colour card and built-in icons.
   mb_bg_color = card colour behind the photo. mb_grad_top / mb_grad_bottom = the red tint over the photo (top to bottom). Both are #943434: solid at the top, 60% at the bottom so the photo shows through. Lower the last number in mb_grad_bottom to show more photo, raise it to show less. mb_text_color = all text and icons.
+  The tint and photo layering are locked with inline !important, so theme CSS cannot hide the tint.
+  The card is square on phones and on desktop (at least as tall as it is wide, never taller than 720px unless the text needs more room) and everything inside scales with the card width.
   mb_animate = true for the fade-in-on-scroll effect, false to show everything straight away.
   mb_respect_motion = false so the fade-in always plays (like Metabolae); set it to true to skip it for people whose device has animations turned off.
   mb_top / mb_bottom = space above and below (merges with neighbouring blocks, never doubled).
