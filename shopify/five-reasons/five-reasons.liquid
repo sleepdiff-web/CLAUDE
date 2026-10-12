@@ -1,0 +1,190 @@
+{%- comment -%}
+  "5 Reasons Why ..." card carousel: small badge, heading, a row of cards you can swipe/drag (1 card on phones, 2.3 on tablets, 3 on desktop) with dots and two arrow buttons, then a button and a guarantee line.
+  EDIT YOUR CARDS BELOW. One card = title ||| text ||| image link. Put @@ on its own line between cards. The small "Reason 1", "Reason 2" ... tag on each card is added for you.
+  The image links start as Metabolae's own files so the section is an exact copy straight away.
+  Before you go live, download them, upload them to your own store (Content > Files) and paste your links here instead, so they keep working and are yours. Also replace all the wording, because it describes Metabolae's product.
+  mb_badge = the small badge above the heading. mb_title = the heading. mb_reason = the word on each card tag (Reason). mb_accent = the colour of the badge, card tags, hover border, active dot and button (Metabolae's orange; use #943434 for your red). mb_title_color = heading and card titles. mb_text_color = card text. mb_bg = section background. mb_card_bg = card background.
+  The button scrolls up to your product area. These colours are locked, so the theme cannot turn them black.
+  Do not use a straight apostrophe (') in the text, use &#39; instead. Write & as &amp;. Do not type three | in a row inside a card except as the separators.
+{%- endcomment -%}
+{%- assign mb_badge = '5 Reasons Why' -%}
+{%- assign mb_title = 'Metabolae Ceylon Cinnamon is Different From Everything You&#39;ve Tried' -%}
+{%- assign mb_reason = 'Reason' -%}
+{%- assign mb_accent = '#c47245' -%}
+{%- assign mb_title_color = '#000000' -%}
+{%- assign mb_text_color = '#444444' -%}
+{%- assign mb_bg = '#fdf1e9' -%}
+{%- assign mb_card_bg = '#ffffff' -%}
+{%- assign mb_button = 'Try Risk-Free Today' -%}
+{%- assign mb_note = '90-day money back guarantee' -%}
+{%- capture mb_cards -%}
+12:1 Concentrated Ceylon Cinnamon ||| Unlike cheap Cassia cinnamon which contains high levels of liver-damaging coumarin, Metabolae is 100% genuine Ceylon cinnamon. We pack the equivalent of 7,200 mg of raw cinnamon into a single daily softgel. ||| https://metabolae.com/cdn/shop/files/metabolae-12-1-concentrated-potency.webp?v=1773612119
+@@
+MCT Oil Enhanced Absorption ||| Active cinnamon compounds are fat-soluble, meaning they pass right through you without healthy fats. We dissolve our premium extract in organic MCT oil so your body can absorb and utilize it immediately. ||| https://metabolae.com/cdn/shop/files/metabolae-mct-oil-absorption.webp?v=1773612119
+@@
+Anti-Inflammatory &amp; Metabolic Support ||| True Ceylon cinnamon contains powerful antioxidants that promote normal blood sugar balance, insulin sensitivity, cardiovascular function, and healthy kidney circulation. ||| https://metabolae.com/cdn/shop/files/metabolae-blood-sugar-support.webp?v=1773612120
+@@
+No Aftertaste, No Stomach Issues ||| Unlike chalky powders, oversized capsules, or raw powders that cause acid reflux and burps, our softgels are small, smooth, and incredibly gentle on your stomach. ||| https://metabolae.com/cdn/shop/files/metabolae_bell.webp?v=1783845324
+@@
+Clean, Third-Party Tested Ingredients ||| Vegan, non-GMO, and free from gluten, dairy, soy, sugar, and artificial fillers. Every single batch is independently tested for purity and potency, manufactured in the USA. ||| https://metabolae.com/cdn/shop/files/metabolae_3party.webp?v=1783845940
+{%- endcapture -%}
+{%- assign mb_items = mb_cards | split: '@@' -%}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600&display=swap"></noscript>
+
+<style>
+.page-width:has(>.mb-fr){max-width:none;padding:0}
+.mb-fr,.mb-fr *,.mb-fr *::before,.mb-fr *::after{box-sizing:border-box}
+.mb-fr{display:block;margin:0;padding:36px 0 36px;font-family:'Plus Jakarta Sans',system-ui,sans-serif;font-size:15px;font-weight:500;line-height:1.8;letter-spacing:.6px;text-align:left}
+.mb-fr__w{max-width:1200px;margin:0 auto;padding:0 1.5rem;text-align:center;font-family:inherit}
+.mb-fr .mb-fr__bg{display:inline-block;margin:0 0 12px;padding:6px 16px;border-radius:8px;font-size:13px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;background-color:var(--mb-fr-ac)!important;color:#fff!important;-webkit-text-fill-color:#fff!important}
+.mb-fr .mb-fr__h{max-width:800px;margin:0 auto 32px;padding:0;font-family:Poppins,system-ui,sans-serif;font-size:clamp(20px,2.8vw,30px);font-style:normal;font-weight:400!important;line-height:1.25;letter-spacing:-.02em;text-align:center;text-transform:none;word-break:break-word;color:var(--mb-fr-tt)!important;-webkit-text-fill-color:var(--mb-fr-tt)!important}
+.mb-fr__sc{position:relative;width:100%;margin-bottom:24px;overflow:hidden;container-type:inline-size;touch-action:pan-y;cursor:grab}
+.mb-fr__sc.is-drag{cursor:grabbing;-webkit-user-select:none;user-select:none}
+.mb-fr__row{display:flex;padding:10px 4px 20px;text-align:left;transition-property:transform}
+.mb-fr__c{display:flex;flex-direction:column;flex-shrink:0;width:100cqw;height:auto;margin-right:16px;overflow:hidden;border:1.5px solid #eaeaea;border-radius:10px;box-shadow:none;transition:transform .2s ease,border-color .2s ease;background-color:var(--mb-fr-cb)!important}
+.mb-fr__c:hover{transform:translateY(-2px);border-color:var(--mb-fr-ac)}
+.mb-fr__i{position:relative;width:100%;aspect-ratio:16 / 12;overflow:hidden;background-color:#f2efec}
+.mb-fr__i img{display:block;width:100%;height:100%;max-width:none;object-fit:cover;border:0;border-radius:10px 10px 0 0!important}
+.mb-fr__b{display:flex;flex-direction:column;align-items:flex-start;flex-grow:1;padding:24px;background-color:var(--mb-fr-cb)!important}
+.mb-fr .mb-fr__tg{display:inline-block;align-self:flex-start;margin:0 0 12px;padding:4px 10px;border-radius:4px;font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;background-color:var(--mb-fr-ac)!important;color:#fff!important;-webkit-text-fill-color:#fff!important}
+.mb-fr .mb-fr__t{margin:0 0 12px;padding:0;font-family:Poppins,system-ui,sans-serif;font-size:17px;font-style:normal;font-weight:500!important;line-height:1.3;letter-spacing:.6px;text-align:left;text-transform:none;word-break:break-word;color:var(--mb-fr-tt)!important;-webkit-text-fill-color:var(--mb-fr-tt)!important}
+.mb-fr .mb-fr__d{margin:0;padding:0;font-size:15px;font-weight:400!important;line-height:1.55;letter-spacing:.6px;text-align:left;color:var(--mb-fr-tx)!important;-webkit-text-fill-color:var(--mb-fr-tx)!important}
+.mb-fr__ctl{display:flex;flex-direction:column;align-items:center;gap:24px;margin:10px 0 32px}
+.mb-fr__dots{display:flex;justify-content:center;align-items:center;gap:8px;width:100%}
+.mb-fr__dot{width:8px;height:8px;margin:0;padding:0;border:0;border-radius:50%;cursor:pointer;transition:background-color .25s ease,width .25s ease,border-radius .25s ease}
+.mb-fr .mb-fr__dot{background-color:#ccc!important}
+.mb-fr .mb-fr__dot.is-on{width:24px;border-radius:4px;background-color:var(--mb-fr-ac)!important}
+.mb-fr__arr{display:flex;gap:12px}
+.mb-fr__btn{display:flex;align-items:center;justify-content:center;width:36px;height:36px;margin:0;padding:0;border:0;border-radius:50%;cursor:pointer;transition:background-color .2s ease,transform .2s ease}
+.mb-fr .mb-fr__btn{background-color:#eceae6!important;color:#3b3b3b!important}
+.mb-fr .mb-fr__btn:hover{background-color:#ddd9d2!important}
+.mb-fr__btn:active{transform:scale(.95)}
+.mb-fr__btn.is-off{opacity:.35!important;cursor:default!important;pointer-events:none!important;background-color:#eceae6!important}
+.mb-fr__btn svg{display:block;width:18px;height:18px}
+.mb-fr .mb-fr__btn svg,.mb-fr .mb-fr__btn svg *{color:#3b3b3b!important;stroke:#3b3b3b!important}
+.mb-fr.is-lock .mb-fr__dots,.mb-fr.is-lock .mb-fr__arr{display:none}
+.mb-fr__cta{display:flex;flex-direction:column;align-items:center;gap:8px;margin-top:16px}
+.mb-fr a.mb-fr__bt{display:inline-block;padding:16px 48px;border:none;border-radius:30px;font-size:16px;font-weight:700;text-decoration:none;cursor:pointer;box-shadow:0 4px 15px rgba(196,114,69,.15);transition:transform .2s ease,box-shadow .2s ease,opacity .2s ease;background-color:var(--mb-fr-ac)!important;color:#fff!important;-webkit-text-fill-color:#fff!important}
+.mb-fr a.mb-fr__bt:hover{transform:scale(1.02);box-shadow:0 6px 20px rgba(196,114,69,.25);opacity:.95}
+.mb-fr a.mb-fr__bt:active{transform:scale(.98)}
+.mb-fr .mb-fr__sb{display:flex;align-items:center;gap:8px;margin-top:4px;font-size:16px;color:#555!important;-webkit-text-fill-color:#555!important}
+.mb-fr .mb-fr__sb svg{display:inline-block;width:18px;height:18px;vertical-align:middle;color:var(--mb-fr-ac)!important}
+.mb-fr .mb-fr__sb svg *{stroke:var(--mb-fr-ac)!important}
+@media screen and (min-width:750px){
+.mb-fr{padding:48px 0;font-size:16px}
+.mb-fr__c{width:calc((100cqw - 26px) / 2.3);margin-right:20px}
+}
+@media screen and (min-width:990px){
+.mb-fr__c{width:calc((100cqw - 48px) / 3);margin-right:24px}
+}
+@media screen and (max-width:749px){
+.mb-fr{padding-bottom:12px!important}
+.mb-fr__sc{margin-bottom:8px!important}
+.mb-fr__row{padding-bottom:8px!important}
+.mb-fr__ctl{margin-bottom:12px!important}
+.mb-fr .mb-fr__sb{font-size:15px!important}
+.mb-fr .mb-fr__sb svg{width:16px!important;height:16px!important}
+}
+</style>
+
+<section class="mb-fr" style="--mb-fr-ac:{{ mb_accent }};--mb-fr-tt:{{ mb_title_color }};--mb-fr-tx:{{ mb_text_color }};--mb-fr-cb:{{ mb_card_bg }};background-color:{{ mb_bg }}!important">
+<div class="mb-fr__w">
+<div class="mb-fr__bg">{{ mb_badge }}</div>
+<h2 class="mb-fr__h">{{ mb_title }}</h2>
+<div class="mb-fr__sc">
+<div class="mb-fr__row" aria-live="polite">
+{%- for it in mb_items -%}
+{%- assign f = it | split: '|||' -%}
+{%- assign ttl = f[0] | strip -%}
+{%- assign img = f[2] | strip -%}
+{%- assign iq = '?' -%}{%- if img contains '?' -%}{%- assign iq = '&amp;' -%}{%- endif -%}
+<div class="mb-fr__c" role="group" aria-label="{{ forloop.index }} / {{ forloop.length }}"><div class="mb-fr__i">{%- if img != blank -%}<img src="{{ img }}{{ iq }}width=600" alt="{{ ttl | escape_once }}" loading="lazy" width="400" height="250">{%- endif -%}</div><div class="mb-fr__b"><span class="mb-fr__tg">{{ mb_reason }} {{ forloop.index }}</span><h3 class="mb-fr__t">{{ ttl }}</h3><p class="mb-fr__d">{{ f[1] | strip }}</p></div></div>
+{%- endfor -%}
+</div>
+</div>
+<div class="mb-fr__ctl">
+<div class="mb-fr__dots">{%- for it in mb_items -%}<button type="button" class="mb-fr__dot{% if forloop.first %} is-on{% endif %}" aria-label="Go to slide {{ forloop.index }}"{% if forloop.first %} aria-current="true"{% endif %}></button>{%- endfor -%}</div>
+<div class="mb-fr__arr">
+<button type="button" class="mb-fr__btn mb-fr__prev is-off" aria-label="Previous slide" disabled tabindex="-1" aria-disabled="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+<button type="button" class="mb-fr__btn mb-fr__next" aria-label="Next slide" aria-disabled="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+</div>
+</div>
+<div class="mb-fr__cta">
+<a href="#" class="mb-fr__bt" data-mb-fr-cta>{{ mb_button }}</a>
+<div class="mb-fr__sb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="m9 11 2 2 4-4"></path></svg>{{ mb_note }}</div>
+</div>
+</div>
+<script>
+(function(){
+var r=document.currentScript.parentElement;
+if(!r||!r.classList.contains('mb-fr'))return;
+var sc=r.querySelector('.mb-fr__sc'),row=r.querySelector('.mb-fr__row'),cs=[].slice.call(row.children),n=cs.length,ds=r.querySelector('.mb-fr__dots'),pv=r.querySelector('.mb-fr__prev'),nx=r.querySelector('.mb-fr__next'),cta=r.querySelector('[data-mb-fr-cta]'),mq=matchMedia('(min-width:750px)'),
+dots=[].slice.call(ds.children),grid=[0],snap=[0],tr=0,ini=1,si=0,down=0,pid=0,moved=0,pass=0,sx=0,sy=0,t0=0,st=0,dir=0,scr,rid='mb-fr-'+Math.random().toString(36).slice(2,8);
+if(cta)cta.addEventListener('click',function(e){
+e.preventDefault();
+var t=document.querySelector('product-info, .product__info-container, .product-form');
+if(t)t.scrollIntoView({behavior:'smooth',block:'start'});else window.scrollTo({top:0,behavior:'smooth'})});
+if(n<2){r.classList.add('is-lock');return}
+row.id=rid;pv.setAttribute('aria-controls',rid);nx.setAttribute('aria-controls',rid);
+function off(b,o){b.disabled=o;b.classList.toggle('is-off',o);b.setAttribute('aria-disabled',o);b.tabIndex=o?-1:0}
+function nav(){off(pv,tr>-1);off(nx,tr<-snap[snap.length-1]+1)}
+function put(x,d){tr=x;row.style.transitionDuration=d+'ms';if(x||!ini){ini=0;row.style.transform='translate3d('+x+'px,0px,0px)'}nav()}
+function act(){for(var i=0;i<dots.length;i++){var on=i===si;dots[i].classList.toggle('is-on',on);if(on)dots[i].setAttribute('aria-current','true');else dots[i].removeAttribute('aria-current')}}
+function go(i,d){si=Math.max(0,Math.min(i,snap.length-1));put(-snap[si],d==null?300:d);act()}
+function build(){ds.textContent='';dots=[];for(var i=0;i<snap.length;i++){var b=document.createElement('button');b.type='button';b.className='mb-fr__dot';b.setAttribute('aria-label','Go to slide '+(i+1));ds.appendChild(b);dots.push(b)}}
+function measure(){
+var W=sc.clientWidth;if(!W)return 0;
+var a=cs[0].getBoundingClientRect().width,g=parseFloat(getComputedStyle(cs[0]).marginRight)||0,v=n*a+(n-1)*g-W,i;
+grid=[];snap=[];
+for(i=0;i<n;i++){grid.push(i*(a+g));if(i*(a+g)<=v)snap.push(i*(a+g))}
+if(!snap.length)snap=[0];
+if(Math.floor(v)-Math.floor(snap[snap.length-1])>1)snap.push(v);
+return 1}
+function upd(){
+var end=snap.length>1&&tr<=-snap[snap.length-1],beg=tr>=0;
+if(!measure())return;
+if(dots.length!==snap.length)build();
+r.classList.toggle('is-lock',snap.length<2);
+go(mq.matches&&end&&!beg?snap.length-1:Math.min(si,snap.length-1),0)}
+function curT(){var m=getComputedStyle(row).transform;if(!m||m==='none')return 0;try{return new DOMMatrixReadOnly(m).m41}catch(e){return tr}}
+sc.addEventListener('pointerdown',function(e){
+if(down||snap.length<2||!row.contains(e.target)||(e.pointerType==='mouse'&&e.button))return;
+down=1;pid=e.pointerId;moved=0;pass=0;scr=undefined;dir=0;sx=e.clientX;sy=e.clientY;t0=Date.now()});
+sc.addEventListener('pointermove',function(e){
+if(!down||e.pointerId!==pid)return;
+var dx=e.clientX-sx,dy=e.clientY-sy,c,lim=snap[snap.length-1];
+if(scr===undefined){if(dy===0)scr=false;else if(dx*dx+dy*dy>=25)scr=Math.atan2(Math.abs(dy),Math.abs(dx))*180/Math.PI>45}
+if(scr){down=0;return}
+if(!moved){moved=1;st=curT();row.style.transitionDuration='0ms'}
+dir=dx>0?-1:1;
+if(!pass){if(Math.abs(dx)>5){pass=1;sx=e.clientX;sy=e.clientY;sc.classList.add('is-drag');try{sc.setPointerCapture(pid)}catch(x){}}return}
+dx=e.clientX-sx;dir=dx>0?-1:1;
+c=dx+st;
+if(dx>0){if(c>0)c=-1+Math.pow(st+dx,.85)}
+else if(dx<0){if(c<-lim)c=-lim+1-Math.pow(-lim-st-dx,.85)}
+put(c,0)});
+function end(e){
+if(!down||e.pointerId!==pid)return;
+down=0;sc.classList.remove('is-drag');
+if(!moved||!pass||!dir||tr===st)return;
+var pos=-tr,stop=0,gs=grid[1]-grid[0],i,ratio,dt=Date.now()-t0;
+for(i=0;i<n;i++){if(grid[i+1]!==undefined){if(pos>=grid[i]&&pos<grid[i+1]){stop=i;gs=grid[i+1]-grid[i]}}else if(pos>=grid[i]){stop=i;gs=grid[n-1]-grid[n-2]}}
+ratio=(pos-grid[stop])/gs;
+if(dt>300)go(dir>0?(ratio>=.5?stop+1:stop):(ratio>.5?stop+1:stop));
+else go(dir>0?stop+1:stop)}
+sc.addEventListener('pointerup',end);
+sc.addEventListener('pointercancel',end);
+sc.addEventListener('dragstart',function(e){e.preventDefault()});
+pv.addEventListener('click',function(){go(si-1)});
+nx.addEventListener('click',function(){go(si+1)});
+ds.addEventListener('click',function(e){var i=dots.indexOf(e.target.closest('.mb-fr__dot'));if(i>-1)go(i)});
+if('ResizeObserver' in window)new ResizeObserver(upd).observe(sc);else addEventListener('resize',upd);
+['(min-width:750px)','(min-width:990px)'].forEach(function(q){var m=matchMedia(q);(m.addEventListener?m.addEventListener('change',upd):m.addListener(upd))});
+upd();
+})();
+</script>
+</section>
