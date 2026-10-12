@@ -1,0 +1,216 @@
+{%- comment -%}
+  "What our customers are saying" video strip: a heading, a row of tall video thumbnails you can swipe or drag (tap one to play it right in place, tap it again to stop), and two arrow buttons.
+  EDIT YOUR VIDEOS BELOW. One video = video link ||| picture link ||| description. Put @@ on its own line between videos.
+  The links start as Metabolae's own files so the strip is an exact copy straight away.
+  Before you go live, upload your own videos and pictures to your store (Content > Files) and paste your links here instead, so they keep working and are yours. Upload videos as MP4: Metabolae's video links (.m3u8) only play on iPhones, iPads and the newest Chrome, an MP4 plays everywhere. The picture is the cover shown before the video plays (tall, 9 by 16 is best).
+  mb_heading = the line above the videos. mb_heading_color = its colour. mb_accent = the play button colour (Metabolae's orange; use #943434 for your red). These colours are locked, so the theme cannot turn them black.
+  Do not use a straight apostrophe (') in the description, use &#39; instead. Do not type three | in a row except as the separators.
+{%- endcomment -%}
+{%- assign mb_heading = 'What our customers are saying:' -%}
+{%- assign mb_heading_color = '#1a1a1a' -%}
+{%- assign mb_accent = '#C47245' -%}
+{%- capture mb_videos -%}
+https://metabolae.com/cdn/shop/videos/c/vp/b36ad0cc63e846e4a96bf52532913cfb/b36ad0cc63e846e4a96bf52532913cfb.m3u8?v=0 ||| https://metabolae.com/cdn/shop/files/preview_images/metabolae-doctor-blood-sugar-thumbnail.png?v=1773604892 ||| Metabolae doctor talking about blood sugar
+@@
+https://metabolae.com/cdn/shop/videos/c/vp/53bb01339ae54a87a1e009da1f3d8c04/53bb01339ae54a87a1e009da1f3d8c04.m3u8?v=0 ||| https://metabolae.com/cdn/shop/files/preview_images/metabolae-ugc-cravings-blood-sugar-thumbnail.png?v=1773591663 ||| Metabolae customer talking about the benefits
+@@
+https://metabolae.com/cdn/shop/videos/c/vp/0d54639cb1e647868fbee692231d7464/0d54639cb1e647868fbee692231d7464.m3u8?v=0 ||| https://metabolae.com/cdn/shop/files/preview_images/metabolae-doctor-diabetes-industry-thumbnail.png?v=1773591696 ||| Metabolae doctor talking about the diabetes industry
+{%- endcapture -%}
+{%- assign mb_items = mb_videos | split: '@@' -%}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600&display=swap"></noscript>
+
+<style>
+.mb-ug{box-sizing:border-box;width:100%;margin:10px 0;font-family:'Plus Jakarta Sans',system-ui,sans-serif;font-size:15px;font-weight:500;line-height:1.8;letter-spacing:.6px;text-align:left;user-select:none;-webkit-user-select:none}
+@media screen and (min-width:750px){.mb-ug{font-size:16px}}
+.mb-ug *,.mb-ug *::before,.mb-ug *::after{box-sizing:border-box}
+.mb-ug .mb-ug__row{display:grid;grid-auto-flow:column;grid-auto-columns:140px;gap:16px!important;overflow-x:auto;scroll-snap-type:x mandatory;padding:5px 0 15px 0;-webkit-overflow-scrolling:touch;cursor:grab;scrollbar-width:none;-ms-overflow-style:none}
+.mb-ug .mb-ug__row::-webkit-scrollbar{display:none;width:0;height:0}
+.mb-ug .mb-ug__row:active{cursor:grabbing}
+.mb-ug .mb-ug__w{scroll-snap-align:start;cursor:pointer}
+.mb-ug .mb-ug__t{position:relative;width:150px;aspect-ratio:9 / 16;border-radius:12px!important;overflow:hidden;background:#000}
+.mb-ug .mb-ug__t img,.mb-ug .mb-ug__t video{position:absolute;top:0;left:0;width:100%;height:100%;max-width:none;object-fit:cover;display:block;border:0;border-radius:12px!important}
+.mb-ug .mb-ug__t img{pointer-events:none}
+.mb-ug .mb-ug__t video{display:none}
+.mb-ug .mb-ug__p{position:absolute;top:50%;left:50%;z-index:2;display:flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;box-shadow:0 2px 10px rgba(0,0,0,.25);transform:translate(-50%,-50%);transition:transform .15s ease,opacity .15s ease;pointer-events:none;background:var(--mb-ug-ac)!important}
+.mb-ug .mb-ug__w:hover .mb-ug__p{transform:translate(-50%,-50%) scale(1.1)}
+.mb-ug .mb-ug__p svg{width:18px;height:18px;margin-left:2px;fill:#fff!important;stroke:none!important}
+.mb-ug .mb-ug__p svg *{fill:#fff!important;stroke:none!important}
+.mb-ug .mb-ug__h{margin:0 0 16px;padding:0;font-size:20px;font-weight:700;line-height:1.8;letter-spacing:.6px;text-align:center;text-transform:none;color:var(--mb-ug-hc)!important;-webkit-text-fill-color:var(--mb-ug-hc)!important}
+.mb-ug .mb-ug__c{display:flex;flex-direction:column;align-items:center;gap:16px;margin-top:10px;margin-bottom:8px}
+.mb-ug .mb-ug__a{display:flex;gap:12px}
+.mb-ug .mb-ug__b{display:flex;align-items:center;justify-content:center;width:36px;height:36px;margin:0;padding:0;border:none;border-radius:50%;cursor:pointer;transition:background-color .2s ease,transform .2s ease;background-color:#eceae6!important;color:#3b3b3b!important}
+.mb-ug .mb-ug__b:hover{background-color:#ddd9d2!important}
+.mb-ug .mb-ug__b:active{transform:scale(.95)}
+.mb-ug .mb-ug__b:disabled{opacity:.35!important;cursor:default!important;pointer-events:none!important;transform:none!important;background-color:#eceae6!important}
+.mb-ug .mb-ug__b svg{display:block;width:18px;height:18px}
+.mb-ug .mb-ug__b svg,.mb-ug .mb-ug__b svg *{color:#3b3b3b!important;stroke:#3b3b3b!important;fill:none!important}
+@media screen and (max-width:767px){
+.mb-ug .mb-ug__row{gap:10px!important;grid-auto-columns:180px}
+.mb-ug .mb-ug__t{width:180px}
+.mb-ug .mb-ug__h{font-size:18px!important}
+}
+</style>
+
+<div class="mb-ug" style="--mb-ug-ac:{{ mb_accent }};--mb-ug-hc:{{ mb_heading_color }}">
+<p class="mb-ug__h">{{ mb_heading }}</p>
+<div class="mb-ug__row">
+{%- for it in mb_items -%}
+{%- assign f = it | split: '|||' -%}
+{%- assign vid = f[0] | strip -%}
+{%- assign pic = f[1] | strip -%}
+{%- assign alt = f[2] | strip -%}
+{%- assign iq = '?' -%}{%- if pic contains '?' -%}{%- assign iq = '&amp;' -%}{%- endif -%}
+<div class="mb-ug__w"><div class="mb-ug__t"><img src="{{ pic }}{{ iq }}width=400" alt="{{ alt | escape_once }}" loading="lazy" width="140" height="249" style="display:block"><video src="{{ vid }}" playsinline preload="none" style="display:none"></video><div class="mb-ug__p" style="display:flex"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg></div></div></div>
+{%- endfor -%}
+</div>
+<div class="mb-ug__c">
+<div class="mb-ug__a">
+<button type="button" class="mb-ug__b mb-ug__prev" aria-label="Previous Slide" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+<button type="button" class="mb-ug__b mb-ug__next" aria-label="Next Slide"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+</div>
+</div>
+</div>
+<script>
+(function () {
+  var wrapper = document.currentScript.previousElementSibling;
+  if (!wrapper || !wrapper.classList.contains('mb-ug')) return;
+  var slider  = wrapper.querySelector('.mb-ug__row');
+  var prevBtn = wrapper.querySelector('.mb-ug__prev');
+  var nextBtn = wrapper.querySelector('.mb-ug__next');
+  if (!slider) return;
+  var thumbs = Array.from(slider.querySelectorAll('.mb-ug__w'));
+
+  /* ── Arrow scroll navigation ── */
+  if (prevBtn && nextBtn) {
+    function getScrollStep() {
+      if (thumbs.length > 0) {
+        return thumbs[0].clientWidth + 16;
+      }
+      return 168;
+    }
+
+    function updateNavButtons() {
+      var scrollLeft = slider.scrollLeft;
+      var maxScrollLeft = slider.scrollWidth - slider.clientWidth;
+      prevBtn.disabled = (scrollLeft <= 5);
+      nextBtn.disabled = (scrollLeft >= maxScrollLeft - 5);
+    }
+
+    prevBtn.addEventListener('click', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      pauseAll();
+      slider.scrollBy({ left: -getScrollStep(), behavior: 'smooth' });
+    });
+
+    nextBtn.addEventListener('click', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      pauseAll();
+      slider.scrollBy({ left: getScrollStep(), behavior: 'smooth' });
+    });
+
+    slider.addEventListener('scroll', updateNavButtons, { passive: true });
+    updateNavButtons();
+    window.addEventListener('resize', updateNavButtons);
+    window.addEventListener('load', updateNavButtons);
+    setTimeout(updateNavButtons, 500);
+    setTimeout(updateNavButtons, 1500);
+  }
+
+  /* ── Pause all inline videos and restore poster + button ── */
+  function pauseAll() {
+    thumbs.forEach(function (t) {
+      var video = t.querySelector('video');
+      var img   = t.querySelector('img');
+      var btn   = t.querySelector('.mb-ug__p');
+      if (!video) return;
+      if (!video.paused) {
+        video.pause();
+        video.currentTime = 0;
+      }
+      video.style.display = 'none';
+      if (img) img.style.display = 'block';
+      if (btn) btn.style.display = 'flex';
+    });
+  }
+
+  /* ── Play a specific thumbnail ── */
+  function playThumb(item) {
+    pauseAll();
+    var video = item.querySelector('video');
+    var img   = item.querySelector('img');
+    var btn   = item.querySelector('.mb-ug__p');
+    if (!video) return;
+    if (img) img.style.display = 'none';
+    if (btn) btn.style.display = 'none';
+    video.style.display = 'block';
+    var pr = video.play();
+    if (pr && pr.catch) pr.catch(function () {});
+  }
+
+  slider.addEventListener('scroll', function () {
+    pauseAll();
+  }, { passive: true });
+
+  /* ── Pause when the strip scrolls out of view ── */
+  if ('IntersectionObserver' in window) {
+    var sectionObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) pauseAll();
+      });
+    }, { threshold: 0.1 });
+    sectionObserver.observe(slider);
+  }
+
+  /* ── Drag support ── */
+  var isDown = false;
+  var startX = 0;
+  var scrollLeft = 0;
+  var isDragging = false;
+
+  slider.addEventListener('mousedown', function (e) {
+    isDown = true;
+    isDragging = false;
+    startX = e.pageX - slider.offsetLeft;
+    scrollLeft = slider.scrollLeft;
+    slider.style.scrollSnapType = 'none';
+  });
+
+  slider.addEventListener('mouseleave', function () {
+    isDown = false;
+    slider.style.scrollSnapType = 'x mandatory';
+  });
+
+  slider.addEventListener('mouseup', function () {
+    isDown = false;
+    slider.style.scrollSnapType = 'x mandatory';
+    setTimeout(function () { isDragging = false; }, 20);
+  });
+
+  slider.addEventListener('mousemove', function (e) {
+    if (!isDown) return;
+    var x = e.pageX - slider.offsetLeft;
+    var walk = (x - startX) * 2;
+    if (Math.abs(walk) > 5) isDragging = true;
+    e.preventDefault();
+    slider.scrollLeft = scrollLeft - walk;
+  });
+
+  thumbs.forEach(function (item) {
+    item.addEventListener('click', function () {
+      if (isDragging) return;
+      var video = item.querySelector('video');
+      if (video && !video.paused) {
+        pauseAll();
+      } else {
+        playThumb(item);
+      }
+    });
+  });
+})();
+</script>
