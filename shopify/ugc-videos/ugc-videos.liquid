@@ -1,14 +1,16 @@
 {%- comment -%}
-  "What our customers are saying" video strip: a heading, a row of tall video thumbnails you can swipe or drag on phones (tap one to play it right in place, tap it again to stop), and two arrow buttons. From 750px wide upwards (tablets and desktop) the videos sit in three equal columns that fill the width of the space they are in, like Metabolae's desktop page (with more than three videos they wrap onto new rows).
+  "What our customers are saying" video strip: a heading, a row of tall video thumbnails you can swipe or drag on phones (tap one to play it right in place, tap it again to stop), and two arrow buttons. From 750px wide upwards (tablets and desktop) the videos sit in three equal columns that fill the width of the space they are in, like Metabolae's desktop page (with more than three videos they wrap onto new rows). With mb_place = gallery the strip also moves itself, on those wider screens, to sit under the product gallery in the left column (like Metabolae); on phones it stays exactly where you put the block.
   EDIT YOUR VIDEOS BELOW. One video = video link ||| picture link ||| description. Put @@ on its own line between videos.
   The links start as Metabolae's own files so the strip is an exact copy straight away.
   Before you go live, upload your own videos and pictures to your store (Content > Files) and paste your links here instead, so they keep working and are yours. Upload videos as MP4: Metabolae's video links (.m3u8) only play on iPhones, iPads and the newest Chrome, an MP4 plays everywhere. The picture is the cover shown before the video plays (tall, 9 by 16 is best).
   mb_heading = the line above the videos. mb_heading_color = its colour. mb_accent = the play button colour (Metabolae's orange; use #943434 for your red). These colours are locked, so the theme cannot turn them black.
+  mb_place = gallery to move the strip under the product gallery on tablets and desktop, or here to leave it where you put the block on every screen size.
   Do not use a straight apostrophe (') in the description, use &#39; instead. Do not type three | in a row except as the separators.
 {%- endcomment -%}
 {%- assign mb_heading = 'What our customers are saying:' -%}
 {%- assign mb_heading_color = '#1a1a1a' -%}
 {%- assign mb_accent = '#C47245' -%}
+{%- assign mb_place = 'gallery' -%}
 {%- capture mb_videos -%}
 https://metabolae.com/cdn/shop/videos/c/vp/b36ad0cc63e846e4a96bf52532913cfb/b36ad0cc63e846e4a96bf52532913cfb.m3u8?v=0 ||| https://metabolae.com/cdn/shop/files/preview_images/metabolae-doctor-blood-sugar-thumbnail.png?v=1773604892 ||| Metabolae doctor talking about blood sugar
 @@
@@ -56,10 +58,11 @@ https://metabolae.com/cdn/shop/videos/c/vp/0d54639cb1e647868fbee692231d7464/0d54
 @media screen and (min-width:750px){
 .mb-ug .mb-ug__row{display:grid!important;grid-auto-flow:unset!important;grid-template-columns:repeat(3,1fr)!important;overflow-x:visible!important}
 .mb-ug .mb-ug__w,.mb-ug .mb-ug__t{width:100%!important}
+.mb-ug.is-moved{margin-top:25px;clear:both}
 }
 </style>
 
-<div class="mb-ug" style="--mb-ug-ac:{{ mb_accent }};--mb-ug-hc:{{ mb_heading_color }}">
+<div class="mb-ug" data-place="{{ mb_place }}" style="--mb-ug-ac:{{ mb_accent }};--mb-ug-hc:{{ mb_heading_color }}">
 <p class="mb-ug__h">{{ mb_heading }}</p>
 <div class="mb-ug__row">
 {%- for it in mb_items -%}
@@ -87,6 +90,43 @@ https://metabolae.com/cdn/shop/videos/c/vp/0d54639cb1e647868fbee692231d7464/0d54
   var nextBtn = wrapper.querySelector('.mb-ug__next');
   if (!slider) return;
   var thumbs = Array.from(slider.querySelectorAll('.mb-ug__w'));
+
+  /* ── Desktop: 3 equal columns (also set inline so no theme rule can undo it) ── */
+  var deskQ = window.matchMedia('(min-width:750px)');
+  function layout() {
+    var on = deskQ.matches;
+    var rule = function (el, prop, val) {
+      if (on) el.style.setProperty(prop, val, 'important'); else el.style.removeProperty(prop);
+    };
+    rule(slider, 'display', 'grid');
+    rule(slider, 'grid-auto-flow', 'row');
+    rule(slider, 'grid-template-columns', 'repeat(3, 1fr)');
+    rule(slider, 'overflow-x', 'visible');
+    thumbs.forEach(function (w) {
+      rule(w, 'width', '100%');
+      var t = w.querySelector('.mb-ug__t');
+      if (t) rule(t, 'width', '100%');
+    });
+  }
+
+  /* ── Tablet/desktop: sit under the product gallery (left column), like Metabolae ── */
+  var home = document.createComment('mb-ug');
+  wrapper.parentNode.insertBefore(home, wrapper);
+  function place() {
+    if (wrapper.getAttribute('data-place') !== 'gallery') return;
+    var sec = wrapper.closest('.product, product-info, [id^="shopify-section"]');
+    var gal = (sec && sec.querySelector('.product__media-wrapper')) || document.querySelector('.product__media-wrapper');
+    if (deskQ.matches && gal) {
+      if (wrapper.parentNode !== gal) gal.appendChild(wrapper);
+      wrapper.classList.add('is-moved');
+    } else if (home.parentNode) {
+      if (wrapper.previousSibling !== home) home.parentNode.insertBefore(wrapper, home.nextSibling);
+      wrapper.classList.remove('is-moved');
+    }
+  }
+  function onMode() { layout(); place(); if (typeof updateNavButtons === 'function') updateNavButtons(); }
+  if (deskQ.addEventListener) deskQ.addEventListener('change', onMode); else deskQ.addListener(onMode);
+  onMode();
 
   /* ── Arrow scroll navigation ── */
   if (prevBtn && nextBtn) {
