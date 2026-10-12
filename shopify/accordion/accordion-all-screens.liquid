@@ -6,7 +6,7 @@
   mb_title_color / mb_text_color = title and text colours (locked, so the theme cannot turn them black). mb_border / mb_border_hover = box border colour and its colour when hovered.
   mb_open_bg = header background while a box is open. mb_focus_color = outline when a box is selected with the keyboard.
   mb_top / mb_bottom = space above and below the whole section. Every box also has 16px under it, like the original (merges with neighbouring blocks, never doubled).
-  mb_place = gallery to move the boxes, on tablets and desktop (750px wide and up), to sit right under the product gallery thumbnails in the left column, directly above the video testimonial strip (like Metabolae); on phones they stay exactly where you put the block. Use here to leave them where you put the block on every screen size. Use this one block for all screens: do not also keep the phone-only accordion on the page or phones would show the boxes twice.
+  mb_place = gallery to move the boxes, on tablets and desktop (750px wide and up), to sit right under the product gallery thumbnails in the left column, directly above the video testimonial strip (like Metabolae); on phones they stay exactly where you put the block. Use here to leave them where you put the block on every screen size. Use this one block for all screens. If an older phone-only accordion block is still on the page, this block hides that old one automatically (otherwise it would hide these boxes on desktop and show them twice on phones), so you can delete the old block whenever you like.
 {%- endcomment -%}
 {%- assign mb_open = 0 -%}
 {%- assign mb_title_color = '#121212' -%}
@@ -66,7 +66,9 @@ How it works|||<p>Most berberine supplements don't work because they rely on sta
 @media screen and (max-width:749px){
 .mb-ac__c{font-size:14px}
 }
+body:has(.mb-ac[data-place]) .mb-ac:not([data-place]){display:none!important}
 @media screen and (min-width:750px){
+.mb-ac[data-place]{display:block!important}
 .mb-ac.is-moved{margin-top:25px;clear:both}
 .mb-ac.is-moved~.mb-ug.is-moved{margin-top:10px}
 }
@@ -109,6 +111,7 @@ if(deskQ.addEventListener)deskQ.addEventListener('change',place);else deskQ.addL
 place();
 }
 function init(){
+if(document.querySelector('.mb-ac[data-place]'))document.querySelectorAll('.mb-ac:not([data-place])').forEach(function(o){o.style.setProperty('display','none','important')});
 var n=window.mbAcN||0;
 document.querySelectorAll('.mb-ac__d').forEach(function(d){
 if(d.getAttribute('data-mb-on'))return;
