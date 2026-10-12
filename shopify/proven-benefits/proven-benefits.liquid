@@ -1,0 +1,169 @@
+{%- comment -%}
+  "Proven Benefits. Backed by Science." section: heading + intro, four flip cards (2 x 2 on desktop, 1 column on phones; click a card to flip it and read the back, click again or click another card to close), then a button and a guarantee line.
+  EDIT YOUR CARDS BELOW. One card = image link ||| title ||| front line ||| back text. Put @@ on its own line between cards.
+  The image links start as Metabolae's own files so the section is an exact copy straight away.
+  Before you go live, download them, upload them to your own store (Content > Files) and paste your links here instead, so they keep working and are yours. Also replace all the wording, because it describes Metabolae's product.
+  mb_title_a / mb_title_b = the two halves of the heading. mb_accent = the colour of the first half of the heading and of the button (Metabolae's orange; use #943434 for your red). mb_text_color = second half of the heading and the intro. mb_card_title_color / mb_card_text_color / mb_back_text_color = text on the cards. mb_bg = section background. mb_card_bg = card background.
+  The button scrolls to your Add to cart button when mb_link is #. Put a real link there to open a page instead.
+  These colours are locked, so the theme cannot turn them black.
+  Do not use a straight apostrophe (') in the text, use &#39; instead. Do not type three | in a row inside a card except as the separators.
+{%- endcomment -%}
+{%- assign mb_title_a = 'Proven Benefits.' -%}
+{%- assign mb_title_b = 'Backed by Science.' -%}
+{%- assign mb_accent = '#c47245' -%}
+{%- assign mb_text_color = '#000000' -%}
+{%- assign mb_card_title_color = '#121212' -%}
+{%- assign mb_card_text_color = '#2b2b2b' -%}
+{%- assign mb_back_text_color = 'rgba(18,18,18,.75)' -%}
+{%- assign mb_bg = '#fff5ef' -%}
+{%- assign mb_card_bg = '#ffffff' -%}
+{%- assign mb_button = 'Try Risk-Free Today' -%}
+{%- assign mb_link = '#' -%}
+{%- assign mb_note = '90-day money back guarantee' -%}
+{%- capture mb_sub -%}
+Your body deserves more than empty promises <strong>Ceylon Cinnamon Extract </strong>supports healthy blood sugar, liver function, and daily metabolic balance using clinically studied ingredients and a bioavailable MCT oil delivery system.
+{%- endcapture -%}
+{%- capture mb_cards -%}
+https://metabolae.com/cdn/shop/files/metabolae-blood-sugar-support.webp?v=1773612120&width=240 ||| Blood Sugar Support ||| Supports healthy blood sugar levels ||| True Ceylon cinnamon is studied for supporting healthy glucose metabolism. Metabolae uses a concentrated 12:1 extract with MCT oil to help your body actually absorb and use it.
+@@
+https://metabolae.com/cdn/shop/files/metabolae-comfortable-daily-use.webp?v=1773612119&width=240 ||| Gentle on the Stomach ||| Designed for comfortable daily use ||| Metabolae uses a liquid cinnamon extract suspended in MCT oil. No harsh powder. No stomach irritation. No cinnamon burps hours later.
+@@
+https://metabolae.com/cdn/shop/files/metabolae-liver-health-support.webp?v=1773612119&width=240 ||| Liver Health Support ||| Made with coumarin free Ceylon cinnamon ||| Unlike Cassia cinnamon, Ceylon contains virtually no coumarin. This makes Metabolae a safer option for daily use and long term liver wellness.
+@@
+https://metabolae.com/cdn/shop/files/metabolae-enhanced-support.webp?v=1773612120&width=240 ||| Enhanced Absorption ||| Helps your body absorb cinnamon ||| Cinnamon compounds are fat soluble. MCT oil acts as a carrier, helping the 7,200 mg equivalent Ceylon extract absorb efficiently instead of passing through unused.
+{%- endcapture -%}
+{%- assign mb_items = mb_cards | split: '@@' -%}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600&display=swap"></noscript>
+
+<style>
+.page-width:has(>.mb-pb){max-width:none;padding:0}
+.mb-pb,.mb-pb *,.mb-pb *::before,.mb-pb *::after{box-sizing:border-box}
+.mb-pb{display:block;width:100%;margin:0 auto;padding:40px;font-family:'Plus Jakarta Sans',system-ui,sans-serif;font-size:15px;font-weight:500;line-height:1.8;letter-spacing:.6px;text-align:left}
+@media screen and (min-width:750px){.mb-pb{font-size:16px}}
+.mb-pb__w{max-width:1500px;margin:0 auto}
+.mb-pb__hd{max-width:750px;margin:0 auto 40px;text-align:center}
+.mb-pb .mb-pb__mt{margin:25px 0 20px;padding:0;font-family:'Plus Jakarta Sans',system-ui,sans-serif;font-size:31.2px;font-weight:400;line-height:1.2;letter-spacing:.6px;text-align:center;text-transform:none}
+.mb-pb .mb-pb__mt span{font-weight:400}
+.mb-pb .mb-pb__st{font-size:17px;font-weight:300;line-height:1.2;letter-spacing:.6px;text-align:center}
+.mb-pb .mb-pb__st p{margin:1em 0;padding:0;font-size:inherit;font-weight:300;line-height:inherit;letter-spacing:.6px;text-align:center}
+.mb-pb .mb-pb__st strong{font-weight:700}
+.mb-pb__g{display:grid;grid-template-columns:repeat(2,1fr);gap:25px;max-width:1300px;margin:0 auto}
+.mb-pb__c{perspective:1200px;cursor:pointer;border:1px solid rgba(178,178,178,.4);border-radius:9px;-webkit-tap-highlight-color:transparent}
+.mb-pb__i{position:relative;width:100%;transform-style:preserve-3d;transition:transform .6s ease}
+.mb-pb__c.flip .mb-pb__i{transform:rotateY(180deg)}
+.mb-pb__f{position:relative;display:flex;align-items:center;padding:20px;border-radius:8px;-webkit-backface-visibility:hidden;backface-visibility:hidden}
+.mb-pb__b{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;overflow-x:hidden;overflow-y:auto;padding:24px;border-radius:8px;background:#fff;-webkit-backface-visibility:hidden;backface-visibility:hidden;transform:rotateY(180deg)}
+.mb-pb .mb-pb__b p{width:90%;margin:0;padding:0 10px 0 0;font-family:'Plus Jakarta Sans',system-ui,sans-serif;font-size:18px;font-weight:400;line-height:1.2;letter-spacing:.6px;text-align:left;text-transform:none}
+.mb-pb .mb-pb__bi{position:absolute;top:36%;right:20px;padding:0 15px 2px;border:1px solid rgba(178,178,178,.4);border-radius:50%;font-size:23px;font-weight:700;line-height:1.8;letter-spacing:.6px;color:#b2b2b2!important;-webkit-text-fill-color:#b2b2b2!important}
+.mb-pb__l img{display:inline;width:120px;max-width:none;height:auto;object-fit:cover;border-radius:6px;border:0;vertical-align:baseline}
+.mb-pb__m{flex:1;padding:0 20px}
+.mb-pb .mb-pb__m h3{margin:0 0 8px;padding:0;font-family:Poppins,system-ui,sans-serif;font-size:24px;font-style:normal;font-weight:400;line-height:1.3;letter-spacing:.6px;text-align:left;text-transform:none;word-break:break-word}
+.mb-pb .mb-pb__m p{margin:0;padding:0;font-family:'Plus Jakarta Sans',system-ui,sans-serif;font-size:18px;font-weight:400;line-height:1.2;letter-spacing:.6px;text-align:left;text-transform:none}
+.mb-pb__r{display:flex;align-items:center;justify-content:center;flex-shrink:0;width:28px;height:28px;border:1.8px solid #a8a8a8;border-radius:50%}
+.mb-pb .mb-pb__tg{margin-bottom:2px;font-size:18px;font-weight:700!important;line-height:1;letter-spacing:.6px;color:#666!important;-webkit-text-fill-color:#666!important}
+.mb-pb__cta{display:flex;flex-direction:column;align-items:center;gap:12px;width:100%;margin-top:40px}
+.mb-pb a.mb-pb__bt{display:inline-flex;align-items:center;justify-content:center;width:100%;max-width:380px;padding:16px 36px;border:0;border-radius:30px;font-family:'Plus Jakarta Sans',system-ui,sans-serif;font-size:18px;font-weight:500;line-height:1.8;letter-spacing:.6px;text-align:center;text-decoration:none;text-transform:none;transition:opacity .2s ease}
+.mb-pb a.mb-pb__bt:hover{opacity:.9}
+.mb-pb .mb-pb__sb{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:4px;font-size:16px;font-weight:400;line-height:1.8;letter-spacing:.6px}
+.mb-pb .mb-pb__sb svg{flex-shrink:0;width:18px;height:18px}
+.mb-pb .mb-pb__sb svg,.mb-pb .mb-pb__sb svg path{color:#2b2b2b!important;stroke:#2b2b2b!important}
+@media screen and (max-width:992px){
+.mb-pb .mb-pb__m h3{margin-bottom:6px;font-size:16px;line-height:1.2}
+.mb-pb .mb-pb__m p{font-size:14px;line-height:1.35}
+.mb-pb__f{padding:12px}
+.mb-pb__l img{width:90px}
+.mb-pb__r{width:24px;height:24px;border-width:1.5px}
+.mb-pb .mb-pb__tg{font-size:16px}
+.mb-pb__b{padding:12px}
+.mb-pb .mb-pb__b p{font-size:14px;line-height:18px}
+.mb-pb .mb-pb__bi{top:31%;right:14px;padding:0 10px;font-size:18px}
+.mb-pb .mb-pb__mt{margin:20px 0;font-size:26px}
+.mb-pb .mb-pb__st{font-size:15.2px}
+}
+@media screen and (max-width:769px){
+.mb-pb{padding:30px 15px}
+.mb-pb__g{grid-template-columns:1fr;gap:15px}
+}
+@media screen and (max-width:768px){
+.mb-pb__cta{margin-top:30px;padding:0 15px}
+.mb-pb a.mb-pb__bt{padding:14px 28px;font-size:16px}
+.mb-pb .mb-pb__sb{font-size:15px}
+.mb-pb .mb-pb__sb svg{width:16px;height:16px}
+}
+</style>
+
+<section class="mb-pb" style="background:{{ mb_bg }}!important">
+  <div class="mb-pb__w">
+    <div class="mb-pb__hd">
+      <div class="mb-pb__mt" role="heading" aria-level="2"><span style="color:{{ mb_accent }}!important;-webkit-text-fill-color:{{ mb_accent }}!important">{{ mb_title_a }}</span><span style="color:{{ mb_text_color }}!important;-webkit-text-fill-color:{{ mb_text_color }}!important"> {{ mb_title_b }}</span></div>
+      <div class="mb-pb__st" style="color:{{ mb_text_color }}!important;-webkit-text-fill-color:{{ mb_text_color }}!important"><p style="color:{{ mb_text_color }}!important;-webkit-text-fill-color:{{ mb_text_color }}!important">{{ mb_sub | strip }}</p></div>
+    </div>
+    <div class="mb-pb__g">
+      {%- for mb_item in mb_items -%}
+        {%- assign mb_f = mb_item | split: '|||' -%}
+        {%- assign mb_img = mb_f[0] | strip -%}
+        {%- assign mb_ttl = mb_f[1] | strip -%}
+        {%- assign mb_front = mb_f[2] | strip -%}
+        {%- assign mb_back = mb_f[3] | strip -%}
+      <div class="mb-pb__c" data-mb-card>
+        <div class="mb-pb__hw">
+        <div class="mb-pb__i">
+          <div class="mb-pb__f" style="background:{{ mb_card_bg }}!important">
+            <div class="mb-pb__l"><img src="{{ mb_img }}" width="240" height="240" alt="{{ mb_ttl | escape }}" loading="lazy" decoding="async"></div>
+            <div class="mb-pb__m">
+              <h3 style="color:{{ mb_card_title_color }}!important;-webkit-text-fill-color:{{ mb_card_title_color }}!important">{{ mb_ttl }}</h3>
+              <p style="color:{{ mb_card_text_color }}!important;-webkit-text-fill-color:{{ mb_card_text_color }}!important">{{ mb_front }}</p>
+            </div>
+            <div class="mb-pb__r"><span class="mb-pb__tg">+</span></div>
+          </div>
+          <div class="mb-pb__b">
+            <div class="mb-pb__bi">–</div>
+            <p style="color:{{ mb_back_text_color }}!important;-webkit-text-fill-color:{{ mb_back_text_color }}!important">{{ mb_back }}</p>
+          </div>
+        </div>
+        </div>
+      </div>
+      {%- endfor -%}
+    </div>
+    <div class="mb-pb__cta">
+      <a href="{{ mb_link }}" class="mb-pb__bt" data-mb-cta style="background:{{ mb_accent }}!important;color:#fff!important;-webkit-text-fill-color:#fff!important">{{ mb_button }}</a>
+      <div class="mb-pb__sb" style="color:#2b2b2b!important;-webkit-text-fill-color:#2b2b2b!important">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="m9 11 2 2 4-4"></path></svg>
+        {{ mb_note }}
+      </div>
+    </div>
+  </div>
+  <script>
+  (function () {
+    var s = document.currentScript, root = s && s.parentElement;
+    if (!root) return;
+    var cards = root.querySelectorAll('[data-mb-card]');
+    cards.forEach(function (card) {
+      card.addEventListener('click', function () {
+        var icon = card.querySelector('.mb-pb__tg');
+        var isOpen = card.classList.contains('flip');
+        cards.forEach(function (other) {
+          if (other !== card) {
+            other.classList.remove('flip');
+            other.querySelector('.mb-pb__tg').textContent = '+';
+          }
+        });
+        card.classList.toggle('flip');
+        icon.textContent = isOpen ? '+' : '–';
+      });
+    });
+    var btn = root.querySelector('[data-mb-cta]');
+    if (btn) btn.addEventListener('click', function (e) {
+      var h = btn.getAttribute('href');
+      if (h && h !== '#') return;
+      e.preventDefault();
+      var atc = document.querySelector('.product-form__submit');
+      if (atc) atc.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+  })();
+  </script>
+</section>
