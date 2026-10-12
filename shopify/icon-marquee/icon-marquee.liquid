@@ -1,0 +1,60 @@
+{%- comment -%}
+  Scrolling trust-icon strip ("Zero additives / GMO-Free / Gluten-Free" with small icons) between two thin grey lines. Endless left-scroll, a little faster on phones.
+  EDIT YOUR ITEMS BELOW. One item = icon link ||| text. Put @@ on its own line between items.
+  The icon links start as Metabolae's own files so the strip is an exact copy straight away.
+  Before you go live, download them, upload them to your own store (Content > Files) and paste your links here instead, so they keep working and are yours. Also replace the text, because it describes Metabolae's product.
+  mb_repeat = how many times the list is repeated along the strip (5 = same as Metabolae). mb_text_color = text. mb_bg = strip background. mb_border = the two thin lines.
+  mb_icon_filter = the colour of the icons. The icons are black/grey pictures, and this filter turns them dark brown like Metabolae. Write none to show the icons exactly as uploaded.
+  These colours are locked, so the theme cannot turn them black.
+  Do not use a straight apostrophe (') in the text, use &#39; instead. Do not type three | in a row inside an item except as the separator.
+{%- endcomment -%}
+{%- assign mb_text_color = '#000000' -%}
+{%- assign mb_bg = '#ffffff' -%}
+{%- assign mb_border = '#cccccc' -%}
+{%- assign mb_icon_filter = 'brightness(0) saturate(100%) invert(19%) sepia(48%) saturate(1450%) hue-rotate(10deg) brightness(92%) contrast(97%)' -%}
+{%- assign mb_repeat = 5 -%}
+{%- capture mb_data -%}
+https://metabolae.com/cdn/shop/files/metabolae-no-additives.webp?v=1773592010&width=32 ||| Zero additives
+@@
+https://metabolae.com/cdn/shop/files/metabolae-non-gmo.webp?v=1773592010&width=32 ||| GMO-Free
+@@
+https://metabolae.com/cdn/shop/files/metabolae-gluten-free.webp?v=1773592010&width=32 ||| Gluten-Free
+{%- endcapture -%}
+{%- assign mb_items = mb_data | split: '@@' -%}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600&display=swap"></noscript>
+
+<style>
+.page-width:has(>.mb-mq){max-width:none;padding:0}
+.mb-mq,.mb-mq *,.mb-mq *::before,.mb-mq *::after{box-sizing:border-box}
+.mb-mq{display:block;margin:0;padding:4px 0;overflow:hidden;border-top:1px solid var(--mb-mq-bd,#ccc);border-bottom:1px solid var(--mb-mq-bd,#ccc);font-family:'Plus Jakarta Sans',system-ui,sans-serif;font-size:15px;font-weight:500;line-height:1.8;letter-spacing:.6px;text-align:left}
+@media screen and (min-width:750px){.mb-mq{font-size:16px}}
+.mb-mq__w{position:relative;width:100%;overflow:hidden}
+.mb-mq__tr{display:flex;gap:50px;align-items:center;white-space:nowrap;animation:mb-mq-scroll 16s linear infinite}
+.mb-mq__it{display:flex;align-items:center;gap:10px}
+.mb-mq__i{display:block;width:28px;height:28px;max-width:none;margin:0;border:0;border-radius:0;object-fit:contain;filter:var(--mb-mq-f,none)}
+.mb-mq .mb-mq__t{font-family:'Plus Jakarta Sans',system-ui,sans-serif;font-size:13.3px;font-weight:700;line-height:20px;letter-spacing:.6px;text-transform:none;white-space:nowrap;color:var(--mb-mq-c,#000)!important;-webkit-text-fill-color:var(--mb-mq-c,#000)!important}
+@media screen and (max-width:769px){
+.mb-mq .mb-mq__t{font-size:11.4px}
+.mb-mq__tr{animation-duration:8s}
+}
+@keyframes mb-mq-scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+</style>
+
+<section class="mb-mq" style="--mb-mq-c:{{ mb_text_color }};--mb-mq-bd:{{ mb_border }};--mb-mq-f:{{ mb_icon_filter }};background:{{ mb_bg }}!important">
+  <div class="mb-mq__w">
+    <div class="mb-mq__tr" style="color:{{ mb_text_color }}">
+      {%- for mb_r in (1..mb_repeat) -%}
+        {%- for mb_item in mb_items -%}
+          {%- assign mb_f = mb_item | split: '|||' -%}
+          {%- assign mb_icon = mb_f[0] | strip -%}
+          {%- assign mb_name = mb_f[1] | strip -%}
+      <div class="mb-mq__it"{% if mb_r > 1 %} aria-hidden="true"{% endif %}><img class="mb-mq__i" src="{{ mb_icon }}" width="32" height="32" alt="{% if mb_r > 1 %}{% else %}{{ mb_name | escape }}{% endif %}" decoding="async"><span class="mb-mq__t">{{ mb_name }}</span></div>
+        {%- endfor -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
