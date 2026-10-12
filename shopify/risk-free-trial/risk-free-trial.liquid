@@ -1,0 +1,77 @@
+{%- comment -%}
+  "90-Day Risk-Free Trial" section: on the left a round guarantee badge, a small orange line, a heading, a short paragraph and a white button; on the right a picture of a person standing at the bottom edge. On phones the person goes under the text, centred.
+  EDIT YOUR CONTENT BELOW.
+  The picture links start as Metabolae's own files so the section is an exact copy straight away.
+  Before you go live, download them, upload them to your own store (Content > Files) and paste your links here instead, so they keep working and are yours. Also replace all the wording, because it describes Metabolae's product.
+  mb_badge = the round badge above the text. mb_person = the picture on the right (a cut-out person on a see-through background looks best, about 400 by 400).
+  mb_link = where the button goes. The original uses # (which jumps to the top of the page). Put a real link there, or #MainContent, to send people somewhere useful.
+  mb_bg = section background. mb_accent = the small line above the heading and the button text (Metabolae's orange; use #943434 for your red). mb_heading_color = the heading. mb_text_color = the paragraph.
+  These colours are locked, so the theme cannot turn them black.
+  Do not use a straight apostrophe (') in the text, use &#39; or a curly one instead.
+{%- endcomment -%}
+{%- assign mb_eyebrow = 'Feel the Difference' -%}
+{%- assign mb_heading = '90-Day Risk-Free Trial' -%}
+{%- capture mb_desc -%}
+If you’re not completely satisfied in your first 90 days, simply return your order for a full refund — no questions asked.
+{%- endcapture -%}
+{%- assign mb_button = 'Try Risk-Free Today' -%}
+{%- assign mb_link = '#' -%}
+{%- assign mb_badge = 'https://metabolae.com/cdn/shop/files/metabolae-90-day-money-back.webp?v=1773612119&width=200' -%}
+{%- assign mb_badge_alt = 'Money-back guarantee badge' -%}
+{%- assign mb_person = 'https://metabolae.com/cdn/shop/files/metabolae-90-day-personv2.webp?v=1784724924&width=600' -%}
+{%- assign mb_person_alt = '90-Day Risk-Free Trial' -%}
+{%- assign mb_bg = '#fdf2e9' -%}
+{%- assign mb_accent = '#b85c2a' -%}
+{%- assign mb_heading_color = '#1a1a1a' -%}
+{%- assign mb_text_color = '#555555' -%}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600&display=swap"></noscript>
+
+<style>
+.page-width:has(>.mb-rf){max-width:none;padding:0}
+.mb-rf,.mb-rf *,.mb-rf *::before,.mb-rf *::after{box-sizing:border-box}
+.mb-rf{position:relative;display:block;margin:0;padding:45px 0 0;overflow:hidden;font-family:'Plus Jakarta Sans',system-ui,sans-serif;font-size:15px;font-weight:500;line-height:1.8;letter-spacing:.6px;text-align:left}
+@media screen and (min-width:750px){.mb-rf{padding-top:60px;font-size:16px}}
+.mb-rf .mb-rf__in{display:grid;grid-template-columns:1fr auto;align-items:end;gap:40px;max-width:1100px;margin:0 auto;padding:0 40px}
+.mb-rf .mb-rf__c{display:flex;flex-direction:column;align-items:center;align-self:center;gap:12px;max-width:540px;margin:0 auto;padding-bottom:40px;text-align:center}
+.mb-rf .mb-rf__bd{display:block;width:152px;max-width:none;height:auto;margin:0 0 4px;border:0}
+.mb-rf .mb-rf__ey{margin:0;padding:0;font-size:15px;font-weight:600;line-height:1.3;letter-spacing:.1em;text-transform:uppercase}
+.mb-rf .mb-rf__h{margin:0;padding:0;font-family:Poppins,system-ui,sans-serif;font-size:clamp(26px,3.5vw,40px);font-style:normal;font-weight:400!important;line-height:1.2;letter-spacing:-.01em;text-align:center;text-transform:none}
+.mb-rf .mb-rf__d{margin:0;padding:0;font-size:15px;font-weight:400!important;line-height:1.65;text-align:center}
+.mb-rf .mb-rf__d strong{font-weight:700!important}
+.mb-rf .mb-rf__cta{display:flex;flex-direction:column;align-items:center;gap:8px;margin-top:16px}
+.mb-rf .mb-rf__bt{display:inline-block;padding:16px 48px;border:none;border-radius:30px;font-size:16px;font-weight:700;text-decoration:none;cursor:pointer;box-shadow:0 4px 15px rgba(0,0,0,.15);transition:transform .2s ease,box-shadow .2s ease,opacity .2s ease}
+.mb-rf .mb-rf__bt:hover{transform:scale(1.02);box-shadow:0 6px 20px rgba(0,0,0,.2);opacity:.95}
+.mb-rf .mb-rf__bt:active{transform:scale(.98)}
+.mb-rf .mb-rf__iw{display:flex;flex-shrink:0;align-items:flex-end;justify-content:flex-end;align-self:end;width:400px;height:400px;overflow:hidden}
+.mb-rf .mb-rf__pi{display:block;width:100%;height:100%;max-width:none;border:0;object-fit:contain;object-position:bottom center}
+.mb-rf .mb-rf__ey,.mb-rf .mb-rf__bt{color:var(--mb-rf-ac)!important;-webkit-text-fill-color:var(--mb-rf-ac)!important}
+.mb-rf .mb-rf__h{color:var(--mb-rf-hc)!important;-webkit-text-fill-color:var(--mb-rf-hc)!important}
+.mb-rf .mb-rf__d,.mb-rf .mb-rf__d strong{color:var(--mb-rf-tx)!important;-webkit-text-fill-color:var(--mb-rf-tx)!important}
+@media screen and (max-width:749px){
+.mb-rf .mb-rf__in{grid-template-columns:1fr;grid-template-rows:auto auto;gap:24px;padding:0 24px}
+.mb-rf .mb-rf__c{align-items:center;max-width:100%;padding-bottom:0;text-align:center}
+.mb-rf .mb-rf__iw{justify-content:center;width:100%;height:320px;overflow:visible}
+.mb-rf .mb-rf__pi{width:auto;max-width:100%;object-fit:contain}
+}
+</style>
+
+<div class="mb-rf" style="--mb-rf-ac:{{ mb_accent }};--mb-rf-hc:{{ mb_heading_color }};--mb-rf-tx:{{ mb_text_color }};background:{{ mb_bg }}!important">
+  <div class="mb-rf__in">
+    <div class="mb-rf__c">
+      <img class="mb-rf__bd" src="{{ mb_badge }}" alt="{{ mb_badge_alt | escape }}" loading="lazy" width="152">
+      <p class="mb-rf__ey">{{ mb_eyebrow }}</p>
+      <h2 class="mb-rf__h">{{ mb_heading }}</h2>
+      <p class="mb-rf__d">{{ mb_desc | strip }}</p>
+      <div class="mb-rf__cta">
+        <a href="{{ mb_link }}" class="mb-rf__bt" style="background:#fff!important">{{ mb_button }}</a>
+      </div>
+    </div>
+    <div class="mb-rf__iw">
+      <img class="mb-rf__pi" src="{{ mb_person }}" alt="{{ mb_person_alt | escape }}" loading="lazy" width="400">
+    </div>
+  </div>
+</div>
