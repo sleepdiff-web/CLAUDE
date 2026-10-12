@@ -1,0 +1,491 @@
+{%- comment -%}
+  "Real People. Real Results." video carousel: a heading, a short line, and a row of tall video thumbnails. Tap one and it plays right in the card (tap again to pause, small button to switch sound on or off). Swipe or drag the row, or use the two arrows and the dots below it. When all the videos fit on the screen they just sit centred and the arrows and dots are not needed.
+  EDIT YOUR VIDEOS BELOW. One video = video link ||| picture link ||| short description. Put @@ on its own line between videos.
+  The video link can be an MP4 file, a YouTube link or a Vimeo link. The picture is the cover shown before the video plays (tall, 9 by 16 is best).
+  The links start as Metabolae's own files so the section is an exact copy straight away.
+  Before you go live, upload your own videos (as MP4) and pictures to your store (Content > Files) and paste your links here instead, so they keep working and are yours.
+  mb_heading = the big line (you can put <em>words</em> in it to colour them with mb_accent). mb_sub = the small line under it (can contain <strong>bold</strong>).
+  mb_accent = the play button, the current dot and the arrow hover colour (Metabolae's orange; use #943434 for your red). mb_heading_color = the big line. mb_sub_color = the small line. mb_bg = section background.
+  These colours are locked, so the theme cannot turn them black.
+  Do not use a straight apostrophe (') in the text, use &#39; instead. Do not type three | in a row except as the separators.
+{%- endcomment -%}
+{%- assign mb_heading = 'Real People.  Real Results.' -%}
+{%- assign mb_sub = 'Hear it in their own words.' -%}
+{%- assign mb_accent = '#b85c2a' -%}
+{%- assign mb_heading_color = '#1a1a1a' -%}
+{%- assign mb_sub_color = '#000000' -%}
+{%- assign mb_bg = '#ffffff' -%}
+{%- capture mb_videos -%}
+https://metabolae.com/cdn/shop/videos/c/vp/bfb858f8ad1c409f816c2e544a85d6d2/bfb858f8ad1c409f816c2e544a85d6d2.HD-1080p-4.8Mbps-87594820.mp4?v=0 ||| https://metabolae.com/cdn/shop/files/preview_images/bfb858f8ad1c409f816c2e544a85d6d2.thumbnail.0000000000.jpg?v=1782637815 ||| Video
+@@
+https://metabolae.com/cdn/shop/videos/c/vp/0d54639cb1e647868fbee692231d7464/0d54639cb1e647868fbee692231d7464.HD-1080p-3.3Mbps-77924353.mp4?v=0 ||| https://metabolae.com/cdn/shop/files/preview_images/metabolae-doctor-diabetes-industry-thumbnail.png?v=1773591696 ||| Video
+@@
+https://metabolae.com/cdn/shop/videos/c/vp/b36ad0cc63e846e4a96bf52532913cfb/b36ad0cc63e846e4a96bf52532913cfb.HD-1080p-7.2Mbps-77936310.mp4?v=0 ||| https://metabolae.com/cdn/shop/files/preview_images/metabolae-doctor-blood-sugar-thumbnail.png?v=1773604892 ||| Video
+@@
+https://metabolae.com/cdn/shop/videos/c/vp/53bb01339ae54a87a1e009da1f3d8c04/53bb01339ae54a87a1e009da1f3d8c04.HD-1080p-7.2Mbps-77924355.mp4?v=0 ||| https://metabolae.com/cdn/shop/files/preview_images/metabolae-ugc-cravings-blood-sugar-thumbnail.png?v=1773591663 ||| Video
+{%- endcapture -%}
+{%- assign mb_items = mb_videos | split: '@@' -%}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600&display=swap"></noscript>
+
+<style>
+.page-width:has(>.mb-vc){max-width:none;padding:0}
+.mb-vc,.mb-vc *,.mb-vc *::before,.mb-vc *::after{box-sizing:border-box}
+.mb-vc{display:block;margin:0;padding:72px 0 32px;overflow:hidden;font-family:'Plus Jakarta Sans',system-ui,sans-serif;font-size:15px;font-weight:500;line-height:1.8;letter-spacing:.6px;text-align:left}
+@media screen and (min-width:750px){.mb-vc{font-size:16px}}
+.mb-vc .mb-vc__hd{margin-bottom:36px;padding:0 20px;text-align:center}
+.mb-vc .mb-vc__h{margin:0 0 10px;padding:0;font-family:Poppins,system-ui,sans-serif;font-size:clamp(26px,3.5vw,36px);font-style:normal;font-weight:400!important;line-height:1.2;letter-spacing:.6px;text-align:center;text-transform:none;color:var(--mb-vc-hc)!important;-webkit-text-fill-color:var(--mb-vc-hc)!important}
+.mb-vc .mb-vc__h em{font-style:normal;color:var(--mb-vc-ac)!important;-webkit-text-fill-color:var(--mb-vc-ac)!important}
+.mb-vc .mb-vc__sh{margin:0;padding:0;font-size:15px;font-style:normal!important;font-weight:400!important;line-height:1.5;letter-spacing:.6px;text-align:center;text-transform:none;color:var(--mb-vc-sc)!important;-webkit-text-fill-color:var(--mb-vc-sc)!important}
+.mb-vc .mb-vc__sh strong{font-weight:700!important}
+.mb-vc .mb-vc__tw{position:relative;max-width:1200px;margin:0 auto;overflow:hidden}
+.mb-vc .mb-vc__tw.is-init{touch-action:pan-y}
+.mb-vc .mb-vc__tk{display:flex;gap:12px;margin:0;padding:12px;transition-property:transform}
+.mb-vc .mb-vc__card{position:relative;flex:0 0 auto;width:200px;overflow:hidden;border-radius:12px;background:#111;box-shadow:0 4px 16px rgba(0,0,0,.12);cursor:pointer;transition:transform .25s ease,box-shadow .25s ease}
+@media screen and (min-width:1024px){.mb-vc .mb-vc__tw.is-init .mb-vc__card{width:auto}}
+.mb-vc .mb-vc__card:hover{transform:scale(1.03);box-shadow:0 8px 28px rgba(0,0,0,.2)}
+.mb-vc .mb-vc__ci{position:relative;width:100%;aspect-ratio:9 / 16;overflow:hidden;background:#000}
+.mb-vc .mb-vc__th{display:block;width:100%;max-width:none;height:100%;border:0;object-fit:cover;transition:transform .4s ease}
+.mb-vc .mb-vc__card:hover .mb-vc__th{transform:scale(1.05)}
+.mb-vc .mb-vc__pl{position:absolute;top:50%;left:50%;z-index:2;display:flex;align-items:center;justify-content:center;width:52px;height:52px;border-radius:50%;box-shadow:0 4px 16px rgba(0,0,0,.25);transform:translate(-50%,-50%);transition:transform .2s ease,background-color .2s ease;background:var(--mb-vc-ac)!important}
+.mb-vc .mb-vc__pl svg{width:20px;height:20px;margin-left:3px}
+.mb-vc .mb-vc__pl svg,.mb-vc .mb-vc__pl svg *{fill:#fff!important;stroke:none!important}
+.mb-vc .mb-vc__card:hover .mb-vc__pl{transform:translate(-50%,-50%) scale(1.12)}
+.mb-vc .mb-vc__ov{position:absolute;inset:0;z-index:1;display:block!important;background:linear-gradient(to bottom,rgba(0,0,0,.05) 60%,rgba(0,0,0,.45) 100%)}
+.mb-vc .mb-vc__dots{display:flex!important;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;margin:24px 0 0;padding:0 20px}
+.mb-vc .mb-vc__dot{flex-shrink:0;width:8px;height:8px;margin:0;padding:0;border:none;border-radius:50%;cursor:pointer;transition:background-color .25s ease,width .25s ease,border-radius .25s ease;background:#d9d9d9!important}
+.mb-vc .mb-vc__dot.is-on{width:24px;border-radius:4px;background:var(--mb-vc-ac)!important}
+.mb-vc .mb-vc__ars{display:flex;justify-content:center;gap:12px;margin-top:20px}
+.mb-vc .mb-vc__ar{display:flex;align-items:center;justify-content:center;width:40px;height:40px;border:1.5px solid #d9d9d9;border-radius:50%;font-size:18px;cursor:pointer;transition:border-color .2s ease,background .2s ease;background:none!important;color:#1a1a1a!important;-webkit-text-fill-color:#1a1a1a!important}
+.mb-vc .mb-vc__ar:hover{border-color:var(--mb-vc-ac);color:var(--mb-vc-ac)!important;-webkit-text-fill-color:var(--mb-vc-ac)!important}
+.mb-vc .mb-vc__ar:disabled{opacity:.35!important;border-color:#d9d9d9!important;color:#8c8c8c!important;-webkit-text-fill-color:#8c8c8c!important;cursor:default!important;background:none!important}
+.mb-vc .mb-vc__card.is-playing .mb-vc__th,.mb-vc .mb-vc__card.is-playing .mb-vc__ov,.mb-vc .mb-vc__card.is-playing .mb-vc__pl{display:none!important}
+.mb-vc .mb-vc__iv{display:block;width:100%;max-width:none;height:100%;border:none;object-fit:cover}
+.mb-vc .mb-vc__ic{position:absolute;inset:0;z-index:5;pointer-events:none}
+.mb-vc .mb-vc__ipo{position:absolute;top:50%;left:50%;display:flex;align-items:center;justify-content:center;width:48px;height:48px;border-radius:50%;opacity:0;transform:translate(-50%,-50%);transition:opacity .3s ease;pointer-events:auto;cursor:pointer;background:rgba(0,0,0,.5)!important}
+.mb-vc .mb-vc__ipo svg{width:24px;height:24px}
+.mb-vc .mb-vc__imb{position:absolute;right:12px;bottom:12px;z-index:6;display:flex;align-items:center;justify-content:center;width:32px;height:32px;border:none;border-radius:50%;cursor:pointer;pointer-events:auto;background:rgba(0,0,0,.6)!important}
+.mb-vc .mb-vc__imb svg{width:16px;height:16px}
+.mb-vc .mb-vc__ipo svg,.mb-vc .mb-vc__ipo svg *,.mb-vc .mb-vc__imb svg,.mb-vc .mb-vc__imb svg *{fill:#fff!important;stroke:none!important}
+@media screen and (max-width:767px){
+.mb-vc{padding-top:30px!important;padding-bottom:30px!important}
+.mb-vc .mb-vc__hd{margin-bottom:18px!important}
+.mb-vc .mb-vc__card{width:calc((100vw - 32px - 8px) / 3.5)}
+.mb-vc .mb-vc__h{font-size:22px!important;font-weight:400!important;white-space:nowrap!important}
+.mb-vc .mb-vc__pl{width:32px!important;height:32px!important;box-shadow:0 2px 8px rgba(0,0,0,.2)!important}
+.mb-vc .mb-vc__pl svg{width:12px!important;height:12px!important;margin-left:2px!important}
+.mb-vc .mb-vc__ars{gap:8px!important;margin-top:14px!important}
+.mb-vc .mb-vc__ar{width:32px!important;height:32px!important;font-size:14px!important}
+}
+</style>
+
+<section class="mb-vc" style="--mb-vc-ac:{{ mb_accent }};--mb-vc-hc:{{ mb_heading_color }};--mb-vc-sc:{{ mb_sub_color }};background:{{ mb_bg }}!important">
+  <div class="mb-vc__hd"><h2 class="mb-vc__h">{{ mb_heading }}</h2><p class="mb-vc__sh">{{ mb_sub }}</p></div>
+  <div class="mb-vc__tw">
+    <div class="mb-vc__tk" aria-live="polite">
+{%- for mb_item in mb_items -%}
+{%- assign mb_f = mb_item | split: '|||' -%}
+{%- assign mb_vid = mb_f[0] | strip -%}
+{%- assign mb_pic = mb_f[1] | strip -%}
+{%- assign mb_alt = mb_f[2] | strip -%}
+{%- assign mb_type = 'mp4' -%}
+{%- if mb_vid contains 'youtu' -%}{%- assign mb_type = 'youtube' -%}{%- elsif mb_vid contains 'vimeo' -%}{%- assign mb_type = 'vimeo' -%}{%- endif -%}
+{%- assign mb_q = '?' -%}{%- if mb_pic contains '?' -%}{%- assign mb_q = '&amp;' -%}{%- endif %}
+<div class="mb-vc__card" data-video-url="{{ mb_vid }}" data-video-type="{{ mb_type }}" role="group" aria-label="{{ forloop.index }} / {{ forloop.length }}"><div class="mb-vc__ci"><img class="mb-vc__th" src="{{ mb_pic }}{{ mb_q }}width=400" alt="{{ mb_alt | escape }}" loading="lazy" width="400"><div class="mb-vc__ov"></div><div class="mb-vc__pl"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg></div></div></div>
+{%- endfor %}
+    </div>
+  </div>
+  <div class="mb-vc__dots"></div>
+  <div class="mb-vc__ars">
+    <button type="button" class="mb-vc__ar mb-vc__prev" aria-label="Previous slide">&lsaquo;</button>
+    <button type="button" class="mb-vc__ar mb-vc__next" aria-label="Next slide">&rsaquo;</button>
+  </div>
+  <script>
+  (function () {
+    var root = document.currentScript.parentElement;
+    if (!root || !root.classList.contains('mb-vc')) return;
+    var wrap = root.querySelector('.mb-vc__tw'), track = root.querySelector('.mb-vc__tk'), dots = root.querySelector('.mb-vc__dots'),
+        pv = root.querySelector('.mb-vc__prev'), nx = root.querySelector('.mb-vc__next'),
+        cards = [].slice.call(track.querySelectorAll('.mb-vc__card')), n = cards.length,
+        GAP = 12, S = null, activeCard = null,
+        m768 = matchMedia('(min-width:768px)'), m1024 = matchMedia('(min-width:1024px)'),
+        uid = 'mb-vc-' + Math.random().toString(36).slice(2, 8);
+    if (!n) return;
+    track.id = uid;
+
+    /* ── The slider (3.5 cards on phones, cards as wide as they are on tablets, 6 cards on desktop) ── */
+    function Slider() {
+      var bp = m1024.matches ? 2 : m768.matches ? 1 : 0,
+          spv = bp === 1 ? 'auto' : bp === 2 ? 6 : 3.5,
+          sb = bp === 1 ? GAP : 3,
+          W, H, grid = [], snap = [], sizes = [], virt = 0, tr = 0, idx = 0, pidx = 0, sidx = 0,
+          beg = true, end = false, anim = false, click = true, lock = false, dead = false, bul = [],
+          td = { pid: null }, tc = {}, ro, endT, rafId;
+
+      function setTr(ms) { track.style.transitionDuration = ms + 'ms'; track.style.transitionDelay = ms === 0 ? '0ms' : ''; }
+      function maxT() { return -snap[snap.length - 1]; }
+      function minT() { return -snap[0]; }
+
+      /* arrows */
+      function tog(b, off) {
+        b.disabled = off; b.classList.toggle('is-off', off);
+        b.setAttribute('aria-disabled', off); b.tabIndex = off ? -1 : 0;
+      }
+      function nav() { tog(pv, beg); tog(nx, end); }
+      /* progress: are we at the very start / very end? */
+      function prog(t) {
+        var d = maxT() - minT(), p;
+        if (d === 0) { beg = true; end = true; }
+        else {
+          p = (t - minT()) / d;
+          beg = Math.abs(t - minT()) < 1 || p <= 0;
+          end = Math.abs(t - maxT()) < 1 || p >= 1;
+        }
+        nav();
+      }
+      /* dots */
+      function pag() {
+        for (var i = 0; i < bul.length; i++) {
+          var on = i === sidx;
+          bul[i].classList.toggle('is-on', on);
+          if (on) bul[i].setAttribute('aria-current', 'true'); else bul[i].removeAttribute('aria-current');
+        }
+      }
+      function render() {
+        var h = '';
+        for (var i = 0; i < snap.length; i++) h += '<button type="button" class="mb-vc__dot" aria-label="Slide ' + (i + 1) + '" tabindex="0"></button>';
+        dots.innerHTML = h;
+        bul = [].slice.call(dots.children);
+        pag();
+      }
+      function put(t) { tr = t; track.style.transform = 'translate3d(' + t + 'px, 0px, 0px)'; prog(t); }
+
+      /* sizes and positions (same maths as Swiper) */
+      function size() {
+        var w = wrap.clientWidth, h = wrap.clientHeight, cs;
+        if (!w) return;
+        cs = getComputedStyle(wrap);
+        W = w - (parseInt(cs.paddingLeft, 10) || 0) - (parseInt(cs.paddingRight, 10) || 0);
+        H = h - (parseInt(cs.paddingTop, 10) || 0) - (parseInt(cs.paddingBottom, 10) || 0);
+      }
+      function slides() {
+        if (W === undefined) return;
+        var g = [], sn = [], sz = [], pos = 0, v = -sb, i, c, s0, ns = [], was = snap.length;
+        for (i = 0; i < n; i++) cards[i].style.marginRight = '';
+        for (i = 0; i < n; i++) {
+          c = cards[i];
+          if (spv === 'auto') {
+            c.style.width = '';
+            s0 = getComputedStyle(c);
+            sz.push((parseFloat(s0.width) || 0) + (parseFloat(s0.marginLeft) || 0) + (parseFloat(s0.marginRight) || 0));
+          } else {
+            sz.push((W - (spv - 1) * sb) / spv);
+            c.style.width = sz[i] + 'px';
+          }
+          sn.push(pos); g.push(pos);
+          pos += sz[i] + sb; v += sz[i] + sb;
+        }
+        v = Math.max(v, W);
+        for (i = 0; i < sn.length; i++) if (sn[i] <= v - W) ns.push(sn[i]);
+        sn = ns;
+        if (Math.floor(v - W) - Math.floor(sn[sn.length - 1]) > 1) sn.push(v - W);
+        if (!sn.length) sn = [0];
+        if (sb !== 0) for (i = 0; i < n; i++) cards[i].style.marginRight = sb + 'px';
+        grid = g; snap = sn; sizes = sz; virt = v;
+        if (sn.length !== was) overflow();
+      }
+      function overflow() { var was = lock; lock = snap.length === 1; if (was && was !== lock) end = false; }
+
+      /* which card is "current" */
+      function byT(t) {
+        var a, i;
+        for (i = 0; i < grid.length; i++) {
+          if (grid[i + 1] !== undefined) {
+            if (t >= grid[i] && t < grid[i + 1] - (grid[i + 1] - grid[i]) / 2) a = i;
+            else if (t >= grid[i] && t < grid[i + 1]) a = i + 1;
+          } else if (t >= grid[i]) a = i;
+        }
+        if (a === undefined || a < 0) a = 0;
+        return a;
+      }
+      function uai(ni) {
+        var t = -tr, a = ni, s2;
+        if (a === undefined) a = byT(t);
+        s2 = snap.indexOf(t) >= 0 ? snap.indexOf(t) : a;
+        if (s2 >= snap.length) s2 = snap.length - 1;
+        if (a === idx) { if (s2 !== sidx) { sidx = s2; pag(); } return; }
+        pidx = idx; sidx = s2; idx = a; pag();
+      }
+
+      /* moving */
+      function tStart(cb, dir) { if (cb && dir !== 'reset' && idx !== pidx) stopAll(); }
+      function tEnd() { anim = false; clearTimeout(endT); track.removeEventListener('transitionend', onTE); setTr(0); }
+      function onTE(e) { if (e.target === track) tEnd(); }
+      function to(i, sp, cb) {
+        if (dead) return false;
+        if (i < 0) i = 0;
+        if (sp === undefined) sp = 300;
+        if (cb === undefined) cb = true;
+        var si = i >= snap.length ? snap.length - 1 : i, t = -snap[si], k, nt, ng, nn, dir;
+        for (k = 0; k < grid.length; k++) {
+          nt = -Math.floor(t * 100); ng = Math.floor(grid[k] * 100); nn = Math.floor(grid[k + 1] * 100);
+          if (grid[k + 1] !== undefined) {
+            if (nt >= ng && nt < nn - (nn - ng) / 2) i = k;
+            else if (nt >= ng && nt < nn) i = k + 1;
+          } else if (nt >= ng) i = k;
+        }
+        prog(t);
+        dir = i > idx ? 'next' : i < idx ? 'prev' : 'reset';
+        if (t === tr) {
+          uai(i);
+          if (dir !== 'reset') { tStart(cb, dir); tEnd(); }
+          return false;
+        }
+        setTr(sp); put(t); uai(i); tStart(cb, dir);
+        if (sp === 0) tEnd();
+        else if (!anim) {
+          anim = true;
+          track.addEventListener('transitionend', onTE);
+          clearTimeout(endT); endT = setTimeout(function () { if (anim) tEnd(); }, sp + 150);
+        }
+        return true;
+      }
+      function nextI() { return idx + 1; }
+      function prevI() {
+        var t = -tr, z = function (v) { return v < 0 ? -Math.floor(Math.abs(v)) : Math.floor(v); },
+            ns = snap.map(z), ps = snap[ns.indexOf(z(t)) - 1], pi = 0;
+        if (ps !== undefined) { pi = grid.indexOf(ps); if (pi < 0) pi = idx - 1; }
+        return pi;
+      }
+      /* whole recalculation (a picture finished loading, or the box changed size) */
+      function update(load) {
+        if (dead) return;
+        size(); slides();
+        if (load) prog(tr);
+        var done = (spv === 'auto' || spv > 1) && end && !beg ? to(n - 1, 0, false) : to(idx, 0, false);
+        if (load && !done) { put(Math.min(Math.max(tr, maxT()), minT())); uai(); }
+      }
+
+      /* touch / mouse drag (same rules as Swiper: 5px threshold, 45 degrees, resistance .85, short swipe under 300ms) */
+      function curT() { var m = getComputedStyle(track).transform; if (!m || m === 'none') return 0; try { return new DOMMatrixReadOnly(m).m41; } catch (x) { return tr; } }
+      function grab(on) { if (!lock) track.style.cursor = on ? 'grabbing' : 'grab'; }
+      function pdown(e) {
+        if (td.pid !== null && td.pid !== e.pointerId) return;
+        td.pid = e.pointerId;
+        if (!track.contains(e.target)) return;
+        if (e.button > 0) return;
+        if (td.touched && td.moved) return;
+        tc.cx = e.pageX; tc.cy = e.pageY; tc.sx = tc.cx; tc.sy = tc.cy;
+        td.touched = true; td.moved = false; td.scrolling = undefined; td.start = undefined; td.thr = false;
+        td.t0 = Date.now(); click = true; size(); td.dir = undefined;
+        var pd = true;
+        if (e.target.matches('input, select, option, textarea, button, video, label')) { pd = false; if (e.target.nodeName === 'SELECT') td.touched = false; }
+        if (pd && !e.target.isContentEditable) e.preventDefault();
+      }
+      function pmove(e) {
+        if (e.pointerId !== td.pid) return;
+        if (!td.touched) return;
+        var px = e.pageX, py = e.pageY, dx, dy, d, ang;
+        tc.px = tc.cx; tc.py = tc.cy; tc.cx = px; tc.cy = py;
+        dx = tc.cx - tc.sx; dy = tc.cy - tc.sy;
+        if (Math.sqrt(dx * dx + dy * dy) < 5) return;
+        if (td.scrolling === undefined) {
+          if (tc.cy === tc.sy) td.scrolling = false;
+          else if (dx * dx + dy * dy >= 25) { ang = Math.atan2(Math.abs(dy), Math.abs(dx)) * 180 / Math.PI; td.scrolling = ang > 45; }
+        }
+        if (td.start === undefined && (tc.cx !== tc.sx || tc.cy !== tc.sy)) td.start = true;
+        if (td.scrolling) { td.touched = false; return; }
+        if (!td.start) return;
+        click = false;
+        if (e.cancelable) e.preventDefault();
+        d = dx; tc.diff = d;
+        td.dir = d > 0 ? 'prev' : 'next';
+        if (!td.moved) {
+          td.startT = curT(); setTr(0);
+          if (anim) tEnd();
+          grab(true);
+        }
+        td.moved = true;
+        td.curT = d + td.startT;
+        if (d > 0) { if (td.curT > minT()) td.curT = minT() - 1 + Math.pow(-minT() + td.startT + d, .85); }
+        else if (d < 0) { if (td.curT < maxT()) td.curT = maxT() + 1 - Math.pow(maxT() - td.startT - d, .85); }
+        if (lock) td.curT = td.startT;
+        if (!td.thr) {
+          if (Math.abs(d) > 5) {
+            td.thr = true; tc.sx = tc.cx; tc.sy = tc.cy; td.curT = td.startT; tc.diff = tc.cx - tc.sx;
+            return;
+          }
+          td.curT = td.startT; return;
+        }
+        uai(); prog(td.curT); put(td.curT);
+      }
+      function pend(e) {
+        if (e.pointerId !== td.pid) return;
+        td.pid = null;
+        if (!td.touched) { if (td.moved) grab(false); td.moved = false; td.start = false; return; }
+        if (td.moved && td.touched) grab(false);
+        var dt = Date.now() - td.t0, cur, last, stop = 0, gs = sizes[0], i, ratio, tgt = e.target;
+        setTimeout(function () { if (!dead) click = true; }, 0);
+        if (!td.touched || !td.moved || !td.dir || tc.diff === 0 || td.curT === td.startT) { td.touched = false; td.moved = false; td.start = false; return; }
+        td.touched = false; td.moved = false; td.start = false;
+        cur = -tr; last = cur >= -maxT();
+        for (i = 0; i < grid.length; i++) {
+          if (grid[i + 1] !== undefined) { if (last || (cur >= grid[i] && cur < grid[i + 1])) { stop = i; gs = grid[i + 1] - grid[i]; } }
+          else if (last || cur >= grid[i]) { stop = i; gs = grid[grid.length - 1] - grid[grid.length - 2]; }
+        }
+        ratio = (cur - grid[stop]) / gs;
+        if (dt > 300) {
+          if (td.dir === 'next') to(ratio >= .5 ? stop + 1 : stop);
+          else to(ratio > .5 ? stop + 1 : stop);
+        } else if (tgt !== nx && tgt !== pv) {
+          to(td.dir === 'next' ? stop + 1 : stop);
+        } else if (tgt === nx) to(stop + 1); else to(stop);
+      }
+      function onClick(e) {
+        if (!click) { e.preventDefault(); if (anim) { e.stopPropagation(); e.stopImmediatePropagation(); } }
+      }
+      function onPrev(e) { e.preventDefault(); if (beg) return; to(prevI()); }
+      function onNext(e) { e.preventDefault(); if (end) return; to(nextI()); }
+      function onDot(e) {
+        var b = e.target.closest && e.target.closest('.mb-vc__dot'), i = bul.indexOf(b);
+        if (!b || i < 0) return;
+        e.preventDefault(); to(i);
+      }
+      function onLoad() { if (spv === 'auto') update(true); }
+
+      /* start */
+      pv.setAttribute('aria-controls', uid); nx.setAttribute('aria-controls', uid);
+      wrap.classList.add('is-init');
+      size(); slides();
+      grab(false);
+      render();
+      nav();
+      to(0, 0, true);
+      wrap.addEventListener('pointerdown', pdown, { passive: false });
+      document.addEventListener('pointermove', pmove, { passive: false });
+      document.addEventListener('pointerup', pend, { passive: true });
+      document.addEventListener('pointercancel', pend, { passive: true });
+      wrap.addEventListener('click', onClick, true);
+      wrap.addEventListener('load', onLoad, true);
+      pv.addEventListener('click', onPrev); nx.addEventListener('click', onNext); dots.addEventListener('click', onDot);
+      if (window.ResizeObserver) {
+        ro = new ResizeObserver(function () {
+          cancelAnimationFrame(rafId);
+          rafId = requestAnimationFrame(function () {
+            if (dead || !wrap.offsetWidth) return;
+            var ow = W, oh = H;
+            size();
+            if (W !== ow || H !== oh) update(false);
+          });
+        });
+        ro.observe(wrap);
+      }
+
+      return {
+        destroy: function () {
+          dead = true;
+          clearTimeout(endT); cancelAnimationFrame(rafId);
+          if (ro) ro.disconnect();
+          track.removeEventListener('transitionend', onTE);
+          wrap.removeEventListener('pointerdown', pdown);
+          document.removeEventListener('pointermove', pmove);
+          document.removeEventListener('pointerup', pend);
+          document.removeEventListener('pointercancel', pend);
+          wrap.removeEventListener('click', onClick, true);
+          wrap.removeEventListener('load', onLoad, true);
+          pv.removeEventListener('click', onPrev); nx.removeEventListener('click', onNext); dots.removeEventListener('click', onDot);
+          bul.forEach(function (b) { b.classList.remove('is-on'); });
+          wrap.classList.remove('is-init');
+          track.removeAttribute('style');
+          cards.forEach(function (c) { c.removeAttribute('style'); });
+          wrap.removeAttribute('style');
+        }
+      };
+    }
+
+    /* ── Inline video player ── */
+    function stopAll() {
+      if (!activeCard) return;
+      activeCard.classList.remove('is-playing');
+      var v = activeCard.querySelector('.mb-vc__iv'), c = activeCard.querySelector('.mb-vc__ic');
+      if (v) v.remove();
+      if (c) c.remove();
+      activeCard = null;
+    }
+    function embedUrl(url, type) {
+      var m;
+      if (!url) return '';
+      if (type === 'youtube') { m = url.match(/(?:youtu\.be\/|v=)([^&?\/]+)/); return m ? 'https://www.youtube.com/embed/' + m[1] + '?autoplay=1&rel=0' : url; }
+      if (type === 'vimeo') { m = url.match(/vimeo\.com\/(\d+)/); return m ? 'https://player.vimeo.com/video/' + m[1] + '?autoplay=1' : url; }
+      return url;
+    }
+    function play(card) {
+      var url = card.getAttribute('data-video-url'), type = card.getAttribute('data-video-type') || 'youtube';
+      if (!url) return;
+      var embed, inner, direct, ctl, po, mb, pi, pa, mi, ui, fade;
+      function icons(paused) {
+        clearTimeout(fade);
+        if (paused) { pi.style.display = 'block'; pa.style.display = 'none'; po.style.opacity = '1'; }
+        else {
+          pi.style.display = 'none'; pa.style.display = 'block'; po.style.opacity = '1';
+          fade = setTimeout(function () { po.style.opacity = '0'; }, 800);
+        }
+      }
+      if (activeCard === card) {
+        embed = card.querySelector('video');
+        if (embed) {
+          po = card.querySelector('.mb-vc__ipo'); pi = card.querySelector('.mb-vc__ipi'); pa = card.querySelector('.mb-vc__ipp');
+          if (embed.paused) { embed.play(); icons(false); } else { embed.pause(); icons(true); }
+        }
+        return;
+      }
+      stopAll();
+      activeCard = card;
+      card.classList.add('is-playing');
+      inner = card.querySelector('.mb-vc__ci');
+      direct = url.match(/\.(mp4|webm|ogg)(\?|$)/i);
+      if (direct) {
+        embed = document.createElement('video');
+        embed.className = 'mb-vc__iv'; embed.src = url; embed.controls = false; embed.autoplay = true; embed.loop = true; embed.muted = false; embed.playsInline = true;
+        ctl = document.createElement('div');
+        ctl.className = 'mb-vc__ic';
+        ctl.innerHTML = '<div class="mb-vc__ipo"><svg class="mb-vc__ipi" viewBox="0 0 24 24" style="display:none"><path d="M8 5v14l11-7z"/></svg><svg class="mb-vc__ipp" viewBox="0 0 24 24" style="display:none"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg></div>'
+          + '<button type="button" class="mb-vc__imb" aria-label="Toggle sound"><svg class="mb-vc__imu" viewBox="0 0 24 24" style="display:none"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg><svg class="mb-vc__imo" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg></button>';
+        po = ctl.querySelector('.mb-vc__ipo'); mb = ctl.querySelector('.mb-vc__imb');
+        pi = ctl.querySelector('.mb-vc__ipi'); pa = ctl.querySelector('.mb-vc__ipp');
+        mi = ctl.querySelector('.mb-vc__imu'); ui = ctl.querySelector('.mb-vc__imo');
+        var ui2 = function () { mi.style.display = embed.muted ? 'block' : 'none'; ui.style.display = embed.muted ? 'none' : 'block'; };
+        mb.addEventListener('click', function (e) { e.stopPropagation(); embed.muted = !embed.muted; ui2(); });
+        embed.addEventListener('playing', function () { icons(false); });
+        inner.appendChild(embed); inner.appendChild(ctl);
+        var pr = embed.play();
+        if (pr && pr.catch) pr.catch(function () { embed.muted = true; ui2(); embed.play(); });
+      } else {
+        embed = document.createElement('iframe');
+        embed.className = 'mb-vc__iv'; embed.src = embedUrl(url, type); embed.allow = 'autoplay; fullscreen'; embed.allowFullscreen = true;
+        inner.appendChild(embed);
+      }
+    }
+    cards.forEach(function (c) { c.addEventListener('click', function () { play(c); }); });
+
+    /* ── Slider on/off (only when the cards do not all fit) ── */
+    function setup() {
+      var cardW = cards[0].offsetWidth + GAP, wrapW = wrap.offsetWidth, total = n * cardW - GAP;
+      if (S) { S.destroy(); S = null; }
+      if (total <= wrapW) {
+        track.style.justifyContent = 'center';
+        pv.style.display = 'none'; nx.style.display = 'none'; dots.style.display = 'none';
+      } else {
+        track.style.justifyContent = 'flex-start';
+        pv.style.display = 'flex'; nx.style.display = 'flex'; dots.style.display = 'flex';
+        S = Slider();
+      }
+    }
+    setup();
+    window.addEventListener('resize', setup);
+  })();
+  </script>
+</section>
