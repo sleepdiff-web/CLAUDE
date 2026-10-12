@@ -1,0 +1,184 @@
+{%- comment -%}
+  "Your Wellness Journey" section: logo picture, heading, intro, button and guarantee line on the left (they stay in view while you scroll on desktop), and a week-by-week timeline on the right whose line fills with colour as you scroll. On phones everything stacks: logo + heading + intro, then the timeline, then the button.
+  EDIT YOUR WEEKS BELOW. One week = title ||| point ;; point ;; point ;; point. Put @@ on its own line between weeks. Separate the points with ;; (two semicolons).
+  The logo link starts as Metabolae's own file so the section is an exact copy straight away.
+  Before you go live, download it, upload it to your own store (Content > Files) and paste your link here instead, so it keeps working and is yours. Also replace all the wording, because it describes Metabolae's product.
+  mb_accent = the orange (subtitle, button, week bars, timeline dots and line, ticks). Use #943434 for your red. mb_heading_color = main heading. mb_text_color = intro, points and guarantee line. mb_bg = section background. mb_track = the grey timeline line and dots.
+  The button scrolls to your product form.
+  These colours are locked, so the theme cannot turn them black.
+  Do not use a straight apostrophe (') in the text, use &#39; instead. Do not type three | in a row or ;; inside a point except as the separators.
+{%- endcomment -%}
+{%- assign mb_logo = 'https://metabolae.com/cdn/shop/files/Metabolae-logo-timeline-upd.webp?v=1784797181&width=800' -%}
+{%- assign mb_logo_alt = 'Journey with Metabolae' -%}
+{%- assign mb_subtitle = 'Your Wellness' -%}
+{%- assign mb_heading = 'Journey with Metabolae' -%}
+{%- assign mb_desc = 'Metabolae is designed to support your daily wellness routine over time. Stay consistent with your softgel, follow your free movement plan, and build healthier habits week by week.' -%}
+{%- assign mb_button = 'Start My Routine' -%}
+{%- assign mb_note = '90-day money back guarantee' -%}
+{%- assign mb_accent = '#c47245' -%}
+{%- assign mb_heading_color = '#1a1a1a' -%}
+{%- assign mb_text_color = '#000000' -%}
+{%- assign mb_bg = '#ffffff' -%}
+{%- assign mb_track = '#d9d9d9' -%}
+{%- capture mb_weeks -%}
+Week 1-2: Easy Start ||| One softgel per day fits easily into your routine ;; Many adults notice more stable energy and fewer afternoon crashes ;; Reduced sugar cravings for some users ;; Body begins responding to daily Ceylon cinnamon support
+@@
+Week 3-4: Daily Balance ||| Feeling more balanced throughout the day ;; Less of the energy ups and downs many experienced before ;; Daily routine starts to feel natural and sustainable ;; Consistency becomes easier
+@@
+Week 5-6: Metabolic Support ||| Most people notice their biggest improvements here ;; Supports healthy glucose metabolism already within normal range* ;; Greater confidence in daily energy and overall well-being ;; Benefits become more noticeable with continued use
+@@
+Week 7-8+: Long-Term Wellness ||| Ongoing metabolic and antioxidant support* ;; Designed for consistent, long-term daily use ;; Focused on stability, not quick fixes ;; Results depend on individual health, diet, and lifestyle
+{%- endcapture -%}
+{%- assign mb_items = mb_weeks | split: '@@' -%}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600&display=swap"></noscript>
+
+<style>
+.page-width:has(>.mb-wj){max-width:none;padding:0}
+.mb-wj,.mb-wj *,.mb-wj *::before,.mb-wj *::after{box-sizing:border-box}
+.mb-wj{display:block;margin:0;padding:80px 20px;font-family:'Plus Jakarta Sans',system-ui,sans-serif;font-size:15px;font-weight:500;line-height:1.8;letter-spacing:.6px;text-align:left}
+@media screen and (min-width:750px){.mb-wj{font-size:16px}}
+.mb-wj__in{display:grid;grid-template-columns:1fr 1fr;align-items:start;gap:60px;max-width:1200px;margin:0 auto}
+.mb-wj__l{position:sticky;top:100px;display:flex;flex-direction:column;align-items:center;gap:20px;text-align:center}
+.mb-wj__logo{display:block;width:100%;max-width:480px;height:auto;margin:0 auto;border:0;border-radius:16px;object-fit:cover}
+.mb-wj .mb-wj__sub{margin:0 0 -12px!important;padding:0;font-family:'Plus Jakarta Sans',system-ui,sans-serif;font-size:clamp(24px,3.5vw,36px)!important;font-style:normal;font-weight:400!important;line-height:1.2;letter-spacing:.6px;text-transform:none;color:var(--mb-wj-ac)!important;-webkit-text-fill-color:var(--mb-wj-ac)!important}
+.mb-wj .mb-wj__h{margin:0;padding:0;font-family:Poppins,system-ui,sans-serif;font-size:clamp(24px,3.5vw,36px)!important;font-style:normal;font-weight:400!important;line-height:1.2;letter-spacing:.6px;text-transform:none;word-break:break-word;color:var(--mb-wj-hc)!important;-webkit-text-fill-color:var(--mb-wj-hc)!important}
+.mb-wj .mb-wj__d{margin:0;padding:0;font-family:'Plus Jakarta Sans',system-ui,sans-serif;font-size:15px;font-weight:400!important;line-height:1.65;letter-spacing:.6px;text-transform:none;color:var(--mb-wj-tc)!important;-webkit-text-fill-color:var(--mb-wj-tc)!important}
+.mb-wj__iw{display:flex;flex-direction:column;align-items:center;gap:20px;width:100%;text-align:center}
+.mb-wj__cw{display:flex;flex-direction:column;align-items:center;gap:8px;width:100%;text-align:center}
+.mb-wj .mb-wj__bt{display:inline-block;width:100%;margin:0;padding:16px 32px;border:none;border-radius:999px;font-size:16px;font-weight:700;text-align:center;text-decoration:none;cursor:pointer;transition:opacity .2s,transform .15s;background-color:var(--mb-wj-ac)!important;color:#fff!important;-webkit-text-fill-color:#fff!important}
+.mb-wj .mb-wj__bt:hover{opacity:.88;transform:scale(1.02)}
+.mb-wj .mb-wj__g{display:flex;align-items:center;justify-content:center;gap:6px;font-size:15px;line-height:1.8;letter-spacing:.6px;opacity:.95;color:var(--mb-wj-tc)!important;-webkit-text-fill-color:var(--mb-wj-tc)!important}
+.mb-wj .mb-wj__g svg{flex-shrink:0;width:16px;height:16px;color:var(--mb-wj-tc)!important}
+.mb-wj .mb-wj__g svg *{stroke:var(--mb-wj-tc)!important}
+.mb-wj__st{position:relative;padding-left:36px}
+.mb-wj__tb{position:absolute;left:8px;top:0;bottom:0;z-index:1;display:block!important;width:2px;border-radius:999px;background-color:var(--mb-wj-tk);pointer-events:none}
+.mb-wj__tf{position:absolute;left:8px;top:0;z-index:1;display:block!important;width:2px;height:0;border-radius:999px;background-color:var(--mb-wj-ac);pointer-events:none}
+.mb-wj__s{position:relative;margin-bottom:36px}
+.mb-wj__s:last-child{margin-bottom:0}
+.mb-wj__dt{position:absolute;left:-36px;top:11px;z-index:2;display:block!important;width:18px;height:18px;border:3px solid #fff;border-radius:50%;background-color:var(--mb-wj-tk);box-shadow:0 0 0 2px var(--mb-wj-tk);transition:background-color .4s ease,box-shadow .4s ease}
+.mb-wj__dt.wj--active{background-color:var(--mb-wj-ac);box-shadow:0 0 0 2px var(--mb-wj-ac)}
+.mb-wj .mb-wj__wk{display:block;width:100%;margin:0 0 14px;padding:10px 16px;border-radius:8px;font-size:14px;font-weight:600;line-height:1.3;background-color:var(--mb-wj-ac)!important;color:#fff!important;-webkit-text-fill-color:#fff!important}
+.mb-wj__ul{display:flex;flex-direction:column;gap:8px;margin:0;padding:0;list-style:none}
+.mb-wj .mb-wj__li{display:flex;align-items:flex-start;gap:8px;margin:0;padding:0;font-size:15px;font-weight:400!important;line-height:1.55;color:var(--mb-wj-tc)!important;-webkit-text-fill-color:var(--mb-wj-tc)!important}
+.mb-wj .mb-wj__li>span:last-child{color:var(--mb-wj-tc)!important;-webkit-text-fill-color:var(--mb-wj-tc)!important}
+.mb-wj__ck{display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;width:14px;height:14px;margin-top:5px;color:var(--mb-wj-ac)!important}
+.mb-wj__ck svg{width:100%;height:100%;fill:none;stroke:var(--mb-wj-ac)!important;stroke-width:3.5}
+@media screen and (max-width:767px){
+.mb-wj{padding:30px 20px!important}
+.mb-wj .mb-wj__g{font-size:14px!important}
+.mb-wj .mb-wj__sub{margin-bottom:-12px!important;font-size:24px!important}
+.mb-wj .mb-wj__h{margin-top:0;font-size:24px!important}
+.mb-wj__in{display:flex;flex-direction:column;gap:36px}
+.mb-wj__l{display:contents}
+.mb-wj__iw{order:1}
+.mb-wj__r{order:2}
+.mb-wj__cw{order:3;margin-top:12px}
+.mb-wj__logo{max-width:100%}
+.mb-wj__st{padding-left:28px}
+.mb-wj__dt{left:-28px;width:14px;height:14px}
+.mb-wj__tb,.mb-wj__tf{left:6px}
+}
+</style>
+
+<section class="mb-wj" style="--mb-wj-ac:{{ mb_accent }};--mb-wj-hc:{{ mb_heading_color }};--mb-wj-tc:{{ mb_text_color }};--mb-wj-tk:{{ mb_track }};background-color:{{ mb_bg }}!important">
+  <div class="mb-wj__in">
+
+    <div class="mb-wj__l">
+      <div class="mb-wj__iw"><img class="mb-wj__logo" src="{{ mb_logo }}" alt="{{ mb_logo_alt | escape }}" loading="lazy" decoding="async" width="480"><p class="mb-wj__sub">{{ mb_subtitle }}</p><h2 class="mb-wj__h">{{ mb_heading }}</h2><p class="mb-wj__d">{{ mb_desc }}</p></div>
+
+      <div class="mb-wj__cw"><button type="button" class="mb-wj__bt" data-mb-wj-cta>{{ mb_button }}</button><div class="mb-wj__g">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M12 2L3 7v5c0 5 4 9 9 10 5-1 9-5 9-10V7l-9-5z" stroke="currentColor" stroke-width="2" fill="none" stroke-linejoin="round"/>
+              <polyline points="8,12 11,15 16,9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            {{ mb_note }}
+          </div></div>
+    </div>
+
+    <div class="mb-wj__r">
+      <div class="mb-wj__st" data-mb-wj-steps>
+
+        <div class="mb-wj__tb"></div>
+        <div class="mb-wj__tf" data-mb-wj-fill style="height:0%"></div>
+
+        {%- for mb_item in mb_items -%}
+          {%- assign mb_f = mb_item | split: '|||' -%}
+          {%- assign mb_wk = mb_f[0] | strip -%}
+          {%- assign mb_pts = mb_f[1] | split: ';;' -%}
+        <div class="mb-wj__s">
+          <div class="mb-wj__dt" data-mb-wj-dot></div>
+          <div class="mb-wj__wk">{{ mb_wk }}</div><ul class="mb-wj__ul">
+            {%- for mb_pt in mb_pts -%}
+            <li class="mb-wj__li"><span class="mb-wj__ck" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></span><span>{{ mb_pt | strip }}</span></li>
+            {%- endfor -%}
+          </ul>
+        </div>
+        {%- endfor -%}
+
+      </div>
+    </div>
+
+  </div>
+  <script>
+  (function () {
+    var s = document.currentScript, root = s && s.parentElement;
+    if (!root) return;
+    var stepsEl = root.querySelector('[data-mb-wj-steps]');
+    var trackFillEl = root.querySelector('[data-mb-wj-fill]');
+    var btn = root.querySelector('[data-mb-wj-cta]');
+    if (btn) btn.addEventListener('click', function () {
+      var el = document.querySelector('[data-product-form], .product-form, .shopify-payment-button__button');
+      var box = el && el.closest('section, [data-section-id]');
+      if (box) box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+    if (!stepsEl || !trackFillEl) return;
+    var dots = Array.prototype.slice.call(stepsEl.querySelectorAll('[data-mb-wj-dot]'));
+    if (!dots.length) return;
+
+    function update() {
+      if (!document.body.contains(stepsEl)) {
+        window.removeEventListener('scroll', onScroll);
+        window.removeEventListener('resize', update);
+        return;
+      }
+      var rect = stepsEl.getBoundingClientRect();
+      var windowH = window.innerHeight;
+      var startTrigger = windowH * 0.7;
+      var totalDist = rect.height;
+      var currentScroll = startTrigger - rect.top;
+      var progress = Math.max(0, Math.min(currentScroll / totalDist, 1));
+      trackFillEl.style.height = (progress * 100).toFixed(1) + '%';
+      var fillPx = progress * totalDist;
+      var containerRect = stepsEl.getBoundingClientRect();
+      dots.forEach(function (dot) {
+        var dotRect = dot.getBoundingClientRect();
+        var dotCenter = dotRect.top - containerRect.top + dotRect.height * 0.5;
+        if (fillPx >= dotCenter) {
+          dot.classList.add('wj--active');
+        } else {
+          dot.classList.remove('wj--active');
+        }
+      });
+    }
+
+    var tickScheduled = false;
+    function onScroll() {
+      if (!tickScheduled) {
+        tickScheduled = true;
+        requestAnimationFrame(function () {
+          update();
+          tickScheduled = false;
+        });
+      }
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  })();
+  </script>
+</section>
