@@ -1,0 +1,149 @@
+{%- comment -%}
+  "They Felt the Shift" customer reviews list: a small rating line (stars, "Rated 4.9 / 5", "Trusted by ..."), a heading, then review cards (rating + stars, the review, and small tag pills). On phones only the first 2 reviews show with a "Read More Reviews" link that opens the rest (and "Read Less Reviews" closes them again and scrolls back up). On desktop the first 4 reviews show.
+  EDIT YOUR REVIEWS BELOW. One review = rating ||| review text ||| tag ;; tag. Put @@ on its own line between reviews. Separate the tags with ;; (two semicolons). Add as many reviews as you like.
+  mb_show_mobile / mb_show_desktop = how many reviews show before "Read More". The link only appears when there are more reviews than that (so with 3 reviews it shows on phones only, like the original).
+  mb_accent = the stars (Metabolae's orange; use #943434 for your red). mb_tag_color / mb_tag_bg = the tag pills (text and border colour, and the pale fill). mb_bg = section background. mb_card_bg / mb_card_border = the review boxes. mb_heading_color = heading. mb_text_color = review text, rating numbers and the "Read More" link. mb_meta_color = the small rating line at the top.
+  These colours are locked, so the theme cannot turn them black.
+  Do not use a straight apostrophe (') in the text, use &#39; instead. Do not type three | in a row or ;; inside a review except as the separators.
+{%- endcomment -%}
+{%- assign mb_rating_line = 'Rated 4.9 / 5' -%}
+{%- assign mb_trusted = 'Trusted by <strong>4,000+</strong>' -%}
+{%- assign mb_heading = 'They Felt the Shift. You Will Too.' -%}
+{%- assign mb_more = 'Read More Reviews' -%}
+{%- assign mb_less = 'Read Less Reviews' -%}
+{%- assign mb_show_mobile = 2 -%}
+{%- assign mb_show_desktop = 4 -%}
+{%- assign mb_accent = '#c47245' -%}
+{%- assign mb_tag_color = '#b65027' -%}
+{%- assign mb_tag_bg = 'rgba(182, 80, 39, 0.05)' -%}
+{%- assign mb_bg = '#ffffff' -%}
+{%- assign mb_card_bg = '#ffffff' -%}
+{%- assign mb_card_border = '#e0e0e0' -%}
+{%- assign mb_heading_color = '#000000' -%}
+{%- assign mb_text_color = '#000000' -%}
+{%- assign mb_meta_color = '#2b2b2b' -%}
+{%- capture mb_reviews -%}
+4.9 ||| I&#39;ve been consistent with one softgel every morning for almost two months now, and my blood sugar readings have never been steadier. The first few weeks I didn&#39;t notice much, but by week 6 the difference was clear. Sticking with it daily is what made it work. ||| Consistent Use ;; Steady Blood Sugar
+@@
+5.0 ||| I was skeptical that a supplement could actually move the needle, but three months of daily use later, my fasting numbers are the best they&#39;ve been in years. It&#39;s not a quick fix but it&#39;s something you have to stick with, and for me that consistency paid off. ||| Long-Term Results ;; Balanced Blood Sugar
+@@
+4.9 ||| The key for me was just not skipping days. Once I made it part of my morning routine alongside breakfast, my energy leveled out and my blood sugar readings became a lot more predictable week to week. Small habit, real difference. ||| Daily Routine ;; Blood Sugar Support
+{%- endcapture -%}
+{%- assign mb_items = mb_reviews | split: '@@' -%}
+{%- assign mb_count = mb_items | size -%}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600&display=swap"></noscript>
+
+<style>
+.page-width:has(>.mb-rl){max-width:none;padding:0}
+.mb-rl,.mb-rl *,.mb-rl *::before,.mb-rl *::after{box-sizing:border-box}
+.mb-rl{display:block;margin:0;padding:36px 0;font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:500;line-height:1.8;letter-spacing:.6px;text-align:left}
+@media screen and (min-width:750px){.mb-rl{padding:48px 0;font-size:16px}}
+.mb-rl .mb-rl__w{max-width:900px;margin:0 auto;padding:0 15px;font-family:inherit;text-align:center}
+.mb-rl .mb-rl__top{display:inline-flex;flex-direction:column;align-items:center;gap:6px;margin-bottom:12px;font-size:14.5px;font-weight:500;color:var(--mb-rl-mc)!important;-webkit-text-fill-color:var(--mb-rl-mc)!important}
+.mb-rl .mb-rl__row{display:inline-flex;align-items:center;justify-content:center;gap:8px}
+.mb-rl .mb-rl__tr{display:inline-flex;align-items:center;justify-content:center;gap:6px;font-weight:400;color:var(--mb-rl-mc)!important;-webkit-text-fill-color:var(--mb-rl-mc)!important}
+.mb-rl .mb-rl__tr strong{font-weight:700!important}
+.mb-rl .mb-rl__top .mb-rl__st{display:inline-block;font-size:20px!important;line-height:1;letter-spacing:1px}
+.mb-rl .mb-rl__st{color:var(--mb-rl-ac)!important;-webkit-text-fill-color:var(--mb-rl-ac)!important}
+.mb-rl .mb-rl__top span,.mb-rl .mb-rl__top strong{color:var(--mb-rl-mc)!important;-webkit-text-fill-color:var(--mb-rl-mc)!important}
+.mb-rl .mb-rl__top .mb-rl__st{color:var(--mb-rl-ac)!important;-webkit-text-fill-color:var(--mb-rl-ac)!important}
+.mb-rl .mb-rl__h{margin:0 auto 36px;padding:0;font-family:Poppins,sans-serif;font-size:clamp(24px,3.5vw,32px);font-style:normal;font-weight:400!important;line-height:1.25;letter-spacing:-.02em;text-transform:none;word-break:break-word;color:var(--mb-rl-hc)!important;-webkit-text-fill-color:var(--mb-rl-hc)!important}
+.mb-rl .mb-rl__list{display:flex;flex-direction:column;gap:16px;text-align:left}
+.mb-rl .mb-rl__card{padding:24px;border:1px solid var(--mb-rl-bd);border-radius:8px;transition:opacity .3s ease,transform .3s ease}
+.mb-rl .mb-rl__card.mb-show{display:block!important;animation:mb-rl-in .3s forwards ease}
+@keyframes mb-rl-in{to{opacity:1;transform:translateY(0)}}
+.mb-rl .mb-rl__cs{display:flex;align-items:center;gap:8px;margin-bottom:12px;font-size:15px;font-weight:700;line-height:1;color:var(--mb-rl-tc)!important}
+.mb-rl .mb-rl__cs span:first-child{color:var(--mb-rl-tc)!important;-webkit-text-fill-color:var(--mb-rl-tc)!important}
+.mb-rl .mb-rl__cs .mb-rl__st{font-size:18px!important;line-height:1;letter-spacing:1.5px}
+.mb-rl .mb-rl__tx{margin:0 0 16px;padding:0;font-size:15px!important;font-weight:400!important;line-height:1.6;color:var(--mb-rl-tc)!important;-webkit-text-fill-color:var(--mb-rl-tc)!important}
+.mb-rl .mb-rl__tx strong{font-weight:700!important}
+.mb-rl .mb-rl__tags{display:flex;flex-wrap:wrap;gap:8px}
+.mb-rl .mb-rl__tag{display:inline-block;padding:5px 10px!important;border:1px solid var(--mb-rl-tg)!important;border-radius:20px;background-color:var(--mb-rl-tb)!important;font-size:10.5px!important;font-weight:400!important;line-height:1;letter-spacing:.02em;color:var(--mb-rl-tg)!important;-webkit-text-fill-color:var(--mb-rl-tg)!important}
+.mb-rl .mb-rl__tw{display:none;margin-top:12px}
+.mb-rl .mb-rl__tb{padding:8px 16px;border:none;background:transparent!important;font-size:15px;font-weight:400!important;text-decoration:underline;cursor:pointer;transition:opacity .2s ease;color:var(--mb-rl-tc)!important;-webkit-text-fill-color:var(--mb-rl-tc)!important}
+.mb-rl .mb-rl__tb:hover{opacity:.8}
+@media screen and (max-width:749px){
+.mb-rl .mb-rl__tw.mb-m{display:block}
+.mb-rl .mb-rl__card.mb-mh{display:none!important}
+}
+@media screen and (min-width:750px){
+.mb-rl .mb-rl__tw.mb-d{display:block}
+.mb-rl .mb-rl__card.mb-dh{display:none!important}
+}
+</style>
+
+<div class="mb-rl" data-m="{{ mb_show_mobile }}" data-d="{{ mb_show_desktop }}" style="--mb-rl-ac:{{ mb_accent }};--mb-rl-tg:{{ mb_tag_color }};--mb-rl-tb:{{ mb_tag_bg }};--mb-rl-bd:{{ mb_card_border }};--mb-rl-hc:{{ mb_heading_color }};--mb-rl-tc:{{ mb_text_color }};--mb-rl-mc:{{ mb_meta_color }};background-color:{{ mb_bg }}!important">
+  <div class="mb-rl__w"><div class="mb-rl__top">
+      <div class="mb-rl__row">
+        <span class="mb-rl__st">★★★★★</span>
+        <span>{{ mb_rating_line }}</span>
+      </div><div class="mb-rl__tr">
+          <span>|</span> <span>{{ mb_trusted }}</span>
+        </div></div><h2 class="mb-rl__h">
+        {{ mb_heading }}
+      </h2><div class="mb-rl__list" data-mb-rl-list>
+      {%- for mb_item in mb_items -%}
+        {%- assign mb_f = mb_item | split: '|||' -%}
+        {%- assign mb_rate = mb_f[0] | strip -%}
+        {%- assign mb_txt = mb_f[1] | strip -%}
+        {%- assign mb_tags = mb_f[2] | split: ';;' -%}
+      <div class="mb-rl__card{% if forloop.index > mb_show_mobile %} mb-mh{% endif %}{% if forloop.index > mb_show_desktop %} mb-dh{% endif %}" style="background-color:{{ mb_card_bg }}!important">
+        <div class="mb-rl__cs">
+          <span>{{ mb_rate }}</span>
+          <span class="mb-rl__st">★★★★★</span>
+        </div>
+
+        <p class="mb-rl__tx">{{ mb_txt }}</p><div class="mb-rl__tags">
+          {%- for mb_tg in mb_tags -%}<span class="mb-rl__tag">{{ mb_tg | strip }}</span>{%- endfor -%}
+        </div></div>
+      {%- endfor -%}
+    </div>
+
+    <div class="mb-rl__tw{% if mb_count > mb_show_mobile %} mb-m{% endif %}{% if mb_count > mb_show_desktop %} mb-d{% endif %}">
+      <button type="button" class="mb-rl__tb" data-mb-rl-btn data-state="collapsed" data-more="{{ mb_more | escape }}" data-less="{{ mb_less | escape }}">{{ mb_more }}</button>
+    </div>
+
+  </div>
+</div>
+<script>
+(function () {
+  function init(root) {
+    if (root.getAttribute('data-on')) return;
+    root.setAttribute('data-on', '1');
+    var btn = root.querySelector('[data-mb-rl-btn]');
+    if (!btn) return;
+    var lm = parseInt(root.getAttribute('data-m'), 10), ld = parseInt(root.getAttribute('data-d'), 10);
+    if (isNaN(lm)) lm = 2;
+    if (isNaN(ld)) ld = 4;
+    btn.addEventListener('click', function () {
+      var cards = root.querySelectorAll('.mb-rl__card');
+      if (btn.getAttribute('data-state') === 'collapsed') {
+        Array.prototype.forEach.call(cards, function (card) {
+          card.classList.add('mb-show');
+          card.classList.remove('mb-mh', 'mb-dh');
+        });
+        btn.textContent = btn.getAttribute('data-less');
+        btn.setAttribute('data-state', 'expanded');
+      } else {
+        Array.prototype.forEach.call(cards, function (card, idx) {
+          card.classList.remove('mb-show');
+          if (idx >= lm) card.classList.add('mb-mh');
+          if (idx >= ld) card.classList.add('mb-dh');
+        });
+        btn.textContent = btn.getAttribute('data-more');
+        btn.setAttribute('data-state', 'collapsed');
+        var list = root.querySelector('[data-mb-rl-list]');
+        if (list) list.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  }
+  document.querySelectorAll('.mb-rl').forEach(init);
+  document.addEventListener('shopify:section:load', function () {
+    document.querySelectorAll('.mb-rl').forEach(init);
+  });
+})();
+</script>
