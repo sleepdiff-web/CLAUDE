@@ -2,15 +2,15 @@
   "Proven Benefits. Backed by Science." section: heading + intro, four flip cards (2 x 2 on desktop, 1 column on phones; click a card to flip it and read the back, click again or click another card to close), then a button and a guarantee line.
   EDIT YOUR CARDS BELOW. One card = image link ||| title ||| front line ||| back text. Put @@ on its own line between cards.
   The image links start as Metabolae's own files so the section is an exact copy straight away.
-  Before you go live, download them, upload them to your own store (Content > Files) and paste your links here instead, so they keep working and are yours. Also replace all the wording, because it describes Metabolae's product.
-  mb_title_a / mb_title_b = the two halves of the heading. mb_accent = the colour of the first half of the heading and of the button (Metabolae's orange; use #943434 for your red). mb_text_color = second half of the heading and the intro. mb_card_title_color / mb_card_text_color / mb_back_text_color = text on the cards. mb_bg = section background. mb_card_bg = card background.
+  Before you go live, download them, upload them to your own store (Content > Files) and paste your links here instead, so they keep working and are yours. The wording is already yours.
+  mb_title_a / mb_title_b = the two halves of the heading. mb_accent = the colour of the first half of the heading and of the button (your red, #943434). mb_text_color = second half of the heading and the intro. mb_card_title_color / mb_card_text_color / mb_back_text_color = text on the cards. mb_bg = section background. mb_card_bg = card background.
   The button scrolls to your Add to cart button when mb_link is #. Put a real link there to open a page instead.
   These colours are locked, so the theme cannot turn them black.
   Do not use a straight apostrophe (') in the text, use &#39; instead. Do not type three | in a row inside a card except as the separators.
 {%- endcomment -%}
 {%- assign mb_title_a = 'Proven Benefits.' -%}
 {%- assign mb_title_b = 'Backed by Science.' -%}
-{%- assign mb_accent = '#c47245' -%}
+{%- assign mb_accent = '#943434' -%}
 {%- assign mb_text_color = '#000000' -%}
 {%- assign mb_card_title_color = '#121212' -%}
 {%- assign mb_card_text_color = '#2b2b2b' -%}
@@ -19,18 +19,18 @@
 {%- assign mb_card_bg = '#ffffff' -%}
 {%- assign mb_button = 'Try Risk-Free Today' -%}
 {%- assign mb_link = '#' -%}
-{%- assign mb_note = '90-day money back guarantee' -%}
+{%- assign mb_note = '60-day money back guarantee' -%}
 {%- capture mb_sub -%}
-Your body deserves more than empty promises <strong>Ceylon Cinnamon Extract </strong>supports healthy blood sugar, liver function, and daily metabolic balance using clinically studied ingredients and a bioavailable MCT oil delivery system.
+Your body deserves more than empty promises. <strong>Purge Berberine </strong>supports healthy blood sugar, hormonal metabolic balance, and daily energy using clinically studied ingredients and a black pepper extract delivery system.
 {%- endcapture -%}
 {%- capture mb_cards -%}
-https://metabolae.com/cdn/shop/files/metabolae-blood-sugar-support.webp?v=1773612120&width=240 ||| Blood Sugar Support ||| Supports healthy blood sugar levels ||| True Ceylon cinnamon is studied for supporting healthy glucose metabolism. Metabolae uses a concentrated 12:1 extract with MCT oil to help your body actually absorb and use it.
+https://metabolae.com/cdn/shop/files/metabolae-blood-sugar-support.webp?v=1773612120&width=240 ||| Blood Sugar Support ||| Supports healthy blood sugar levels ||| Berberine HCl is one of the most researched plant compounds for supporting healthy glucose metabolism. Purge Berberine delivers a 500mg therapeutic dose with black pepper extract to help your body actually absorb and use it.
 @@
-https://metabolae.com/cdn/shop/files/metabolae-comfortable-daily-use.webp?v=1773612119&width=240 ||| Gentle on the Stomach ||| Designed for comfortable daily use ||| Metabolae uses a liquid cinnamon extract suspended in MCT oil. No harsh powder. No stomach irritation. No cinnamon burps hours later.
+https://metabolae.com/cdn/shop/files/metabolae-comfortable-daily-use.webp?v=1773612119&width=240 ||| Gentle on the Stomach ||| Designed for comfortable daily use ||| Plain berberine can cause stomach upset, which is why most women stop taking it before it can work. Purge Berberine is formulated at a dose and in a combination that supports comfortable daily use from the start.
 @@
-https://metabolae.com/cdn/shop/files/metabolae-liver-health-support.webp?v=1773612119&width=240 ||| Liver Health Support ||| Made with coumarin free Ceylon cinnamon ||| Unlike Cassia cinnamon, Ceylon contains virtually no coumarin. This makes Metabolae a safer option for daily use and long term liver wellness.
+https://metabolae.com/cdn/shop/files/metabolae-liver-health-support.webp?v=1773612119&width=240 ||| Hormonal Weight Support ||| Formulated for the menopausal shift ||| When estrogen drops, blood sugar spikes more easily, cells respond to insulin differently, and fat stores around the belly. Purge Berberine targets the metabolic factors that shift during perimenopause and menopause, not just one point in the chain.
 @@
-https://metabolae.com/cdn/shop/files/metabolae-enhanced-support.webp?v=1773612120&width=240 ||| Enhanced Absorption ||| Helps your body absorb cinnamon ||| Cinnamon compounds are fat soluble. MCT oil acts as a carrier, helping the 7,200 mg equivalent Ceylon extract absorb efficiently instead of passing through unused.
+https://metabolae.com/cdn/shop/files/metabolae-enhanced-support.webp?v=1773612120&width=240 ||| Enhanced Absorption ||| Helps your body absorb berberine ||| Berberine absorbs poorly on its own, which is why plain berberine supplements often deliver so little. Black pepper extract acts as a bioavailability carrier, increasing absorption by up to 20x so the berberine and every other active compound actually reaches your bloodstream.
 {%- endcapture -%}
 {%- assign mb_items = mb_cards | split: '@@' -%}
 
@@ -52,11 +52,12 @@ https://metabolae.com/cdn/shop/files/metabolae-enhanced-support.webp?v=177361212
 .mb-pb .mb-pb__st p{margin:1em 0;padding:0;font-size:inherit;font-weight:300;line-height:inherit;letter-spacing:.6px;text-align:center}
 .mb-pb .mb-pb__st strong{font-weight:700}
 .mb-pb__g{display:grid;grid-template-columns:repeat(2,1fr);gap:25px;max-width:1300px;margin:0 auto}
-.mb-pb__c{perspective:1200px;cursor:pointer;border:1px solid rgba(178,178,178,.4);border-radius:9px;-webkit-tap-highlight-color:transparent}
-.mb-pb__i{position:relative;width:100%;transform-style:preserve-3d;transition:transform .6s ease}
+.mb-pb__c{display:flex;perspective:1200px;cursor:pointer;border:1px solid rgba(178,178,178,.4);border-radius:9px;-webkit-tap-highlight-color:transparent}
+.mb-pb__hw{display:flex;flex:1;min-width:0}
+.mb-pb__i{position:relative;display:grid;flex:1;width:100%;min-width:0;transform-style:preserve-3d;transition:transform .6s ease}
 .mb-pb__c.flip .mb-pb__i{transform:rotateY(180deg)}
-.mb-pb__f{position:relative;display:flex;align-items:center;padding:20px;border-radius:8px;-webkit-backface-visibility:hidden;backface-visibility:hidden}
-.mb-pb__b{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;overflow-x:hidden;overflow-y:auto;padding:24px;border-radius:8px;background:#fff;-webkit-backface-visibility:hidden;backface-visibility:hidden;transform:rotateY(180deg)}
+.mb-pb__f{position:relative;grid-area:1/1;display:flex;align-items:center;padding:20px;border-radius:8px;-webkit-backface-visibility:hidden;backface-visibility:hidden}
+.mb-pb__b{position:relative;grid-area:1/1;display:flex;flex-direction:column;justify-content:center;overflow-x:hidden;overflow-y:auto;padding:24px;border-radius:8px;background:#fff;-webkit-backface-visibility:hidden;backface-visibility:hidden;transform:rotateY(180deg)}
 .mb-pb .mb-pb__b p{width:90%;margin:0;padding:0 10px 0 0;font-family:'Plus Jakarta Sans',system-ui,sans-serif;font-size:18px;font-weight:400;line-height:1.2;letter-spacing:.6px;text-align:left;text-transform:none}
 .mb-pb .mb-pb__bi{position:absolute;top:36%;right:20px;padding:0 15px 2px;border:1px solid rgba(178,178,178,.4);border-radius:50%;font-size:23px;font-weight:700;line-height:1.8;letter-spacing:.6px;color:#b2b2b2!important;-webkit-text-fill-color:#b2b2b2!important}
 .mb-pb__l img{display:inline;width:120px;max-width:none;height:auto;object-fit:cover;border-radius:6px;border:0;vertical-align:baseline}
