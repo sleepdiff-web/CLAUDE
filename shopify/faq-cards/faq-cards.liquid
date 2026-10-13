@@ -1,0 +1,126 @@
+{%- comment -%}
+  "Frequently Asked Questions" section: heading, then grey rounded question boxes. Click a question to open its answer (the arrow turns over); opening one closes the others; click again to close. On phones the heading is stacked, capitalised and spaced out.
+  EDIT YOUR CONTENT BELOW. One question = question ||| answer. Put @@ on its own line between questions. Add as many as you like.
+  mb_title_a / mb_title_b = the two lines of the heading (side by side on desktop, stacked on phones).
+  mb_bg = section background. mb_card_bg = the grey question boxes. mb_heading_color = heading. mb_question_color = questions and arrows. mb_answer_color = answers.
+  These colours are locked, so the theme cannot turn them black.
+  Do not use a straight apostrophe (') in the heading, use &#39; instead; in the questions and answers it is fine, but &#39; works too. Do not type three | in a row inside a question or answer except as the separator.
+  To split an answer into paragraphs write: first paragraph</p><p>second paragraph
+{%- endcomment -%}
+{%- assign mb_title_a = 'Frequently' -%}
+{%- assign mb_title_b = 'Asked Questions' -%}
+{%- assign mb_bg = '#ffffff' -%}
+{%- assign mb_card_bg = '#f7f7f7' -%}
+{%- assign mb_heading_color = '#000000' -%}
+{%- assign mb_question_color = '#000000' -%}
+{%- assign mb_answer_color = '#444444' -%}
+{%- capture mb_faqs -%}
+What makes Ceylon cinnamon different from what most supplements use? ||| Nearly all cinnamon supplements are made with Cassia and it matters more than most people realize. Cassia is high in coumarin, which builds up and can stress your liver with regular use. Ceylon from Sri Lanka has almost none, making it the right choice for daily, therapeutic-level supplementation. Our 12-to-1 concentration delivers 7,200mg equivalent of actual Ceylon per softgel, in a bioavailable form your body can put to use.
+@@
+How does Metabolae compare to standard cinnamon capsules at the pharmacy? ||| What you&#39;ll find at the pharmacy is almost always low-dose Cassia in a basic capsule — minimal potency, minimal absorption. Metabolae uses a 12:1 Ceylon extract delivered in MCT oil. The difference in strength and bioavailability is significant: each softgel delivers the equivalent of 7,200mg of raw Ceylon bark in a form your body can genuinely absorb.
+@@
+Is it safe to take alongside my current medications? ||| Most people tolerate Ceylon cinnamon well, but if you&#39;re currently managing blood sugar with medication or taking blood thinners, have a conversation with your doctor before you start. That&#39;s good practice with any new supplement and worth the phone call.
+@@
+When can I expect to notice a difference? ||| Energy and balance improvements tend to show up first, usually within the first 2–4 weeks for people who take it consistently. Blood sugar support takes longer to become measurable; plan for at least 6–8 weeks before drawing conclusions. How quickly you notice a difference depends on your starting point, diet, and daily habits.
+{%- endcapture -%}
+{%- assign mb_items = mb_faqs | split: '@@' -%}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600&display=swap"></noscript>
+
+<style>
+.page-width:has(>.mb-fq){max-width:none;padding:0}
+.mb-fq,.mb-fq *,.mb-fq *::before,.mb-fq *::after{box-sizing:border-box}
+.mb-fq{display:block;margin:0;padding:36px 5% 48px;font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:500;line-height:1.8;letter-spacing:.6px;text-align:left}
+@media screen and (min-width:750px){.mb-fq{font-size:16px}}
+.mb-fq .mb-fq__in{max-width:900px;margin:0 auto}
+.mb-fq .mb-fq__h{margin:0 0 58px;padding:0;font-family:Poppins,sans-serif;font-size:39px;font-style:normal;font-weight:600;line-height:1.15;letter-spacing:.6px;text-align:center;text-transform:none;word-break:break-word;color:var(--mb-fq-hc)!important;-webkit-text-fill-color:var(--mb-fq-hc)!important}
+.mb-fq .mb-fq__w1,.mb-fq .mb-fq__w2{display:inline;color:var(--mb-fq-hc)!important;-webkit-text-fill-color:var(--mb-fq-hc)!important}
+.mb-fq .mb-fq__list{display:flex;flex-direction:column;gap:12px;margin:0;padding:0}
+.mb-fq .mb-fq__item{padding:20px 24px;border:none;border-radius:12px;transition:background-color .25s ease}
+.mb-fq .mb-fq__btn{display:flex;justify-content:space-between;align-items:center;gap:16px;width:100%;margin:0;padding:0;border:none;background:none;cursor:pointer;text-align:left;font-size:16px;font-weight:500;line-height:1.35;color:var(--mb-fq-qc)!important;-webkit-text-fill-color:var(--mb-fq-qc)!important}
+.mb-fq .mb-fq__bt{flex:1 1 auto;min-width:0;font-family:Poppins,sans-serif;font-weight:400!important;color:var(--mb-fq-qc)!important;-webkit-text-fill-color:var(--mb-fq-qc)!important}
+.mb-fq .mb-fq__ic{display:flex;flex:0 0 20px;align-items:center;justify-content:center;width:20px;height:20px;background-color:transparent!important;color:var(--mb-fq-qc)!important;transition:transform .25s ease}
+.mb-fq .mb-fq__ic svg *{stroke:var(--mb-fq-qc)!important}
+.mb-fq .mb-fq__ic svg{width:12px;height:12px;stroke:var(--mb-fq-qc)!important;stroke-width:3.5;fill:none;transition:transform .25s ease}
+.mb-fq .mb-fq__item.mb-open .mb-fq__ic svg{transform:rotate(180deg)}
+.mb-fq .mb-fq__a{display:grid;grid-template-rows:0fr;overflow:hidden;transition:grid-template-rows .32s ease}
+.mb-fq .mb-fq__item.mb-open .mb-fq__a{grid-template-rows:1fr}
+.mb-fq .mb-fq__ai{max-height:0;padding:0;border:none;overflow:hidden;font-size:15px;line-height:1.6;color:var(--mb-fq-ac)!important;-webkit-text-fill-color:var(--mb-fq-ac)!important;transition:padding .32s ease,max-height .32s ease}
+.mb-fq .mb-fq__item.mb-open .mb-fq__ai{max-height:2000px;padding-top:14px}
+.mb-fq .mb-fq__ai p{margin:0 0 10px;padding:0;font-weight:300;color:var(--mb-fq-ac)!important;-webkit-text-fill-color:var(--mb-fq-ac)!important}
+.mb-fq .mb-fq__ai p:last-child{margin-bottom:0}
+@media screen and (max-width:749px){
+.mb-fq{padding:12px 20px 28px!important}
+.mb-fq .mb-fq__h{margin-bottom:32px;font-size:29px;letter-spacing:.05em;text-align:center;text-transform:uppercase!important}
+.mb-fq .mb-fq__w1,.mb-fq .mb-fq__w2{display:block}
+.mb-fq .mb-fq__item{padding:16px 20px}
+.mb-fq .mb-fq__btn{font-size:15px}
+.mb-fq .mb-fq__ic{flex:0 0 28px;width:28px;height:28px}
+.mb-fq .mb-fq__ai{font-size:14px}
+}
+</style>
+
+<div class="mb-fq" style="--mb-fq-hc:{{ mb_heading_color }};--mb-fq-qc:{{ mb_question_color }};--mb-fq-ac:{{ mb_answer_color }};background-color:{{ mb_bg }}!important">
+  <div class="mb-fq__in"><h2 class="mb-fq__h"><span class="mb-fq__w1">{{ mb_title_a }}</span>
+        <span class="mb-fq__w2">{{ mb_title_b }} </span></h2><div class="mb-fq__list" role="list">
+    {%- for mb_item in mb_items -%}
+      {%- assign mb_f = mb_item | split: '|||' -%}
+      {%- assign mb_q = mb_f[0] | strip -%}
+      {%- assign mb_a = mb_f[1] | strip -%}
+    <div class="mb-fq__item" role="listitem" style="background-color:{{ mb_card_bg }}!important">
+      <button type="button" class="mb-fq__btn" aria-expanded="false" aria-controls="mb-fq-{{ section.id }}-{{ forloop.index }}">
+        <span class="mb-fq__bt">{{ mb_q }}</span>
+        <span class="mb-fq__ic" aria-hidden="true">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </span>
+      </button>
+      <div id="mb-fq-{{ section.id }}-{{ forloop.index }}" class="mb-fq__a" aria-hidden="true">
+        <div class="mb-fq__ai">
+          <p>{{ mb_a }}</p>
+        </div>
+      </div>
+    </div>
+    {%- endfor -%}
+  </div></div>
+</div>
+<script>
+(function () {
+  function init(root) {
+    if (root.getAttribute('data-on')) return;
+    root.setAttribute('data-on', '1');
+    var items = Array.prototype.slice.call(root.querySelectorAll('.mb-fq__item'));
+    items.forEach(function (item) {
+      var btn = item.querySelector('.mb-fq__btn');
+      var answer = item.querySelector('.mb-fq__a');
+      btn.addEventListener('click', function () {
+        var isOpen = item.classList.contains('mb-open');
+        items.forEach(function (other) {
+          if (other !== item) {
+            other.classList.remove('mb-open');
+            other.querySelector('.mb-fq__btn').setAttribute('aria-expanded', 'false');
+            other.querySelector('.mb-fq__a').setAttribute('aria-hidden', 'true');
+          }
+        });
+        if (isOpen) {
+          item.classList.remove('mb-open');
+          btn.setAttribute('aria-expanded', 'false');
+          answer.setAttribute('aria-hidden', 'true');
+        } else {
+          item.classList.add('mb-open');
+          btn.setAttribute('aria-expanded', 'true');
+          answer.setAttribute('aria-hidden', 'false');
+        }
+      });
+    });
+  }
+  document.querySelectorAll('.mb-fq').forEach(init);
+  document.addEventListener('shopify:section:load', function () {
+    document.querySelectorAll('.mb-fq').forEach(init);
+  });
+})();
+</script>
