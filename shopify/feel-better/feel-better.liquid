@@ -1,19 +1,19 @@
 {%- comment -%}
-  "Feel Better. Every Day." feature section: orange gradient, heading + line, a 2 x 2 grid of icon boxes on the left and the product pack picture on the right (sitting on the bottom edge of the section). Under 990px wide (tablets and phones) everything stacks: grid first, picture under it.
+  "Feel Better. Every Day." feature section: red background, heading + line, a 2 x 2 grid of icon boxes on the left and the product pack picture on the right (sitting on the bottom edge of the section). Under 990px wide (tablets and phones) everything stacks: grid first, picture under it.
   EDIT YOUR FEATURES BELOW. One box = icon link ||| title. Put @@ on its own line between boxes.
-  The picture links start as Metabolae's own files so the section is an exact copy straight away.
-  Before you go live, download them, upload them to your own store (Content > Files) and paste your links here instead, so they keep working and are yours. Also replace the heading and text, because they describe Metabolae's product.
-  mb_bg_top / mb_bg_bottom = the gradient (Metabolae's orange; for your red use #943434 and #612229). mb_text_color = all the text. mb_pt = space above the heading.
+  mb_pack = the product picture on the right (your own file). The four small icons start as Metabolae's own files so the section is an exact copy straight away.
+  Before you go live, download the icons, upload them to your own store (Content > Files) and paste your links here instead, so they keep working and are yours. The 4th icon (Hormone-Friendly Formula) still shows Metabolae's liver icon until you swap it.
+  mb_bg_top / mb_bg_bottom = the background colour (both #943434 = a plain red; for a soft fade to darker red at the bottom, set mb_bg_bottom to #612229). mb_text_color = all the text. mb_pt = space above the heading.
   These colours are locked, so the theme cannot turn them black.
   Do not use a straight apostrophe (') in the text, use &#39; or &rsquo; instead. Do not type three | in a row inside a box except as the separator.
 {%- endcomment -%}
 {%- assign mb_title = 'Feel Better. Every Day.' -%}
-{%- assign mb_text = 'From steady metabolic support to effortless daily use, here&rsquo;s what makes Metabolae Ceylon Cinnamon different.' -%}
-{%- assign mb_bg_top = '#d27f52' -%}
-{%- assign mb_bg_bottom = '#a55328' -%}
+{%- assign mb_text = 'From steady metabolic support to effortless daily use, here&rsquo;s what makes Purge Berberine different.' -%}
+{%- assign mb_bg_top = '#943434' -%}
+{%- assign mb_bg_bottom = '#943434' -%}
 {%- assign mb_text_color = '#ffffff' -%}
 {%- assign mb_pt = '36px' -%}
-{%- assign mb_pack = 'https://metabolae.com/cdn/shop/files/metabolae-3-pack-pdp.webp?v=1784819489&width=800' -%}
+{%- assign mb_pack = 'https://cdn.shopify.com/s/files/1/0695/1007/0343/files/4166b36b-5d5c-4e60-af4e-b3c88615e195_1.png?v=1791880972&width=800' -%}
 {%- capture mb_boxes -%}
 https://metabolae.com/cdn/shop/files/metabolae-icon-blood-sugar-support.webp?v=1773663519&width=100 ||| Blood Sugar Support
 @@
@@ -21,7 +21,7 @@ https://metabolae.com/cdn/shop/files/metabolae-better-daily-absorption.webp?v=17
 @@
 https://metabolae.com/cdn/shop/files/metabolae-gentle-on-stomach.webp?v=1773663520&width=100 ||| Gentle on the Stomach
 @@
-https://metabolae.com/cdn/shop/files/metabolae-liver-friendly-formulav2.webp?v=1773663752&width=100 ||| Liver-Friendly Formula
+https://metabolae.com/cdn/shop/files/metabolae-liver-friendly-formulav2.webp?v=1773663752&width=100 ||| Hormone-Friendly Formula
 {%- endcapture -%}
 {%- assign mb_items = mb_boxes | split: '@@' -%}
 
