@@ -1,32 +1,32 @@
 {%- comment -%}
   "5 Reasons Why ..." card carousel: small badge, heading, a row of cards you can swipe/drag (1 card on phones, 2.3 on tablets, 3 on desktop) with dots and two arrow buttons, then a button and a guarantee line.
   EDIT YOUR CARDS BELOW. One card = title ||| text ||| image link. Put @@ on its own line between cards. The small "Reason 1", "Reason 2" ... tag on each card is added for you.
-  The image links start as Metabolae's own files so the section is an exact copy straight away.
-  Before you go live, download them, upload them to your own store (Content > Files) and paste your links here instead, so they keep working and are yours. Also replace all the wording, because it describes Metabolae's product.
-  mb_badge = the small badge above the heading. mb_title = the heading. mb_reason = the word on each card tag (Reason). mb_accent = the colour of the badge, card tags, hover border, active dot and button (Metabolae's orange; use #943434 for your red). mb_title_color = heading and card titles. mb_text_color = card text. mb_bg = section background. mb_card_bg = card background.
+  The card images start as Metabolae's own files so the section is an exact copy straight away.
+  Before you go live, download them, upload them to your own store (Content > Files) and paste your links here instead, so they keep working and are yours.
+  mb_badge = the small badge above the heading. mb_title = the heading. mb_reason = the word on each card tag (Reason). mb_accent = the colour of the badge, card tags, hover border, active dot and button (your red, #943434). mb_title_color = heading and card titles. mb_text_color = card text. mb_bg = section background. mb_card_bg = card background.
   The button scrolls up to your product area. These colours are locked, so the theme cannot turn them black.
   Do not use a straight apostrophe (') in the text, use &#39; instead. Write & as &amp;. Do not type three | in a row inside a card except as the separators.
 {%- endcomment -%}
 {%- assign mb_badge = '5 Reasons Why' -%}
-{%- assign mb_title = 'Metabolae Ceylon Cinnamon is Different From Everything You&#39;ve Tried' -%}
+{%- assign mb_title = 'Purge Berberine is Different From Everything You&#39;ve Tried' -%}
 {%- assign mb_reason = 'Reason' -%}
-{%- assign mb_accent = '#c47245' -%}
+{%- assign mb_accent = '#943434' -%}
 {%- assign mb_title_color = '#000000' -%}
 {%- assign mb_text_color = '#444444' -%}
 {%- assign mb_bg = '#fdf1e9' -%}
 {%- assign mb_card_bg = '#ffffff' -%}
 {%- assign mb_button = 'Try Risk-Free Today' -%}
-{%- assign mb_note = '90-day money back guarantee' -%}
+{%- assign mb_note = '60-day money back guarantee' -%}
 {%- capture mb_cards -%}
-12:1 Concentrated Ceylon Cinnamon ||| Unlike cheap Cassia cinnamon which contains high levels of liver-damaging coumarin, Metabolae is 100% genuine Ceylon cinnamon. We pack the equivalent of 7,200 mg of raw cinnamon into a single daily softgel. ||| https://metabolae.com/cdn/shop/files/metabolae-12-1-concentrated-potency.webp?v=1773612119
+Berberine HCl, Not Standard Powder ||| Unlike cheap berberine powder, which absorbs poorly and delivers inconsistent results, Purge Berberine uses Berberine HCl, the hydrochloride salt form chosen for its superior stability and bioavailability. It is the form used in clinical research, in a dose your body can actually put to work. ||| https://metabolae.com/cdn/shop/files/metabolae-12-1-concentrated-potency.webp?v=1773612119
 @@
-MCT Oil Enhanced Absorption ||| Active cinnamon compounds are fat-soluble, meaning they pass right through you without healthy fats. We dissolve our premium extract in organic MCT oil so your body can absorb and utilize it immediately. ||| https://metabolae.com/cdn/shop/files/metabolae-mct-oil-absorption.webp?v=1773612119
+Black Pepper Enhanced Absorption ||| Berberine&#39;s active compounds absorb poorly on their own, meaning most of what you take passes through your system unused. We pair every serving with black pepper extract to increase absorption by up to 20x, so the berberine and every other active compound actually reaches your bloodstream. ||| https://metabolae.com/cdn/shop/files/metabolae-mct-oil-absorption.webp?v=1773612119
 @@
-Anti-Inflammatory &amp; Metabolic Support ||| True Ceylon cinnamon contains powerful antioxidants that promote normal blood sugar balance, insulin sensitivity, cardiovascular function, and healthy kidney circulation. ||| https://metabolae.com/cdn/shop/files/metabolae-blood-sugar-support.webp?v=1773612120
+Four-Ingredient Hormonal Formula ||| Most berberine supplements address one point in the metabolic chain and leave the rest untouched. Purge Berberine pairs berberine with Ceylon cinnamon, chromium, and turmeric, targeting the blood sugar spikes, cellular resistance, inflammation, and insulin response that all shift after 40. ||| https://metabolae.com/cdn/shop/files/metabolae-blood-sugar-support.webp?v=1773612120
 @@
-No Aftertaste, No Stomach Issues ||| Unlike chalky powders, oversized capsules, or raw powders that cause acid reflux and burps, our softgels are small, smooth, and incredibly gentle on your stomach. ||| https://metabolae.com/cdn/shop/files/metabolae_bell.webp?v=1783845324
+Formulated for the Menopausal Shift ||| The weight that shows up after 40 is not the same as the weight you managed in your 30s. When estrogen drops, the metabolic switch that tells your body to burn what it is carrying gets turned off. Purge Berberine is designed specifically for that hormonal shift, not as a generic supplement. ||| https://metabolae.com/cdn/shop/files/metabolae_bell.webp?v=1783845324
 @@
-Clean, Third-Party Tested Ingredients ||| Vegan, non-GMO, and free from gluten, dairy, soy, sugar, and artificial fillers. Every single batch is independently tested for purity and potency, manufactured in the USA. ||| https://metabolae.com/cdn/shop/files/metabolae_3party.webp?v=1783845940
+Third-Party Lab Verified ||| Every batch is sent to an independent lab before it reaches you. Not as a formality, but because you deserve to know exactly what you are putting in your body every day. Each batch is verified for purity, potency, and the absence of artificial fillers. ||| https://metabolae.com/cdn/shop/files/metabolae_3party.webp?v=1783845940
 {%- endcapture -%}
 {%- assign mb_items = mb_cards | split: '@@' -%}
 
@@ -68,8 +68,8 @@ Clean, Third-Party Tested Ingredients ||| Vegan, non-GMO, and free from gluten, 
 .mb-fr .mb-fr__btn svg,.mb-fr .mb-fr__btn svg *{color:#3b3b3b!important;stroke:#3b3b3b!important}
 .mb-fr.is-lock .mb-fr__dots,.mb-fr.is-lock .mb-fr__arr{display:none}
 .mb-fr__cta{display:flex;flex-direction:column;align-items:center;gap:8px;margin-top:16px}
-.mb-fr a.mb-fr__bt{display:inline-block;padding:16px 48px;border:none;border-radius:30px;font-size:16px;font-weight:700;text-decoration:none;cursor:pointer;box-shadow:0 4px 15px rgba(196,114,69,.15);transition:transform .2s ease,box-shadow .2s ease,opacity .2s ease;background-color:var(--mb-fr-ac)!important;color:#fff!important;-webkit-text-fill-color:#fff!important}
-.mb-fr a.mb-fr__bt:hover{transform:scale(1.02);box-shadow:0 6px 20px rgba(196,114,69,.25);opacity:.95}
+.mb-fr a.mb-fr__bt{display:inline-block;padding:16px 48px;border:none;border-radius:30px;font-size:16px;font-weight:700;text-decoration:none;cursor:pointer;box-shadow:0 4px 15px rgba(148,52,52,.15);transition:transform .2s ease,box-shadow .2s ease,opacity .2s ease;background-color:var(--mb-fr-ac)!important;color:#fff!important;-webkit-text-fill-color:#fff!important}
+.mb-fr a.mb-fr__bt:hover{transform:scale(1.02);box-shadow:0 6px 20px rgba(148,52,52,.25);opacity:.95}
 .mb-fr a.mb-fr__bt:active{transform:scale(.98)}
 .mb-fr .mb-fr__sb{display:flex;align-items:center;gap:8px;margin-top:4px;font-size:16px;color:#555!important;-webkit-text-fill-color:#555!important}
 .mb-fr .mb-fr__sb svg{display:inline-block;width:18px;height:18px;vertical-align:middle;color:var(--mb-fr-ac)!important}
