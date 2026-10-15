@@ -335,6 +335,14 @@
   var _kLastCompare = -1;
 
   function getActiveKachingElements() {
+    /* ── Strategy 0: the bar Kaching marks as selected (this is what changes when a bundle is clicked) ── */
+    var selBar = document.querySelector('.kaching-bundles__bar--selected, .kaching-bundles__bar--active');
+    if (selBar) {
+      var sbp  = selBar.querySelector('.kaching-bundles__bar-price');
+      var sbfp = selBar.querySelector('.kaching-bundles__bar-full-price');
+      if (sbp && sbfp) return { barPrice: sbp, barFullPrice: sbfp };
+    }
+
     /* ── Strategy 1: checked radio → walk up to find its bar row ── */
     var kachingWrap = document.querySelector('.kaching-bundles');
     if (kachingWrap) {
@@ -443,8 +451,26 @@
         .observe(kachingRoot, { subtree: true, childList: true, characterData: true });
     }
 
+    /* ── Selection: clicking another bundle only changes a class on the bars, so watch that too ── */
+    var barsRoot = document.querySelector('.kaching-bundles__bars') || document.querySelector('.kaching-bundles');
+    if (barsRoot) {
+      new MutationObserver(readKachingPrices).observe(barsRoot, {
+        attributes: true,
+        attributeFilter: ['class', 'checked', 'aria-checked', 'aria-selected'],
+        subtree: true
+      });
+    }
+
     return true;
   }
+
+  /* Clicks / changes inside the bundle bars (works even if Kaching re-draws its bars) */
+  document.addEventListener('click', function (e) {
+    if (e.target && e.target.closest && e.target.closest('.kaching-bundles')) setTimeout(readKachingPrices, 80);
+  }, true);
+  document.addEventListener('change', function (e) {
+    if (e.target && e.target.closest && e.target.closest('.kaching-bundles')) setTimeout(readKachingPrices, 80);
+  }, true);
 
   /* Try immediately — elements may already be in the DOM */
   if (!attachKachingObserver()) {

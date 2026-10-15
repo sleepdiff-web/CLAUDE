@@ -81,8 +81,17 @@ return;
 }
 if(c>p){cmp.textContent=money(c);cmp.style.display=''}else cmp.style.display='none';
 }
+var shownP=0,shownC=0;
+function watchBadge(){
+var bc=document.querySelector('[data-badge-compare]');
+if(!bc)return false;
+new MutationObserver(function(){if(btn)setCompare(btn.querySelector('.mb-atc-btn-compare'),shownP,shownC)}).observe(bc,{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:['class','style']});
+return true;
+}
+if(!watchBadge()){var wn=0,wp=setInterval(function(){wn++;if(watchBadge()||wn>=50)clearInterval(wp)},100)}
 function showPrices(p,c){
 if(!btn)return;
+shownP=p;shownC=c;
 var pr=btn.querySelector('.mb-atc-btn-prices'),sp=btn.querySelector('.mb-atc-btn-sep'),ps=btn.querySelector('.mb-atc-btn-price'),cm=btn.querySelector('.mb-atc-btn-compare');
 if(!pr)return;
 pr.style.display='';
@@ -159,6 +168,8 @@ setInterval(function(){if(!document.hidden)chk()},200);
 /* Kaching Bundles: follow the price of the selected bundle (same as the original page) */
 var kT=0;
 function kEls(){
+var sel=document.querySelector('.kaching-bundles__bar--selected,.kaching-bundles__bar--active'),sp,sf;
+if(sel){sp=sel.querySelector('.kaching-bundles__bar-price');sf=sel.querySelector('.kaching-bundles__bar-full-price');if(sp&&sf)return[sp,sf]}
 var k=document.querySelector('.kaching-bundles'),r,bp,bf,i,list=['.kaching-bundles__bar--selected','.kaching-bundles__bar--active','.kaching-bundles__bar.is-selected','.kaching-bundles__bar.is-active','.kaching-bundles__bar.selected','.kaching-bundles__bar.active'];
 if(k){
 r=k.querySelector('input[type="radio"]:checked');
@@ -194,8 +205,13 @@ readK();
 m=new MutationObserver(readK);m.observe(a,o);m.observe(b,o);
 root=document.querySelector('.kaching-bundles__bar-pricing')||document.querySelector('.kaching-bundles__bar-wrapper')||document.querySelector('.kaching-bundles')||document.querySelector('[id^="MainProduct"]')||document.querySelector('.product__info-container')||document.querySelector('main');
 if(root)new MutationObserver(readK).observe(root,o);
+var bars=document.querySelector('.kaching-bundles__bars')||document.querySelector('.kaching-bundles');
+if(bars)new MutationObserver(readK).observe(bars,{attributes:true,attributeFilter:['class','checked','aria-checked','aria-selected'],subtree:true});
 return true;
 }
+/* clicks/changes inside the bundle bars (works even if Kaching re-draws its bars) */
+document.addEventListener('click',function(e){if(e.target&&e.target.closest&&e.target.closest('.kaching-bundles'))setTimeout(readK,80)},true);
+document.addEventListener('change',function(e){if(e.target&&e.target.closest&&e.target.closest('.kaching-bundles'))setTimeout(readK,80)},true);
 if(!attachK()){var n=0,pl=setInterval(function(){n++;if(attachK()||n>=50)clearInterval(pl)},100)}
 ['kaching:price:updated','kaching:bundle:selected','kaching:subscription:changed','kaching:subscription:toggled','kaching:autoship:changed','kaching:selling_plan:changed'].forEach(function(ev){document.addEventListener(ev,readK)});
 {%- endif %}
