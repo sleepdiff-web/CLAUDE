@@ -1,0 +1,397 @@
+{%- comment -%}
+  Cart drawer (copy of the Metabolae "Your order" drawer).
+  INSTALL: replace the WHOLE content of snippets/cart-drawer.liquid with this file. Also add the two files in assets/
+  (component-cart-drawer-custom.css and cart-drawer-custom.js) and check sections/cart-drawer.liquid (see the install notes).
+  In the theme settings, Cart > Cart type must be "Drawer".
+
+  EDIT YOUR CONTENT BELOW (everything between the two long lines of "=" is yours to change).
+  Do not use a straight apostrophe (') in the text, use &#39; instead. Do not type three | in a row inside a line except as the separators.
+{%- endcomment -%}
+
+{%- comment -%} ================================ EDIT FROM HERE ================================ {%- endcomment -%}
+{%- assign mcd_title = 'Your order' -%}
+{%- assign mcd_empty_title = 'Your cart is empty' -%}
+{%- assign mcd_empty_sub = 'Our Buy 2 Get 1 FREE bundle is the most popular.' -%}
+
+{%- comment -%} Colours (Metabolae orange). For your red use #943434 / #7b2b2b / #7a2c2c. {%- endcomment -%}
+{%- assign mcd_brand = '#c47245' -%}
+{%- assign mcd_brand_dark = '#b0623a' -%}
+{%- assign mcd_brand_ink = '#a35b32' -%}
+
+{%- comment -%} Under each product: star rating line and 3 tick lines. Set mcd_show_facts to false to hide both. {%- endcomment -%}
+{%- assign mcd_show_facts = true -%}
+{%- assign mcd_rating = '4.9' -%}
+{%- assign mcd_rating_text = 'Thousands of 5-star reviews' -%}
+{%- capture mcd_facts_data -%}
+<strong>Berberine HCl</strong>, the stable, bioavailable form, not standard powder
+@@
+<strong>500mg therapeutic dose</strong> with black pepper extract for better absorption
+@@
+Supports <strong>healthy blood sugar</strong>, metabolism and hormonal balance
+{%- endcapture -%}
+
+{%- comment -%}
+  How many packs one cart line holds, used for the "per pack" price. One row = a word in the variant name ||| number of packs.
+  Put @@ on its own line between rows. Anything not listed counts as 1 pack.
+{%- endcomment -%}
+{%- capture mcd_pack_data -%}
+Buy 1 ||| 1
+@@
+Buy 2 Get 1 ||| 3
+@@
+Buy 3 Get 2 ||| 5
+{%- endcapture -%}
+{%- assign mcd_per_label = 'per pack' -%}
+
+{%- comment -%} Money-back guarantee box. {%- endcomment -%}
+{%- assign mcd_g_show = true -%}
+{%- assign mcd_g_days = '60' -%}
+{%- assign mcd_g_title = '60-Day Money Back Guarantee' -%}
+{%- assign mcd_g_bold = 'Less than 1%' -%}
+{%- assign mcd_g_rest = ' of customers ever claim it.' -%}
+
+{%- comment -%}
+  Four small trust boxes. One box = picture link ||| text (use <br> for a line break). Leave the picture link empty for a built-in icon.
+{%- endcomment -%}
+{%- assign mcd_chips_show = true -%}
+{%- capture mcd_chips_data -%}
+ ||| Berberine HCl,<br>not powder
+@@
+ ||| 500mg<br>therapeutic dose
+@@
+ ||| Black pepper<br>absorption
+@@
+ ||| Third-party<br>lab verified
+{%- endcapture -%}
+
+{%- assign mcd_checkout = 'Secure checkout' -%}
+
+{%- comment -%}
+  Payment icons under the button. Empty mcd_pay_types = the first mcd_pay_limit icons of the list of your own store (what Metabolae does).
+  To choose and order them yourself, list the names with commas, e.g. visa,master,american_express,apple_pay,google_pay,paypal,shopify_pay
+{%- endcomment -%}
+{%- assign mcd_pay_limit = 5 -%}
+{%- assign mcd_pay_types = '' -%}
+
+{%- comment -%}
+  OPTIONAL one-click offer card (like "Try Vitamin D3 + K2"). Leave mcd_up_variant at 0 to switch it off.
+  mcd_up_variant = the variant ID of the product you offer. mcd_up_plan = its selling plan ID (0 if it is a one-time product).
+  The card hides itself once that product is in the cart.
+{%- endcomment -%}
+{%- assign mcd_up_variant = 0 -%}
+{%- assign mcd_up_plan = 0 -%}
+{%- assign mcd_up_band = 'Free shipping included' -%}
+{%- assign mcd_up_image = '' -%}
+{%- assign mcd_up_pill = 'Best value' -%}
+{%- assign mcd_up_save = 'Save $30 per pack' -%}
+{%- assign mcd_up_head = 'Try this product for $29.99' -%}
+{%- assign mcd_up_claim = '<strong>93% of customers</strong> claimed this offer' -%}
+{%- assign mcd_up_btn = 'Upgrade' -%}
+
+{%- comment -%}
+  OPTIONAL shipping protection switch. Leave mcd_sp_variant at 0 to switch it off.
+  mcd_sp_variant = the variant ID of your shipping protection product. mcd_sp_plan = its selling plan ID (0 if none).
+  NOTE: like the original, once this is switched on the script adds the protection to the cart by itself and the customer can turn it off.
+{%- endcomment -%}
+{%- assign mcd_sp_variant = 0 -%}
+{%- assign mcd_sp_plan = 0 -%}
+{%- assign mcd_sp_title = 'Shipping Protection ($3.95)' -%}
+{%- assign mcd_sp_sub = 'Covered against loss, theft, or damage' -%}
+{%- assign mcd_sp_icon = '' -%}
+{%- comment -%} ================================ EDIT UNTIL HERE ================================ {%- endcomment -%}
+
+{%- liquid
+  assign mcd_lines = 0
+  assign mcd_savings = 0
+  assign mcd_sp_key = ''
+  assign mcd_up_in_cart = false
+  for item in cart.items
+    if mcd_sp_variant > 0 and item.variant_id == mcd_sp_variant
+      assign mcd_sp_key = item.key
+    else
+      assign mcd_lines = mcd_lines | plus: 1
+      if mcd_up_variant > 0 and item.variant_id == mcd_up_variant
+        assign mcd_up_in_cart = true
+      endif
+      assign cu = item.variant.compare_at_price | default: 0
+      if cu < item.original_price
+        assign cu = item.original_price
+      endif
+      assign cl = cu | times: item.quantity
+      assign ls = cl | minus: item.final_line_price
+      if ls > 0
+        assign mcd_savings = mcd_savings | plus: ls
+      endif
+    endif
+  endfor
+  assign mcd_is_empty = false
+  if mcd_lines == 0
+    assign mcd_is_empty = true
+  endif
+  assign mcd_show_up = false
+  if mcd_up_variant > 0 and mcd_lines > 0 and mcd_up_in_cart == false
+    assign mcd_show_up = true
+  endif
+  assign mcd_show_sp = false
+  if mcd_sp_variant > 0 and mcd_lines > 0
+    assign mcd_show_sp = true
+  endif
+  assign mcd_facts = mcd_facts_data | split: '@@'
+  assign mcd_pack_rows = mcd_pack_data | split: '@@'
+  assign mcd_chips = mcd_chips_data | split: '@@'
+-%}
+
+<script src="{{ 'cart.js' | asset_url }}" defer="defer"></script>
+<link rel="stylesheet" href="{{ 'component-cart-drawer-custom.css' | asset_url }}" media="all">
+<script src="{{ 'cart-drawer-custom.js' | asset_url }}" defer="defer"></script>
+{%- if mcd_brand != '#c47245' -%}
+<style>.mcd-shell .mcd-guarantee{border-color:color-mix(in srgb,var(--mcd-brand) 45%,transparent)}</style>
+{%- endif -%}
+<style>
+  .drawer {
+    visibility: hidden;
+  }
+  .mcd-shell.mcd-sp-on .fc-sp-block{display:flex}
+  .mcd-shell .drawer__inner-empty{position:relative}
+  .mcd-shell .drawer__inner-empty .drawer__close{position:absolute;top:8px;right:12px;margin:0}
+</style>
+
+<cart-drawer class="drawer{% if mcd_is_empty %} is-empty{% endif %}">
+  <div id="CartDrawer" class="cart-drawer">
+    <div id="CartDrawer-Overlay" class="cart-drawer__overlay"></div>
+    <div
+      class="drawer__inner mcd-shell{% if mcd_is_empty %} is-empty{% endif %}{% if mcd_show_up %} fc-force-b{% endif %}{% if mcd_show_sp %} mcd-sp-on{% endif %}"
+      {% if mcd_brand != '#c47245' or mcd_brand_dark != '#b0623a' or mcd_brand_ink != '#a35b32' %}style="--mcd-brand:{{ mcd_brand }};--mcd-brand-dark:{{ mcd_brand_dark }};--mcd-brand-ink:{{ mcd_brand_ink }}"{% endif %}
+      {% if mcd_lines == 0 and mcd_sp_key != blank %}data-fc-sp-only="{{ mcd_sp_key }}"{% endif %}
+      role="dialog"
+      aria-modal="true"
+      aria-label="Your cart"
+      tabindex="-1"
+    >
+      {%- if mcd_is_empty -%}
+        <div class="drawer__inner-empty">
+          <button
+            class="drawer__close"
+            type="button"
+            onclick="this.closest('cart-drawer').close()"
+            aria-label="Close"
+          >
+            {% render 'icon-close' %}
+          </button>
+          <p class="mcd-empty-title">{{ mcd_empty_title }}</p>
+          <p class="mcd-empty-sub">{{ mcd_empty_sub }}</p>
+        </div>
+      {%- else -%}
+        <div class="mcd-head">
+          <h2 class="mcd-title">{{ mcd_title }}</h2>
+          <button class="drawer__close" type="button" onclick="this.closest('cart-drawer').close()" aria-label="Close">
+            {% render 'icon-close' %}
+          </button>
+        </div>
+
+        <div class="mcd-body">
+          <p class="mcd-err" hidden role="alert"></p>
+
+          <div class="mcd-lines">
+            {%- for item in cart.items -%}
+              {%- if mcd_sp_variant > 0 and item.variant_id == mcd_sp_variant -%}
+                {%- continue -%}
+              {%- endif -%}
+              {%- liquid
+                assign cu = item.variant.compare_at_price | default: 0
+                if cu < item.original_price
+                  assign cu = item.original_price
+                endif
+                assign cl = cu | times: item.quantity
+                assign ls = cl | minus: item.final_line_price
+                assign pct = 0
+                if ls > 0 and cl > 0
+                  assign pct = ls | times: 100.0 | divided_by: cl | round
+                endif
+                assign packs = 1
+                assign vt = item.variant.title | downcase
+                for prow in mcd_pack_rows
+                  assign pf = prow | split: '|||'
+                  assign pkey = pf[0] | strip | downcase
+                  if pkey != blank and vt contains pkey
+                    assign packs = pf[1] | strip | plus: 0
+                  endif
+                endfor
+                if packs < 1
+                  assign packs = 1
+                endif
+                assign per_pack = item.final_line_price | times: 1.0 | divided_by: item.quantity | divided_by: packs | round
+                assign line_facts = false
+                if mcd_show_facts and item.variant_id != mcd_up_variant
+                  assign line_facts = true
+                endif
+              -%}
+              <div class="mcd-line" data-key="{{ item.key }}">
+                <div class="mcd-media">
+                  {%- if item.image -%}<img class="mcd-thumb" src="{{ item.image | image_url: width: 156 }}" alt="" width="78" height="80" decoding="async">{%- endif -%}
+                  {%- if pct > 0 -%}<span class="mcd-save-badge">−{{ pct }}%</span>{%- endif -%}
+                </div>
+
+                <div class="mcd-line-main">
+                  <p class="mcd-line-name">{{ item.product.title | escape }}</p>
+                  {%- if line_facts -%}
+                    <div class="mcd-rating">
+                      <span class="mcd-stars" aria-hidden="true">★★★★★</span>
+                      <span class="mcd-rating-text"><strong>{{ mcd_rating }}</strong> · {{ mcd_rating_text }}</span>
+                    </div>
+
+                    <ul class="mcd-facts">
+                      {%- for fact in mcd_facts -%}
+                        <li><p>{{ fact | strip }}</p></li>
+                      {%- endfor -%}
+                    </ul>
+                  {%- endif -%}
+                  <div class="mcd-controls">
+                    <div class="mcd-controls-left"><button class="mcd-remove" type="button" data-mcd-remove data-key="{{ item.key }}">Remove</button></div>
+
+                    <div class="mcd-prices"><div class="mcd-per-unit">{{ per_pack | money }} {{ mcd_per_label }}</div></div>
+                  </div>
+                </div>
+              </div>
+            {%- endfor -%}
+          </div>
+
+          {%- if mcd_show_up -%}
+            <div class="fc-upsell-card fc-upsell-card--b">
+              <div class="fc-upsell-card__band">
+                <svg class="fc-upsell-card__truck" viewBox="0 0 24 16" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M1.5 2h12v10h-12z"></path>
+                  <path d="M13.5 5h4.2l3 3.2V12h-7.2"></path>
+                  <circle cx="6" cy="13" r="1.8"></circle>
+                  <circle cx="17.5" cy="13" r="1.8"></circle>
+                </svg>
+                <span>{{ mcd_up_band }}</span>
+              </div>
+              <div class="fc-upsell-card__body">
+                {%- if mcd_up_image != blank -%}<img class="fc-upsell-card__img" src="{{ mcd_up_image }}" alt="" width="84" height="84" decoding="async">{%- endif -%}
+                <div class="fc-upsell-card__main">
+                  <div class="fc-upsell-card__tags">
+                    <span class="fc-upsell-card__pill">{{ mcd_up_pill }}</span>
+                    <span class="fc-upsell-card__save">{{ mcd_up_save }}</span>
+                  </div>
+                  <p class="fc-upsell-card__head">{{ mcd_up_head }}</p>
+                  <p class="fc-upsell-card__claim">{{ mcd_up_claim }}</p>
+                </div>
+                <button class="fc-upsell-card__btn" type="button" data-fc-upsell-add data-fc-items="[{&quot;id&quot;:{{ mcd_up_variant }},&quot;quantity&quot;:1{% if mcd_up_plan > 0 %},&quot;selling_plan&quot;:{{ mcd_up_plan }}{% endif %}}]">{{ mcd_up_btn }}</button>
+              </div>
+            </div>
+          {%- endif -%}
+
+          {%- if mcd_g_show -%}
+            <div class="mcd-guarantee">
+              <svg class="mcd-guarantee-badge" viewBox="0 0 46 46" fill="none" aria-hidden="true">
+                <circle cx="23" cy="23" r="21" fill="#fff" stroke="{{ mcd_brand }}" stroke-width="1.5"></circle>
+                <circle cx="23" cy="23" r="17" fill="none" stroke="{{ mcd_brand }}" stroke-width="0.8" stroke-dasharray="2 2.4"></circle>
+                <text x="23" y="21" text-anchor="middle" font-family="Poppins,sans-serif" font-size="13" font-weight="700" fill="{{ mcd_brand_ink }}">{{ mcd_g_days }}</text>
+                <text x="23" y="31" text-anchor="middle" font-family="Poppins,sans-serif" font-size="6.5" font-weight="700" letter-spacing=".5" fill="{{ mcd_brand_ink }}">DAYS</text>
+              </svg>
+              <div>
+                <p class="mcd-guarantee-title">{{ mcd_g_title }}</p>
+                <p class="mcd-guarantee-sub"><strong>{{ mcd_g_bold }}</strong>{{ mcd_g_rest }}</p>
+              </div>
+            </div>
+          {%- endif -%}
+
+          {%- if mcd_chips_show -%}
+            <ul class="mcd-trust">
+              {%- for chip in mcd_chips -%}
+                {%- assign cf = chip | split: '|||' -%}
+                {%- assign cimg = cf[0] | strip -%}
+                <li>
+                  {%- if cimg != blank -%}
+                    <img class="mcd-chip-img" src="{{ cimg }}" alt="" width="36" height="36" decoding="async">
+                  {%- else -%}
+                    <svg class="mcd-chip-img" viewBox="0 0 36 36" fill="none" stroke="{{ mcd_brand_ink }}" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      {%- case forloop.index -%}
+                        {%- when 1 -%}<path d="M18 8l8 3v6c0 5-3.4 8.4-8 10-4.6-1.6-8-5-8-10v-6z"></path><path d="M14.5 17.5l2.5 2.5 4.5-5"></path>
+                        {%- when 2 -%}<rect x="8" y="14" width="20" height="8" rx="4" transform="rotate(-35 18 18)"></rect><path d="M14.5 21.5l7-7"></path>
+                        {%- when 3 -%}<path d="M18 8.5c3.6 4.2 6 7 6 10a6 6 0 0 1-12 0c0-3 2.4-5.8 6-10z"></path>
+                        {%- else -%}<path d="M15 8.5h6M16 8.5v6.5l-5 9a1.5 1.5 0 0 0 1.3 2.2h11.4a1.5 1.5 0 0 0 1.3-2.2l-5-9V8.5"></path><path d="M13.5 21h9"></path>
+                      {%- endcase -%}
+                    </svg>
+                  {%- endif -%}
+                  <span>{{ cf[1] | strip }}</span>
+                </li>
+              {%- endfor -%}
+            </ul>
+          {%- endif -%}
+        </div>
+
+        <div class="mcd-foot">
+          <div class="mcd-sum-row mcd-row-subtotal">
+            <span>Subtotal</span>
+            <span>{{ cart.total_price | plus: mcd_savings | money }}</span>
+          </div>
+          {%- if mcd_savings > 0 -%}
+            <div class="mcd-sum-row is-savings mcd-row-savings">
+              <span>Bundle savings</span>
+              <span>−{{ mcd_savings | money }}</span>
+            </div>
+          {%- endif -%}
+          <div class="mcd-total-row">
+            <span class="mcd-total-label">Total</span>
+            <span class="mcd-total-val">{{ cart.total_price | money }}</span>
+          </div>
+
+          {%- if mcd_show_sp -%}
+            <div class="fc-sp-block" data-fc-sp-variant="{{ mcd_sp_variant }}"{% if mcd_sp_plan > 0 %} data-fc-sp-plan="{{ mcd_sp_plan }}"{% endif %} data-fc-sp-incart="{% if mcd_sp_key != blank %}true{% else %}false{% endif %}"{% if mcd_sp_key != blank %} data-fc-sp-key="{{ mcd_sp_key }}"{% endif %}>
+              <div class="fc-sp-block__info">
+                {%- if mcd_sp_icon != blank -%}
+                  <img class="fc-sp-block__icon" src="{{ mcd_sp_icon }}" alt="" width="38" height="43" decoding="async">
+                {%- else -%}
+                  <svg class="fc-sp-block__icon" viewBox="0 0 38 43" fill="none" stroke="{{ mcd_brand_ink }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 4l14 5.5V21c0 9-6 15.5-14 18C11 36.500 5 30 5 21V9.500z"></path><path d="M13 21.500l4.500 4.500L26 17"></path></svg>
+                {%- endif -%}
+                <div class="fc-sp-block__text">
+                  <p class="fc-sp-block__title">{{ mcd_sp_title }}</p>
+                  <p class="fc-sp-block__sub">{{ mcd_sp_sub }}</p>
+                </div>
+              </div>
+              <button class="fc-sp-toggle" type="button" role="switch" aria-checked="false" aria-label="Shipping protection" data-fc-sp-toggle>
+                <span class="fc-sp-toggle__knob"></span>
+              </button>
+            </div>
+          {%- endif -%}
+
+          <form action="{{ routes.cart_url }}" method="post" id="CartDrawer-Form" novalidate>
+            <button type="submit" name="checkout" class="mcd-cta">
+              <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                <rect x="4" y="9" width="12" height="8" rx="1.6"></rect>
+                <path d="M7 9V6.5a3 3 0 0 1 6 0V9" stroke-linecap="round"></path>
+              </svg>
+              <span class="mcd-cta-label">{{ mcd_checkout }} · {{ cart.total_price | money }}</span>
+            </button>
+          </form>
+
+          {%- liquid
+            assign mcd_pay_html = ''
+            assign mcd_pay_count = 0
+            if mcd_pay_types != blank
+              assign mcd_pay_order = mcd_pay_types | remove: ' ' | split: ','
+              for ptype in mcd_pay_order
+                if shop.enabled_payment_types contains ptype and mcd_pay_count < mcd_pay_limit
+                  assign one_svg = ptype | payment_type_svg_tag: class: 'icon icon--full-color'
+                  assign mcd_pay_html = mcd_pay_html | append: one_svg
+                  assign mcd_pay_count = mcd_pay_count | plus: 1
+                endif
+              endfor
+            else
+              for ptype in shop.enabled_payment_types limit: mcd_pay_limit
+                assign one_svg = ptype | payment_type_svg_tag: class: 'icon icon--full-color'
+                assign mcd_pay_html = mcd_pay_html | append: one_svg
+                assign mcd_pay_count = mcd_pay_count | plus: 1
+              endfor
+            endif
+          -%}
+          {%- if mcd_pay_count > 0 -%}
+            <div class="mcd-pay">{{ mcd_pay_html }}</div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</cart-drawer>

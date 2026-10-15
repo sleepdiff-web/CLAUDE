@@ -1,0 +1,12 @@
+{%- comment -%}
+  Cart drawer section. The theme asks for this section by name ("cart-drawer") every time the cart changes,
+  and the drawer script swaps in the #CartDrawer part of what comes back, so it must output the same drawer as the snippet.
+{%- endcomment -%}
+{%- render 'cart-drawer' -%}
+
+{% schema %}
+{
+  "name": "Cart drawer",
+  "settings": []
+}
+{% endschema %}
