@@ -1,0 +1,201 @@
+{%- comment -%}
+  "Add to cart" button, copy of Metabolae's: "Add to cart | £59.99 £90.00" with the guarantee line underneath.
+  WHERE: add this as a Custom Liquid block/section on the PRODUCT page, directly UNDER the Add to cart button (anywhere on the page also works).
+  It rebuilds the theme's own Add to cart button, so adding to the cart, the loading spinner and the sold out state keep working.
+  The price follows the selected bundle: it reads Kaching Bundles (mb_kaching = true) or the selected variant.
+  EDIT YOUR BUTTON BELOW.
+  mb_guarantee = the small line under the button. Leave it empty for no line.
+  mb_btn_rgb = button colour as three numbers 0-255 with commas (148,52,52 = #943434, Metabolae orange = 196,114,69). mb_btn_text_rgb = text colour.
+  mb_kaching = false if you do not use Kaching Bundles.
+  Do not use a straight apostrophe (') in the text, use &#39; instead.
+{%- endcomment -%}
+{%- assign mb_guarantee = '60-Day Money-Back Guarantee' -%}
+{%- assign mb_btn_rgb = '148,52,52' -%}
+{%- assign mb_btn_text_rgb = '255,255,255' -%}
+{%- assign mb_kaching = true -%}
+
+{%- if product -%}
+{%- assign mb_v = product.selected_or_first_available_variant -%}
+<style>
+/* ── ATC button inner layout ── */
+.mb-atc-btn-inner{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;width:100%;pointer-events:none}
+/* top row: label | price */
+.mb-atc-btn-top-row{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap}
+.mb-atc-btn-label{font-size:inherit;font-weight:inherit;line-height:inherit;white-space:nowrap}
+.mb-atc-btn-sep{opacity:.5;font-weight:300;font-size:1.1em;line-height:1}
+/* prices group */
+.mb-atc-btn-prices{display:flex;align-items:center;gap:6px;flex-wrap:nowrap;white-space:nowrap}
+.mb-atc-btn-price{font-weight:700;font-size:inherit}
+.mb-atc-btn-compare{font-weight:400;font-size:.88em;opacity:.6;color:currentColor;text-decoration:line-through}
+/* guarantee sub-line */
+.mb-atc-guarantee-line{display:flex;align-items:center;justify-content:center;gap:5px;font-size:11px;font-weight:400;letter-spacing:.04em;opacity:.9;line-height:1.2;white-space:nowrap}
+.mb-atc-guarantee-line svg{flex-shrink:0}
+.product-form__submit.button{padding-left:20px!important;padding-right:20px!important;padding-top:16px!important;padding-bottom:16px!important;height:auto!important;min-height:unset!important}
+/* button look: colour from the settings above, Metabolae's corner radius, the capital letters on the label */
+.product-form__submit.mb-atc{--color-button:{{ mb_btn_rgb }};--color-button-text:{{ mb_btn_text_rgb }};--buttons-radius:6px;--buttons-radius-outset:7px;--buttons-border-width:1px;--alpha-button-background:1;--alpha-button-border:1;text-transform:capitalize;font-weight:700}
+.product-form__buttons.mb-atc-wrap{max-width:unset!important}
+</style>
+
+<script type="application/json" data-mb-atc-data>{"id":{{ product.id }},"format":{{ shop.money_format | json }},"guarantee":{{ mb_guarantee | strip | json }},"kaching":{{ mb_kaching }},"variant":{{ mb_v.id | default: 0 }},"variants":[{%- for v in product.variants -%}{"id":{{ v.id }},"price":{{ v.price }},"compare":{{ v.compare_at_price | default: 0 }},"available":{{ v.available }}}{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%}]}</script>
+<script>
+(function(){
+var me=document.currentScript,dEl=me&&me.previousElementSibling;
+if(!dEl||!dEl.hasAttribute('data-mb-atc-data'))return;
+var D;try{D=JSON.parse(dEl.textContent)}catch(e){return}
+var V={};D.variants.forEach(function(v){V[v.id]=v});
+var cur=V[D.variant]||D.variants[0]||null,busy=false,btn=null,lastP=-1,lastC=-1;
+function money(c){
+var a=(c/100).toFixed(2),n=String(Math.round(c/100));
+return D.format.replace(/\{\{\s*amount\s*\}\}/g,a).replace(/\{\{\s*amount_no_decimals\s*\}\}/g,n).replace(/\{\{\s*amount_with_comma_separator\s*\}\}/g,a.replace('.',',')).replace(/\{\{\s*amount_no_decimals_with_comma_separator\s*\}\}/g,n.replace('.',','));
+}
+function cents(s){
+s=s.replace(/[^\d.,]/g,'');
+if(!s)return 0;
+if(/,\d{2}$/.test(s)&&s.indexOf('.')===-1)s=s.replace(',','.');else s=s.replace(/,/g,'');
+return Math.round(parseFloat(s)*100)||0;
+}
+function esc(t){var d=document.createElement('div');d.textContent=t;return d.innerHTML}
+function pick(){
+var all=document.querySelectorAll('.product-form__submit[name="add"],[id^="ProductSubmitButton-"]'),i,f,p;
+for(i=0;i<all.length;i++){
+f=all[i].form||all[i].closest('form');
+p=f&&f.querySelector('input[name="product-id"]');
+if(p&&String(p.value)===String(D.id))return all[i];
+}
+return all.length?all[0]:null;
+}
+/* original page: compare price is mirrored from the sale badge when there is one */
+function setCompare(cmp,p,c){
+if(!cmp)return;
+var bc=document.querySelector('[data-badge-compare]'),t;
+if(bc){
+if(!bc.classList.contains('bsw__compare--hidden')&&!bc.classList.contains('mb-bsw__compare--hidden')){
+t=(bc.innerText||'').trim();
+if(t){cmp.textContent=t;cmp.style.display='';return}
+}
+cmp.style.display='none';
+return;
+}
+if(c>p){cmp.textContent=money(c);cmp.style.display=''}else cmp.style.display='none';
+}
+function showPrices(p,c){
+if(!btn)return;
+var pr=btn.querySelector('.mb-atc-btn-prices'),sp=btn.querySelector('.mb-atc-btn-sep'),ps=btn.querySelector('.mb-atc-btn-price'),cm=btn.querySelector('.mb-atc-btn-compare');
+if(!pr)return;
+pr.style.display='';
+if(sp)sp.style.display='';
+if(ps)ps.textContent=money(p);
+setCompare(cm,p,c);
+}
+function showVariant(v){
+if(!v)return;
+cur=v;
+if(!btn)return;
+if(!v.available){
+var pr=btn.querySelector('.mb-atc-btn-prices'),sp=btn.querySelector('.mb-atc-btn-sep');
+if(pr)pr.style.display='none';
+if(sp)sp.style.display='none';
+return;
+}
+showPrices(v.price,v.compare);
+}
+function build(){
+btn=pick();
+if(!btn)return false;
+btn.classList.add('mb-atc');
+if(btn.parentElement&&btn.parentElement.classList.contains('product-form__buttons'))btn.parentElement.classList.add('mb-atc-wrap');
+if(btn.querySelector('.mb-atc-btn-top-row'))return true;
+var kids=btn.children,lab=null,i,txt,mk,hid;
+for(i=0;i<kids.length;i++){
+if(kids[i].tagName==='SPAN'&&!kids[i].classList.contains('sold-out-message')){lab=kids[i];break}
+}
+txt=lab?lab.textContent.replace(/\s+/g,' ').trim():'Add to cart';
+mk=document.createElement('span');
+mk.className='mb-atc-btn-inner';
+mk.innerHTML='<span class="mb-atc-btn-top-row"><span class="mb-atc-btn-label">'+esc(txt)+'</span><span class="mb-atc-btn-sep" aria-hidden="true">|</span><span class="mb-atc-btn-prices" data-money-format="'+esc(D.format).replace(/"/g,'&quot;')+'"><span class="mb-atc-btn-price"></span><s class="mb-atc-btn-compare"></s></span></span>'+(D.guarantee?'<span class="mb-atc-guarantee-line">'+D.guarantee+'</span>':'');
+busy=true;
+if(lab)btn.replaceChild(mk,lab);else btn.insertBefore(mk,btn.firstChild);
+busy=false;
+lastP=-1;lastC=-1;
+hid=btn.form&&btn.form.querySelector('input[name="id"]');
+showVariant(hid&&V[parseInt(hid.value,10)]||cur);
+{%- if mb_kaching %}
+readK();
+{%- endif %}
+return true;
+}
+function init(){
+if(!build())return;
+/* the theme can rewrite the button text (variant change, sold out): rebuild it */
+new MutationObserver(function(){
+if(busy)return;
+if(btn&&!btn.querySelector('.mb-atc-btn-top-row'))build();
+}).observe(btn,{childList:true,subtree:true,characterData:true});
+}
+function byId(id){var v=V[parseInt(id,10)];if(v)showVariant(v)}
+document.addEventListener('variant:changed',function(e){if(e.detail&&e.detail.variant){var v=V[e.detail.variant.id];if(v)showVariant(v)}});
+document.addEventListener('product:variantChanged',function(e){if(e.detail&&e.detail.variant){var v=V[e.detail.variant.id];if(v)showVariant(v)}});
+document.addEventListener('change',function(e){
+var t=e.target;
+if(!t)return;
+if(t.name==='id')byId(t.value);
+{%- if mb_kaching %}
+if(t.name==='selling_plan')setTimeout(readK,250);
+{%- endif %}
+});
+var hid=document.querySelector('[data-product-form] input[name="id"],form[action*="/cart/add"] input[name="id"]');
+if(hid){
+var last=hid.value;
+var chk=function(){if(hid.value!==last){last=hid.value;byId(last)}};
+new MutationObserver(chk).observe(hid,{attributes:true,attributeFilter:['value']});
+setInterval(function(){if(!document.hidden)chk()},200);
+}
+{%- if mb_kaching %}
+/* Kaching Bundles: follow the price of the selected bundle (same as the original page) */
+var kT=0;
+function kEls(){
+var k=document.querySelector('.kaching-bundles'),r,bp,bf,i,list=['.kaching-bundles__bar--selected','.kaching-bundles__bar--active','.kaching-bundles__bar.is-selected','.kaching-bundles__bar.is-active','.kaching-bundles__bar.selected','.kaching-bundles__bar.active'];
+if(k){
+r=k.querySelector('input[type="radio"]:checked');
+r=r&&r.parentElement;
+while(r&&r!==k){
+bp=r.querySelector('.kaching-bundles__bar-price');bf=r.querySelector('.kaching-bundles__bar-full-price');
+if(bp&&bf)return[bp,bf];
+r=r.parentElement;
+}
+}
+for(i=0;i<list.length;i++){
+r=document.querySelector(list[i]);
+if(r){bp=r.querySelector('.kaching-bundles__bar-price');bf=r.querySelector('.kaching-bundles__bar-full-price');if(bp&&bf)return[bp,bf]}
+}
+return[document.querySelector('.kaching-bundles__bar-price'),document.querySelector('.kaching-bundles__bar-full-price')];
+}
+function readK(){
+clearTimeout(kT);
+kT=setTimeout(function(){
+var e=kEls(),a,b,p,c;
+if(!e[0]||!e[1])return;
+a=(e[0].innerText||'').trim();b=(e[1].innerText||'').trim();
+if(!a||!b)return;
+p=cents(a);c=cents(b);
+if(p<=0||c<=0||(p===lastP&&c===lastC))return;
+lastP=p;lastC=c;showPrices(p,c);
+},50);
+}
+function attachK(){
+var a=document.querySelector('.kaching-bundles__bar-price'),b=document.querySelector('.kaching-bundles__bar-full-price'),o={subtree:true,childList:true,characterData:true},root,m;
+if(!a||!b)return false;
+readK();
+m=new MutationObserver(readK);m.observe(a,o);m.observe(b,o);
+root=document.querySelector('.kaching-bundles__bar-pricing')||document.querySelector('.kaching-bundles__bar-wrapper')||document.querySelector('.kaching-bundles')||document.querySelector('[id^="MainProduct"]')||document.querySelector('.product__info-container')||document.querySelector('main');
+if(root)new MutationObserver(readK).observe(root,o);
+return true;
+}
+if(!attachK()){var n=0,pl=setInterval(function(){n++;if(attachK()||n>=50)clearInterval(pl)},100)}
+['kaching:price:updated','kaching:bundle:selected','kaching:subscription:changed','kaching:subscription:toggled','kaching:autoship:changed','kaching:selling_plan:changed'].forEach(function(ev){document.addEventListener(ev,readK)});
+{%- endif %}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+document.addEventListener('shopify:section:load',function(){busy=false;init()});
+})();
+</script>
+{%- endif -%}
