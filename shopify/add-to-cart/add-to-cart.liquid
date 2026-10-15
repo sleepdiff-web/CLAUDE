@@ -6,12 +6,14 @@
   EDIT YOUR BUTTON BELOW.
   mb_guarantee = the small line under the button. Leave it empty for no line.
   mb_btn_rgb = button colour as three numbers 0-255 with commas (148,52,52 = #943434, Metabolae orange = 196,114,69). mb_btn_text_rgb = text colour.
+  mb_gap_top = space between the bundle bars and the button (Metabolae: 12px, the Dawn theme default is 25px).
   mb_kaching = false if you do not use Kaching Bundles.
   Do not use a straight apostrophe (') in the text, use &#39; instead.
 {%- endcomment -%}
 {%- assign mb_guarantee = '60-Day Money-Back Guarantee' -%}
 {%- assign mb_btn_rgb = '148,52,52' -%}
 {%- assign mb_btn_text_rgb = '255,255,255' -%}
+{%- assign mb_gap_top = '12px' -%}
 {%- assign mb_kaching = true -%}
 
 {%- if product -%}
@@ -31,8 +33,9 @@
 .mb-atc-guarantee-line{display:flex;align-items:center;justify-content:center;gap:5px;font-size:11px;font-weight:400;letter-spacing:.04em;opacity:.9;line-height:1.2;white-space:nowrap}
 .mb-atc-guarantee-line svg{flex-shrink:0}
 .product-form__submit.button{padding-left:20px!important;padding-right:20px!important;padding-top:16px!important;padding-bottom:16px!important;height:auto!important;min-height:unset!important}
-/* button look: colour from the settings above, Metabolae's corner radius, the capital letters on the label */
-.product-form__submit.mb-atc{--color-button:{{ mb_btn_rgb }};--color-button-text:{{ mb_btn_text_rgb }};--buttons-radius:6px;--buttons-radius-outset:7px;--buttons-border-width:1px;--alpha-button-background:1;--alpha-button-border:1;text-transform:capitalize;font-weight:700}
+/* button look: colour from the settings above, Metabolae's corner radius, capital letters, line height 1.5 (makes the button as tall as Metabolae's) and the space above the button */
+.product-form__submit.mb-atc{--color-button:{{ mb_btn_rgb }};--color-button-text:{{ mb_btn_text_rgb }};--buttons-radius:6px;--buttons-radius-outset:7px;--buttons-border-width:1px;--alpha-button-background:1;--alpha-button-border:1;text-transform:capitalize;font-weight:700;line-height:1.5}
+.product-form.mb-atc-form,.product__info-container .product-form.mb-atc-form{margin-top:{{ mb_gap_top }}!important}
 .product-form__buttons.mb-atc-wrap{max-width:unset!important}
 </style>
 
@@ -104,6 +107,8 @@ btn=pick();
 if(!btn)return false;
 btn.classList.add('mb-atc');
 if(btn.parentElement&&btn.parentElement.classList.contains('product-form__buttons'))btn.parentElement.classList.add('mb-atc-wrap');
+var fm=btn.closest('.product-form');
+if(fm)fm.classList.add('mb-atc-form');
 if(btn.querySelector('.mb-atc-btn-top-row'))return true;
 var kids=btn.children,lab=null,i,txt,mk,hid;
 for(i=0;i<kids.length;i++){
