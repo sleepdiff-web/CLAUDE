@@ -229,7 +229,7 @@ Buy 3 Get 2 ||| 5
               <div class="mcd-line" data-key="{{ item.key }}">
                 <div class="mcd-media">
                   {%- if item.image -%}<img class="mcd-thumb" src="{{ item.image | image_url: width: 156 }}" alt="" width="78" height="80" decoding="async">{%- endif -%}
-                  {%- if pct > 0 -%}<span class="mcd-save-badge">−{{ pct }}%</span>{%- endif -%}
+                  {%- if item.final_line_price == 0 -%}<span class="mcd-save-badge">FREE</span>{%- elsif pct > 0 -%}<span class="mcd-save-badge">−{{ pct }}%</span>{%- endif -%}
                 </div>
 
                 <div class="mcd-line-main">
@@ -249,7 +249,7 @@ Buy 3 Get 2 ||| 5
                   <div class="mcd-controls">
                     <div class="mcd-controls-left"><button class="mcd-remove" type="button" data-mcd-remove data-key="{{ item.key }}">Remove</button></div>
 
-                    <div class="mcd-prices"><div class="mcd-per-unit">{{ per_pack | money }} {{ mcd_per_label }}</div></div>
+                    <div class="mcd-prices"><div class="mcd-per-unit">{% if item.final_line_price == 0 %}Free{% else %}{{ per_pack | money }} {{ mcd_per_label }}{% endif %}</div></div>
                   </div>
                 </div>
               </div>
