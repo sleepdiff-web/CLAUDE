@@ -1,10 +1,6 @@
 {%- comment -%}
-  Sale price row, exact copy of Metabolae's: current price, crossed-out price and the sale pill ("Summer Sale - Save 67%").
-  WHERE: add as a Custom Liquid block/section on the PRODUCT page, between the progress bar and the bundle bars.
-  On a product page the prices come from the selected variant and update when the variant changes and when you pick another Kaching Bundles bar.
-  Anywhere else (no product) it shows the demo prices below, in cents (5999 = 59.99).
-  EDIT BELOW: mb_label = the pill text before the percentage. Colours, sizes and weights have a desktop (_d) and a mobile (_m) value like the original.
-  mb_top / mb_bottom = space above / below (margins merge with neighbouring blocks). mb_kaching = false if you do not use Kaching Bundles.
+  Sale price row, exact copy of Metabolae's (price, crossed-out price, sale pill). Add as a Custom Liquid block on the PRODUCT page above the bundle bars.
+  Prices follow the selected variant and the selected Kaching Bundles bar. mb_label = pill text. _d = desktop, _m = mobile. mb_kaching = false if no Kaching.
   Do not use a straight apostrophe (') in the text, use &#39; instead.
 {%- endcomment -%}
 {%- assign mb_label = 'Summer Sale - Save' -%}
@@ -97,401 +93,289 @@
 </div>
 
 <style>
-  /* Reset */
-  #{{ bid }} *,
-  #{{ bid }} *::before,
-  #{{ bid }} *::after {
-    box-sizing: border-box;
-  }
-
-  /* Wrapper */
-  #{{ bid }}.bsw {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 8px;
-    margin: var(--bs-mt) 0 var(--bs-mb);
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-weight: 500;
-    letter-spacing: .6px;
-    text-align: left;
-  }
-
-  /* ── Price row ── */
-  #{{ bid }} .bsw__prices {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    gap: 6px;
-  }
-
-  /* Current price — mobile first */
-  #{{ bid }} .bsw__price {
-    color:       var(--bs-price-color);
-    font-size:   var(--bs-price-fs-m);
-    font-weight: var(--bs-price-fw-m);
-    line-height: 1.2;
-  }
-
-  /* Compare-at price — mobile first */
-  #{{ bid }} .bsw__compare {
-    color:            var(--bs-compare-color);
-    font-size:        var(--bs-compare-fs-m);
-    font-weight:      var(--bs-compare-fw-m);
-    text-decoration:  line-through;
-    line-height:      1.2;
-  }
-
-  #{{ bid }} .bsw__compare--hidden {
-    display: none;
-  }
-
-  /* ── Badge pill — mobile first ── */
-  #{{ bid }} .bsw__pill {
-    display:          inline-flex;
-    align-items:      center;
-    background-color: var(--bs-badge-bg);
-    color:            var(--bs-badge-color);
-    border-radius:    var(--bs-badge-radius);
-    padding:          var(--bs-badge-pv) var(--bs-badge-ph);
-    font-size:        var(--bs-badge-fs-m);
-    font-weight:      var(--bs-badge-fw-m);
-    line-height:      1;
-    white-space:      nowrap;
-    transition:       opacity 0.2s ease;
-  }
-
-  #{{ bid }} .bsw__pill--hidden {
-    display: none;
-  }
-
-  /* ── Desktop overrides ── */
-  @media screen and (min-width: 750px) {
-    #{{ bid }} .bsw__price {
-      font-size:   var(--bs-price-fs-d);
-      font-weight: var(--bs-price-fw-d);
-    }
-
-    #{{ bid }} .bsw__compare {
-      font-size:   var(--bs-compare-fs-d);
-      font-weight: var(--bs-compare-fw-d);
-    }
-
-    #{{ bid }} .bsw__pill {
-      font-size:   var(--bs-badge-fs-d);
-      font-weight: var(--bs-badge-fw-d);
-    }
-  }
+#{{ bid }} *,
+#{{ bid }} *::before,
+#{{ bid }} *::after {
+box-sizing: border-box;
+}
+#{{ bid }}.bsw {
+display: flex;
+flex-wrap: wrap;
+align-items: center;
+gap: 8px;
+margin: var(--bs-mt) 0 var(--bs-mb);
+font-family: 'Plus Jakarta Sans', sans-serif;
+font-weight: 500;
+letter-spacing: .6px;
+text-align: left;
+}
+#{{ bid }} .bsw__prices {
+display: flex;
+flex-wrap: wrap;
+align-items: baseline;
+gap: 6px;
+}
+#{{ bid }} .bsw__price {
+color: var(--bs-price-color);
+font-size: var(--bs-price-fs-m);
+font-weight: var(--bs-price-fw-m);
+line-height: 1.2;
+}
+#{{ bid }} .bsw__compare {
+color: var(--bs-compare-color);
+font-size: var(--bs-compare-fs-m);
+font-weight: var(--bs-compare-fw-m);
+text-decoration: line-through;
+line-height: 1.2;
+}
+#{{ bid }} .bsw__compare--hidden {
+display: none;
+}
+#{{ bid }} .bsw__pill {
+display: inline-flex;
+align-items: center;
+background-color: var(--bs-badge-bg);
+color: var(--bs-badge-color);
+border-radius: var(--bs-badge-radius);
+padding: var(--bs-badge-pv) var(--bs-badge-ph);
+font-size: var(--bs-badge-fs-m);
+font-weight: var(--bs-badge-fw-m);
+line-height: 1;
+white-space: nowrap;
+transition: opacity 0.2s ease;
+}
+#{{ bid }} .bsw__pill--hidden {
+display: none;
+}
+@media screen and (min-width: 750px) {
+#{{ bid }} .bsw__price {
+font-size: var(--bs-price-fs-d);
+font-weight: var(--bs-price-fw-d);
+}
+#{{ bid }} .bsw__compare {
+font-size: var(--bs-compare-fs-d);
+font-weight: var(--bs-compare-fw-d);
+}
+#{{ bid }} .bsw__pill {
+font-size: var(--bs-badge-fs-d);
+font-weight: var(--bs-badge-fw-d);
+}
+}
 </style>
 
 <script>
 (function () {
-  'use strict';
-
-  /* ── 1. Grab DOM refs ── */
-  var wrap      = document.getElementById('{{ bid }}');
-  if (!wrap) return;
-
-  var priceEl   = wrap.querySelector('[data-badge-price]');
-  var compareEl = wrap.querySelector('[data-badge-compare]');
-  var pillEl    = wrap.querySelector('[data-badge-pill]');
-  var pctEl     = wrap.querySelector('[data-badge-pct]');
-
-  /* ── 2. Variant data from Liquid ── */
-  var variants = [{%- if product -%}{%- for v in product.variants -%}{"id":{{ v.id }},"price":{{ v.price }},"compare_at_price":{{ v.compare_at_price | default: 0 }}}{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%}{%- endif -%}];
-  var variantMap = {};
-  variants.forEach(function (v) { variantMap[v.id] = v; });
-
-  /* ── 3. Money helpers ── */
-  var moneyFmt = {{ shop.money_format | json }};
-
-  function formatMoney(cents) {
-    var amount      = (cents / 100).toFixed(2);
-    var amountNoD   = String(Math.round(cents / 100));
-    var amountComma = amount.replace('.', ',');
-    return moneyFmt
-      .replace(/\{\{\s*amount\s*\}\}/g,                                    amount)
-      .replace(/\{\{\s*amount_no_decimals\s*\}\}/g,                        amountNoD)
-      .replace(/\{\{\s*amount_with_comma_separator\s*\}\}/g,               amountComma)
-      .replace(/\{\{\s*amount_no_decimals_with_comma_separator\s*\}\}/g,   amountNoD.replace('.', ','));
-  }
-
-  /*
-   * parseToCents — converts a rendered money string (e.g. "$29.99", "€29,99")
-   * back to integer cents so we can do maths on Kaching-rendered prices.
-   */
-  function parseToCents(str) {
-    var s = str.replace(/[^\d.,]/g, '');          // keep only digits + separators
-    if (!s) return 0;
-    /* European format: comma is the decimal separator (e.g. "29,99") */
-    if (/,\d{2}$/.test(s) && s.indexOf('.') === -1) {
-      s = s.replace(',', '.');
-    } else {
-      /* Remove thousands commas (e.g. "1,234.56" → "1234.56") */
-      s = s.replace(/,/g, '');
-    }
-    return Math.round(parseFloat(s) * 100) || 0;
-  }
-
-  /* ── 4. Core render — works from raw cents ── */
-  function updateBadgeFromCents(priceCents, compareAtCents) {
-    if (priceEl) priceEl.textContent = formatMoney(priceCents);
-
-    if (compareAtCents && compareAtCents > priceCents) {
-      var pct = Math.round((compareAtCents - priceCents) / compareAtCents * 100);
-
-      if (compareEl) {
-        compareEl.textContent = formatMoney(compareAtCents);
-        compareEl.classList.remove('bsw__compare--hidden');
-      }
-      pctEl.textContent = pct + '%';
-      pillEl.classList.remove('bsw__pill--hidden');
-      pillEl.setAttribute('aria-hidden', 'false');
-    } else {
-      if (compareEl) compareEl.classList.add('bsw__compare--hidden');
-      pillEl.classList.add('bsw__pill--hidden');
-      pillEl.setAttribute('aria-hidden', 'true');
-    }
-  }
-
-  /* Thin wrapper that accepts a Shopify variant object */
-  function updateBadge(variant) {
-    if (!variant) return;
-    updateBadgeFromCents(variant.price, variant.compare_at_price || 0);
-  }
-
-  function getVariant(id) {
-    return variantMap[parseInt(id, 10)] || null;
-  }
-
-  /* ── 5a. Hook: Dawn / common theme event ── */
-  document.addEventListener('variant:changed', function (e) {
-    if (e.detail && e.detail.variant) updateBadge(e.detail.variant);
-  });
-
-  /* ── 5b. Hook: alternate theme event ── */
-  document.addEventListener('product:variantChanged', function (e) {
-    if (e.detail && e.detail.variant) updateBadge(e.detail.variant);
-  });
-
-  /* ── 5c. Hook: native change on variant id input / selling-plan (subscription) ──
-   *
-   * Subscription toggles change input[name="selling_plan"], NOT input[name="id"].
-   * That means no variant:changed event fires, so we explicitly watch for it and
-   * give Kaching 250 ms to finish re-rendering its price DOM before we read.
-   */
-  document.addEventListener('change', function (e) {
-    var el = e.target;
-    if (!el) return;
-    if (el.name === 'id') {
-      var v = getVariant(el.value);
-      if (v) updateBadge(v);
-    }
+'use strict';
+var wrap = document.getElementById('{{ bid }}');
+if (!wrap) return;
+var priceEl = wrap.querySelector('[data-badge-price]');
+var compareEl = wrap.querySelector('[data-badge-compare]');
+var pillEl = wrap.querySelector('[data-badge-pill]');
+var pctEl = wrap.querySelector('[data-badge-pct]');
+var variants = [{%- if product -%}{%- for v in product.variants -%}{"id":{{ v.id }},"price":{{ v.price }},"compare_at_price":{{ v.compare_at_price | default: 0 }}}{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%}{%- endif -%}];
+var variantMap = {};
+variants.forEach(function (v) { variantMap[v.id] = v; });
+var moneyFmt = {{ shop.money_format | json }};
+function formatMoney(cents) {
+var amount = (cents / 100).toFixed(2);
+var amountNoD = String(Math.round(cents / 100));
+var amountComma = amount.replace('.', ',');
+return moneyFmt
+.replace(/\{\{\s*amount\s*\}\}/g, amount)
+.replace(/\{\{\s*amount_no_decimals\s*\}\}/g, amountNoD)
+.replace(/\{\{\s*amount_with_comma_separator\s*\}\}/g, amountComma)
+.replace(/\{\{\s*amount_no_decimals_with_comma_separator\s*\}\}/g, amountNoD.replace('.', ','));
+}
+function parseToCents(str) {
+var s = str.replace(/[^\d.,]/g, '');
+if (!s) return 0;
+if (/,\d{2}$/.test(s) && s.indexOf('.') === -1) {
+s = s.replace(',', '.');
+} else {
+s = s.replace(/,/g, '');
+}
+return Math.round(parseFloat(s) * 100) || 0;
+}
+function updateBadgeFromCents(priceCents, compareAtCents) {
+if (priceEl) priceEl.textContent = formatMoney(priceCents);
+if (compareAtCents && compareAtCents > priceCents) {
+var pct = Math.round((compareAtCents - priceCents) / compareAtCents * 100);
+if (compareEl) {
+compareEl.textContent = formatMoney(compareAtCents);
+compareEl.classList.remove('bsw__compare--hidden');
+}
+pctEl.textContent = pct + '%';
+pillEl.classList.remove('bsw__pill--hidden');
+pillEl.setAttribute('aria-hidden', 'false');
+} else {
+if (compareEl) compareEl.classList.add('bsw__compare--hidden');
+pillEl.classList.add('bsw__pill--hidden');
+pillEl.setAttribute('aria-hidden', 'true');
+}
+}
+function updateBadge(variant) {
+if (!variant) return;
+updateBadgeFromCents(variant.price, variant.compare_at_price || 0);
+}
+function getVariant(id) {
+return variantMap[parseInt(id, 10)] || null;
+}
+document.addEventListener('variant:changed', function (e) {
+if (e.detail && e.detail.variant) updateBadge(e.detail.variant);
+});
+document.addEventListener('product:variantChanged', function (e) {
+if (e.detail && e.detail.variant) updateBadge(e.detail.variant);
+});
+document.addEventListener('change', function (e) {
+var el = e.target;
+if (!el) return;
+if (el.name === 'id') {
+var v = getVariant(el.value);
+if (v) updateBadge(v);
+}
 {%- if mb_kaching %}
-    if (el.name === 'selling_plan') {
-      setTimeout(readKachingPrices, 250);
-    }
+if (el.name === 'selling_plan') {
+setTimeout(readKachingPrices, 250);
+}
 {%- endif %}
-  });
-
-  /* ── 5d. Hook: MutationObserver on hidden variant input ── */
-  var hiddenInput = document.querySelector(
-    '[data-product-form] input[name="id"], form[action*="/cart/add"] input[name="id"]'
-  );
-  if (hiddenInput) {
-    var lastHiddenVal = hiddenInput.value;
-    new MutationObserver(function () {
-      if (hiddenInput.value !== lastHiddenVal) {
-        lastHiddenVal = hiddenInput.value;
-        var v = getVariant(lastHiddenVal);
-        if (v) updateBadge(v);
-      }
-    }).observe(hiddenInput, { attributes: true, attributeFilter: ['value'] });
-
-    setInterval(function () {
-      if (hiddenInput.value !== lastHiddenVal) {
-        lastHiddenVal = hiddenInput.value;
-        var v = getVariant(lastHiddenVal);
-        if (v) updateBadge(v);
-      }
-    }, 200);
-  }
+});
+var hiddenInput = document.querySelector(
+'[data-product-form] input[name="id"], form[action*="/cart/add"] input[name="id"]'
+);
+if (hiddenInput) {
+var lastHiddenVal = hiddenInput.value;
+new MutationObserver(function () {
+if (hiddenInput.value !== lastHiddenVal) {
+lastHiddenVal = hiddenInput.value;
+var v = getVariant(lastHiddenVal);
+if (v) updateBadge(v);
+}
+}).observe(hiddenInput, { attributes: true, attributeFilter: ['value'] });
+setInterval(function () {
+if (hiddenInput.value !== lastHiddenVal) {
+lastHiddenVal = hiddenInput.value;
+var v = getVariant(lastHiddenVal);
+if (v) updateBadge(v);
+}
+}, 200);
+}
 {%- if mb_kaching %}
-
-  /* ── 5e. Hook: Kaching Bundles — watch their rendered price elements ──────
-   *
-   * Kaching Bundles manages its own price display and does NOT fire standard
-   * variant-change events when the user switches bundle tiers or toggles the
-   * subscription. Instead it directly mutates its own DOM nodes:
-   *
-   *   .kaching-bundles__bar-price       ← selected/sale price
-   *   .kaching-bundles__bar-full-price  ← original/compare-at
-   *
-   * getActiveKachingElements() always resolves to the SELECTED bundle row's
-   * price elements, not just the first in the DOM.
-   * ─────────────────────────────────────────────────────────────────────── */
-  var _kTimer       = null;
-  var _kLastPrice   = -1;
-  var _kLastCompare = -1;
-
-  function getActiveKachingElements() {
-    /* ── Strategy 0: the bar Kaching marks as selected (this is what changes when a bundle is clicked) ── */
-    var selBar = document.querySelector('.kaching-bundles__bar--selected, .kaching-bundles__bar--active');
-    if (selBar) {
-      var sbp  = selBar.querySelector('.kaching-bundles__bar-price');
-      var sbfp = selBar.querySelector('.kaching-bundles__bar-full-price');
-      if (sbp && sbfp) return { barPrice: sbp, barFullPrice: sbfp };
-    }
-
-    /* ── Strategy 1: checked radio → walk up to find its bar row ── */
-    var kachingWrap = document.querySelector('.kaching-bundles');
-    if (kachingWrap) {
-      var checked = kachingWrap.querySelector('input[type="radio"]:checked');
-      if (checked) {
-        var row = checked.parentElement;
-        while (row && row !== kachingWrap) {
-          var bp  = row.querySelector('.kaching-bundles__bar-price');
-          var bfp = row.querySelector('.kaching-bundles__bar-full-price');
-          if (bp && bfp) return { barPrice: bp, barFullPrice: bfp };
-          row = row.parentElement;
-        }
-      }
-    }
-
-    /* ── Strategy 2: selected/active modifier class on the bar row ── */
-    var activeCandidates = [
-      '.kaching-bundles__bar--selected',
-      '.kaching-bundles__bar--active',
-      '.kaching-bundles__bar.is-selected',
-      '.kaching-bundles__bar.is-active',
-      '.kaching-bundles__bar.selected',
-      '.kaching-bundles__bar.active'
-    ];
-    for (var i = 0; i < activeCandidates.length; i++) {
-      var activeRow = document.querySelector(activeCandidates[i]);
-      if (activeRow) {
-        var abp  = activeRow.querySelector('.kaching-bundles__bar-price');
-        var abfp = activeRow.querySelector('.kaching-bundles__bar-full-price');
-        if (abp && abfp) return { barPrice: abp, barFullPrice: abfp };
-      }
-    }
-
-    /* ── Strategy 3: first elements on page (original fallback) ── */
-    return {
-      barPrice:     document.querySelector('.kaching-bundles__bar-price'),
-      barFullPrice: document.querySelector('.kaching-bundles__bar-full-price')
-    };
-  }
-
-  function readKachingPrices() {
-    if (_kTimer) clearTimeout(_kTimer);
-    _kTimer = setTimeout(function () {
-      var els          = getActiveKachingElements();
-      var barPrice     = els.barPrice;
-      var barFullPrice = els.barFullPrice;
-
-      /* Require both elements to exist with non-empty, *visible* text.
-         Use innerText only — it returns '' for display:none elements,
-         preventing us from parsing hidden/stale price strings. */
-      if (!barPrice || !barFullPrice) return;
-      var priceText     = (barPrice.innerText     || '').trim();
-      var fullPriceText = (barFullPrice.innerText || '').trim();
-      if (!priceText || !fullPriceText) return;
-
-      var priceCents     = parseToCents(priceText);
-      var compareAtCents = parseToCents(fullPriceText);
-
-      /* Require both to be valid non-zero numbers */
-      if (priceCents <= 0 || compareAtCents <= 0) return;
-
-      /* Skip if nothing changed — prevents feedback loops */
-      if (priceCents === _kLastPrice && compareAtCents === _kLastCompare) return;
-      _kLastPrice   = priceCents;
-      _kLastCompare = compareAtCents;
-
-      updateBadgeFromCents(priceCents, compareAtCents);
-    }, 50);
-  }
-
-  /*
-   * attachKachingObserver
-   * Observes the two price elements directly (primary) and the nearest
-   * stable container (secondary, for full element replacement on re-render).
-   * Returns true when the price elements were found so the poll can stop.
-   */
-  function attachKachingObserver() {
-    var barPrice     = document.querySelector('.kaching-bundles__bar-price');
-    var barFullPrice = document.querySelector('.kaching-bundles__bar-full-price');
-
-    /* Require BOTH elements before we commit — if only one exists the poll
-       keeps running until the second appears (Kaching renders them together) */
-    if (!barPrice || !barFullPrice) return false;
-
-    /* ── Initial read now that we have the elements ── */
-    readKachingPrices();
-
-    /* ── Primary: observe each price element directly ── */
-    var directObs = new MutationObserver(readKachingPrices);
-    directObs.observe(barPrice,     { subtree: true, childList: true, characterData: true });
-    directObs.observe(barFullPrice, { subtree: true, childList: true, characterData: true });
-
-    /* ── Secondary: observe a stable ancestor so element replacement is caught ── */
-    var kachingRoot = (
-      document.querySelector('.kaching-bundles__bar-pricing') ||
-      document.querySelector('.kaching-bundles__bar-wrapper') ||
-      document.querySelector('.kaching-bundles') ||
-      document.querySelector('[id^="MainProduct"]') ||
-      document.querySelector('.product__info-container') ||
-      document.querySelector('.product-single') ||
-      document.querySelector('[data-product-form]') ||
-      document.querySelector('main')
-    );
-    if (kachingRoot) {
-      new MutationObserver(readKachingPrices)
-        .observe(kachingRoot, { subtree: true, childList: true, characterData: true });
-    }
-
-    /* ── Selection: clicking another bundle only changes a class on the bars, so watch that too ── */
-    var barsRoot = document.querySelector('.kaching-bundles__bars') || document.querySelector('.kaching-bundles');
-    if (barsRoot) {
-      new MutationObserver(readKachingPrices).observe(barsRoot, {
-        attributes: true,
-        attributeFilter: ['class', 'checked', 'aria-checked', 'aria-selected'],
-        subtree: true
-      });
-    }
-
-    return true;
-  }
-
-  /* Clicks / changes inside the bundle bars (works even if Kaching re-draws its bars) */
-  document.addEventListener('click', function (e) {
-    if (e.target && e.target.closest && e.target.closest('.kaching-bundles')) setTimeout(readKachingPrices, 80);
-  }, true);
-  document.addEventListener('change', function (e) {
-    if (e.target && e.target.closest && e.target.closest('.kaching-bundles')) setTimeout(readKachingPrices, 80);
-  }, true);
-
-  /* Try immediately — elements may already be in the DOM */
-  if (!attachKachingObserver()) {
-    /* Kaching may inject its bar after DOMContentLoaded — poll up to 5 s */
-    var _kPollN = 0;
-    var _kPoll  = setInterval(function () {
-      _kPollN++;
-      if (attachKachingObserver() || _kPollN >= 50) {
-        clearInterval(_kPoll);
-      }
-    }, 100);
-  }
-
-  /* Also listen for Kaching's own custom events */
-  document.addEventListener('kaching:price:updated',        readKachingPrices);
-  document.addEventListener('kaching:bundle:selected',      readKachingPrices);
-  document.addEventListener('kaching:subscription:changed', readKachingPrices);
-  document.addEventListener('kaching:subscription:toggled', readKachingPrices);
-  document.addEventListener('kaching:autoship:changed',     readKachingPrices);
-  document.addEventListener('kaching:selling_plan:changed', readKachingPrices);
+var _kTimer = null;
+var _kLastPrice = -1;
+var _kLastCompare = -1;
+function getActiveKachingElements() {
+var selBar = document.querySelector('.kaching-bundles__bar--selected, .kaching-bundles__bar--active');
+if (selBar) {
+var sbp = selBar.querySelector('.kaching-bundles__bar-price');
+var sbfp = selBar.querySelector('.kaching-bundles__bar-full-price');
+if (sbp && sbfp) return { barPrice: sbp, barFullPrice: sbfp };
+}
+var kachingWrap = document.querySelector('.kaching-bundles');
+if (kachingWrap) {
+var checked = kachingWrap.querySelector('input[type="radio"]:checked');
+if (checked) {
+var row = checked.parentElement;
+while (row && row !== kachingWrap) {
+var bp = row.querySelector('.kaching-bundles__bar-price');
+var bfp = row.querySelector('.kaching-bundles__bar-full-price');
+if (bp && bfp) return { barPrice: bp, barFullPrice: bfp };
+row = row.parentElement;
+}
+}
+}
+var activeCandidates = [
+'.kaching-bundles__bar--selected',
+'.kaching-bundles__bar--active',
+'.kaching-bundles__bar.is-selected',
+'.kaching-bundles__bar.is-active',
+'.kaching-bundles__bar.selected',
+'.kaching-bundles__bar.active'
+];
+for (var i = 0; i < activeCandidates.length; i++) {
+var activeRow = document.querySelector(activeCandidates[i]);
+if (activeRow) {
+var abp = activeRow.querySelector('.kaching-bundles__bar-price');
+var abfp = activeRow.querySelector('.kaching-bundles__bar-full-price');
+if (abp && abfp) return { barPrice: abp, barFullPrice: abfp };
+}
+}
+return {
+barPrice: document.querySelector('.kaching-bundles__bar-price'),
+barFullPrice: document.querySelector('.kaching-bundles__bar-full-price')
+};
+}
+function readKachingPrices() {
+if (_kTimer) clearTimeout(_kTimer);
+_kTimer = setTimeout(function () {
+var els = getActiveKachingElements();
+var barPrice = els.barPrice;
+var barFullPrice = els.barFullPrice;
+if (!barPrice || !barFullPrice) return;
+var priceText = (barPrice.innerText || '').trim();
+var fullPriceText = (barFullPrice.innerText || '').trim();
+if (!priceText || !fullPriceText) return;
+var priceCents = parseToCents(priceText);
+var compareAtCents = parseToCents(fullPriceText);
+if (priceCents <= 0 || compareAtCents <= 0) return;
+if (priceCents === _kLastPrice && compareAtCents === _kLastCompare) return;
+_kLastPrice = priceCents;
+_kLastCompare = compareAtCents;
+updateBadgeFromCents(priceCents, compareAtCents);
+}, 50);
+}
+function attachKachingObserver() {
+var barPrice = document.querySelector('.kaching-bundles__bar-price');
+var barFullPrice = document.querySelector('.kaching-bundles__bar-full-price');
+if (!barPrice || !barFullPrice) return false;
+readKachingPrices();
+var directObs = new MutationObserver(readKachingPrices);
+directObs.observe(barPrice, { subtree: true, childList: true, characterData: true });
+directObs.observe(barFullPrice, { subtree: true, childList: true, characterData: true });
+var kachingRoot = (
+document.querySelector('.kaching-bundles__bar-pricing') ||
+document.querySelector('.kaching-bundles__bar-wrapper') ||
+document.querySelector('.kaching-bundles') ||
+document.querySelector('[id^="MainProduct"]') ||
+document.querySelector('.product__info-container') ||
+document.querySelector('.product-single') ||
+document.querySelector('[data-product-form]') ||
+document.querySelector('main')
+);
+if (kachingRoot) {
+new MutationObserver(readKachingPrices)
+.observe(kachingRoot, { subtree: true, childList: true, characterData: true });
+}
+var barsRoot = document.querySelector('.kaching-bundles__bars') || document.querySelector('.kaching-bundles');
+if (barsRoot) {
+new MutationObserver(readKachingPrices).observe(barsRoot, {
+attributes: true,
+attributeFilter: ['class', 'checked', 'aria-checked', 'aria-selected'],
+subtree: true
+});
+}
+return true;
+}
+document.addEventListener('click', function (e) {
+if (e.target && e.target.closest && e.target.closest('.kaching-bundles')) setTimeout(readKachingPrices, 80);
+}, true);
+document.addEventListener('change', function (e) {
+if (e.target && e.target.closest && e.target.closest('.kaching-bundles')) setTimeout(readKachingPrices, 80);
+}, true);
+if (!attachKachingObserver()) {
+var _kPollN = 0;
+var _kPoll = setInterval(function () {
+_kPollN++;
+if (attachKachingObserver() || _kPollN >= 50) {
+clearInterval(_kPoll);
+}
+}, 100);
+}
+document.addEventListener('kaching:price:updated', readKachingPrices);
+document.addEventListener('kaching:bundle:selected', readKachingPrices);
+document.addEventListener('kaching:subscription:changed', readKachingPrices);
+document.addEventListener('kaching:subscription:toggled', readKachingPrices);
+document.addEventListener('kaching:autoship:changed', readKachingPrices);
+document.addEventListener('kaching:selling_plan:changed', readKachingPrices);
 {%- endif %}
-
 })();
 </script>
