@@ -1,25 +1,26 @@
 {%- comment -%}
   EDIT YOUR CONTENT BELOW. One bullet per entry, put @@ on its own line between bullets.
   Add or remove bullets freely. Do not use a straight apostrophe (') inside the text (use &#39; instead).
+  This block uses its own class names (mb-bl), so it can sit on the same page as the hero banner and the photo strip without clashing.
   mb_icon      = optional image URL for the tick (any square image, shown 16px wide). Leave '' to use the built-in round tick (then mb_icon_color applies).
   mb_icon_color = colour of the built-in round tick.
   mb_text_color = colour of the bullet text.
-  mb_top / mb_top_mobile / mb_bottom = space above the list (desktop / phone) and below it. Margins merge with neighbouring
-  blocks, so if the block above already has its own bottom space, the larger of the two is used. To tighten further than
-  that, use a negative value, for example -8px. Set to 0 to remove.
+  mb_top / mb_top_mobile / mb_bottom = space above the list (desktop / phone) and below it. In the original page this space
+  comes from the product title&#39;s bottom margin (12px / 16px) and the next block&#39;s top margin (16px). Margins merge with
+  neighbouring blocks, so a title that already has space is not doubled. Set to 0 to remove.
 {%- endcomment -%}
 {%- assign mb_icon = 'https://cdn.shopify.com/s/files/1/0695/1007/0343/files/exec-18f10466-3b19-4d94-bdb9-205c33f98f4f.png?v=1791682406' -%}
 {%- assign mb_icon_color = '#c47245' -%}
 {%- assign mb_text_color = '#444444' -%}
-{%- assign mb_top = '4px' -%}
-{%- assign mb_top_mobile = '6px' -%}
+{%- assign mb_top = '12px' -%}
+{%- assign mb_top_mobile = '16px' -%}
 {%- assign mb_bottom = '16px' -%}
 {%- capture mb_data -%}
 Restores Insulin Sensitivity
 @@
 Stabilizes Blood Sugar Levels
 @@
-Supports Blood Pressure Naturally
+Targets the Belly That Won&#39;t Budge
 @@
 Supports Steady Energy
 {%- endcapture -%}
@@ -31,20 +32,21 @@ Supports Steady Energy
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600&display=swap"></noscript>
 
 <style>
-.mb-sp{display:flex;flex-direction:column;margin:var(--mb-sp-mt,12px) 0 var(--mb-sp-mb,16px);font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:500;line-height:1.8;letter-spacing:.6px;text-align:left}
-.mb-sp__it{display:flex;align-items:center;margin:0 0 12px}
-.mb-sp__ic{display:block;flex:none;width:16px;height:auto;margin:0 10px 0 0;color:var(--mb-sp-ic,#c47245)}
-.mb-sp__t{display:flex;align-items:center;width:100%;font-size:15px;line-height:1.2;color:var(--mb-sp-tx,#444)}
-@media screen and (max-width:749px){.mb-sp{margin-top:var(--mb-sp-mtm,16px)}}
+.mb-bl{display:flex;flex-direction:column;margin:var(--mb-bl-mt,12px) 0 var(--mb-bl-mb,16px);font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:500;line-height:1.8;letter-spacing:.6px;text-align:left}
+.mb-bl__it{display:flex;align-items:center;margin:0 0 12px}
+.mb-bl__ic{display:block;flex:none;width:16px;height:auto;margin:0 10px 0 0;color:var(--mb-bl-ic,#c47245)!important}
+.mb-bl__t{display:flex;align-items:center;width:100%;font-size:15px;line-height:1.2;color:var(--mb-bl-tx,#444)!important;-webkit-text-fill-color:var(--mb-bl-tx,#444)!important}
+.mb-bl__t span{color:var(--mb-bl-tx,#444)!important;-webkit-text-fill-color:var(--mb-bl-tx,#444)!important}
+@media screen and (max-width:749px){.mb-bl{margin-top:var(--mb-bl-mtm,16px)}}
 </style>
 
 {%- capture mb_svg -%}
-<svg class="mb-sp__ic" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="8" fill="currentColor"/><path d="M4.6 8.4l2.6 2.4 4.6-5.4" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<svg class="mb-bl__ic" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="8" fill="currentColor"/><path d="M4.6 8.4l2.6 2.4 4.6-5.4" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
 {%- endcapture -%}
-<div class="mb-sp" role="list" style="--mb-sp-ic:{{ mb_icon_color }};--mb-sp-tx:{{ mb_text_color }};--mb-sp-mt:{{ mb_top }};--mb-sp-mtm:{{ mb_top_mobile }};--mb-sp-mb:{{ mb_bottom }}">
+<div class="mb-bl" role="list" style="--mb-bl-ic:{{ mb_icon_color }};--mb-bl-tx:{{ mb_text_color }};--mb-bl-mt:{{ mb_top }};--mb-bl-mtm:{{ mb_top_mobile }};--mb-bl-mb:{{ mb_bottom }}">
 {%- for it in mb_items -%}
-<div class="mb-sp__it" role="listitem">
-{%- if mb_icon != blank -%}<img class="mb-sp__ic" src="{{ mb_icon }}" width="16" height="16" alt="" decoding="async">{%- else -%}{{ mb_svg }}{%- endif -%}
-<div class="mb-sp__t"><span>{{ it | strip }}</span></div></div>
+<div class="mb-bl__it" role="listitem">
+{%- if mb_icon != blank -%}<img class="mb-bl__ic" src="{{ mb_icon }}" width="16" height="16" alt="" decoding="async">{%- else -%}{{ mb_svg }}{%- endif -%}
+<div class="mb-bl__t"><span>{{ it | strip }}</span></div></div>
 {%- endfor -%}
 </div>
