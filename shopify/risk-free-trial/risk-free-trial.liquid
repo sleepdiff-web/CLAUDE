@@ -1,34 +1,43 @@
 {%- comment -%}
-  "90-Day Risk-Free Trial" section: on the left a round guarantee badge, a small orange line, a heading, a short paragraph and a white button; on the right a picture of a person standing at the bottom edge. On phones the person goes under the text, centred.
+  "60-Day Risk-Free Trial" section: on the left a round guarantee badge, a small line of text, a heading, a short paragraph and a white button; on the right a picture of a person standing at the bottom edge. On phones the person goes under the text, centred.
   EDIT YOUR CONTENT BELOW.
-  The picture links start as Metabolae's own files so the section is an exact copy straight away.
-  Before you go live, download them, upload them to your own store (Content > Files) and paste your links here instead, so they keep working and are yours. Also replace all the wording, because it describes Metabolae's product.
-  mb_badge = the round badge above the text. mb_person = the picture on the right (a cut-out person on a see-through background looks best, about 400 by 400).
-  mb_link = where the button goes. The original uses # (which jumps to the top of the page). Put a real link there, or #MainContent, to send people somewhere useful.
-  mb_bg = section background. mb_accent = the small line above the heading and the button text (Metabolae's orange; use #943434 for your red). mb_heading_color = the heading. mb_text_color = the paragraph.
+  mb_badge_top / mb_badge_days / mb_badge_unit / mb_badge_bottom = the wording on the round badge (top curve, big number, small word under the number, bottom curve). The badge is drawn by the code, so there is no picture to upload. If you would rather use your own badge picture, paste its link into mb_badge and the picture is used instead.
+  mb_badge_dark / mb_badge_main = the two badge colours (outer edge and inner ring).
+  mb_person = the picture on the right (a cut-out person on a see-through background looks best, about 400 by 400).
+  mb_link = where the button goes. Leave it as # and the button scrolls up to your Kaching bundles, with the Add to cart button just below them in view. Put a real link there, or #MainContent, to send people somewhere else instead.
+  mb_target = what the # button scrolls to (a CSS selector, the first match on the page is used; if it is not found it scrolls to your Add to cart button, then your product form). mb_scroll_gap = the space in pixels left between your sticky header and the top of the bundles.
+  mb_bg = section background. mb_accent = the small line above the heading and the button text (set to your red). mb_heading_color = the heading. mb_text_color = the paragraph.
   These colours are locked, so the theme cannot turn them black.
   Do not use a straight apostrophe (') in the text, use &#39; or a curly one instead.
 {%- endcomment -%}
+{%- assign mb_badge_top = 'Risk Free' -%}
+{%- assign mb_badge_days = '60' -%}
+{%- assign mb_badge_unit = 'Days' -%}
+{%- assign mb_badge_bottom = 'Guarantee' -%}
+{%- assign mb_badge_dark = '#612229' -%}
+{%- assign mb_badge_main = '#913939' -%}
+{%- assign mb_badge = '' -%}
+{%- assign mb_badge_alt = '60 days risk free guarantee' -%}
 {%- assign mb_eyebrow = 'Feel the Difference' -%}
-{%- assign mb_heading = '90-Day Risk-Free Trial' -%}
+{%- assign mb_heading = '60-Day Risk-Free Trial' -%}
 {%- capture mb_desc -%}
-If you’re not completely satisfied in your first 90 days, simply return your order for a full refund — no questions asked.
+If you are not completely satisfied in your first 60 days, simply return your order for a full refund. No questions asked.
 {%- endcapture -%}
 {%- assign mb_button = 'Try Risk-Free Today' -%}
 {%- assign mb_link = '#' -%}
-{%- assign mb_badge = 'https://metabolae.com/cdn/shop/files/metabolae-90-day-money-back.webp?v=1773612119&width=200' -%}
-{%- assign mb_badge_alt = 'Money-back guarantee badge' -%}
-{%- assign mb_person = 'https://metabolae.com/cdn/shop/files/metabolae-90-day-personv2.webp?v=1784724924&width=600' -%}
-{%- assign mb_person_alt = '90-Day Risk-Free Trial' -%}
+{%- assign mb_target = '.kaching-bundles' -%}
+{%- assign mb_scroll_gap = 12 -%}
+{%- assign mb_person = 'https://cdn.shopify.com/s/files/1/0695/1007/0343/files/45dc30ae-2648-47dd-86fc-0dc1b1848f5c.png?v=1792063192&width=600' -%}
+{%- assign mb_person_alt = '60-Day Risk-Free Trial' -%}
 {%- assign mb_bg = '#fdf2e9' -%}
-{%- assign mb_accent = '#b85c2a' -%}
+{%- assign mb_accent = '#913939' -%}
 {%- assign mb_heading_color = '#1a1a1a' -%}
 {%- assign mb_text_color = '#555555' -%}
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600&display=swap" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600&display=swap"></noscript>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600&display=swap"></noscript>
 
 <style>
 .page-width:has(>.mb-rf){max-width:none;padding:0}
@@ -38,6 +47,11 @@ If you’re not completely satisfied in your first 90 days, simply return your o
 .mb-rf .mb-rf__in{display:grid;grid-template-columns:1fr auto;align-items:end;gap:40px;max-width:1100px;margin:0 auto;padding:0 40px}
 .mb-rf .mb-rf__c{display:flex;flex-direction:column;align-items:center;align-self:center;gap:12px;max-width:540px;margin:0 auto;padding-bottom:40px;text-align:center}
 .mb-rf .mb-rf__bd{display:block;width:152px;max-width:none;height:auto;margin:0 0 4px;border:0}
+.mb-rf svg.mb-rf__bd{overflow:visible}
+.mb-rf .mb-rf__s1{fill:var(--mb-rf-b1)!important}
+.mb-rf .mb-rf__s2{fill:var(--mb-rf-b2)!important}
+.mb-rf .mb-rf__s3{fill:#fff!important}
+.mb-rf .mb-rf__s4{fill:var(--mb-rf-b1)!important}
 .mb-rf .mb-rf__ey{margin:0;padding:0;font-size:15px;font-weight:600;line-height:1.3;letter-spacing:.1em;text-transform:uppercase}
 .mb-rf .mb-rf__h{margin:0;padding:0;font-family:Poppins,system-ui,sans-serif;font-size:clamp(26px,3.5vw,40px);font-style:normal;font-weight:400!important;line-height:1.2;letter-spacing:-.01em;text-align:center;text-transform:none}
 .mb-rf .mb-rf__d{margin:0;padding:0;font-size:15px;font-weight:400!important;line-height:1.65;text-align:center}
@@ -59,15 +73,19 @@ If you’re not completely satisfied in your first 90 days, simply return your o
 }
 </style>
 
-<div class="mb-rf" style="--mb-rf-ac:{{ mb_accent }};--mb-rf-hc:{{ mb_heading_color }};--mb-rf-tx:{{ mb_text_color }};background:{{ mb_bg }}!important">
+<div class="mb-rf" style="--mb-rf-ac:{{ mb_accent }};--mb-rf-hc:{{ mb_heading_color }};--mb-rf-tx:{{ mb_text_color }};--mb-rf-b1:{{ mb_badge_dark }};--mb-rf-b2:{{ mb_badge_main }};background:{{ mb_bg }}!important">
   <div class="mb-rf__in">
     <div class="mb-rf__c">
+      {%- if mb_badge != blank -%}
       <img class="mb-rf__bd" src="{{ mb_badge }}" alt="{{ mb_badge_alt | escape }}" loading="lazy" width="152">
+      {%- else -%}
+      <svg class="mb-rf__bd" viewBox="-3.3 -3.3 218.5 218.5" width="152" height="152" role="img" aria-label="{{ mb_badge_alt | escape }}"><path class="mb-rf__s1" d="M106.0 7.0L117.9 15.8L131.6 10.4L140.8 21.9L155.5 20.3L161.4 33.8L176.0 36.0L178.2 50.6L191.7 56.5L190.1 71.2L201.6 80.4L196.2 94.1L205.0 106.0L196.2 117.9L201.6 131.6L190.1 140.8L191.7 155.5L178.2 161.4L176.0 176.0L161.4 178.2L155.5 191.7L140.8 190.1L131.6 201.6L117.9 196.2L106.0 205.0L94.1 196.2L80.4 201.6L71.2 190.1L56.5 191.7L50.6 178.2L36.0 176.0L33.8 161.4L20.3 155.5L21.9 140.8L10.4 131.6L15.8 117.9L7.0 106.0L15.8 94.1L10.4 80.4L21.9 71.2L20.3 56.5L33.8 50.6L36.0 36.0L50.6 33.8L56.5 20.3L71.2 21.9L80.4 10.4L94.1 15.8Z" stroke="#fff" stroke-width="3" stroke-linejoin="round"/><circle class="mb-rf__s2" cx="106" cy="106" r="81.5" stroke="#fff" stroke-width="2.2"/><path id="mb-rf-t-{{ section.id }}" d="M106 106m-62 0a62 62 0 0 1 124 0" fill="none"/><path id="mb-rf-b-{{ section.id }}" d="M106 106m-73 0a73 73 0 0 0 146 0" fill="none"/><g class="mb-rf__s3" font-family="'Plus Jakarta Sans',sans-serif" font-weight="800" font-size="17.5" letter-spacing="1.7"><text text-anchor="middle"><textPath href="#mb-rf-t-{{ section.id }}" startOffset="50%">{{ mb_badge_top | upcase }}</textPath></text><text text-anchor="middle"><textPath href="#mb-rf-b-{{ section.id }}" startOffset="50%">{{ mb_badge_bottom | upcase }}</textPath></text><path d="M41.5 83.3L42.9 86.6L46.4 86.9L43.7 89.2L44.6 92.7L41.5 90.8L38.4 92.7L39.3 89.2L36.6 86.9L40.1 86.6ZM40.5 103.8L41.9 107.1L45.4 107.4L42.7 109.7L43.6 113.2L40.5 111.3L37.4 113.2L38.3 109.7L35.6 107.4L39.1 107.1ZM45.5 123.3L46.9 126.6L50.4 126.9L47.7 129.2L48.6 132.7L45.5 130.8L42.4 132.7L43.3 129.2L40.6 126.9L44.1 126.6ZM170.5 83.3L171.9 86.6L175.4 86.9L172.7 89.2L173.6 92.7L170.5 90.8L167.4 92.7L168.3 89.2L165.6 86.9L169.1 86.6ZM171.5 103.8L172.9 107.1L176.4 107.4L173.7 109.7L174.6 113.2L171.5 111.3L168.4 113.2L169.3 109.7L166.6 107.4L170.1 107.1ZM166.5 123.3L167.9 126.6L171.4 126.9L168.7 129.2L169.6 132.7L166.5 130.8L163.4 132.7L164.3 129.2L161.6 126.9L165.1 126.6Z"/></g><circle cx="106" cy="106" r="48.5" fill="#fff" stroke="{{ mb_badge_dark }}" stroke-width="2.4"/><g class="mb-rf__s4" font-family="'Plus Jakarta Sans',sans-serif" text-anchor="middle"><text x="106" y="107" font-size="40" font-weight="800" letter-spacing="-1">{{ mb_badge_days }}</text><text x="106" y="130" font-size="18.5" font-weight="800">{{ mb_badge_unit | upcase }}</text></g></svg>
+      {%- endif -%}
       <p class="mb-rf__ey">{{ mb_eyebrow }}</p>
       <h2 class="mb-rf__h">{{ mb_heading }}</h2>
       <p class="mb-rf__d">{{ mb_desc | strip }}</p>
       <div class="mb-rf__cta">
-        <a href="{{ mb_link }}" class="mb-rf__bt" style="background:#fff!important">{{ mb_button }}</a>
+        <a href="{{ mb_link }}" class="mb-rf__bt" data-target="{{ mb_target | escape }}" data-gap="{{ mb_scroll_gap }}" style="background:#fff!important">{{ mb_button }}</a>
       </div>
     </div>
     <div class="mb-rf__iw">
@@ -75,3 +93,22 @@ If you’re not completely satisfied in your first 90 days, simply return your o
     </div>
   </div>
 </div>
+<script>
+(function(){
+var r=document.currentScript.previousElementSibling,b=r&&r.querySelector('.mb-rf__bt');
+if(!b)return;
+b.addEventListener('click',function(e){
+var h=b.getAttribute('href');
+if(h&&h!=='#')return;
+e.preventDefault();
+var sel=b.getAttribute('data-target'),gap=parseInt(b.getAttribute('data-gap'),10);
+if(isNaN(gap))gap=12;
+function find(){var t=null;try{t=document.querySelector(sel)}catch(x){}return t||document.querySelector('.product-form__submit, [name="add"]')||document.querySelector('[data-product-form], .product-form')}
+function hdr(){var q=['.section-header','sticky-header','.header-wrapper','header.header'],i,n,p;for(i=0;i<q.length;i++){n=document.querySelector(q[i]);while(n&&n!==document.body){p=getComputedStyle(n).position;if(p==='sticky'||p==='fixed')return n.offsetHeight;n=n.parentElement}}return 0}
+var t=find();
+if(!t)return;
+window.scrollTo({top:Math.max(0,t.getBoundingClientRect().top+(window.pageYOffset||document.documentElement.scrollTop)-hdr()-gap),behavior:'smooth'});
+[900,1700].forEach(function(ms){setTimeout(function(){var y=find();if(!y)return;var d=y.getBoundingClientRect().top-(hdr()+gap);if(Math.abs(d)>6)window.scrollBy({top:d,behavior:'smooth'})},ms)});
+});
+})();
+</script>
