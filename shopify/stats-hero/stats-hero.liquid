@@ -4,7 +4,7 @@
   The text can use <br> for a line break and <strong>...</strong>. Do not use @@ or ||| inside the text.
   mb_bg_img = a photo for the background (Content > Files > upload > copy link). Leave '' for a plain colour background.
   mb_bg_color = background colour (shows while the photo loads). mb_overlay = a colour wash laid over the photo; it starts fully clear, so the photo shows as it is. For a wash use for example rgba(148, 52, 52, 0.75). mb_text_color = text colour (locked). mb_desc_color = colour of the small text under each number.
-  mb_btn_bg / mb_btn_color = button background and text colour. mb_target = what the button scrolls to (a CSS selector for your buy box).
+  mb_btn_bg / mb_btn_color = button background and text colour. mb_target = what the button scrolls to: your Kaching bundles (a CSS selector; the first match on the page is used). If that is not found it scrolls to your Add to Cart button, then to the product info. mb_scroll_gap = the space in pixels left between your sticky header and the top of the bundles, so the bundles and the Add to Cart button below them are both in view.
   mb_respect_motion = false so the numbers always count up (like Metabolae); set it to true to skip the count-up for people whose device has animations turned off.
   mb_top / mb_bottom = space above and below. The section runs the full width of the screen.
   Do not use a straight apostrophe (') inside the text, use &#39; instead.
@@ -12,7 +12,8 @@
 {%- assign mb_heading = 'What Customers Report After Using Purge' -%}
 {%- assign mb_btn = 'Try Risk-Free Today' -%}
 {%- assign mb_sub = '60-day money back guarantee' -%}
-{%- assign mb_target = 'product-info, .product__info-container, .product-form' -%}
+{%- assign mb_target = '.kaching-bundles' -%}
+{%- assign mb_scroll_gap = 12 -%}
 {%- assign mb_bg_img = 'https://cdn.shopify.com/s/files/1/0695/1007/0343/files/0919087c-5832-48f0-a2b4-ae6bd7fe5fcd.png?v=1791711797' -%}
 {%- assign mb_bg_color = '#943434' -%}
 {%- assign mb_overlay = 'rgba(0, 0, 0, 0)' -%}
@@ -91,7 +92,7 @@
 </div></div>
 <div class="mb-sh__r">
 <div class="mb-sh__hd"><h2 class="mb-sh__h">{{ mb_heading }}</h2></div>
-<div class="mb-sh__cw"><button type="button" class="mb-sh__btn" data-target="{{ mb_target | escape }}">{{ mb_btn }}</button><div class="mb-sh__s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 11 11 13 15 9"/></svg><span>{{ mb_sub }}</span></div></div>
+<div class="mb-sh__cw"><button type="button" class="mb-sh__btn" data-target="{{ mb_target | escape }}" data-gap="{{ mb_scroll_gap }}">{{ mb_btn }}</button><div class="mb-sh__s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 11 11 13 15 9"/></svg><span>{{ mb_sub }}</span></div></div>
 </div>
 </div>
 </div>
@@ -103,8 +104,36 @@ if(w.getAttribute('data-on'))return;
 w.setAttribute('data-on','1');
 var b=w.querySelector('.mb-sh__btn');
 if(b)b.addEventListener('click',function(){
-var t=document.querySelector(b.getAttribute('data-target'));
-if(t)t.scrollIntoView({behavior:'smooth',block:'start'});
+var sel=b.getAttribute('data-target'),gap=parseInt(b.getAttribute('data-gap'),10);
+if(isNaN(gap))gap=12;
+function find(){
+var t=null;
+try{t=document.querySelector(sel)}catch(e){}
+return t||document.querySelector('.product-form__submit, [name="add"]')||document.querySelector('product-info, .product__info-container, .product-form');
+}
+function hdr(){
+var q=['.section-header','sticky-header','.header-wrapper','header.header'],i,n,p;
+for(i=0;i<q.length;i++){
+n=document.querySelector(q[i]);
+while(n&&n!==document.body){
+p=getComputedStyle(n).position;
+if(p==='sticky'||p==='fixed')return n.offsetHeight;
+n=n.parentElement;
+}
+}
+return 0;
+}
+var t=find();
+if(!t)return;
+window.scrollTo({top:Math.max(0,t.getBoundingClientRect().top+(window.pageYOffset||document.documentElement.scrollTop)-hdr()-gap),behavior:'smooth'});
+[900,1700].forEach(function(ms){
+setTimeout(function(){
+var x=find();
+if(!x)return;
+var d=x.getBoundingClientRect().top-(hdr()+gap);
+if(Math.abs(d)>6)window.scrollBy({top:d,behavior:'smooth'});
+},ms);
+});
 });
 var cs=[].slice.call(w.querySelectorAll('.mb-sh__p'));
 if(!cs.length||!('IntersectionObserver' in window))return;
