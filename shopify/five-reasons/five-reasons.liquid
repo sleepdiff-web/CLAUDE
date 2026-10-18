@@ -4,7 +4,7 @@
   The card images start as Metabolae's own files so the section is an exact copy straight away.
   Before you go live, download them, upload them to your own store (Content > Files) and paste your links here instead, so they keep working and are yours.
   mb_badge = the small badge above the heading. mb_title = the heading. mb_reason = the word on each card tag (Reason). mb_accent = the colour of the badge, card tags, hover border, active dot and button (your red, #943434). mb_title_color = heading and card titles. mb_text_color = card text. mb_bg = section background. mb_card_bg = card background.
-  The button scrolls up to your product area. These colours are locked, so the theme cannot turn them black.
+  The button scrolls up to your Kaching bundles, with the Add to cart button just below them in view. mb_target = what it scrolls to (a CSS selector, the first match on the page is used; if it is not found it scrolls to your Add to cart button, then your product area). mb_scroll_gap = the space in pixels left between your sticky header and the top of the bundles. These colours are locked, so the theme cannot turn them black.
   Do not use a straight apostrophe (') in the text, use &#39; instead. Write & as &amp;. Do not type three | in a row inside a card except as the separators.
 {%- endcomment -%}
 {%- assign mb_badge = '5 Reasons Why' -%}
@@ -17,6 +17,8 @@
 {%- assign mb_card_bg = '#ffffff' -%}
 {%- assign mb_button = 'Try Risk-Free Today' -%}
 {%- assign mb_note = '60-day money back guarantee' -%}
+{%- assign mb_target = '.kaching-bundles' -%}
+{%- assign mb_scroll_gap = 12 -%}
 {%- capture mb_cards -%}
 Berberine HCl, Not Standard Powder ||| Unlike cheap berberine powder, which absorbs poorly and delivers inconsistent results, Purge Berberine uses Berberine HCl, the hydrochloride salt form chosen for its superior stability and bioavailability. It is the form used in clinical research, in a dose your body can actually put to work. ||| https://metabolae.com/cdn/shop/files/metabolae-12-1-concentrated-potency.webp?v=1773612119
 @@
@@ -114,7 +116,7 @@ Third-Party Lab Verified ||| Every batch is sent to an independent lab before it
 </div>
 </div>
 <div class="mb-fr__cta">
-<a href="#" class="mb-fr__bt" data-mb-fr-cta>{{ mb_button }}</a>
+<a href="#" class="mb-fr__bt" data-mb-fr-cta data-target="{{ mb_target | escape }}" data-gap="{{ mb_scroll_gap }}">{{ mb_button }}</a>
 <div class="mb-fr__sb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="m9 11 2 2 4-4"></path></svg>{{ mb_note }}</div>
 </div>
 </div>
@@ -126,8 +128,14 @@ var sc=r.querySelector('.mb-fr__sc'),row=r.querySelector('.mb-fr__row'),cs=[].sl
 dots=[].slice.call(ds.children),grid=[0],snap=[0],tr=0,ini=1,si=0,down=0,pid=0,moved=0,pass=0,sx=0,sy=0,t0=0,st=0,dir=0,scr,rid='mb-fr-'+Math.random().toString(36).slice(2,8);
 if(cta)cta.addEventListener('click',function(e){
 e.preventDefault();
-var t=document.querySelector('product-info, .product__info-container, .product-form');
-if(t)t.scrollIntoView({behavior:'smooth',block:'start'});else window.scrollTo({top:0,behavior:'smooth'})});
+var sel=cta.getAttribute('data-target'),gap=parseInt(cta.getAttribute('data-gap'),10);
+if(isNaN(gap))gap=12;
+function find(){var t=null;try{t=document.querySelector(sel)}catch(x){}return t||document.querySelector('.product-form__submit, [name="add"]')||document.querySelector('product-info, .product__info-container, .product-form')}
+function hdr(){var q=['.section-header','sticky-header','.header-wrapper','header.header'],i,h,p;for(i=0;i<q.length;i++){h=document.querySelector(q[i]);while(h&&h!==document.body){p=getComputedStyle(h).position;if(p==='sticky'||p==='fixed')return h.offsetHeight;h=h.parentElement}}return 0}
+var t=find();
+if(!t){window.scrollTo({top:0,behavior:'smooth'});return}
+window.scrollTo({top:Math.max(0,t.getBoundingClientRect().top+(window.pageYOffset||document.documentElement.scrollTop)-hdr()-gap),behavior:'smooth'});
+[900,1700].forEach(function(ms){setTimeout(function(){var y=find();if(!y)return;var d=y.getBoundingClientRect().top-(hdr()+gap);if(Math.abs(d)>6)window.scrollBy({top:d,behavior:'smooth'})},ms)})});
 if(n<2){r.classList.add('is-lock');return}
 row.id=rid;pv.setAttribute('aria-controls',rid);nx.setAttribute('aria-controls',rid);
 function off(b,o){b.disabled=o;b.classList.toggle('is-off',o);b.setAttribute('aria-disabled',o);b.tabIndex=o?-1:0}
