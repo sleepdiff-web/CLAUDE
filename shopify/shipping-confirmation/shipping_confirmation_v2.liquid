@@ -1,0 +1,513 @@
+{% comment %}
+  SETTINGS. Edit these four lines only.
+  show_raw_tracking_number: false hides the raw tracking number. Set to true to show it again.
+  show_view_order_link: true shows the small "View your order" link under the button.
+  brand_name: the name used in the email copy.
+  tracking_page_url: the page the "Track your order" button opens.
+{% endcomment %}
+{% assign show_raw_tracking_number = false %}
+{% assign show_view_order_link = true %}
+{% assign brand_name = 'Purge Labs' %}
+{% assign tracking_page_url = 'https://purgelabs.shop/apps/parcelpanel' %}
+{% assign pl_font = "-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" %}
+
+{% if fulfillment.item_count == item_count %}
+  {% capture email_title %}Your order is on its way{% endcapture %}
+  {% capture email_body %}Good news. Everything in your order has been packed and is heading to you. Use the button below to see where it is at any time.{% endcapture %}
+{% elsif fulfillment.item_count > 1 %}
+  {% if fulfillment_status == 'fulfilled' %}
+    {% capture email_title %}The last items in your order are on their way{% endcapture %}
+    {% capture email_body %}Good news. The final items in your order have been packed and are heading to you, so everything has now been sent. Use the button below to see where this shipment is at any time.{% endcapture %}
+  {% else %}
+    {% capture email_title %}Some items in your order are on their way{% endcapture %}
+    {% capture email_body %}Good news. Some items in your order have been packed and are heading to you. Anything still to come will be sent separately. Use the button below to see where this shipment is at any time.{% endcapture %}
+  {% endif %}
+{% else %}
+  {% if fulfillment_status == 'fulfilled' %}
+    {% capture email_title %}The last item in your order is on its way{% endcapture %}
+    {% capture email_body %}Good news. The final item in your order has been packed and is heading to you, so everything has now been sent. Use the button below to see where this shipment is at any time.{% endcapture %}
+  {% else %}
+    {% capture email_title %}One item in your order is on its way{% endcapture %}
+    {% capture email_body %}Good news. One item in your order has been packed and is heading to you. Anything still to come will be sent separately. Use the button below to see where this shipment is at any time.{% endcapture %}
+  {% endif %}
+{% endif %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <title>{{ email_title }}</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width">
+  <meta name="x-apple-disable-message-reformatting">
+  <link rel="stylesheet" type="text/css" href="/assets/notifications/styles.css">
+  <style>
+    a, a:hover, a:active, a:visited { color: {{ shop.email_accent_color }}; }
+    @media only screen and (max-width: 480px) {
+      .pl-h2 { font-size: 23px !important; }
+    }
+  </style>
+</head>
+
+  <body>
+    <div style="display:none;font-size:1px;line-height:1px;max-height:0;max-width:0;opacity:0;overflow:hidden;mso-hide:all;">{{ email_title }}. Tap Track your order to see where it is.</div>
+
+    <table class="body">
+      <tr>
+        <td>
+          <table class="header row">
+  <tr>
+    <td class="header__cell">
+      <center>
+
+        <table class="container">
+          <tr>
+            <td>
+
+              <table class="row">
+                <tr>
+                  <td class="shop-name__cell">
+                    {%- if shop.email_logo_url %}
+                      <img src="{{shop.email_logo_url}}" alt="{{ shop.name }}" width="{{ shop.email_logo_width }}">
+                    {%- else %}
+                      <h1 class="shop-name__text">
+                        <a href="{{shop.url}}">{{ shop.name }}</a>
+                      </h1>
+                    {%- endif %}
+                  </td>
+
+                    <td>
+                      <table class="order-po-number__container">
+                        <tr>
+                          <td class="order-number__cell">
+                            <span class="order-number__text">
+                              Order {{ order_name }}
+                            </span>
+                          </td>
+                        </tr>
+                        {%- if po_number %}
+                            <tr>
+                              <td class="po-number__cell">
+                                <span class="po-number__text">
+                                  PO number #{{ po_number }}
+                                </span>
+                              </td>
+                            </tr>
+                        {%- endif %}
+                      </table>
+                    </td>
+                </tr>
+              </table>
+
+            </td>
+          </tr>
+        </table>
+
+      </center>
+    </td>
+  </tr>
+</table>
+
+          <table class="row content">
+  <tr>
+    <td class="content__cell">
+      <center>
+        <table class="container">
+          <tr>
+            <td>
+
+              <h2 class="pl-h2" style="margin:0 0 12px 0;font-family:{{ pl_font }};font-size:26px;line-height:1.25;font-weight:700;color:#1a1a1a;">{{ email_title }}</h2>
+              <p style="margin:0 0 20px 0;font-family:{{ pl_font }};font-size:16px;line-height:1.6;color:#333333;">{{ email_body }}</p>
+
+              {% if fulfillment.estimated_delivery_at %}
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 24px 0;">
+                <tr>
+                  <td bgcolor="#f5f5f5" style="background-color:#f5f5f5;border:1px solid #e3e3e3;border-radius:8px;padding:16px 20px;font-family:{{ pl_font }};">
+                    <div style="font-size:13px;line-height:1.4;color:#555555;">Estimated delivery date</div>
+                    <div style="font-size:20px;line-height:1.4;font-weight:700;color:#1a1a1a;">{{ fulfillment.estimated_delivery_at | date: format: 'date' }}</div>
+                  </td>
+                </tr>
+              </table>
+              {% endif %}
+
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td align="center" bgcolor="{{ shop.email_accent_color }}" style="background-color:{{ shop.email_accent_color }};border-radius:8px;">
+                    <a href="{{ tracking_page_url }}" target="_blank" style="display:block;padding:0 24px;font-family:{{ pl_font }};font-size:17px;font-weight:700;line-height:54px;height:54px;mso-line-height-rule:exactly;color:#ffffff;text-decoration:none;">Track your order</a>
+                  </td>
+                </tr>
+              </table>
+
+              {% if show_view_order_link and order_status_url %}
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td align="center" style="padding:6px 0 0 0;font-family:{{ pl_font }};font-size:15px;line-height:44px;mso-line-height-rule:exactly;">
+                    <a href="{{ order_status_url }}" style="color:#1a1a1a;text-decoration:underline;">View your order</a>
+                  </td>
+                </tr>
+              </table>
+              {% endif %}
+
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:28px 0 0 0;">
+                <tr>
+                  <td colspan="2" style="border-top:1px solid #e3e3e3;padding:24px 0 16px 0;font-family:{{ pl_font }};font-size:18px;line-height:1.3;font-weight:700;color:#1a1a1a;">What happens next</td>
+                </tr>
+                <tr>
+                  <td width="44" valign="top" style="padding:0 0 18px 0;">
+                    <table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr><td width="32" height="32" align="center" valign="middle" bgcolor="{{ shop.email_accent_color }}" style="background-color:{{ shop.email_accent_color }};border-radius:16px;font-family:{{ pl_font }};font-size:15px;font-weight:700;line-height:32px;color:#ffffff;">1</td></tr></table>
+                  </td>
+                  <td valign="top" style="padding:0 0 18px 0;font-family:{{ pl_font }};font-size:15px;line-height:1.55;color:#333333;"><strong style="color:#1a1a1a;">It is on its way</strong><br>{{ brand_name }} has packed your order and it is now heading to you.</td>
+                </tr>
+                <tr>
+                  <td width="44" valign="top" style="padding:0 0 18px 0;">
+                    <table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr><td width="32" height="32" align="center" valign="middle" bgcolor="{{ shop.email_accent_color }}" style="background-color:{{ shop.email_accent_color }};border-radius:16px;font-family:{{ pl_font }};font-size:15px;font-weight:700;line-height:32px;color:#ffffff;">2</td></tr></table>
+                  </td>
+                  <td valign="top" style="padding:0 0 18px 0;font-family:{{ pl_font }};font-size:15px;line-height:1.55;color:#333333;"><strong style="color:#1a1a1a;">Follow it any time</strong><br>Use the Track your order button for the latest status. New shipments can take a little while to show updates, so check back if you do not see movement straight away.</td>
+                </tr>
+                <tr>
+                  <td width="44" valign="top" style="padding:0;">
+                    <table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr><td width="32" height="32" align="center" valign="middle" bgcolor="{{ shop.email_accent_color }}" style="background-color:{{ shop.email_accent_color }};border-radius:16px;font-family:{{ pl_font }};font-size:15px;font-weight:700;line-height:32px;color:#ffffff;">3</td></tr></table>
+                  </td>
+                  <td valign="top" style="padding:0;font-family:{{ pl_font }};font-size:15px;line-height:1.55;color:#333333;"><strong style="color:#1a1a1a;">Delivery</strong><br>Your order will be delivered to the address you gave at checkout.</td>
+                </tr>
+              </table>
+
+              {% if show_raw_tracking_number and fulfillment.tracking_numbers.size > 0 %}
+  <p class="disclaimer__subtext">
+    <br/>
+    {% if fulfillment.tracking_numbers.size == 1 %}
+      Tracking number: {{ fulfillment.tracking_numbers.first }}
+    {% else %}
+      Tracking numbers:<br />
+      {% for tracking_number in fulfillment.tracking_numbers %}
+        {{ tracking_number }}<br/>
+      {% endfor %}
+    {% endif %}
+  </p>
+{% endif %}
+
+            </td>
+          </tr>
+        </table>
+      </center>
+    </td>
+  </tr>
+</table>
+
+          <table class="row section">
+  <tr>
+    <td class="section__cell">
+      <center>
+        <table class="container">
+          <tr>
+            <td>
+              <h3>Items in this shipment</h3>
+            </td>
+          </tr>
+        </table>
+        <table class="container">
+          <tr>
+            <td>
+              
+            
+  <table class="row">
+    {% for line in fulfillment.fulfillment_line_items %}
+      
+{% comment %} Skip child add-ons since they will be rendered under the parent line item {% endcomment %}
+{% unless line.line_item.nested_line_child? %}
+
+  {% assign is_parent = false %}
+  {% assign is_nested_line_parent = line.line_item.nested_line_parent? %}
+  {% if line.line_item.bundle_parent? or line.line_item.nested_line_parent? %}
+    {% assign is_parent = true %}
+  {% endif %}
+  {% if is_nested_line_parent %}
+    {% assign css_order_list_cell_nested_line_parent_class = 'order-list__parent-cell' %}
+    {% assign css_order_list_parent_image_cell_nested_line_parent_class = 'order-list__nested-parent-image-cell' %}
+  {% endif %}
+
+  <tr class="order-list__item">
+    <td class="order-list__item__cell {{ css_order_list_cell_nested_line_parent_class }}">
+      <table height="100%">
+        <td style="padding-bottom: 0px;">
+          <table height="100%">
+            <tr valign="top">
+              {% if false and is_parent %}
+                <td class="order-list__parent-image-cell {{ css_order_list_parent_image_cell_nested_line_parent_class }}">
+                  {% if line.line_item.image %}
+                    <img src="{{ line.line_item | img_url: 'compact_cropped' }}" align="left" width="60" height="60" class="order-list__product-image"/>
+                  {% else %}
+                    <div class="order-list__no-image-cell">
+                      <img src="{{ 'notifications/no-image.png' | shopify_asset_url }}" align="left" class="order-list__no-product-image"/>
+                    </div>
+                  {% endif %}
+                </td>
+              {% else %}
+                <td class="order-list__image-cell">
+                  {% if line.line_item.image %}
+                    <img src="{{ line.line_item | img_url: 'compact_cropped' }}" align="left" width="60" height="60" class="order-list__product-image"/>
+                  {% else %}
+                    <div class="order-list__no-image-cell">
+                      <img src="{{ 'notifications/no-image.png' | shopify_asset_url }}" align="left" width="60" height="60" class="order-list__no-product-image"/>
+                    </div>
+                  {% endif %}
+                </td>
+              {% endif %}
+            </tr>
+            {% if is_nested_line_parent %}
+              <tr height="100%">
+                <td style="padding: 0px;" height="100%">
+                  <table height="100%">
+                    <tr>
+                      <td height="100%" class="nested-line-item-spacer-cell">
+                        <div class="nested-line-item-spacer"></div>
+                      </td>
+                      <td height="100%" class="parent-vertical-line__cell">
+                        <div class="parent-vertical-line__content"></div>
+                      </td>
+                    </tr>
+                  </table>                        
+                </td>
+              </tr>
+            {% endif %}
+          </table>
+        </td>
+
+        <td class="order-list__product-description-cell">
+          {% if line.line_item.presentment_title %}
+            {% assign line_title = line.line_item.presentment_title %}
+          {% elsif line.line_item.title %}
+            {% assign line_title = line.line_item.title %}
+          {% else %}
+            {% assign line_title = line.line_item.product.title %}
+          {% endif %}
+          {% if line.quantity < line.line_item.quantity %}
+            {% capture line_display %}
+              {{ line.quantity }} of {{ line.line_item.quantity }}
+            {% endcapture %}
+          {% else %}
+            {% assign line_display = line.line_item.quantity %}
+          {% endif %}
+
+          <span class="order-list__item-title">{{ line_title }}&nbsp;&times;&nbsp;{{ line_display }}</span><br/>
+
+          {% if line.line_item.variant.title != 'Default Title' and is_parent == false %}
+            <span class="order-list__item-variant">{{ line.line_item.variant.title }}</span><br/>
+          {% elsif line.line_item.variant.title != 'Default Title' and line.line_item.nested_line_parent? %}
+            <span class="order-list__item-variant">{{ line.line_item.variant.title }}</span><br/>
+          {% elsif line.line_item.variant.title != 'Default Title' and line.line_item.bundle_parent? and false == false %}
+            <span class="order-list__item-variant">{{ line.line_item.variant.title }}</span><br/>
+          {% endif %}
+
+          {% if false %}
+            {% for child_line in line.line_item.bundle_components %}
+              
+{% if true %}
+  {% assign css_class = 'order-list__bundle-item' %}
+  {% assign css_image_class = 'order-list__image-cell' %}
+  {% assign css_description_class = 'order-list__product-description-cell' %}
+{% else %}
+  {% assign css_class = 'order-list__deliverable-item_abandoned' %}
+  {% assign css_image_class = 'order-list__image-cell--nested-line-item' %}
+  {% assign css_description_class = 'order-list__product-description-cell--nested-line-item' %}
+  {% if false %}
+    {% assign css_curved_line_cell_container_class = 'curved-line-cell-container__top-spacer-cell--show-border' %}
+    {% assign css_hide_vertical_line_class = 'vertical-line__content--hide' %}
+    {% assign css_curved_line_cell_container_cell__no_padding_class = 'curved-line-cell-container__cell--no-padding' %}
+  {% endif %}
+{% endif %}
+
+<table height="100%">
+  <tr class="order-list__item">
+    <td class="{{ css_class }}" height="100%">
+      <table height="100%">
+        <td class="{{ css_image_class }}">
+          {% if child_line.image %}
+            <img src="{{ child_line | img_url: 'compact_cropped' }}" align="left" width="40" height="40" class="order-list__product-image small"/>
+          {% else %}
+            <div class="order-list__no-image-cell small">
+              <img src="{{ 'notifications/no-image.png' | shopify_asset_url }}" align="left" width="20" height="20" class="order-list__no-product-image small"/>
+            </div>
+          {% endif %}
+        </td>
+
+        <td class="{{ css_description_class }}">
+          {% if child_line.product.title %}
+            {% assign item_title = child_line.product.title %}
+          {% else %}
+            {% assign item_title = child_line.title %}
+          {% endif %}
+
+          {% assign item_display = child_line.quantity %}
+
+            <span class="order-list__item-title">{{ item_display }}&nbsp;&times;&nbsp;{{ item_title }}</span><br>
+
+          {% if child_line.variant.title != 'Default Title'%}
+            <span class="order-list__item-variant">{{ child_line.variant.title }}</span><br/>
+          {% endif %}
+          {% if child_line.selling_plan_allocation %}
+            <span class="order-list__item-variant">{{ child_line.selling_plan_allocation.selling_plan.name }}</span>
+          {% endif %}
+        </td>
+      </table>
+    </td>
+  </tr>
+</table>
+            {% endfor %}
+          {% else %}
+            {% for group in line.line_item.groups %}
+              {% if group.deliverable? %}
+                <span class="order-list__item-variant">For: {{ group.display_title }}</span><br/>
+              {% else %}
+                <span class="order-list__item-variant">Part of: {{ group.display_title }}</span><br/>
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+
+
+          {% if line.line_item.selling_plan_allocation %}
+            <span class="order-list__item-variant">{{ line.line_item.selling_plan_allocation.selling_plan.name }}</span><br/>
+          {% endif %}
+
+          {% if line.line_item.refunded_quantity > 0 %}
+            <span class="order-list__item-refunded">Refunded</span>
+          {% endif %}
+
+          {% if line.line_item.discount_allocations %}
+            {% for discount_allocation in line.line_item.discount_allocations %}
+              {% if discount_allocation.discount_application.target_selection != 'all' %}
+              <p>
+                <span class="order-list__item-discount-allocation">
+                  <img src="{{ 'notifications/discounttag.png' | shopify_asset_url }}" width="18" height="18" class="discount-tag-icon" />
+                  <span>
+                    {{ discount_allocation.discount_application.title | upcase }}
+                    (-{{ discount_allocation.amount | money }})
+                  </span>
+                </span>
+              </p>
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+        </td>
+        {% if line.line_item.nested_line_parent? %}
+          {% for child_line in line.line_item.nested_lines %}
+            
+{% if false %}
+  {% assign css_class = 'order-list__bundle-item' %}
+  {% assign css_image_class = 'order-list__image-cell' %}
+  {% assign css_description_class = 'order-list__product-description-cell' %}
+{% else %}
+  {% assign css_class = 'order-list__deliverable-item_abandoned' %}
+  {% assign css_image_class = 'order-list__image-cell--nested-line-item' %}
+  {% assign css_description_class = 'order-list__product-description-cell--nested-line-item' %}
+  {% if forloop.last %}
+    {% assign css_curved_line_cell_container_class = 'curved-line-cell-container__top-spacer-cell--show-border' %}
+    {% assign css_hide_vertical_line_class = 'vertical-line__content--hide' %}
+    {% assign css_curved_line_cell_container_cell__no_padding_class = 'curved-line-cell-container__cell--no-padding' %}
+  {% endif %}
+{% endif %}
+
+<table height="100%">
+  <tr class="order-list__item">
+    <td class="{{ css_class }}" height="100%">
+      <table height="100%">
+          <td class="nested-line-item-spacer-cell"style="padding: 1px;">
+            <div class="nested-line-item-spacer"></div>
+          </td>
+          <td class="curved-line-cell-container" valign="top">
+            <div style="width: 0px;">
+              <table>
+                <tr>
+                  <td class="{{ css_curved_line_cell_container_cell__no_padding_class }}" style="mso-padding-right-alt: 10px;">
+                    <div class="curved-line-cell-container__top-spacer {{ css_curved_line_cell_container_class }}"></div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="curved-line-cell-container__curvedLine-cell">
+                    <div class="curved-line-cell-container__curvedLine-cell__curvedLine"></div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </td>
+          <td class="vertical-line" height="100%">
+            <div class="vertical-line__content {{ css_hide_vertical_line_class }}"></div>
+          </td>
+          <td class="nested-line-item-spacer-cell--right">
+            <div class="nested-line-item-spacer"></div>
+          </td>
+        <td class="{{ css_image_class }}">
+          {% if child_line.image %}
+            <img src="{{ child_line | img_url: 'compact_cropped' }}" align="left" width="40" height="40" class="order-list__product-image small"/>
+          {% else %}
+            <div class="order-list__no-image-cell small">
+              <img src="{{ 'notifications/no-image.png' | shopify_asset_url }}" align="left" width="20" height="20" class="order-list__no-product-image small"/>
+            </div>
+          {% endif %}
+        </td>
+
+        <td class="{{ css_description_class }}">
+          {% if child_line.product.title %}
+            {% assign item_title = child_line.product.title %}
+          {% else %}
+            {% assign item_title = child_line.title %}
+          {% endif %}
+
+          {% assign item_display = child_line.quantity %}
+
+            <span class="order-list__item-title">{{ item_title }}&nbsp;&times;&nbsp;{{ item_display }}</span><br>
+
+          {% if child_line.variant.title != 'Default Title'%}
+            <span class="order-list__item-variant">{{ child_line.variant.title }}</span><br/>
+          {% endif %}
+          {% if child_line.selling_plan_allocation %}
+            <span class="order-list__item-variant">{{ child_line.selling_plan_allocation.selling_plan.name }}</span>
+          {% endif %}
+        </td>
+      </table>
+    </td>
+  </tr>
+</table>
+          {% endfor %}
+        {% endif %}
+      </table>
+    </td>
+  </tr>
+
+{% endunless %}
+
+    {% endfor %}
+  </table>
+
+
+            </td>
+          </tr>
+        </table>
+      </center>
+    </td>
+  </tr>
+</table>
+
+          <table class="row footer">
+  <tr>
+    <td class="footer__cell">
+      <center>
+        <table class="container">
+          <tr>
+            <td>
+              
+              <p class="disclaimer__subtext">Questions? Reply to this email or contact the {{ brand_name }} team at <a href="mailto:{{ shop.email }}" style="color:#1a1a1a;text-decoration:underline;">{{ shop.email }}</a>.<!-- shopify-shop-marketplace-footer --></p>
+            </td>
+          </tr>
+        </table>
+      </center>
+    </td>
+  </tr>
+</table>
+
+<img src="{{ 'notifications/spacer.png' | shopify_asset_url }}" class="spacer" height="1" />
+
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
