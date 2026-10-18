@@ -8,12 +8,14 @@
   mb_img1 / mb_name1 = the picture above your column and its name. mb_img2 / mb_name2 = same for the other brands column. mb_img1_w / mb_img2_w = their width in pixels on desktop (phones use 90 and 75).
   mb_bg = section background. mb_col_bg = your column. mb_check_color = the tick inside the white circles. mb_cross_bg = the grey circle behind each cross.
   Your reds: mb_bg #943434 (section), mb_col_bg #82373a (your column), mb_check_color #943434 (keep it the same as mb_bg).
-  The button scrolls to your Add to cart area. These colours are locked, so the theme cannot turn them black.
+  The button scrolls up to your Kaching bundles, with the Add to cart button just below them in view. mb_target = what it scrolls to (a CSS selector, the first match on the page is used; if it is not found it scrolls to your Add to cart button, then your product form). mb_scroll_gap = the space in pixels left between your sticky header and the top of the bundles. These colours are locked, so the theme cannot turn them black.
   Do not use a straight apostrophe (') in the text, use &#39; instead. Do not type three | in a row inside a line except as the separators.
 {%- endcomment -%}
 {%- assign mb_heading = 'Purge Berberine vs. Other Brands' -%}
 {%- assign mb_button = 'Try Risk-Free Today' -%}
 {%- assign mb_note = '60-day money back guarantee' -%}
+{%- assign mb_target = '.kaching-bundles' -%}
+{%- assign mb_scroll_gap = 12 -%}
 {%- assign mb_bg = '#943434' -%}
 {%- assign mb_col_bg = '#82373a' -%}
 {%- assign mb_check_color = '#943434' -%}
@@ -150,7 +152,7 @@ Clean and Pure Ingredients. ||| No fillers, GMOs, or unnecessary additives
         {%- endfor -%}
       </ul>
       <div class="mb-vs__cta">
-        <button type="button" class="mb-vs__bt" data-mb-vs-cta>{{ mb_button }}</button>
+        <button type="button" class="mb-vs__bt" data-mb-vs-cta data-target="{{ mb_target | escape }}" data-gap="{{ mb_scroll_gap }}">{{ mb_button }}</button>
         <div class="mb-vs__gu">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 15l-4-4 1.41-1.41L10 13.17l6.59-6.59L18 8l-8 8z"></path></svg>
           {{ mb_note }}
@@ -164,11 +166,36 @@ Clean and Pure Ingredients. ||| No fillers, GMOs, or unnecessary additives
     if (!root) return;
     var btn = root.querySelector('[data-mb-vs-cta]');
     if (btn) btn.addEventListener('click', function () {
-      var el = document.querySelector('.shopify-payment-button__button,[data-product-form],.product-form');
-      if (el) {
-        var sec = el.closest('section,[data-section-id]');
-        if (sec) sec.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      var sel = btn.getAttribute('data-target'), gap = parseInt(btn.getAttribute('data-gap'), 10);
+      if (isNaN(gap)) gap = 12;
+      function find() {
+        var t = null;
+        try { t = document.querySelector(sel); } catch (x) {}
+        return t || document.querySelector('.product-form__submit, [name="add"]') || document.querySelector('[data-product-form], .product-form');
       }
+      function hdr() {
+        var q = ['.section-header', 'sticky-header', '.header-wrapper', 'header.header'], i, n, p;
+        for (i = 0; i < q.length; i++) {
+          n = document.querySelector(q[i]);
+          while (n && n !== document.body) {
+            p = getComputedStyle(n).position;
+            if (p === 'sticky' || p === 'fixed') return n.offsetHeight;
+            n = n.parentElement;
+          }
+        }
+        return 0;
+      }
+      var t = find();
+      if (!t) return;
+      window.scrollTo({ top: Math.max(0, t.getBoundingClientRect().top + (window.pageYOffset || document.documentElement.scrollTop) - hdr() - gap), behavior: 'smooth' });
+      [900, 1700].forEach(function (ms) {
+        setTimeout(function () {
+          var y = find();
+          if (!y) return;
+          var d = y.getBoundingClientRect().top - (hdr() + gap);
+          if (Math.abs(d) > 6) window.scrollBy({ top: d, behavior: 'smooth' });
+        }, ms);
+      });
     });
   })();
   </script>
