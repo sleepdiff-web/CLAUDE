@@ -4,7 +4,7 @@
   The "Hormonal Weight Support" image is yours. The other three card images start as Metabolae's own files so the section is an exact copy straight away.
   Before you go live, download them, upload them to your own store (Content > Files) and paste your links here instead, so they keep working and are yours. The wording is already yours.
   mb_title_a / mb_title_b = the two halves of the heading. mb_accent = the colour of the first half of the heading and of the button (your red, #943434). mb_text_color = second half of the heading and the intro. mb_card_title_color / mb_card_text_color / mb_back_text_color = text on the cards. mb_bg = section background. mb_card_bg = card background.
-  The button scrolls to your Add to cart button when mb_link is #. Put a real link there to open a page instead.
+  The button scrolls up to your Kaching bundles when mb_link is #, with the Add to cart button just below them in view. mb_target = what it scrolls to (a CSS selector, the first match on the page is used; if it is not found it scrolls to your Add to cart button). mb_scroll_gap = the space in pixels left between your sticky header and the top of the bundles. Put a real link in mb_link to open a page instead.
   These colours are locked, so the theme cannot turn them black.
   Do not use a straight apostrophe (') in the text, use &#39; instead. Do not type three | in a row inside a card except as the separators.
 {%- endcomment -%}
@@ -19,6 +19,8 @@
 {%- assign mb_card_bg = '#ffffff' -%}
 {%- assign mb_button = 'Try Risk-Free Today' -%}
 {%- assign mb_link = '#' -%}
+{%- assign mb_target = '.kaching-bundles' -%}
+{%- assign mb_scroll_gap = 12 -%}
 {%- assign mb_note = '60-day money back guarantee' -%}
 {%- capture mb_sub -%}
 Your body deserves more than empty promises. <strong>Purge Berberine </strong>supports healthy blood sugar, hormonal metabolic balance, and daily energy using clinically studied ingredients and a black pepper extract delivery system.
@@ -131,7 +133,7 @@ https://metabolae.com/cdn/shop/files/metabolae-enhanced-support.webp?v=177361212
       {%- endfor -%}
     </div>
     <div class="mb-pb__cta">
-      <a href="{{ mb_link }}" class="mb-pb__bt" data-mb-cta style="background:{{ mb_accent }}!important;color:#fff!important;-webkit-text-fill-color:#fff!important">{{ mb_button }}</a>
+      <a href="{{ mb_link }}" class="mb-pb__bt" data-mb-cta data-target="{{ mb_target | escape }}" data-gap="{{ mb_scroll_gap }}" style="background:{{ mb_accent }}!important;color:#fff!important;-webkit-text-fill-color:#fff!important">{{ mb_button }}</a>
       <div class="mb-pb__sb" style="color:#2b2b2b!important;-webkit-text-fill-color:#2b2b2b!important">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="m9 11 2 2 4-4"></path></svg>
         {{ mb_note }}
@@ -191,8 +193,36 @@ https://metabolae.com/cdn/shop/files/metabolae-enhanced-support.webp?v=177361212
       var h = btn.getAttribute('href');
       if (h && h !== '#') return;
       e.preventDefault();
-      var atc = document.querySelector('.product-form__submit');
-      if (atc) atc.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      var sel = btn.getAttribute('data-target'), gap = parseInt(btn.getAttribute('data-gap'), 10);
+      if (isNaN(gap)) gap = 12;
+      function find() {
+        var t = null;
+        try { t = document.querySelector(sel); } catch (x) {}
+        return t || document.querySelector('.product-form__submit, [name="add"]');
+      }
+      function hdr() {
+        var q = ['.section-header', 'sticky-header', '.header-wrapper', 'header.header'], i, n, p;
+        for (i = 0; i < q.length; i++) {
+          n = document.querySelector(q[i]);
+          while (n && n !== document.body) {
+            p = getComputedStyle(n).position;
+            if (p === 'sticky' || p === 'fixed') return n.offsetHeight;
+            n = n.parentElement;
+          }
+        }
+        return 0;
+      }
+      var t = find();
+      if (!t) return;
+      window.scrollTo({ top: Math.max(0, t.getBoundingClientRect().top + (window.pageYOffset || document.documentElement.scrollTop) - hdr() - gap), behavior: 'smooth' });
+      [900, 1700].forEach(function (ms) {
+        setTimeout(function () {
+          var y = find();
+          if (!y) return;
+          var d = y.getBoundingClientRect().top - (hdr() + gap);
+          if (Math.abs(d) > 6) window.scrollBy({ top: d, behavior: 'smooth' });
+        }, ms);
+      });
     });
   })();
   </script>
