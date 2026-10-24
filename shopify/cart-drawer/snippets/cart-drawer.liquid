@@ -43,6 +43,19 @@ Buy 3 Get 2 ||| 5
 {%- endcapture -%}
 {%- assign mcd_per_label = 'per pack' -%}
 
+{%- comment -%}
+  The "- 3 +" box under each product, and the green "Best price per pack unlocked" message.
+  The box works out the bundle steps from the variants of the product: every variant whose name matches a row of the list above is a step,
+  and - / + move the customer to the step below / above (3 means the Buy 2 Get 1 variant, 5 means Buy 3 Get 2). Selling plans are carried over.
+  If a product has no matching variants, mcd_qty_stepper = true shows a plain quantity box (- 1 +) instead. Set it to false to show nothing there.
+  mcd_max_packs = the pack count of your biggest bundle. When a product reaches it, the green message shows.
+  In the two messages, [savings] is replaced by the bundle savings of the whole order. The first is the normal one, the second shows while the offer card below is switched on.
+{%- endcomment -%}
+{%- assign mcd_qty_stepper = true -%}
+{%- assign mcd_max_packs = 5 -%}
+{%- assign mcd_maxtier_a = 'Best price per pack unlocked — [savings] off this order, free shipping included.' -%}
+{%- assign mcd_maxtier_bc = 'Best deal unlocked — [savings] off this order, free shipping included.' -%}
+
 {%- comment -%} Money-back guarantee box. {%- endcomment -%}
 {%- assign mcd_g_show = true -%}
 {%- assign mcd_g_days = '60' -%}
@@ -105,6 +118,7 @@ Buy 3 Get 2 ||| 5
   assign mcd_savings = 0
   assign mcd_sp_key = ''
   assign mcd_up_in_cart = false
+  assign mcd_is_max = false
   for item in cart.items
     if mcd_sp_variant > 0 and item.variant_id == mcd_sp_variant
       assign mcd_sp_key = item.key
@@ -209,16 +223,62 @@ Buy 3 Get 2 ||| 5
                   assign pct = ls | times: 100.0 | divided_by: cl | round
                 endif
                 assign packs = 1
+                assign line_match = false
                 assign vt = item.variant.title | downcase
                 for prow in mcd_pack_rows
                   assign pf = prow | split: '|||'
                   assign pkey = pf[0] | strip | downcase
                   if pkey != blank and vt contains pkey
                     assign packs = pf[1] | strip | plus: 0
+                    assign line_match = true
                   endif
                 endfor
                 if packs < 1
                   assign packs = 1
+                endif
+                assign down_id = 0
+                assign down_packs = 0
+                assign up_id = 0
+                assign up_packs = 100000
+                if line_match
+                  for pv in item.product.variants
+                    if pv.available == false
+                      continue
+                    endif
+                    assign pvt = pv.title | downcase
+                    assign vp = 0
+                    for prow in mcd_pack_rows
+                      assign pf = prow | split: '|||'
+                      assign pkey = pf[0] | strip | downcase
+                      if pkey != blank and pvt contains pkey
+                        assign vp = pf[1] | strip | plus: 0
+                      endif
+                    endfor
+                    if vp > 0 and vp < packs and vp > down_packs
+                      assign down_id = pv.id
+                      assign down_packs = vp
+                    endif
+                    if vp > packs and vp < up_packs
+                      assign up_id = pv.id
+                      assign up_packs = vp
+                    endif
+                  endfor
+                endif
+                assign line_plan = ''
+                if item.selling_plan_allocation
+                  assign line_plan = item.selling_plan_allocation.selling_plan.id
+                endif
+                assign step_mode = ''
+                if item.final_line_price > 0 and item.variant_id != mcd_up_variant
+                  if line_match
+                    assign step_mode = 'tier'
+                  elsif mcd_qty_stepper
+                    assign step_mode = 'qty'
+                  endif
+                endif
+                assign line_packs = packs | times: item.quantity
+                if item.final_line_price > 0 and item.variant_id != mcd_up_variant and line_packs >= mcd_max_packs
+                  assign mcd_is_max = true
                 endif
                 assign per_pack = item.final_line_price | times: 1.0 | divided_by: item.quantity | divided_by: packs | round
                 assign line_facts = false
@@ -247,7 +307,22 @@ Buy 3 Get 2 ||| 5
                     </ul>
                   {%- endif -%}
                   <div class="mcd-controls">
-                    <div class="mcd-controls-left"><button class="mcd-remove" type="button" data-mcd-remove data-key="{{ item.key }}">Remove</button></div>
+                    <div class="mcd-controls-left">
+                      {%- if step_mode == 'tier' -%}
+                        <div class="mcd-stepper" role="group" aria-label="Bundle size in packs">
+                          <button class="mcd-step" type="button" aria-label="Fewer packs" data-mcd-tier data-dir="down" data-fc-bundle-main data-to="{{ down_id }}" data-key="{{ item.key }}" data-plan="{{ line_plan }}"{% if down_id == 0 %} disabled{% endif %}>−</button>
+                          <span class="mcd-qty">{{ line_packs }}</span>
+                          <button class="mcd-step" type="button" aria-label="More packs" data-mcd-tier data-dir="up" data-fc-bundle-main data-to="{{ up_id }}" data-key="{{ item.key }}" data-plan="{{ line_plan }}"{% if up_id == 0 %} disabled{% endif %}>+</button>
+                        </div>
+                      {%- elsif step_mode == 'qty' -%}
+                        <div class="mcd-stepper" role="group" aria-label="Quantity">
+                          <button class="mcd-step" type="button" aria-label="Decrease quantity" data-fc-qty data-key="{{ item.key }}" data-qty="{{ item.quantity | minus: 1 }}"{% if item.quantity < 2 %} disabled{% endif %}>−</button>
+                          <span class="mcd-qty">{{ item.quantity }}</span>
+                          <button class="mcd-step" type="button" aria-label="Increase quantity" data-fc-qty data-key="{{ item.key }}" data-qty="{{ item.quantity | plus: 1 }}">+</button>
+                        </div>
+                      {%- endif -%}
+                      <button class="mcd-remove" type="button" data-mcd-remove data-key="{{ item.key }}">Remove</button>
+                    </div>
 
                     <div class="mcd-prices"><div class="mcd-per-unit">{% if item.final_line_price == 0 %}Free{% else %}{{ per_pack | money }} {{ mcd_per_label }}{% endif %}</div></div>
                   </div>
@@ -255,6 +330,16 @@ Buy 3 Get 2 ||| 5
               </div>
             {%- endfor -%}
           </div>
+
+          {%- if mcd_is_max -%}
+            {%- assign mcd_sav_money = mcd_savings | money -%}
+            <div class="mcd-maxtier">
+              <p>
+                <span class="fc-maxtier-a">{{ mcd_maxtier_a | replace: '[savings]', mcd_sav_money }}</span>
+                <span class="fc-maxtier-bc">{{ mcd_maxtier_bc | replace: '[savings]', mcd_sav_money }}</span>
+              </p>
+            </div>
+          {%- endif -%}
 
           {%- if mcd_show_up -%}
             <div class="fc-upsell-card fc-upsell-card--b">
