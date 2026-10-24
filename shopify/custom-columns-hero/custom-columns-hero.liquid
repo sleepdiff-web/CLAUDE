@@ -1,0 +1,117 @@
+{%- comment -%}
+  Hero with a product image: heading, button and guarantee line on a red gradient, with the product image beside them on desktop and below them on phones.
+  EDIT YOUR CONTENT BELOW.
+  mb_heading = the big heading. mb_btn = the button text. mb_link = where the button goes if it cannot scroll (see mb_scroll).
+  mb_guarantee = the small line with the medal icon under the button.
+  mb_img = the product image (Content > Files > upload > copy link). mb_img_w and mb_img_h = that image&#39;s real width and height in pixels (stops the page jumping while it loads). mb_img_alt = a short description for screen readers, or '' if the picture is decoration only.
+  mb_scroll = true: on a product page the button scrolls to your Kaching bundles (mb_target is a CSS selector, the first match on the page is used). If they are not found it scrolls to the Add to Cart button, then to the product info. If none of those exist (for example on the home page) it simply opens mb_link. Set it to false to always open mb_link. mb_scroll_gap = the space in pixels left between your sticky header and the top of the bundles.
+  mb_grad_from and mb_grad_to = the two ends of the gradient (top to bottom). mb_text_color = heading and guarantee colour. mb_btn_bg and mb_btn_color = button background and text colour. All colours are locked so the theme cannot override them.
+  mb_heading_m and mb_heading_d = heading size on phones and on desktop.
+  Do not use a straight apostrophe (') inside the text, use &#39; instead.
+{%- endcomment -%}
+{%- assign mb_heading = 'Support Your Daily Wellness With Nature&#39;s Most Powerful Antioxidant*' -%}
+{%- assign mb_btn = 'SHOP NOW' -%}
+{%- assign mb_link = 'https://purgelabs.shop/products/berberine' -%}
+{%- assign mb_guarantee = '90-day money-back guarantee' -%}
+{%- assign mb_img = 'https://tryrovina.com/cdn/shop/files/Untitled_design_37.png?v=1776211077' -%}
+{%- assign mb_img_w = 1500 -%}
+{%- assign mb_img_h = 1372 -%}
+{%- assign mb_img_alt = '' -%}
+{%- assign mb_scroll = true -%}
+{%- assign mb_target = '.kaching-bundles' -%}
+{%- assign mb_scroll_gap = 12 -%}
+{%- assign mb_grad_from = 'rgb(147, 51, 51)' -%}
+{%- assign mb_grad_to = 'rgb(194, 105, 105)' -%}
+{%- assign mb_text_color = '#ffffff' -%}
+{%- assign mb_btn_bg = '#ffffff' -%}
+{%- assign mb_btn_color = 'rgb(147, 51, 51)' -%}
+{%- assign mb_heading_m = '26.67px' -%}
+{%- assign mb_heading_d = '32px' -%}
+{%- assign q = '?' -%}{%- if mb_img contains '?' -%}{%- assign q = '&amp;' -%}{%- endif -%}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600&display=swap"></noscript>
+
+<style>
+.page-width:has(>.mb-cc){max-width:none;padding:0}
+.mb-cc{box-sizing:border-box;width:100%;margin:0;padding:0 0 12px;background:#fdfff5;background:linear-gradient(178deg,var(--mb-cc-a) 12%,var(--mb-cc-b) 82%);font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:500;line-height:1.8;letter-spacing:.6px;text-align:left}
+.mb-cc *{box-sizing:border-box}
+.mb-cc__in{display:grid;grid-template-columns:minmax(0,1fr);max-width:1400px;margin:0 auto;padding:0 14px}
+.mb-cc__t{order:1;min-width:0;padding-top:24px}
+.mb-cc__i{order:2;min-width:0;margin:0 0 15px}
+.mb-cc__h{margin:3px 0 15px;padding:0;font-family:Poppins,sans-serif;font-size:var(--mb-cc-hm);font-style:normal;font-weight:600;line-height:1.2;letter-spacing:0;text-align:center;text-transform:none;word-break:normal}
+.mb-cc__bw{margin:15px 0}
+.mb-cc__btn{display:flex;align-items:center;justify-content:center;width:100%;min-height:46px;padding:0 20px;border:0;border-radius:8px;background:var(--mb-cc-bb);font-family:'Plus Jakarta Sans',sans-serif;font-size:17px;font-style:normal;font-weight:600;line-height:1.2;letter-spacing:1.8px;text-align:center;text-decoration:none;text-transform:none;cursor:pointer;transition:opacity .2s ease}
+.mb-cc__btn:hover{opacity:.92}
+.mb-cc__g{display:flex;align-items:center;justify-content:center;gap:5px;margin:15px 0;padding:0;font-size:13px;font-weight:600;line-height:1.3;letter-spacing:0;text-align:center}
+.mb-cc__g svg{flex:none;position:relative;top:-2px;width:1.2em;height:1.2em;fill:currentColor}
+.mb-cc__im{display:block;width:100%;height:auto}
+.mb-cc .mb-cc__h,.mb-cc .mb-cc__g,.mb-cc .mb-cc__g *{color:var(--mb-cc-tx)!important;-webkit-text-fill-color:var(--mb-cc-tx)!important}
+.mb-cc .mb-cc__btn{color:var(--mb-cc-bc)!important;-webkit-text-fill-color:var(--mb-cc-bc)!important}
+@media screen and (min-width:750px){
+.mb-cc{padding-bottom:16px}
+.mb-cc__in{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:40px;align-items:center;padding:0 50px}
+.mb-cc__i{order:0;margin:15px 0}
+.mb-cc__h{font-size:var(--mb-cc-hd)}
+.mb-cc__g{font-size:15px}
+}
+</style>
+
+<div class="mb-cc" style="--mb-cc-a:{{ mb_grad_from }};--mb-cc-b:{{ mb_grad_to }};--mb-cc-tx:{{ mb_text_color }};--mb-cc-bb:{{ mb_btn_bg }};--mb-cc-bc:{{ mb_btn_color }};--mb-cc-hm:{{ mb_heading_m }};--mb-cc-hd:{{ mb_heading_d }}">
+<div class="mb-cc__in">
+<div class="mb-cc__i"><img class="mb-cc__im" src="{{ mb_img }}{{ q }}width=1500" srcset="{{ mb_img }}{{ q }}width=165 165w, {{ mb_img }}{{ q }}width=360 360w, {{ mb_img }}{{ q }}width=535 535w, {{ mb_img }}{{ q }}width=750 750w, {{ mb_img }}{{ q }}width=1070 1070w, {{ mb_img }}{{ q }}width=1250 1250w, {{ mb_img }}{{ q }}width=1500 1500w" sizes="(min-width: 1500px) 660px, (min-width: 750px) calc((100vw - 140px) / 2), calc(100vw - 30px)" width="{{ mb_img_w }}" height="{{ mb_img_h }}" alt="{{ mb_img_alt | escape }}" decoding="async" fetchpriority="high"></div>
+<div class="mb-cc__t">
+<h2 class="mb-cc__h">{{ mb_heading }}</h2>
+<div class="mb-cc__bw"><a class="mb-cc__btn" href="{{ mb_link }}" data-scroll="{{ mb_scroll }}" data-target="{{ mb_target | escape }}" data-gap="{{ mb_scroll_gap }}">{{ mb_btn }}</a></div>
+<p class="mb-cc__g"><svg viewBox="0 -960 960 960" aria-hidden="true" focusable="false"><path d="m385-412 36-115-95-74h116l38-119 37 119h117l-95 74 35 115-94-71-95 71ZM244-40v-304q-45-47-64.5-103T160-560q0-136 92-228t228-92q136 0 228 92t92 228q0 57-19.5 113T716-344v304l-236-79-236 79Zm420.5-335.5Q740-451 740-560t-75.5-184.5Q589-820 480-820t-184.5 75.5Q220-669 220-560t75.5 184.5Q371-300 480-300t184.5-75.5ZM304-124l176-55 176 55v-171q-40 29-86 42t-90 13q-44 0-90-13t-86-42v171Zm176-86Z"/></svg><span>{{ mb_guarantee }}</span></p>
+</div>
+</div>
+</div>
+
+<script>
+(function(){
+function init(w){
+if(w.getAttribute('data-on'))return;
+w.setAttribute('data-on','1');
+var b=w.querySelector('.mb-cc__btn');
+if(!b||b.getAttribute('data-scroll')!=='true')return;
+b.addEventListener('click',function(e){
+var sel=b.getAttribute('data-target'),gap=parseInt(b.getAttribute('data-gap'),10);
+if(isNaN(gap))gap=12;
+function find(){
+var t=null;
+try{t=document.querySelector(sel)}catch(x){}
+return t||document.querySelector('.product-form__submit, [name="add"]')||document.querySelector('product-info, .product__info-container, .product-form');
+}
+function hdr(){
+var q=['.section-header','sticky-header','.header-wrapper','header.header'],i,n,p;
+for(i=0;i<q.length;i++){
+n=document.querySelector(q[i]);
+while(n&&n!==document.body){
+p=getComputedStyle(n).position;
+if(p==='sticky'||p==='fixed')return n.offsetHeight;
+n=n.parentElement;
+}
+}
+return 0;
+}
+var t=find();
+if(!t)return;
+e.preventDefault();
+window.scrollTo({top:Math.max(0,t.getBoundingClientRect().top+(window.pageYOffset||document.documentElement.scrollTop)-hdr()-gap),behavior:'smooth'});
+[900,1700].forEach(function(ms){
+setTimeout(function(){
+var x=find();
+if(!x)return;
+var d=x.getBoundingClientRect().top-(hdr()+gap);
+if(Math.abs(d)>6)window.scrollBy({top:d,behavior:'smooth'});
+},ms);
+});
+});
+}
+document.querySelectorAll('.mb-cc').forEach(init);
+document.addEventListener('shopify:section:load',function(){document.querySelectorAll('.mb-cc').forEach(init)});
+})();
+</script>
