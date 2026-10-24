@@ -4,6 +4,7 @@
   mb_heading = the big heading. mb_btn = the button text. mb_link = where the button goes if it cannot scroll (see mb_scroll).
   mb_guarantee = the small line with the medal icon under the button.
   mb_img = the product image (Content > Files > upload > copy link). mb_img_w and mb_img_h = that image&#39;s real width and height in pixels (stops the page jumping while it loads). mb_img_alt = a short description for screen readers, or '' if the picture is decoration only.
+  mb_img_size = how wide the image is inside its column (100% = full width, 90% = a little smaller, centred).
   mb_scroll = true: on a product page the button scrolls to your Kaching bundles (mb_target is a CSS selector, the first match on the page is used). If they are not found it scrolls to the Add to Cart button, then to the product info. If none of those exist (for example on the home page) it simply opens mb_link. Set it to false to always open mb_link. mb_scroll_gap = the space in pixels left between your sticky header and the top of the bundles.
   mb_grad_from and mb_grad_to = the two ends of the gradient (top to bottom). mb_text_color = heading and guarantee colour. mb_btn_bg and mb_btn_color = button background and text colour. All colours are locked so the theme cannot override them.
   mb_heading_m and mb_heading_d = heading size on phones and on desktop.
@@ -17,6 +18,7 @@
 {%- assign mb_img_w = 1500 -%}
 {%- assign mb_img_h = 1372 -%}
 {%- assign mb_img_alt = '' -%}
+{%- assign mb_img_size = '90%' -%}
 {%- assign mb_scroll = true -%}
 {%- assign mb_target = '.kaching-bundles' -%}
 {%- assign mb_scroll_gap = 12 -%}
@@ -47,7 +49,7 @@
 .mb-cc__btn:hover{opacity:.92}
 .mb-cc__g{display:flex;align-items:center;justify-content:center;gap:5px;margin:15px 0;padding:0;font-size:13px;font-weight:600;line-height:1.3;letter-spacing:0;text-align:center}
 .mb-cc__g svg{flex:none;position:relative;top:-2px;width:1.2em;height:1.2em;fill:currentColor}
-.mb-cc__im{display:block;width:100%;height:auto}
+.mb-cc__im{display:block;width:var(--mb-cc-is,100%);max-width:100%;height:auto;margin:0 auto}
 .mb-cc .mb-cc__h,.mb-cc .mb-cc__g,.mb-cc .mb-cc__g *{color:var(--mb-cc-tx)!important;-webkit-text-fill-color:var(--mb-cc-tx)!important}
 .mb-cc .mb-cc__btn{color:var(--mb-cc-bc)!important;-webkit-text-fill-color:var(--mb-cc-bc)!important}
 @media screen and (min-width:750px){
@@ -59,7 +61,7 @@
 }
 </style>
 
-<div class="mb-cc" style="--mb-cc-a:{{ mb_grad_from }};--mb-cc-b:{{ mb_grad_to }};--mb-cc-tx:{{ mb_text_color }};--mb-cc-bb:{{ mb_btn_bg }};--mb-cc-bc:{{ mb_btn_color }};--mb-cc-hm:{{ mb_heading_m }};--mb-cc-hd:{{ mb_heading_d }}">
+<div class="mb-cc" style="--mb-cc-a:{{ mb_grad_from }};--mb-cc-b:{{ mb_grad_to }};--mb-cc-tx:{{ mb_text_color }};--mb-cc-bb:{{ mb_btn_bg }};--mb-cc-bc:{{ mb_btn_color }};--mb-cc-hm:{{ mb_heading_m }};--mb-cc-hd:{{ mb_heading_d }};--mb-cc-is:{{ mb_img_size }}">
 <div class="mb-cc__in">
 <div class="mb-cc__i"><img class="mb-cc__im" src="{{ mb_img }}{{ q }}width=1500" srcset="{{ mb_img }}{{ q }}width=165 165w, {{ mb_img }}{{ q }}width=360 360w, {{ mb_img }}{{ q }}width=535 535w, {{ mb_img }}{{ q }}width=750 750w, {{ mb_img }}{{ q }}width=1070 1070w, {{ mb_img }}{{ q }}width=1250 1250w, {{ mb_img }}{{ q }}width=1500 1500w" sizes="(min-width: 1500px) 660px, (min-width: 750px) calc((100vw - 140px) / 2), calc(100vw - 30px)" width="{{ mb_img_w }}" height="{{ mb_img_h }}" alt="{{ mb_img_alt | escape }}" decoding="async" fetchpriority="high"></div>
 <div class="mb-cc__t">
