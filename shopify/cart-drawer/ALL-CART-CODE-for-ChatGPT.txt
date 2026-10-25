@@ -1,0 +1,962 @@
+PURGE LABS (purgelabs.shop) - CART DRAWER CODE
+==============================================
+
+CONTEXT FOR CHATGPT
+- Shopify store, live theme "Dawn" (15.x). Store currency GBP.
+- This is a custom cart drawer that copies the Metabolae "Your order" drawer, recoloured to the brand red #913939.
+- It is made of 4 files in the theme:
+    1. snippets/cart-drawer.liquid              (the drawer markup and all the logic; settings at the top)
+    2. sections/cart-drawer.liquid              (only renders the snippet, so the drawer can be re-rendered by the Section Rendering API)
+    3. assets/component-cart-drawer-custom.css  (all the styles)
+    4. assets/cart-drawer-custom.js             (the buttons: remove, - / +, Upgrade, optional offer card and shipping protection)
+- Theme setting Cart > Cart type = "Drawer". Dawn's own assets/cart.js is still loaded.
+- Bundles come from the Kaching Bundles app: "Buy 1", "Buy 2 Get 1 FREE", "Buy 3 Get 2 FREE".
+  The free packs arrive as their own cart line priced 0. The snippet folds those free lines into the paid line of the
+  same product, so Buy 3 Get 2 shows as one line of 5 packs.
+- Two bundle modes are supported:
+    * "tier" mode: bundles are separate variants (variant title contains "Buy 1" / "Buy 2 Get 1" / "Buy 3 Get 2").
+      - / + and Upgrade add the other variant (/cart/add.js) and remove the current line (/cart/update.js).
+    * "qty" mode: one variant added with a quantity (how Purge's Kaching bundle seems to work).
+      - / + jump between 1, 3 and 5 packs and Upgrade sets 5, all through /cart/update.js on the line key.
+      Free lines with a different key are zeroed through the data-also attribute.
+- The green "Best price per pack unlocked" box shows once a product reaches 5 packs (the biggest bundle in the pack list).
+  Otherwise the "BEST VALUE" upgrade card shows.
+- The JS posts to /cart/add.js and /cart/update.js with sections "cart-drawer,cart-icon-bubble" and swaps #CartDrawer
+  with the returned section HTML.
+- Not yet confirmed: the exact structure of Purge's cart (output of /cart.js) with each Kaching bundle in it.
+  The Upgrade price assumes Kaching charges for 3 of the 5 packs in Buy 3 Get 2.
+
+
+
+==================================================================
+FILE: snippets/cart-drawer.liquid
+==================================================================
+
+{%- comment -%}
+  Cart drawer (copy of the Metabolae "Your order" drawer, in your brand red).
+  INSTALL: replace the WHOLE content of snippets/cart-drawer.liquid with this file. Also replace the two files in assets/
+  (component-cart-drawer-custom.css and cart-drawer-custom.js) with their new versions. sections/cart-drawer.liquid stays as it is.
+  In the theme settings, Cart > Cart type must be "Drawer".
+
+  EDIT YOUR CONTENT BELOW (everything between the two long lines of "=" is yours to change).
+  Do not use a straight apostrophe (') in the text, use &#39; instead. Do not type three | in a row inside a line except as the separators.
+{%- endcomment -%}
+
+{%- comment -%} ================================ EDIT FROM HERE ================================ {%- endcomment -%}
+{%- assign mcd_title = 'Your order' -%}
+{%- assign mcd_empty_title = 'Your cart is empty' -%}
+{%- assign mcd_empty_sub = 'Our Buy 2 Get 1 FREE bundle is the most popular.' -%}
+
+{%- comment -%}
+  Colours. mcd_brand = your red (buttons, badges, stars, borders). mcd_brand_dark = the buttons on hover.
+  mcd_brand_ink = the darker red of small red text. mcd_tint = background of the upgrade card, mcd_tint_2 = background of the guarantee box.
+{%- endcomment -%}
+{%- assign mcd_brand = '#913939' -%}
+{%- assign mcd_brand_dark = '#7a3131' -%}
+{%- assign mcd_brand_ink = '#6c2a2a' -%}
+{%- assign mcd_tint = '#fdf0f0' -%}
+{%- assign mcd_tint_2 = '#fdf2f2' -%}
+
+{%- comment -%} Under each product: star rating line and 3 tick lines. Set mcd_show_facts to false to hide both. {%- endcomment -%}
+{%- assign mcd_show_facts = true -%}
+{%- assign mcd_rating = '4.9' -%}
+{%- assign mcd_rating_text = '10,012+ verified reviews' -%}
+{%- capture mcd_facts_data -%}
+<strong>Berberine HCl</strong>, the stable, bioavailable form, not standard powder
+@@
+<strong>500mg therapeutic dose</strong> with black pepper extract for better absorption
+@@
+Supports <strong>healthy blood sugar</strong>, metabolism and hormonal balance
+{%- endcapture -%}
+
+{%- comment -%}
+  Your bundles. One row = a word in the variant name ||| packs in the bundle ||| packs the customer pays for.
+  Put @@ on its own line between rows. Anything not listed counts as 1 pack.
+  The biggest bundle is the best deal: once a product reaches it, the green "Best price per pack unlocked" message shows.
+  If your bundles are not separate variants (one product added with a quantity, like Kaching quantity bundles), the pack numbers
+  (1, 3, 5) are the steps of the - / + box and the third number is used to work out the upgrade price.
+{%- endcomment -%}
+{%- capture mcd_pack_data -%}
+Buy 1 ||| 1 ||| 1
+@@
+Buy 2 Get 1 ||| 3 ||| 2
+@@
+Buy 3 Get 2 ||| 5 ||| 3
+{%- endcapture -%}
+{%- assign mcd_per_label = 'per pack' -%}
+
+{%- comment -%}
+  The "- 3 +" box under each product.
+  Bundles that are variants: - / + move the customer to the bundle below / above. Selling plans are carried over.
+  Bundles that are not: mcd_qty_jump = true makes - / + jump between the bundle sizes of the list above (1, 3, 5), like Metabolae.
+  false = one pack at a time. mcd_qty_stepper = false hides the box on those products.
+  mcd_fold_free = true counts the free packs of a product (the free one in Buy 2 Get 1) inside its paid line, so the customer
+  sees one line with 3 packs, like Metabolae. false = the free packs show as their own FREE line.
+{%- endcomment -%}
+{%- assign mcd_qty_stepper = true -%}
+{%- assign mcd_qty_jump = true -%}
+{%- assign mcd_fold_free = true -%}
+
+{%- comment -%}
+  The green message once a product reaches your biggest bundle. [savings] is replaced by the bundle savings of the whole order.
+  The second text shows instead while the offer card further down is switched on.
+{%- endcomment -%}
+{%- assign mcd_maxtier_a = 'Best price per pack unlocked — [savings] off this order, free shipping included.' -%}
+{%- assign mcd_maxtier_bc = 'Best deal unlocked — [savings] off this order, free shipping included.' -%}
+
+{%- comment -%}
+  The "BEST VALUE" upgrade card under the product. It shows until the biggest bundle is in the cart, and its button moves the customer up to it.
+  [save] = saving per pack, [packs] = packs added, [price] = what those packs cost, [each] = price per pack of the biggest bundle. All are worked out for you.
+  mcd_upg_image = picture link of your biggest bundle (Metabolae shows 5 pouches side by side, 112 x 84 px). Empty = the product photo.
+  mcd_upg_ship_icon = picture link of the small truck. Empty = a built-in truck in your brand colour.
+{%- endcomment -%}
+{%- assign mcd_upg_show = true -%}
+{%- assign mcd_upg_image = '' -%}
+{%- assign mcd_upg_ship_icon = '' -%}
+{%- assign mcd_upg_pill = 'Best value' -%}
+{%- assign mcd_upg_save = 'Save [save] per pack' -%}
+{%- assign mcd_upg_head = '+[packs] packs for [price] — [each] each' -%}
+{%- assign mcd_upg_sub = 'Free shipping included.' -%}
+{%- assign mcd_upg_btn = 'Upgrade' -%}
+
+{%- comment -%} Money-back guarantee box. {%- endcomment -%}
+{%- assign mcd_g_show = true -%}
+{%- assign mcd_g_days = '60' -%}
+{%- assign mcd_g_title = '60-Day Money Back Guarantee' -%}
+{%- assign mcd_g_bold = 'Less than 1%' -%}
+{%- assign mcd_g_rest = ' of customers ever claim it.' -%}
+
+{%- comment -%}
+  Four small trust boxes. One box = picture link ||| text (use <br> for a line break). Leave the picture link empty for a built-in icon.
+{%- endcomment -%}
+{%- assign mcd_chips_show = true -%}
+{%- capture mcd_chips_data -%}
+ ||| Berberine HCl,<br>not powder
+@@
+ ||| 500mg<br>therapeutic dose
+@@
+ ||| Black pepper<br>absorption
+@@
+ ||| Third-party<br>lab verified
+{%- endcapture -%}
+
+{%- assign mcd_checkout = 'Secure checkout' -%}
+
+{%- comment -%}
+  Payment icons under the button. Empty mcd_pay_types = the first mcd_pay_limit icons of the list of your own store (what Metabolae does).
+  To choose and order them yourself, list the names with commas, e.g. visa,master,american_express,apple_pay,google_pay,paypal,shopify_pay
+{%- endcomment -%}
+{%- assign mcd_pay_limit = 5 -%}
+{%- assign mcd_pay_types = '' -%}
+
+{%- comment -%}
+  OPTIONAL one-click offer card (like "Try Vitamin D3 + K2"). Leave mcd_up_variant at 0 to switch it off.
+  mcd_up_variant = the variant ID of the product you offer. mcd_up_plan = its selling plan ID (0 if it is a one-time product).
+  The card hides itself once that product is in the cart. While it shows, it takes the place of the upgrade card (as on Metabolae).
+{%- endcomment -%}
+{%- assign mcd_up_variant = 0 -%}
+{%- assign mcd_up_plan = 0 -%}
+{%- assign mcd_up_band = 'Free shipping included' -%}
+{%- assign mcd_up_image = '' -%}
+{%- assign mcd_up_pill = 'Best value' -%}
+{%- assign mcd_up_save = 'Save $30 per pack' -%}
+{%- assign mcd_up_head = 'Try this product for $29.99' -%}
+{%- assign mcd_up_claim = '<strong>93% of customers</strong> claimed this offer' -%}
+{%- assign mcd_up_btn = 'Upgrade' -%}
+
+{%- comment -%}
+  OPTIONAL shipping protection switch. Leave mcd_sp_variant at 0 to switch it off.
+  mcd_sp_variant = the variant ID of your shipping protection product. mcd_sp_plan = its selling plan ID (0 if none).
+  NOTE: like the original, once this is switched on the script adds the protection to the cart by itself and the customer can turn it off.
+{%- endcomment -%}
+{%- assign mcd_sp_variant = 0 -%}
+{%- assign mcd_sp_plan = 0 -%}
+{%- assign mcd_sp_title = 'Shipping Protection ($3.95)' -%}
+{%- assign mcd_sp_sub = 'Covered against loss, theft, or damage' -%}
+{%- assign mcd_sp_icon = '' -%}
+{%- comment -%} ================================ EDIT UNTIL HERE ================================ {%- endcomment -%}
+
+{%- liquid
+  assign mcd_facts = mcd_facts_data | split: '@@'
+  assign mcd_pack_rows = mcd_pack_data | split: '@@'
+  assign mcd_chips = mcd_chips_data | split: '@@'
+
+  assign mcd_max_packs = 1
+  assign mcd_top_paid = 0
+  for prow in mcd_pack_rows
+    assign pf = prow | split: '|||'
+    assign pn = pf[1] | strip | plus: 0
+    if pn > mcd_max_packs
+      assign mcd_max_packs = pn
+      assign mcd_top_paid = pf[2] | strip | plus: 0
+    endif
+  endfor
+  if mcd_top_paid < 1 or mcd_top_paid > mcd_max_packs
+    assign mcd_top_paid = mcd_max_packs
+  endif
+
+  assign mcd_pk_csv = ''
+  assign mcd_mt_csv = ''
+  for item in cart.items
+    assign packs = 1
+    assign pm = 'n'
+    assign vt = item.variant.title | downcase
+    for prow in mcd_pack_rows
+      assign pf = prow | split: '|||'
+      assign pkey = pf[0] | strip | downcase
+      if pkey != blank and vt contains pkey
+        assign packs = pf[1] | strip | plus: 0
+        assign pm = 'y'
+      endif
+    endfor
+    if packs < 1
+      assign packs = 1
+    endif
+    assign mcd_pk_csv = mcd_pk_csv | append: packs | append: ','
+    assign mcd_mt_csv = mcd_mt_csv | append: pm | append: ','
+  endfor
+  assign mcd_pk = mcd_pk_csv | split: ','
+  assign mcd_mt = mcd_mt_csv | split: ','
+
+  assign mcd_lines = 0
+  assign mcd_savings = 0
+  assign mcd_sp_key = ''
+  assign mcd_up_in_cart = false
+  assign mcd_is_max = false
+  for item in cart.items
+    if mcd_sp_variant > 0 and item.variant_id == mcd_sp_variant
+      assign mcd_sp_key = item.key
+      continue
+    endif
+    assign mcd_lines = mcd_lines | plus: 1
+    if mcd_up_variant > 0 and item.variant_id == mcd_up_variant
+      assign mcd_up_in_cart = true
+    endif
+    assign cu = item.variant.compare_at_price | default: 0
+    if cu < item.original_price
+      assign cu = item.original_price
+    endif
+    assign cl = cu | times: item.quantity
+    assign ls = cl | minus: item.final_line_price
+    if ls > 0
+      assign mcd_savings = mcd_savings | plus: ls
+    endif
+    if item.final_line_price > 0 and item.variant_id != mcd_up_variant and mcd_max_packs > 1
+      assign tot = 0
+      for other in cart.items
+        if other.product_id == item.product_id
+          assign op = mcd_pk[forloop.index0] | plus: 0
+          assign tot = op | times: other.quantity | plus: tot
+        endif
+      endfor
+      if tot >= mcd_max_packs
+        assign mcd_is_max = true
+      endif
+    endif
+  endfor
+  assign mcd_is_empty = false
+  if mcd_lines == 0
+    assign mcd_is_empty = true
+  endif
+  assign mcd_show_up = false
+  if mcd_up_variant > 0 and mcd_lines > 0 and mcd_up_in_cart == false
+    assign mcd_show_up = true
+  endif
+  assign mcd_show_sp = false
+  if mcd_sp_variant > 0 and mcd_lines > 0
+    assign mcd_show_sp = true
+  endif
+-%}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Poppins:wght@500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Poppins:wght@500;600;700&display=swap"></noscript>
+<script src="{{ 'cart.js' | asset_url }}" defer="defer"></script>
+<link rel="stylesheet" href="{{ 'component-cart-drawer-custom.css' | asset_url }}" media="all">
+<script src="{{ 'cart-drawer-custom.js' | asset_url }}" defer="defer"></script>
+<style>
+  .drawer {
+    visibility: hidden;
+  }
+  .mcd-shell.mcd-sp-on .fc-sp-block{display:flex}
+  .mcd-shell .drawer__inner-empty{position:relative}
+  .mcd-shell .drawer__inner-empty .drawer__close{position:absolute;top:8px;right:12px;margin:0}
+</style>
+
+<cart-drawer class="drawer{% if mcd_is_empty %} is-empty{% endif %}">
+  <div id="CartDrawer" class="cart-drawer">
+    <div id="CartDrawer-Overlay" class="cart-drawer__overlay"></div>
+    <div
+      class="drawer__inner mcd-shell{% if mcd_is_empty %} is-empty{% endif %}{% if mcd_show_up %} fc-force-b{% endif %}{% if mcd_show_sp %} mcd-sp-on{% endif %}"
+      style="--mcd-brand:{{ mcd_brand }};--mcd-brand-dark:{{ mcd_brand_dark }};--mcd-brand-ink:{{ mcd_brand_ink }};--mcd-warm-bg:{{ mcd_tint }};--mcd-warm-bg-2:{{ mcd_tint_2 }}"
+      {% if mcd_lines == 0 and mcd_sp_key != blank %}data-fc-sp-only="{{ mcd_sp_key }}"{% endif %}
+      role="dialog"
+      aria-modal="true"
+      aria-label="Your cart"
+      tabindex="-1"
+    >
+      {%- if mcd_is_empty -%}
+        <div class="drawer__inner-empty">
+          <button
+            class="drawer__close"
+            type="button"
+            onclick="this.closest('cart-drawer').close()"
+            aria-label="Close"
+          >
+            <span class="svg-wrapper"><svg xmlns="http://www.w3.org/2000/svg" fill="none" class="icon icon-close" viewBox="0 0 18 17"><path fill="currentColor" d="M.865 15.978a.5.5 0 0 0 .707.707l7.433-7.431 7.579 7.282a.501.501 0 0 0 .846-.37.5.5 0 0 0-.153-.351L9.712 8.546l7.417-7.416a.5.5 0 1 0-.707-.708L8.991 7.853 1.413.573a.5.5 0 1 0-.693.72l7.563 7.268z"></path></svg></span>
+          </button>
+          <p class="mcd-empty-title">{{ mcd_empty_title }}</p>
+          <p class="mcd-empty-sub">{{ mcd_empty_sub }}</p>
+        </div>
+      {%- else -%}
+        <div class="mcd-head">
+          <h2 class="mcd-title">{{ mcd_title }}</h2>
+          <button class="drawer__close" type="button" onclick="this.closest('cart-drawer').close()" aria-label="Close">
+            <span class="svg-wrapper"><svg xmlns="http://www.w3.org/2000/svg" fill="none" class="icon icon-close" viewBox="0 0 18 17"><path fill="currentColor" d="M.865 15.978a.5.5 0 0 0 .707.707l7.433-7.431 7.579 7.282a.501.501 0 0 0 .846-.37.5.5 0 0 0-.153-.351L9.712 8.546l7.417-7.416a.5.5 0 1 0-.707-.708L8.991 7.853 1.413.573a.5.5 0 1 0-.693.72l7.563 7.268z"></path></svg></span>
+          </button>
+        </div>
+
+        <div class="mcd-body">
+          <p class="mcd-err" hidden role="alert"></p>
+
+          {%- assign mcd_upg_html = '' -%}
+          <div class="mcd-lines">
+            {%- for item in cart.items -%}
+              {%- if mcd_sp_variant > 0 and item.variant_id == mcd_sp_variant -%}
+                {%- continue -%}
+              {%- endif -%}
+              {%- liquid
+                assign li = forloop.index0
+                assign is_paid = false
+                if item.final_line_price > 0
+                  assign is_paid = true
+                endif
+                assign folded = false
+                assign host = false
+                if mcd_fold_free
+                  if is_paid
+                    assign host = true
+                    for other in cart.items
+                      if forloop.index0 >= li
+                        break
+                      endif
+                      if other.product_id == item.product_id and other.final_line_price > 0
+                        assign host = false
+                      endif
+                    endfor
+                  else
+                    for other in cart.items
+                      if other.product_id == item.product_id and other.final_line_price > 0
+                        assign folded = true
+                        break
+                      endif
+                    endfor
+                  endif
+                endif
+              -%}
+              {%- if folded -%}
+                {%- continue -%}
+              {%- endif -%}
+              {%- liquid
+                assign own_packs = mcd_pk[li] | plus: 0
+                assign line_match = false
+                if mcd_mt[li] == 'y'
+                  assign line_match = true
+                endif
+                assign cu = item.variant.compare_at_price | default: 0
+                if cu < item.original_price
+                  assign cu = item.original_price
+                endif
+                assign cl = cu | times: item.quantity
+                assign fl = item.final_line_price
+                assign line_packs = own_packs | times: item.quantity
+                assign also_keys = ''
+                if host
+                  for other in cart.items
+                    if other.product_id == item.product_id and other.final_line_price == 0
+                      assign op = mcd_pk[forloop.index0] | plus: 0
+                      assign line_packs = op | times: other.quantity | plus: line_packs
+                      assign ocu = other.variant.compare_at_price | default: 0
+                      if ocu < other.original_price
+                        assign ocu = other.original_price
+                      endif
+                      assign cl = ocu | times: other.quantity | plus: cl
+                      if other.key != item.key
+                        unless also_keys contains other.key
+                          assign also_keys = also_keys | append: other.key | append: ','
+                        endunless
+                      endif
+                    endif
+                  endfor
+                endif
+                assign ls = cl | minus: fl
+                assign pct = 0
+                if ls > 0 and cl > 0
+                  assign pct = ls | times: 100.0 | divided_by: cl | floor
+                endif
+                assign per_pack = fl | times: 1.0 | divided_by: line_packs | round
+
+                assign line_plan = ''
+                if item.selling_plan_allocation
+                  assign line_plan = item.selling_plan_allocation.selling_plan.id
+                endif
+                assign step_mode = ''
+                if is_paid and item.variant_id != mcd_up_variant
+                  if line_match
+                    assign step_mode = 'tier'
+                  elsif mcd_qty_stepper
+                    assign step_mode = 'qty'
+                  endif
+                endif
+
+                assign down_id = 0
+                assign down_packs = 0
+                assign up_id = 0
+                assign up_packs = 100000
+                assign top_id = 0
+                assign top_packs = 0
+                assign top_price = 0
+                assign top_img = nil
+                if step_mode == 'tier'
+                  for pv in item.product.variants
+                    if pv.available == false
+                      continue
+                    endif
+                    assign pvt = pv.title | downcase
+                    assign vp = 0
+                    for prow in mcd_pack_rows
+                      assign pf = prow | split: '|||'
+                      assign pkey = pf[0] | strip | downcase
+                      if pkey != blank and pvt contains pkey
+                        assign vp = pf[1] | strip | plus: 0
+                      endif
+                    endfor
+                    if vp > 0 and vp < own_packs and vp > down_packs
+                      assign down_id = pv.id
+                      assign down_packs = vp
+                    endif
+                    if vp > own_packs and vp < up_packs
+                      assign up_id = pv.id
+                      assign up_packs = vp
+                    endif
+                    if vp > own_packs and vp > top_packs
+                      assign top_id = pv.id
+                      assign top_packs = vp
+                      assign top_price = pv.price
+                      if line_plan != ''
+                        for alloc in pv.selling_plan_allocations
+                          if alloc.selling_plan.id == line_plan
+                            assign top_price = alloc.price
+                          endif
+                        endfor
+                      endif
+                      assign top_img = pv.featured_image
+                    endif
+                  endfor
+                endif
+
+                assign step_cur = line_packs
+                assign q_down = 0
+                assign q_up = 0
+                if step_mode == 'qty'
+                  if host == false
+                    assign step_cur = 0
+                    for other in cart.items
+                      if other.key == item.key
+                        assign step_cur = step_cur | plus: other.quantity
+                      endif
+                    endfor
+                  endif
+                  if mcd_qty_jump
+                    assign q_up = 100000
+                    for prow in mcd_pack_rows
+                      assign pf = prow | split: '|||'
+                      assign pn = pf[1] | strip | plus: 0
+                      if pn > 0 and pn < step_cur and pn > q_down
+                        assign q_down = pn
+                      endif
+                      if pn > step_cur and pn < q_up
+                        assign q_up = pn
+                      endif
+                    endfor
+                    if q_up == 100000
+                      assign q_up = 0
+                    endif
+                  else
+                    assign q_down = step_cur | minus: 1
+                    assign q_up = step_cur | plus: 1
+                  endif
+                endif
+
+                assign upg = false
+                if mcd_upg_show and mcd_is_max == false and mcd_upg_html == ''
+                  if step_mode == 'tier' and top_id != 0
+                    assign u_price = top_price
+                    assign u_packs = top_packs
+                    assign u_add = top_packs | minus: line_packs
+                    assign upg = true
+                  elsif step_mode == 'qty' and mcd_max_packs > step_cur
+                    assign u_price = fl | times: 1.0 | divided_by: item.quantity | times: mcd_top_paid | round
+                    assign u_packs = mcd_max_packs
+                    assign u_add = mcd_max_packs | minus: step_cur
+                    assign upg = true
+                  endif
+                endif
+                if upg
+                  assign u_add_price = u_price | minus: fl
+                  assign u_each = u_price | times: 1.0 | divided_by: u_packs | round
+                  assign u_save = per_pack | minus: u_each
+                  if u_add < 1 or u_add_price <= 0 or u_save <= 0
+                    assign upg = false
+                  endif
+                endif
+
+                assign line_facts = false
+                if mcd_show_facts and item.variant_id != mcd_up_variant
+                  assign line_facts = true
+                endif
+              -%}
+              <div class="mcd-line" data-key="{{ item.key }}">
+                <div class="mcd-media">
+                  {%- if item.image -%}<img class="mcd-thumb" src="{{ item.image | image_url: width: 156 }}" alt="" width="78" height="80" decoding="async">{%- endif -%}
+                  {%- if fl == 0 -%}<span class="mcd-save-badge">FREE</span>{%- elsif pct > 0 -%}<span class="mcd-save-badge">−{{ pct }}%</span>{%- endif -%}
+                </div>
+
+                <div class="mcd-line-main">
+                  <p class="mcd-line-name">{{ item.product.title | escape }}</p>
+                  {%- if line_facts -%}
+                    <div class="mcd-rating">
+                      <span class="mcd-stars" aria-hidden="true">★★★★★</span>
+                      <span class="mcd-rating-text"><strong>{{ mcd_rating }}</strong> · {{ mcd_rating_text }}</span>
+                    </div>
+
+                    <ul class="mcd-facts">
+                      {%- for fact in mcd_facts -%}
+                        <li><p>{{ fact | strip }}</p></li>
+                      {%- endfor -%}
+                    </ul>
+                  {%- endif -%}
+                  <div class="mcd-controls">
+                    <div class="mcd-controls-left">
+                      {%- if step_mode == 'tier' -%}
+                        <div class="mcd-stepper" role="group" aria-label="Bundle size in packs">
+                          {%- if down_id != 0 -%}
+                            <button class="mcd-step" type="button" aria-label="Fewer packs" data-mcd-tier data-dir="down" data-fc-bundle-main data-to="{{ down_id }}" data-key="{{ item.key }}" data-plan="{{ line_plan }}">−</button>
+                          {%- else -%}
+                            <button class="mcd-step" type="button" aria-label="Fewer packs" data-mcd-tier data-dir="down" data-fc-bundle-main disabled>−</button>
+                          {%- endif -%}
+                          <span class="mcd-qty">{{ line_packs }}</span>
+                          {%- if up_id != 0 -%}
+                            <button class="mcd-step" type="button" aria-label="More packs" data-mcd-tier data-dir="up" data-fc-bundle-main data-to="{{ up_id }}" data-key="{{ item.key }}" data-plan="{{ line_plan }}">+</button>
+                          {%- else -%}
+                            <button class="mcd-step" type="button" aria-label="More packs" data-mcd-tier data-dir="up" data-fc-bundle-main disabled>+</button>
+                          {%- endif -%}
+                        </div>
+                      {%- elsif step_mode == 'qty' -%}
+                        <div class="mcd-stepper" role="group" aria-label="Bundle size in packs">
+                          {%- if q_down > 0 -%}
+                            <button class="mcd-step" type="button" aria-label="Fewer packs" data-fc-qty data-dir="down" data-fc-bundle-main data-key="{{ item.key }}" data-qty="{{ q_down }}"{% if also_keys != '' %} data-also="{{ also_keys }}"{% endif %}>−</button>
+                          {%- else -%}
+                            <button class="mcd-step" type="button" aria-label="Fewer packs" data-fc-qty data-dir="down" data-fc-bundle-main disabled>−</button>
+                          {%- endif -%}
+                          <span class="mcd-qty">{{ step_cur }}</span>
+                          {%- if q_up > 0 -%}
+                            <button class="mcd-step" type="button" aria-label="More packs" data-fc-qty data-dir="up" data-fc-bundle-main data-key="{{ item.key }}" data-qty="{{ q_up }}"{% if also_keys != '' %} data-also="{{ also_keys }}"{% endif %}>+</button>
+                          {%- else -%}
+                            <button class="mcd-step" type="button" aria-label="More packs" data-fc-qty data-dir="up" data-fc-bundle-main disabled>+</button>
+                          {%- endif -%}
+                        </div>
+                      {%- endif -%}
+                      <button class="mcd-remove" type="button" data-mcd-remove data-key="{{ item.key }}"{% if also_keys != '' %} data-also="{{ also_keys }}"{% endif %}{% if step_mode != '' %} data-fc-bundle-main{% endif %}>Remove</button>
+                    </div>
+
+                    <div class="mcd-prices"><div class="mcd-per-unit">{% if fl == 0 %}Free{% else %}{{ per_pack | money }} {{ mcd_per_label }}{% endif %}</div></div>
+                  </div>
+                </div>
+              </div>
+              {%- if upg -%}
+                {%- liquid
+                  assign u_save_m = u_save | money
+                  assign u_add_price_m = u_add_price | money
+                  assign u_each_m = u_each | money
+                  assign u_save_txt = mcd_upg_save | replace: '[save]', u_save_m
+                  assign u_head_txt = mcd_upg_head | replace: '[packs]', u_add | replace: '[price]', u_add_price_m | replace: '[each]', u_each_m
+                -%}
+                {%- capture mcd_upg_html -%}
+                  <div class="mcd-upgrade">
+                    {%- if mcd_upg_image != blank -%}
+                      <img class="mcd-upgrade-img" src="{{ mcd_upg_image }}" alt="" width="56" height="42" decoding="async">
+                    {%- elsif top_img -%}
+                      <img class="mcd-upgrade-img" src="{{ top_img | image_url: width: 112 }}" alt="" width="56" height="42" decoding="async">
+                    {%- elsif item.image -%}
+                      <img class="mcd-upgrade-img" src="{{ item.image | image_url: width: 112 }}" alt="" width="56" height="42" decoding="async">
+                    {%- endif -%}
+                    <div class="mcd-upgrade-main">
+                      <div class="mcd-upgrade-tags">
+                        <span class="mcd-pill">{{ mcd_upg_pill }}</span>
+                        <span class="mcd-upgrade-save">{{ u_save_txt }}</span>
+                      </div>
+                      <p class="mcd-upgrade-head">{{ u_head_txt }}</p>
+                      <p class="mcd-upgrade-sub">
+                        {%- if mcd_upg_ship_icon != blank -%}
+                          <img class="mcd-ship-icon" src="{{ mcd_upg_ship_icon }}" alt="" width="40" height="22" decoding="async">
+                        {%- else -%}
+                          <svg class="mcd-ship-icon" viewBox="0 0 40 22" width="40" height="22" fill="none" stroke="currentColor" stroke-width=".9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1.5 8.5h6M3 11h4.5M1.5 13.5h6"></path><rect x="9" y="3.5" width="17" height="12.5" rx="1.5"></rect><path d="M26 7.5h5.4l3.6 4.4V16h-9"></path><path d="M28 9.5h2.6l1.9 2.4H28z"></path><rect x="11.5" y="6.8" width="12" height="5.6" rx="2.8"></rect><text x="17.5" y="11.1" text-anchor="middle" font-family="Poppins,sans-serif" font-size="3.8" font-weight="700" fill="currentColor" stroke="none">FREE</text><circle cx="14.5" cy="17.6" r="2.4" class="mcd-ship-wheel"></circle><circle cx="30.5" cy="17.6" r="2.4" class="mcd-ship-wheel"></circle></svg>
+                        {%- endif -%}
+                        <span>{{ mcd_upg_sub }}</span>
+                      </p>
+                    </div>
+                    {%- if step_mode == 'tier' -%}
+                      <button class="mcd-upgrade-btn" type="button" data-mcd-tier data-dir="upgrade" data-fc-bundle-main data-to="{{ top_id }}" data-key="{{ item.key }}" data-plan="{{ line_plan }}">{{ mcd_upg_btn }}</button>
+                    {%- else -%}
+                      <button class="mcd-upgrade-btn" type="button" data-fc-qty data-dir="upgrade" data-fc-bundle-main data-key="{{ item.key }}" data-qty="{{ mcd_max_packs }}"{% if also_keys != '' %} data-also="{{ also_keys }}"{% endif %}>{{ mcd_upg_btn }}</button>
+                    {%- endif -%}
+                  </div>
+                {%- endcapture -%}
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+
+          {%- if mcd_is_max -%}
+            {%- assign mcd_sav_money = mcd_savings | money -%}
+            <div class="mcd-maxtier">
+              <p>
+                <span class="fc-maxtier-a">{{ mcd_maxtier_a | replace: '[savings]', mcd_sav_money }}</span>
+                <span class="fc-maxtier-bc">{{ mcd_maxtier_bc | replace: '[savings]', mcd_sav_money }}</span>
+              </p>
+            </div>
+          {%- elsif mcd_upg_html != '' -%}
+            {{ mcd_upg_html }}
+          {%- endif -%}
+
+          {%- if mcd_show_up -%}
+            <div class="fc-upsell-card fc-upsell-card--b">
+              <div class="fc-upsell-card__band">
+                <svg class="fc-upsell-card__truck" viewBox="0 0 24 16" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M1.5 2h12v10h-12z"></path>
+                  <path d="M13.5 5h4.2l3 3.2V12h-7.2"></path>
+                  <circle cx="6" cy="13" r="1.8"></circle>
+                  <circle cx="17.5" cy="13" r="1.8"></circle>
+                </svg>
+                <span>{{ mcd_up_band }}</span>
+              </div>
+              <div class="fc-upsell-card__body">
+                {%- if mcd_up_image != blank -%}<img class="fc-upsell-card__img" src="{{ mcd_up_image }}" alt="" width="84" height="84" decoding="async">{%- endif -%}
+                <div class="fc-upsell-card__main">
+                  <div class="fc-upsell-card__tags">
+                    <span class="fc-upsell-card__pill">{{ mcd_up_pill }}</span>
+                    <span class="fc-upsell-card__save">{{ mcd_up_save }}</span>
+                  </div>
+                  <p class="fc-upsell-card__head">{{ mcd_up_head }}</p>
+                  <p class="fc-upsell-card__claim">{{ mcd_up_claim }}</p>
+                </div>
+                <button class="fc-upsell-card__btn" type="button" data-fc-upsell-add data-fc-items="[{&quot;id&quot;:{{ mcd_up_variant }},&quot;quantity&quot;:1{% if mcd_up_plan > 0 %},&quot;selling_plan&quot;:{{ mcd_up_plan }}{% endif %}}]">{{ mcd_up_btn }}</button>
+              </div>
+            </div>
+          {%- endif -%}
+
+          {%- if mcd_g_show -%}
+            <div class="mcd-guarantee">
+              <svg class="mcd-guarantee-badge" viewBox="0 0 46 46" fill="none" aria-hidden="true">
+                <circle cx="23" cy="23" r="21" fill="#fff" stroke="{{ mcd_brand }}" stroke-width="1.5"></circle>
+                <circle cx="23" cy="23" r="17" fill="none" stroke="{{ mcd_brand }}" stroke-width="0.8" stroke-dasharray="2 2.4"></circle>
+                <text x="23" y="21" text-anchor="middle" font-family="Poppins,sans-serif" font-size="13" font-weight="700" fill="{{ mcd_brand_ink }}">{{ mcd_g_days }}</text>
+                <text x="23" y="31" text-anchor="middle" font-family="Poppins,sans-serif" font-size="6.5" font-weight="700" letter-spacing=".5" fill="{{ mcd_brand_ink }}">DAYS</text>
+              </svg>
+              <div>
+                <p class="mcd-guarantee-title">{{ mcd_g_title }}</p>
+                <p class="mcd-guarantee-sub"><strong>{{ mcd_g_bold }}</strong>{{ mcd_g_rest }}</p>
+              </div>
+            </div>
+          {%- endif -%}
+
+          {%- if mcd_chips_show -%}
+            <ul class="mcd-trust">
+              {%- for chip in mcd_chips -%}
+                {%- assign cf = chip | split: '|||' -%}
+                {%- assign cimg = cf[0] | strip -%}
+                <li>
+                  {%- if cimg != blank -%}
+                    <img class="mcd-chip-img" src="{{ cimg }}" alt="" width="36" height="36" decoding="async">
+                  {%- else -%}
+                    <svg class="mcd-chip-img" viewBox="0 0 36 36" fill="none" stroke="{{ mcd_brand_ink }}" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      {%- case forloop.index -%}
+                        {%- when 1 -%}<path d="M18 8l8 3v6c0 5-3.4 8.4-8 10-4.6-1.6-8-5-8-10v-6z"></path><path d="M14.5 17.5l2.5 2.5 4.5-5"></path>
+                        {%- when 2 -%}<rect x="8" y="14" width="20" height="8" rx="4" transform="rotate(-35 18 18)"></rect><path d="M14.5 21.5l7-7"></path>
+                        {%- when 3 -%}<path d="M18 8.5c3.6 4.2 6 7 6 10a6 6 0 0 1-12 0c0-3 2.4-5.8 6-10z"></path>
+                        {%- else -%}<path d="M15 8.5h6M16 8.5v6.5l-5 9a1.5 1.5 0 0 0 1.3 2.2h11.4a1.5 1.5 0 0 0 1.3-2.2l-5-9V8.5"></path><path d="M13.5 21h9"></path>
+                      {%- endcase -%}
+                    </svg>
+                  {%- endif -%}
+                  <span>{{ cf[1] | strip }}</span>
+                </li>
+              {%- endfor -%}
+            </ul>
+          {%- endif -%}
+        </div>
+
+        <div class="mcd-foot">
+          <div class="mcd-sum-row mcd-row-subtotal">
+            <span>Subtotal</span>
+            <span>{{ cart.total_price | plus: mcd_savings | money }}</span>
+          </div>
+          {%- if mcd_savings > 0 -%}
+            <div class="mcd-sum-row is-savings mcd-row-savings">
+              <span>Bundle savings</span>
+              <span>−{{ mcd_savings | money }}</span>
+            </div>
+          {%- endif -%}
+          <div class="mcd-total-row">
+            <span class="mcd-total-label">Total</span>
+            <span class="mcd-total-val">{{ cart.total_price | money }}</span>
+          </div>
+
+          {%- if mcd_show_sp -%}
+            <div class="fc-sp-block" data-fc-sp-variant="{{ mcd_sp_variant }}"{% if mcd_sp_plan > 0 %} data-fc-sp-plan="{{ mcd_sp_plan }}"{% endif %} data-fc-sp-incart="{% if mcd_sp_key != blank %}true{% else %}false{% endif %}"{% if mcd_sp_key != blank %} data-fc-sp-key="{{ mcd_sp_key }}"{% endif %}>
+              <div class="fc-sp-block__info">
+                {%- if mcd_sp_icon != blank -%}
+                  <img class="fc-sp-block__icon" src="{{ mcd_sp_icon }}" alt="" width="38" height="43" decoding="async">
+                {%- else -%}
+                  <svg class="fc-sp-block__icon" viewBox="0 0 38 43" fill="none" stroke="{{ mcd_brand_ink }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 4l14 5.5V21c0 9-6 15.5-14 18C11 36.500 5 30 5 21V9.500z"></path><path d="M13 21.500l4.500 4.500L26 17"></path></svg>
+                {%- endif -%}
+                <div class="fc-sp-block__text">
+                  <p class="fc-sp-block__title">{{ mcd_sp_title }}</p>
+                  <p class="fc-sp-block__sub">{{ mcd_sp_sub }}</p>
+                </div>
+              </div>
+              <button class="fc-sp-toggle" type="button" role="switch" aria-checked="false" aria-label="Shipping protection" data-fc-sp-toggle>
+                <span class="fc-sp-toggle__knob"></span>
+              </button>
+            </div>
+          {%- endif -%}
+
+          <form action="{{ routes.cart_url }}" method="post" id="CartDrawer-Form" novalidate>
+            <button type="submit" name="checkout" class="mcd-cta">
+              <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                <rect x="4" y="9" width="12" height="8" rx="1.6"></rect>
+                <path d="M7 9V6.5a3 3 0 0 1 6 0V9" stroke-linecap="round"></path>
+              </svg>
+              <span class="mcd-cta-label">{{ mcd_checkout }} · {{ cart.total_price | money }}</span>
+            </button>
+          </form>
+
+          {%- liquid
+            assign mcd_pay_html = ''
+            assign mcd_pay_count = 0
+            if mcd_pay_types != blank
+              assign mcd_pay_order = mcd_pay_types | remove: ' ' | split: ','
+              for ptype in mcd_pay_order
+                if shop.enabled_payment_types contains ptype and mcd_pay_count < mcd_pay_limit
+                  assign one_svg = ptype | payment_type_svg_tag: class: 'icon icon--full-color'
+                  assign mcd_pay_html = mcd_pay_html | append: one_svg
+                  assign mcd_pay_count = mcd_pay_count | plus: 1
+                endif
+              endfor
+            else
+              for ptype in shop.enabled_payment_types limit: mcd_pay_limit
+                assign one_svg = ptype | payment_type_svg_tag: class: 'icon icon--full-color'
+                assign mcd_pay_html = mcd_pay_html | append: one_svg
+                assign mcd_pay_count = mcd_pay_count | plus: 1
+              endfor
+            endif
+          -%}
+          {%- if mcd_pay_count > 0 -%}
+            <div class="mcd-pay">{{ mcd_pay_html }}</div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</cart-drawer>
+
+
+==================================================================
+FILE: sections/cart-drawer.liquid
+==================================================================
+
+{%- comment -%}
+  Cart drawer section. The theme asks for this section by name ("cart-drawer") every time the cart changes,
+  and the drawer script swaps in the #CartDrawer part of what comes back, so it must output the same drawer as the snippet.
+{%- endcomment -%}
+{%- render 'cart-drawer' -%}
+
+{% schema %}
+{
+  "name": "Cart drawer",
+  "settings": []
+}
+{% endschema %}
+
+
+==================================================================
+FILE: assets/component-cart-drawer-custom.css
+==================================================================
+
+.mcd-shell{--mcd-brand: #913939;--mcd-brand-dark: #7a3131;--mcd-brand-ink: #6c2a2a;--mcd-ink: #1a1a1a;--mcd-ink-2: #3b3630;--mcd-ink-3: #6c6259;--mcd-ink-4: #8a8078;--mcd-ink-5: #a09488;--mcd-line: rgba(43, 43, 43, .08);--mcd-line-2: rgba(43, 43, 43, .13);--mcd-line-3: rgba(43, 43, 43, .18);--mcd-surface: #ffffff;--mcd-surface-2: #faf7f4;--mcd-surface-3: #f6f2ec;--mcd-green: #4a7c59;--mcd-green-ink: #2f5c40;--mcd-green-bg: #f2f7f3;--mcd-warm-bg: #fdf0f0;--mcd-warm-bg-2: #fdf2f2;--mcd-tap: 44px}
+.cart-drawer .drawer__inner.mcd-shell{padding:0;display:flex;flex-direction:column;overflow:hidden;color:var(--mcd-ink);line-height:1.5;background:var(--mcd-surface);font-family:"Plus Jakarta Sans",sans-serif;font-weight:500}
+@media screen and (min-width:750px){.cart-drawer .drawer__inner.mcd-shell{width:420px;max-width:100vw}
+}
+@media screen and (min-width:768px)and (max-width:1100px){.cart-drawer .drawer__inner.mcd-shell{width:400px}
+}
+.mcd-head{flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;padding:18px 24px 16px;border-bottom:1px solid var(--mcd-line)}
+.mcd-title{margin:0;font-family:Poppins,sans-serif;font-size:21px;font-weight:600;color:var(--mcd-ink);letter-spacing:normal}
+.mcd-shell .drawer__close{width:var(--mcd-tap);height:var(--mcd-tap);margin:-6px -10px -6px 0;padding:0;border:0;background:transparent;color:var(--mcd-ink);display:flex;align-items:center;justify-content:center;cursor:pointer;position:static}
+.mcd-shell .drawer__close svg{width:17px;height:17px}
+.mcd-shell .drawer__close:focus-visible{outline:2px solid var(--mcd-brand);outline-offset:2px;border-radius:8px}
+.mcd-body{flex:1 1 auto;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:18px 24px 20px}
+.mcd-err{margin:0 0 14px;padding:10px 12px;border-radius:8px;background:#fdecec;color:#8a1f1f;font-size:13px}
+.mcd-err[hidden]{display:none}
+.mcd-line{display:flex;gap:14px;align-items:flex-start}
+.mcd-line+.mcd-line{margin-top:18px;padding-top:18px;border-top:1px solid var(--mcd-line)}
+.mcd-line[data-busy="1"]{opacity:.5;pointer-events:none}
+.mcd-media{position:relative;flex:0 0 auto}
+.mcd-thumb{width:78px;height:80px;object-fit:cover;border-radius:6px;border:1px solid var(--mcd-line);background:var(--mcd-surface-3);display:block}
+.mcd-save-badge{position:absolute;top:-7px;left:-7px;background:var(--mcd-brand);color:#fff;font-size:10.5px;font-weight:800;letter-spacing:.02em;padding:3px 6px;border-radius:5px}
+.mcd-line-main{flex:1;min-width:0}
+.mcd-line-name{margin:0;font-size:14.5px;line-height:1.35;font-weight:600;color:var(--mcd-ink)}
+.mcd-rating{display:flex;align-items:center;gap:7px;margin-top:6px}
+.mcd-stars{color:var(--mcd-brand);font-size:11px;letter-spacing:1px;flex:0 0 auto}
+.mcd-rating-text{font-size:13px;color:var(--mcd-ink-3)}
+.mcd-rating-text strong{font-weight:700;color:var(--mcd-ink)}
+.mcd-facts{list-style:none;margin:9px 0 0;padding:0;display:flex;flex-direction:column;gap:5px}
+.mcd-facts li{display:flex;gap:8px;align-items:flex-start}
+.mcd-facts li:before{content:"\2713";width:14px;height:14px;margin-top:2px;border-radius:50%;background:var(--mcd-green);color:#fff;font-size:8.5px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+.mcd-facts p{margin:0;font-size:13px;line-height:1.35;color:var(--mcd-ink-2)}
+.mcd-facts strong{font-weight:700;color:var(--mcd-ink)}
+.mcd-facts em{font-style:italic}
+.mcd-controls{margin-top:11px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px}
+.mcd-controls-left{display:flex;align-items:center;gap:9px}
+.mcd-stepper{display:flex;align-items:center;border:1px solid var(--mcd-line-3);border-radius:8px;overflow:hidden;height:40px}
+.mcd-step{width:var(--mcd-tap);height:40px;border:0;background:var(--mcd-surface);color:var(--mcd-ink);font-size:18px;line-height:1;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.mcd-step:hover:not([disabled]){background:var(--mcd-surface-3)}
+.mcd-step[disabled]{color:#cfc7bd;cursor:not-allowed}
+.mcd-step:focus-visible{outline:2px solid var(--mcd-brand);outline-offset:-2px}
+.mcd-qty{min-width:42px;text-align:center;font-size:14px;font-weight:700;color:var(--mcd-ink)}
+.mcd-remove{padding:0;border:0;background:transparent;min-height:var(--mcd-tap);display:inline-flex;align-items:center;font-family:inherit;font-size:13px;color:var(--mcd-ink-5);text-decoration:underline;text-underline-offset:3px;white-space:nowrap;cursor:pointer}
+.mcd-remove:hover{color:var(--mcd-ink-3)}
+.mcd-remove:focus-visible{outline:2px solid var(--mcd-brand);outline-offset:2px}
+.mcd-prices{text-align:right;margin-left:auto}
+.mcd-compare{font-size:13px;color:var(--mcd-ink-5);text-decoration:line-through}
+.mcd-subtotal{font-size:16px;font-weight:800;color:var(--mcd-ink)}
+.mcd-per-unit{font-size:11.5px;color:var(--mcd-ink-4);margin-top:1px}
+.mcd-upgrade{margin-top:14px;border:1.5px solid var(--mcd-brand);border-radius:10px;background:var(--mcd-warm-bg);padding:11px 14px;display:flex;align-items:center;gap:12px}
+.mcd-upgrade[hidden]{display:none}
+.mcd-upgrade-main{flex:1;min-width:0}
+.mcd-upgrade-tags{display:flex;align-items:center;gap:7px;margin-bottom:4px;flex-wrap:wrap}
+.mcd-pill{background:var(--mcd-brand);color:#fff;font-size:10px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:2.5px 6px;border-radius:4px}
+.mcd-upgrade-save{font-size:12px;font-weight:700;color:var(--mcd-brand-ink)}
+.mcd-upgrade-head{margin:0;font-size:14px;font-weight:700;color:var(--mcd-ink)}
+.mcd-upgrade-sub{margin:4px 0 0;font-size:13px;line-height:1.4;color:var(--mcd-ink-3);display:flex;align-items:center;gap:6px}
+.mcd-ship-icon{width:auto;height:22px;flex:0 0 auto;display:block}
+svg.mcd-ship-icon{width:40px;color:var(--mcd-brand);opacity:.8}
+.mcd-ship-wheel{fill:var(--mcd-warm-bg)}
+.mcd-upgrade-img{width:56px;height:42px;flex:0 0 auto;object-fit:contain;background:none;display:block}
+.mcd-upgrade-btn{flex:0 0 auto;min-height:var(--mcd-tap);padding:0 16px;border:0;border-radius:8px;background:var(--mcd-brand);color:#fff;font-family:inherit;font-size:13.5px;font-weight:700;cursor:pointer}
+.mcd-upgrade-btn:hover{background:var(--mcd-brand-dark)}
+.mcd-upgrade-btn:focus-visible{outline:2px solid var(--mcd-ink);outline-offset:2px}
+.mcd-maxtier{margin-top:18px;border:1px solid rgba(74,124,89,.35);border-radius:10px;background:var(--mcd-green-bg);padding:13px 16px;display:flex;align-items:center;gap:10px}
+.mcd-maxtier[hidden]{display:none}
+.mcd-maxtier:before{content:"\2713";width:18px;height:18px;border-radius:50%;background:var(--mcd-green);color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+.mcd-maxtier p{margin:0;font-size:13.5px;font-weight:600;color:var(--mcd-green-ink);display:flex;align-items:center}
+.mcd-guarantee{margin-top:12px;border:1.5px dashed rgba(145,57,57,.45);border-color:color-mix(in srgb,var(--mcd-brand) 45%,transparent);border-radius:10px;background:var(--mcd-warm-bg-2);padding:10px 14px;display:flex;align-items:center;gap:12px}
+.mcd-guarantee[hidden]{display:none}
+.mcd-guarantee-badge{width:46px;height:46px;flex:0 0 auto}
+.mcd-guarantee-title{margin:0 0 2px;font-family:Poppins,sans-serif;font-size:14px;font-weight:600;line-height:1.2;color:var(--mcd-ink)}
+.mcd-guarantee-sub{margin:0;font-size:13px;line-height:1.35;color:var(--mcd-ink-3)}
+.mcd-trust{margin-top:10px;display:grid;grid-template-columns:1fr 1fr;gap:6px;list-style:none;padding:0}
+.mcd-trust[hidden]{display:none}
+.mcd-trust li{display:flex;align-items:center;gap:9px;border:1px solid var(--mcd-line-2);border-radius:7px;padding:7px 9px}
+.mcd-trust .mcd-chip-img{width:36px;height:36px;flex:0 0 auto;border-radius:6px;object-fit:cover;background:var(--mcd-surface-3);display:block}
+.mcd-trust span{font-size:11.5px;font-weight:700;line-height:1.25;color:var(--mcd-ink-2)}
+.mcd-shell .drawer__inner-empty{padding:70px 24px;text-align:center;background:var(--mcd-surface)}
+.mcd-empty-title{margin:0 0 6px;font-family:Poppins,sans-serif;font-size:18px;font-weight:600;color:var(--mcd-ink)}
+.mcd-empty-sub{margin:0;font-size:14px;color:var(--mcd-ink-4)}
+.mcd-foot{flex:0 0 auto;border-top:1px solid rgba(43,43,43,.1);padding:16px 24px 20px;padding-bottom:calc(20px + env(safe-area-inset-bottom,0px));background:var(--mcd-surface)}
+.mcd-sum-row{display:flex;align-items:center;justify-content:space-between;font-size:13.5px;color:var(--mcd-ink-3);margin-bottom:6px}
+.mcd-sum-row span:last-child{color:var(--mcd-ink-2);font-weight:600}
+.mcd-sum-row[hidden]{display:none}
+.mcd-sum-row.is-savings{color:var(--mcd-green-ink);font-weight:600}
+.mcd-sum-row.is-savings span:last-child{color:var(--mcd-green-ink)}
+.mcd-total-row{display:flex;align-items:center;justify-content:space-between;padding-top:12px;margin-top:12px;margin-bottom:14px;border-top:1px solid var(--mcd-line)}
+.mcd-total-label{font-family:Poppins,sans-serif;font-size:17px;font-weight:600;color:var(--mcd-ink)}
+.mcd-total-val{font-family:Poppins,sans-serif;font-size:21px;font-weight:700;color:var(--mcd-ink)}
+.mcd-cta{width:100%;height:58px;border:0;border-radius:8px;background:var(--mcd-brand);color:#fff;font-family:inherit;font-size:16.5px;font-weight:800;letter-spacing:.01em;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer}
+.mcd-cta:hover:not([disabled]){background:var(--mcd-brand-dark)}
+.mcd-cta[disabled]{opacity:.45;cursor:not-allowed}
+.mcd-cta:focus-visible{outline:2px solid var(--mcd-ink);outline-offset:2px}
+.mcd-cta svg{width:15px;height:15px}
+.mcd-pay{display:flex;align-items:center;justify-content:center;gap:7px;margin-top:14px}
+.mcd-pay[hidden]{display:none}
+.mcd-pay svg{height:22px;width:auto;display:block}
+.fc-upsell-card{display:none;margin-top:14px;border:1px solid var(--mcd-brand);border-radius:10px;overflow:hidden;background:var(--mcd-warm-bg)}
+.fc-upsell-card__band{background:var(--mcd-brand);color:#fff;display:flex;align-items:center;justify-content:center;gap:8px;padding:4px 8px;font-size:12px;font-weight:700;letter-spacing:.05em}
+.fc-upsell-card__truck{width:24px;height:16px;flex:0 0 auto;display:block}
+.fc-upsell-card__body{display:grid;grid-template-columns:auto 1fr;column-gap:12px;row-gap:8px;align-items:center;padding:12px 14px}
+.fc-upsell-card__img{width:84px;height:auto;grid-column:1;grid-row:1 / span 2;align-self:center;object-fit:contain;display:block;pointer-events:none}
+.fc-upsell-card__main{grid-column:2;grid-row:1;min-width:0;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center}
+.fc-upsell-card__tags{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:center}
+.fc-upsell-card__pill{background:var(--mcd-brand);color:#fff;font-size:10.5px;font-weight:800;letter-spacing:.02em;padding:2px 6px;border-radius:5px;white-space:nowrap}
+.fc-upsell-card__save{font-size:12px;font-weight:700;color:var(--mcd-brand-ink);letter-spacing:.6px}
+.fc-upsell-card__head{margin:0;font-size:14px;font-weight:700;color:var(--mcd-ink);line-height:1.2;letter-spacing:.6px}
+.fc-upsell-card__head--sm{font-size:14px}
+.fc-upsell-card__claim{margin:0;font-size:12px;color:var(--mcd-ink-3);letter-spacing:-.12px}
+.fc-upsell-card__claim strong{font-weight:700}
+.fc-upsell-card__btn{grid-column:2;grid-row:2;width:100%;min-height:var(--mcd-tap);padding:0 16px;border:0;border-radius:8px;background:var(--mcd-brand);color:#fff;font-family:inherit;font-size:13.5px;font-weight:700;cursor:pointer}
+.fc-upsell-card__btn:hover:not([disabled]){background:var(--mcd-brand-dark)}
+.fc-upsell-card__btn[disabled]{opacity:.6;cursor:wait}
+.fc-upsell-card__btn:focus-visible{outline:2px solid var(--mcd-ink);outline-offset:2px}
+@media screen and (max-width:749px){.fc-upsell-card__body{column-gap:10px;padding:4px 14px 8px}
+.fc-upsell-card__img{width:54px;grid-row:1;align-self:stretch;height:100%}
+.fc-upsell-card__main{grid-row:1;align-items:flex-start;text-align:left}
+.fc-upsell-card__tags{justify-content:flex-start}
+.fc-upsell-card__head{font-size:13px}
+.fc-upsell-card__btn{grid-column:1 / -1;grid-row:2}
+}
+.fc-maxtier-bc{display:none}
+.mcd-shell.fc-force-b .fc-upsell-card--b,.mcd-shell.fc-force-c .fc-upsell-card--c{display:block}
+.mcd-shell.fc-force-b .mcd-upgrade,.mcd-shell.fc-force-c .mcd-upgrade,.mcd-shell.fc-force-b .fc-maxtier-a,.mcd-shell.fc-force-c .fc-maxtier-a{display:none}
+.mcd-shell.fc-force-b .fc-maxtier-bc,.mcd-shell.fc-force-c .fc-maxtier-bc{display:inline}
+.fc-maxtier-claimed{display:none}
+.fc-maxtier-claimed2{display:block}
+.fc-maxtier-claimed:before,.fc-maxtier-claimed2:before{content:none}
+.fc-maxtier-claimed__check{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;flex:0 0 18px;margin-right:10px;border-radius:50%;background:var(--mcd-green);color:#fff;font-size:11px;font-weight:800;vertical-align:-4px}
+.mcd-shell.fc-force-b .fc-maxtier-claimed,.mcd-shell.fc-force-c .fc-maxtier-claimed{display:block}
+.fc-upsell-card__accent{color:var(--mcd-brand)}
+.fc-upsell-card__was{color:#91393980;color:color-mix(in srgb,var(--mcd-brand) 50%,transparent);font-weight:600;text-decoration:line-through}
+.mcd-subtotal.mcd-free{color:var(--mcd-green)}
+.fc-sp-block{display:none;align-items:center;justify-content:space-between;gap:12px;margin:2px 0 14px;padding:8px 0}
+.fc-sp-block__info{display:flex;align-items:center;gap:12px;min-width:0}
+.fc-sp-block__icon{width:38px;height:43px;flex:0 0 auto;object-fit:contain;display:block}
+.fc-sp-block__text{min-width:0}
+.fc-sp-block__title{margin:0 0 4px;font-size:14px;font-weight:700;color:var(--mcd-ink);letter-spacing:.4px;line-height:1.2}
+.fc-sp-block__sub{margin:0;font-size:12px;color:var(--mcd-ink-3);line-height:1.2;letter-spacing:.4px;font-weight:400}
+.fc-sp-toggle{flex:0 0 auto;position:relative;width:56px;height:30px;min-width:56px;padding:0;border:0;border-radius:999px;background:var(--mcd-line-3);cursor:pointer;transition:background .18s ease}
+.fc-sp-block.is-on .fc-sp-toggle{background:var(--mcd-green)}
+.fc-sp-toggle__knob{position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:0 3px 7px #0000002e;transition:transform .18s ease}
+.fc-sp-block.is-on .fc-sp-toggle__knob{transform:translate(26px)}
+.fc-sp-toggle:focus-visible{outline:2px solid var(--mcd-brand);outline-offset:2px}
+.fc-sp-toggle[disabled]{opacity:.6;cursor:wait}
+@media screen and (max-width:749px){.fc-sp-block__title,.fc-sp-block__sub{font-size:12px}
+.fc-sp-block__icon{width:32px;height:36px}
+}
+.mcd-shell.fc-force2-bv2 .fc-upsell-card--bv2,.mcd-shell.fc-force2-cv2 .fc-upsell-card--cv2,.mcd-shell.fc-force2-dv2 .fc-upsell-card--dv2,.mcd-shell.fc-force2-ev2 .fc-upsell-card--ev2{display:block}
+.mcd-shell.fc-force2-bv2 .mcd-upgrade,.mcd-shell.fc-force2-cv2 .mcd-upgrade,.mcd-shell.fc-force2-dv2 .mcd-upgrade,.mcd-shell.fc-force2-ev2 .mcd-upgrade,.mcd-shell.fc-force2-bv2 .fc-upsell-card--b,.mcd-shell.fc-force2-bv2 .fc-upsell-card--c,.mcd-shell.fc-force2-cv2 .fc-upsell-card--b,.mcd-shell.fc-force2-cv2 .fc-upsell-card--c,.mcd-shell.fc-force2-dv2 .fc-upsell-card--b,.mcd-shell.fc-force2-dv2 .fc-upsell-card--c,.mcd-shell.fc-force2-ev2 .fc-upsell-card--b,.mcd-shell.fc-force2-ev2 .fc-upsell-card--c{display:none}
+.mcd-shell.fc-force2-cv2 .fc-sp-block,.mcd-shell.fc-force2-dv2 .fc-sp-block,.mcd-shell.fc-force2-ev2 .fc-sp-block{display:flex}
+.mcd-shell.fc-force2-bv2 .fc-maxtier-claimed2,.mcd-shell.fc-force2-cv2 .fc-maxtier-claimed2,.mcd-shell.fc-force2-dv2 .fc-maxtier-claimed2,.mcd-shell.fc-force2-ev2 .fc-maxtier-claimed2{display:block}
+.mcd-shell.fc-force2-bv2 .fc-maxtier-a,.mcd-shell.fc-force2-cv2 .fc-maxtier-a,.mcd-shell.fc-force2-dv2 .fc-maxtier-a,.mcd-shell.fc-force2-ev2 .fc-maxtier-a{display:none}
+.mcd-shell.fc-force2-bv2 .fc-maxtier-bc,.mcd-shell.fc-force2-cv2 .fc-maxtier-bc,.mcd-shell.fc-force2-dv2 .fc-maxtier-bc,.mcd-shell.fc-force2-ev2 .fc-maxtier-bc{display:inline}
+.mcd-shell.fc-force2-cv2 .mcd-sum-row,.mcd-shell.fc-force2-cv2 .mcd-total-row,.mcd-shell.fc-force2-dv2 .mcd-sum-row,.mcd-shell.fc-force2-dv2 .mcd-total-row,.mcd-shell.fc-force2-ev2 .mcd-sum-row,.mcd-shell.fc-force2-ev2 .mcd-total-row{display:none}
+
+
+==================================================================
+FILE: assets/cart-drawer-custom.js
+==================================================================
+
+(function(){"use strict";var SECTIONS="cart-drawer,cart-icon-bubble",mutating=!1;function drawerEl(){return document.querySelector("cart-drawer")}function showError(msg){var el=document.querySelector("#CartDrawer .mcd-err");el&&(el.textContent=msg,el.hidden=!1)}function busy(key,state){if(key)for(var rows=document.querySelectorAll("#CartDrawer .mcd-line"),i=0;i<rows.length;i++)rows[i].getAttribute("data-key")===key&&(state?rows[i].setAttribute("data-busy","1"):rows[i].removeAttribute("data-busy"))}function innerHTMLFrom(html,selector){var doc=new DOMParser().parseFromString(html,"text/html"),node=doc.querySelector(selector);return node?node.innerHTML:null}function applySections(state){var sections=state&&state.sections;if(sections){var drawerHTML=sections["cart-drawer"];if(drawerHTML){var target=document.querySelector("#CartDrawer"),markup=innerHTMLFrom(drawerHTML,"#CartDrawer");target&&markup!==null&&(target.innerHTML=markup)}var bubbleHTML=sections["cart-icon-bubble"];if(bubbleHTML){var bubble=document.getElementById("cart-icon-bubble"),bubbleMarkup=innerHTMLFrom(bubbleHTML,".shopify-section");bubble&&bubbleMarkup!==null&&(bubble.innerHTML=bubbleMarkup)}var drawer=drawerEl();if(drawer){state.item_count===0?drawer.classList.add("is-empty"):drawer.classList.remove("is-empty");var overlay=drawer.querySelector("#CartDrawer-Overlay");overlay&&typeof drawer.close=="function"&&overlay.addEventListener("click",drawer.close.bind(drawer))}syncSP()}}function postJSON(url,body){return body.sections=SECTIONS,body.sections_url=window.location.pathname,fetch(url,{method:"POST",headers:{"Content-Type":"application/json",Accept:"application/json"},body:JSON.stringify(body)}).then(function(res){return res.json().then(function(data){if(!res.ok)throw new Error(data.description||data.message||"cart error");return data})})}function dropSPIfEmptying(updates){for(var lines=document.querySelectorAll("#CartDrawer .mcd-line"),remaining=0,i=0;i<lines.length;i++){var k=lines[i].getAttribute("data-key"),v=updates[k];(v===void 0||v>0)&&remaining++}if(!(remaining>0)){var block=spBlock(),spKey=block&&block.getAttribute("data-fc-sp-key");spKey&&(updates[spKey]=0)}}function addAlso(updates,btn){var also=btn&&btn.getAttribute("data-also");if(also)for(var parts=also.split(","),i=0;i<parts.length;i++){var k=parts[i].trim();k&&!(k in updates)&&(updates[k]=0)}}function removeLine(key,btn){if(!(!key||mutating)){mutating=!0,busy(key,!0),btn&&(btn.disabled=!0);var updates={};updates[key]=0,addAlso(updates,btn),dropSPIfEmptying(updates),postJSON("/cart/update.js",{updates:updates}).then(applySections).catch(function(){busy(key,!1),btn&&(btn.disabled=!1),showError("That didn't go through \u2014 please try again.")}).then(function(){mutating=!1})}}function setTier(key,toVariantId,plan,btn){if(!(!key||!toVariantId||mutating)){mutating=!0,busy(key,!0),btn&&(btn.disabled=!0);var addBody={id:toVariantId,quantity:1};plan&&(addBody.selling_plan=plan),postJSON("/cart/add.js",addBody).then(function(){var updates={};return updates[key]=0,postJSON("/cart/update.js",{updates:updates})}).then(applySections).catch(function(){busy(key,!1),btn&&(btn.disabled=!1),showError("We couldn't change the bundle. Your cart is unchanged.")}).then(function(){mutating=!1})}}function addUpsell(btn){if(!mutating){var items;try{items=JSON.parse(btn.getAttribute("data-fc-items")||"[]")}catch(e){items=[]}if(items.length){var removeKey=btn.getAttribute("data-fc-remove-key");mutating=!0,btn.disabled=!0,postJSON("/cart/add.js",{items:items}).then(function(state){if(!removeKey)return state;var updates={};return updates[removeKey]=0,postJSON("/cart/update.js",{updates:updates})}).then(applySections).catch(function(){btn.disabled=!1,showError("We couldn't add that offer. Your cart is unchanged.")}).then(function(){mutating=!1})}}}function setQty(key,qty,btn){if(!(!key||isNaN(qty)||qty<0||mutating)){mutating=!0,busy(key,!0),btn&&(btn.disabled=!0);var updates={};updates[key]=qty,addAlso(updates,btn),dropSPIfEmptying(updates),postJSON("/cart/update.js",{updates:updates}).then(applySections).catch(function(){busy(key,!1),btn&&(btn.disabled=!1),showError("That didn't go through \u2014 please try again.")}).then(function(){mutating=!1})}}var SP_OFF_KEY="fcSpDismissed";function spDismissed(){try{return sessionStorage.getItem(SP_OFF_KEY)==="1"}catch(e){return!1}}function setSpDismissed(v){try{v?sessionStorage.setItem(SP_OFF_KEY,"1"):sessionStorage.removeItem(SP_OFF_KEY)}catch(e){}}function spBlock(){return document.querySelector("#CartDrawer .fc-sp-block")}function spActive(block){return!!block&&window.getComputedStyle(block).display!=="none"}function setSPVisual(block,on){if(block){block.classList.toggle("is-on",!!on);var t=block.querySelector("[data-fc-sp-toggle]");t&&t.setAttribute("aria-checked",on?"true":"false")}}function inDesignMode(){return!!(window.Shopify&&window.Shopify.designMode)}function reflectSP(){var block=spBlock();if(!(!block||!spActive(block))){if(block.getAttribute("data-fc-sp-incart")==="true"){setSPVisual(block,!0);return}setSPVisual(block,!spDismissed())}}function autoAddSP(){if(!inDesignMode()){if(mutating){scheduleSPAutoAdd();return}var block=spBlock();if(!(!block||!spActive(block))&&block.getAttribute("data-fc-sp-incart")!=="true"&&!spDismissed()){var id=block.getAttribute("data-fc-sp-variant");id&&(mutating=!0,postJSON("/cart/add.js",spAddBody(block,id)).then(applySections).catch(function(){}).then(function(){mutating=!1}))}}}function spAddBody(block,id){var body={id:id,quantity:1},plan=block.getAttribute("data-fc-sp-plan");return plan&&(body.selling_plan=plan),body}var spScheduled=!1;function scheduleSPAutoAdd(){spScheduled||(spScheduled=!0,setTimeout(function(){spScheduled=!1,autoAddSP()},0))}function autoRemoveGift(){if(!inDesignMode()){if(mutating){scheduleGiftReconcile();return}var shell=document.querySelector("#CartDrawer .mcd-shell"),key=shell&&shell.getAttribute("data-fc-gift-orphan");if(key){mutating=!0;var updates={};updates[key]=0,postJSON("/cart/update.js",{updates:updates}).then(applySections).catch(function(){}).then(function(){mutating=!1})}}}var giftScheduled=!1;function scheduleGiftReconcile(){giftScheduled||(giftScheduled=!0,setTimeout(function(){giftScheduled=!1,autoRemoveGift()},0))}function autoRemoveSPOnly(){if(!inDesignMode()){if(mutating){scheduleSPOnlyRemove();return}var shell=document.querySelector("#CartDrawer .mcd-shell"),key=shell&&shell.getAttribute("data-fc-sp-only");if(key){mutating=!0;var updates={};updates[key]=0,postJSON("/cart/update.js",{updates:updates}).then(applySections).catch(function(){}).then(function(){mutating=!1})}}}var spOnlyScheduled=!1;function scheduleSPOnlyRemove(){spOnlyScheduled||(spOnlyScheduled=!0,setTimeout(function(){spOnlyScheduled=!1,autoRemoveSPOnly()},0))}function syncSP(){reflectSP(),scheduleSPAutoAdd(),scheduleGiftReconcile(),scheduleSPOnlyRemove()}function toggleSP(block,btn){if(!(!block||mutating)){var turningOn=!block.classList.contains("is-on");if(setSPVisual(block,turningOn),setSpDismissed(!turningOn),!inDesignMode()){var inCart=block.getAttribute("data-fc-sp-incart")==="true";if(turningOn!==inCart){btn&&(btn.disabled=!0),mutating=!0;var req;if(turningOn)req=postJSON("/cart/add.js",spAddBody(block,block.getAttribute("data-fc-sp-variant")));else{var updates={};updates[block.getAttribute("data-fc-sp-key")]=0,req=postJSON("/cart/update.js",{updates:updates})}req.then(applySections).catch(function(){btn&&(btn.disabled=!1),showError("That didn't go through \u2014 please try again.")}).then(function(){mutating=!1})}}}}document.addEventListener("click",function(event){var spToggle=event.target.closest("[data-fc-sp-toggle]");if(spToggle&&!spToggle.hasAttribute("disabled")){event.preventDefault(),toggleSP(spToggle.closest(".fc-sp-block"),spToggle);return}var remove=event.target.closest("[data-mcd-remove]");if(remove){event.preventDefault(),removeLine(remove.getAttribute("data-key"),remove);return}var upsell=event.target.closest("[data-fc-upsell-add]");if(upsell&&!upsell.hasAttribute("disabled")){event.preventDefault(),addUpsell(upsell);return}var qtyBtn=event.target.closest("[data-fc-qty]");if(qtyBtn&&!qtyBtn.hasAttribute("disabled")){event.preventDefault(),setQty(qtyBtn.getAttribute("data-key"),parseInt(qtyBtn.getAttribute("data-qty"),10),qtyBtn);return}var tier=event.target.closest("[data-mcd-tier]");tier&&!tier.hasAttribute("disabled")&&(event.preventDefault(),setTier(tier.getAttribute("data-key"),tier.getAttribute("data-to"),tier.getAttribute("data-plan"),tier))}),syncSP(),(function(){var drawer=document.querySelector("cart-drawer");!drawer||!window.MutationObserver||new MutationObserver(function(){syncSP()}).observe(drawer,{childList:!0,subtree:!0})})()})();
+
+
+
+==================================================================
+END OF FILES
+==================================================================
