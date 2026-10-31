@@ -1,0 +1,114 @@
+{%- comment -%}
+  Seasonal announcement bar with a countdown (copy of the Resilia "HALLOWEEN EVENT" bar), in your brand colour.
+  WHERE: Online Store > Themes > Customize > Header (top of the left list) > Add section > Custom Liquid, drag it to the very top, paste this in.
+  In that Custom Liquid section set Top padding and Bottom padding to 0. Remove or hide your old Fall Sale bar so you do not have two.
+  EDIT YOUR CONTENT BELOW.
+  mb_title = the big top line. mb_sub = the small line under it.
+  mb_icon_left / mb_icon_right = the two animated pictures on each side (GIF, PNG or WEBP link from Content > Files). Leave '' for no picture on that side.
+  mb_bg = background colour. mb_text = colour of all the text (locked so the theme cannot change it).
+  mb_end = leave '' for an evergreen 2-hour timer that starts again when it reaches zero,
+  or set a real end date, e.g. '2026-10-31T23:59:59-04:00', to count down to it (it then stops at 00:00:00).
+  mb_hours = length of the evergreen timer in hours.
+  Do not use a straight apostrophe (') inside the text, use &#39; instead.
+{%- endcomment -%}
+{%- assign mb_title = 'HALLOWEEN EVENT' -%}
+{%- assign mb_sub = 'Treat Yourself, Save Up To 70%' -%}
+{%- assign mb_icon_left = 'https://resilia.shop/cdn/shop/files/halloween-ghost.gif?v=1793204226&width=100' -%}
+{%- assign mb_icon_right = 'https://resilia.shop/cdn/shop/files/halloween-spider.gif?v=1793204227&width=100' -%}
+{%- assign mb_bg = '#943434' -%}
+{%- assign mb_text = '#ffffff' -%}
+{%- assign mb_end = '' -%}
+{%- assign mb_hours = 2 -%}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap"></noscript>
+
+<style>
+.page-width:has(>.mb-ab){max-width:none;padding:0}
+div[class*="-padding"]:has(>.mb-ab){padding-top:0!important;padding-bottom:0!important}
+.mb-ab{box-sizing:border-box;width:100%;margin:0;background:var(--mb-ab-bg)!important;font-family:'Plus Jakarta Sans',sans-serif;font-weight:500;letter-spacing:.3px;text-align:center}
+.mb-ab *{box-sizing:border-box}
+.mb-ab,.mb-ab *{color:var(--mb-ab-tx)!important;-webkit-text-fill-color:var(--mb-ab-tx)!important}
+.mb-ab__in{display:flex;align-items:center;justify-content:center;gap:24px;max-width:1200px;min-height:62px;margin:0 auto;padding:6px 16px}
+.mb-ab__ic{display:block;flex:none;width:50px;height:50px;object-fit:contain}
+.mb-ab__txt{display:flex;flex-direction:column;align-items:center;gap:3px;min-width:0}
+.mb-ab__top,.mb-ab__sub{margin:0;padding:0;border:0;text-transform:none;text-decoration:none}
+.mb-ab__top{font-family:Poppins,sans-serif;font-size:20px;font-weight:700;line-height:1.1;letter-spacing:1px;text-transform:uppercase}
+.mb-ab__sub{font-size:14px;font-weight:500;line-height:1.2}
+.mb-ab__cd{display:flex;align-items:flex-start;gap:6px;flex:none}
+.mb-ab__blk{display:flex;flex-direction:column;align-items:center;min-width:34px}
+.mb-ab__num{font-size:22px;font-weight:700;line-height:1;letter-spacing:1px;font-variant-numeric:tabular-nums}
+.mb-ab__lbl{margin-top:3px;font-size:11px;font-weight:500;line-height:1.2;letter-spacing:.2px}
+.mb-ab__sep{font-size:18px;font-weight:700;line-height:22px}
+@media screen and (max-width:749px){
+.mb-ab__in{gap:10px;min-height:52px;padding:5px 10px}
+.mb-ab__ic{width:34px;height:34px}
+.mb-ab__txt{gap:2px}
+.mb-ab__top{font-size:14px;letter-spacing:.6px}
+.mb-ab__sub{font-size:11px}
+.mb-ab__cd{gap:3px}
+.mb-ab__blk{min-width:22px}
+.mb-ab__num{font-size:16px;letter-spacing:.5px}
+.mb-ab__lbl{margin-top:2px;font-size:9px}
+.mb-ab__sep{font-size:14px;line-height:16px}
+}
+@media screen and (max-width:374px){
+.mb-ab__in{gap:7px;padding:5px 6px}
+.mb-ab__ic{width:26px;height:26px}
+.mb-ab__top{font-size:12px;letter-spacing:.3px}
+.mb-ab__sub{font-size:10px}
+.mb-ab__num{font-size:14px}
+}
+</style>
+
+<div class="mb-ab" style="--mb-ab-bg:{{ mb_bg }};--mb-ab-tx:{{ mb_text }}" data-end="{{ mb_end | escape }}" data-hours="{{ mb_hours }}">
+<div class="mb-ab__in">
+{%- if mb_icon_left != blank -%}<img class="mb-ab__ic" src="{{ mb_icon_left }}" width="50" height="50" alt="" loading="eager" decoding="async">{%- endif -%}
+<div class="mb-ab__txt">
+<p class="mb-ab__top">{{ mb_title }}</p>
+{%- if mb_sub != blank -%}<p class="mb-ab__sub">{{ mb_sub }}</p>{%- endif -%}
+</div>
+<div class="mb-ab__cd" role="timer" aria-label="Offer ends in">
+<div class="mb-ab__blk"><span class="mb-ab__num" data-h>{% if mb_hours < 10 %}0{% endif %}{{ mb_hours }}</span><span class="mb-ab__lbl">Hrs</span></div>
+<div class="mb-ab__sep" aria-hidden="true">:</div>
+<div class="mb-ab__blk"><span class="mb-ab__num" data-m>00</span><span class="mb-ab__lbl">Mins</span></div>
+<div class="mb-ab__sep" aria-hidden="true">:</div>
+<div class="mb-ab__blk"><span class="mb-ab__num" data-s>00</span><span class="mb-ab__lbl">Secs</span></div>
+</div>
+{%- if mb_icon_right != blank -%}<img class="mb-ab__ic" src="{{ mb_icon_right }}" width="50" height="50" alt="" loading="eager" decoding="async">{%- endif -%}
+</div>
+</div>
+
+<script>
+(function(){
+function init(root){
+if(root.getAttribute('data-on'))return;
+root.setAttribute('data-on','1');
+var h=root.querySelector('[data-h]'),m=root.querySelector('[data-m]'),s=root.querySelector('[data-s]');
+if(!h||!m||!s)return;
+var hrs=parseFloat(root.getAttribute('data-hours'));if(!(hrs>0))hrs=2;
+var D=hrs*36e5,K='mb_ab_timer_end',E=Date.parse(root.getAttribute('data-end')||''),fixed=E==E,end=fixed?E:0,t,ph,pm,ps;
+if(!fixed){try{end=+localStorage.getItem(K)||0}catch(e){}if(end-Date.now()>D)end=0}
+function reset(){end=Date.now()+D;try{localStorage.setItem(K,end)}catch(e){}}
+function p(n){return n<10?'0'+n:''+n}
+function tick(){
+clearTimeout(t);
+if(!root.isConnected)return;
+var left=end-Date.now();
+if(left<=0){if(fixed)left=0;else{reset();left=D-1}}
+var q=left/1e3|0,a=p(q/3600|0),b=p(q%3600/60|0),c=p(q%60);
+if(a!==ph)h.textContent=ph=a;
+if(b!==pm)m.textContent=pm=b;
+if(c!==ps)s.textContent=ps=c;
+if(!document.hidden&&left>0)t=setTimeout(tick,left%1e3+5);
+}
+if(!fixed&&end<=Date.now())reset();
+document.addEventListener('visibilitychange',tick);
+tick();
+}
+document.querySelectorAll('.mb-ab').forEach(init);
+document.addEventListener('shopify:section:load',function(){document.querySelectorAll('.mb-ab').forEach(init)});
+})();
+</script>
