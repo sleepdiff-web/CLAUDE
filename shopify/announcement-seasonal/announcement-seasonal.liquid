@@ -36,7 +36,7 @@ div[class*="-padding"]:has(>.mb-ab){padding-top:0!important;padding-bottom:0!imp
 .mb-ab__txt{display:flex;flex-direction:column;align-items:center;gap:3px;min-width:0}
 .mb-ab__top,.mb-ab__sub{margin:0;padding:0;border:0;text-transform:none;text-decoration:none}
 .mb-ab__top{font-family:Poppins,sans-serif;font-size:20px;font-weight:700;line-height:1.1;letter-spacing:1px;text-transform:uppercase}
-.mb-ab__sub{font-size:14px;font-weight:500;line-height:1.2}
+.mb-ab__sub{font-size:14px;font-weight:500;line-height:1.2;white-space:nowrap}
 .mb-ab__cd{display:flex;align-items:flex-start;gap:6px;flex:none}
 .mb-ab__blk{display:flex;flex-direction:column;align-items:center;min-width:34px}
 .mb-ab__num{font-size:22px;font-weight:700;line-height:1;letter-spacing:1px;font-variant-numeric:tabular-nums}
@@ -47,7 +47,7 @@ div[class*="-padding"]:has(>.mb-ab){padding-top:0!important;padding-bottom:0!imp
 .mb-ab__ic{width:34px;height:34px}
 .mb-ab__txt{gap:2px}
 .mb-ab__top{font-size:14px;letter-spacing:.6px}
-.mb-ab__sub{font-size:11px}
+.mb-ab__sub{font-size:min(11px,3vw);letter-spacing:0}
 .mb-ab__cd{gap:3px}
 .mb-ab__blk{min-width:22px}
 .mb-ab__num{font-size:16px;letter-spacing:.5px}
@@ -55,11 +55,14 @@ div[class*="-padding"]:has(>.mb-ab){padding-top:0!important;padding-bottom:0!imp
 .mb-ab__sep{font-size:14px;line-height:16px}
 }
 @media screen and (max-width:374px){
-.mb-ab__in{gap:7px;padding:5px 6px}
-.mb-ab__ic{width:26px;height:26px}
+.mb-ab__in{gap:6px;padding:5px 6px}
+.mb-ab__ic{width:24px;height:24px}
 .mb-ab__top{font-size:12px;letter-spacing:.3px}
-.mb-ab__sub{font-size:10px}
+.mb-ab__cd{gap:2px}
+.mb-ab__blk{min-width:20px}
 .mb-ab__num{font-size:14px}
+.mb-ab__lbl{font-size:8px}
+.mb-ab__sep{font-size:12px;line-height:14px}
 }
 </style>
 
