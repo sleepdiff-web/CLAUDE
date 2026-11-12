@@ -1,0 +1,256 @@
+{%- comment -%}
+  "Customer Reviews" photo-review grid (a native look-alike of the Loox reviews widget): a centred title, a summary row (big average, stars, "Based on N reviews", a bar for each star rating, and a "Write a review" button), then a masonry grid of review cards. Each card has the customer&#39;s photo, stars, the review text, the name, a green "Verified" tick and the date. Click a card and the full review opens in a pop-up. 8 reviews show first, then a "Show more reviews" button.
+  No app, no slider library, no monthly fee, so it loads fast. It works without JavaScript too (all the reviews just show).
+
+  THIS SECTION SHOWS ONLY THE REVIEWS YOU TYPE IN BELOW. IT HAS NO REVIEWS OF ITS OWN. The average, the review count and the bars are worked out from the reviews you enter, so they always match what is on the page.
+  Please only enter REAL reviews from your own real customers (with their agreement for any photo). Never copy another brand&#39;s reviews, and do not invent reviews: that is illegal in most countries and platforms ban it.
+  Until you add your first review, visitors see NOTHING from this block. In the theme editor (Customize) you see a clearly labelled SAMPLE preview so you can check the layout; the sample is never shown on your live store.
+
+  WHERE: best as its own full-width section: Online Store > Themes > Customize > Product page > Add section > Custom Liquid, drag it where you want it, paste this in.
+  If you paste it inside a narrow column instead, set mb_bleed to false.
+  EDIT YOUR CONTENT BELOW. Do not use a straight apostrophe (') in the text, use &#39; instead, and write & as &amp;
+  mb_title = the title (leave empty to hide it).
+  mb_reviews = your reviews, separated by @@ and each one written as   NAME ||| STARS ||| DATE ||| REVIEW TEXT ||| PHOTO LINK ||| VERIFIED
+  Example (one review):   Anna K. ||| 5 ||| March 3, 2027 ||| I use it every night and love it. ||| https://cdn.shopify.com/s/files/.../photo.jpg ||| yes
+  STARS = a whole number 1 to 5 (empty counts as 5). DATE = any text you like. PHOTO LINK is optional (leave empty for a review without a photo). Write yes in VERIFIED only if the person really bought the product, anything else shows no tick. Inside the review text you can write [br] for a line break.
+  mb_limit = how many reviews show first and how many more each "Show more" click adds (8 in the original).
+  mb_write_url = where the "Write a review" button goes (leave empty to hide the button). mb_write_text / mb_more_text = the two button texts.
+  mb_summary = true shows the summary row (average, stars, bars, button), false hides it.
+  mb_bg = section colour. mb_card_bg = card colour. mb_border = card edge and line colour. mb_color_text = main writing. mb_color_muted = small grey writing. mb_color_star = star colour. mb_color_verified = the Verified tick. mb_btn_bg / mb_btn_color = button colour / its writing. mb_radius = how round the cards are.
+  mb_max = the widest the section gets (1080px in the original). mb_pad_d / mb_pad_m = space inside the section on desktop (750px and up) / phone, written as top-and-bottom left-and-right, for example 48px 24px.
+  mb_bleed = true stretches the section edge to edge across the screen. mb_top / mb_bottom = space above and below the block.
+{%- endcomment -%}
+{%- capture mb_reviews -%}
+{%- endcapture -%}
+{%- assign mb_title = 'Customer Reviews' -%}
+{%- assign mb_limit = 8 -%}
+{%- assign mb_write_url = '' -%}
+{%- assign mb_write_text = 'Write a review' -%}
+{%- assign mb_more_text = 'Show more reviews' -%}
+{%- assign mb_summary = true -%}
+{%- assign mb_bg = '#ffffff' -%}
+{%- assign mb_card_bg = '#ffffff' -%}
+{%- assign mb_border = '#e6e6e6' -%}
+{%- assign mb_color_text = '#222222' -%}
+{%- assign mb_color_muted = '#767676' -%}
+{%- assign mb_color_star = '#ebbf20' -%}
+{%- assign mb_color_verified = '#2d9c5b' -%}
+{%- assign mb_btn_bg = '#000000' -%}
+{%- assign mb_btn_color = '#ffffff' -%}
+{%- assign mb_radius = '8px' -%}
+{%- assign mb_max = '1080px' -%}
+{%- assign mb_pad_d = '48px 24px' -%}
+{%- assign mb_pad_m = '32px 16px' -%}
+{%- assign mb_bleed = true -%}
+{%- assign mb_top = '0px' -%}
+{%- assign mb_bottom = '0px' -%}
+{%- assign mb_demo = false -%}
+{%- assign mb_probe = mb_reviews | strip -%}
+{%- if mb_probe == blank and request.design_mode -%}
+{%- assign mb_demo = true -%}
+{%- capture mb_reviews -%}
+Sample customer ||| 5 ||| Sample date ||| Sample review text. This is only a layout preview that you can see in the theme editor. Add your real reviews in mb_reviews. ||| ph:4/5 ||| yes
+@@
+Sample customer ||| 4 ||| Sample date ||| Sample review text, a short one. ||| ph:1/1 ||| yes
+@@
+Sample customer ||| 5 ||| Sample date ||| Sample review text without a photo. Real reviews can be short or long, with or without a picture, and the cards line up in a neat grid. ||| |||
+@@
+Sample customer ||| 5 ||| Sample date ||| Sample review text. ||| ph:5/6 ||| yes
+@@
+Sample customer ||| 3 ||| Sample date ||| Sample review text with a photo. ||| ph:6/5 |||
+@@
+Sample customer ||| 5 ||| Sample date ||| Sample review text. This card has no verified tick. ||| ph:1/1 |||
+@@
+Sample customer ||| 5 ||| Sample date ||| Sample review text. ||| ph:4/5 ||| yes
+@@
+Sample customer ||| 4 ||| Sample date ||| Sample review text. ||| ph:1/1 ||| yes
+@@
+Sample customer ||| 5 ||| Sample date ||| Sample review text, shown after clicking Show more reviews. ||| ph:5/6 ||| yes
+{%- endcapture -%}
+{%- endif -%}
+{%- assign mb_items = mb_reviews | split: '@@' -%}
+{%- assign mb_n = 0 -%}
+{%- assign mb_sum = 0 -%}
+{%- assign mb_c1 = 0 -%}
+{%- assign mb_c2 = 0 -%}
+{%- assign mb_c3 = 0 -%}
+{%- assign mb_c4 = 0 -%}
+{%- assign mb_c5 = 0 -%}
+{%- for mb_it in mb_items -%}
+{%- assign mb_chk = mb_it | strip -%}
+{%- if mb_chk != blank -%}
+{%- assign mb_f = mb_it | split: '|||' -%}
+{%- assign mb_sr = mb_f[1] | strip -%}
+{%- if mb_sr == blank -%}{%- assign mb_sr = 5 -%}{%- endif -%}
+{%- assign mb_s = mb_sr | plus: 0 | round | at_least: 1 | at_most: 5 -%}
+{%- assign mb_n = mb_n | plus: 1 -%}
+{%- assign mb_sum = mb_sum | plus: mb_s -%}
+{%- if mb_s == 5 -%}{%- assign mb_c5 = mb_c5 | plus: 1 -%}{%- elsif mb_s == 4 -%}{%- assign mb_c4 = mb_c4 | plus: 1 -%}{%- elsif mb_s == 3 -%}{%- assign mb_c3 = mb_c3 | plus: 1 -%}{%- elsif mb_s == 2 -%}{%- assign mb_c2 = mb_c2 | plus: 1 -%}{%- else -%}{%- assign mb_c1 = mb_c1 | plus: 1 -%}{%- endif -%}
+{%- endif -%}
+{%- endfor -%}
+
+{%- if mb_n > 0 -%}
+{%- assign mb_raw = mb_sum | times: 1.0 | divided_by: mb_n -%}
+{%- assign mb_avg = mb_raw | round: 1 -%}
+{%- assign mb_avgp = mb_raw | times: 20 | round: 1 -%}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Libre+Caslon+Text:wght@400&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Libre+Caslon+Text:wght@400&display=swap"></noscript>
+
+<style>
+.mb-rg{--mb-rg-star:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z'/%3E%3C/svg%3E");box-sizing:border-box;width:100%;margin:var(--mb-rg-top) 0 var(--mb-rg-bottom);padding:var(--mb-rg-pm);background:var(--mb-rg-bg);font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;line-height:1.5;font-weight:400;text-align:left;color:var(--mb-rg-tx)}
+.mb-rg--bleed{width:100vw;max-width:none;margin-left:calc(50% - 50vw);margin-right:0}
+.mb-rg *{box-sizing:border-box}
+.mb-rg [hidden]{display:none!important}
+.mb-rg p,.mb-rg div,.mb-rg span,.mb-rg h2,.mb-rg a,.mb-rg button,.mb-rg article,.mb-rg b{letter-spacing:0;text-transform:none;font-style:normal}
+.mb-rg__in{max-width:var(--mb-rg-max);margin:0 auto;padding:0}
+.mb-rg .mb-rg__demo{margin:0 0 20px;padding:10px 14px;border:2px dashed #c0392b;border-radius:8px;background:#fff5f3;font-size:13px;line-height:1.4;font-weight:600;text-align:center;color:#c0392b!important;-webkit-text-fill-color:#c0392b!important}
+.mb-rg .mb-rg__t{margin:0 0 24px;padding:0;text-align:center;font-family:'Libre Caslon Text',Georgia,serif;font-size:26px;line-height:1.15;font-weight:400;font-style:normal;letter-spacing:0;text-transform:none;color:var(--mb-rg-tx)!important;-webkit-text-fill-color:var(--mb-rg-tx)!important}
+.mb-rg .mb-rg__st{position:relative;display:inline-block;flex:none;width:80px;height:16px;margin:0;padding:0;vertical-align:middle;background:var(--mb-rg-bd);-webkit-mask:var(--mb-rg-star) 0 0/16px 16px repeat-x;mask:var(--mb-rg-star) 0 0/16px 16px repeat-x}
+.mb-rg .mb-rg__st i{display:block;width:var(--p);height:100%;margin:0;padding:0;background:var(--mb-rg-sc)}
+.mb-rg__sm{display:flex;flex-direction:column;align-items:center;gap:20px;margin:0 0 24px;padding:0 0 24px;border-bottom:1px solid var(--mb-rg-bd)}
+.mb-rg__av{display:flex;flex-direction:column;align-items:center;gap:6px;margin:0;padding:0;text-align:center}
+.mb-rg .mb-rg__num{margin:0;padding:0;font-size:44px;line-height:1;font-weight:700;color:var(--mb-rg-tx)!important;-webkit-text-fill-color:var(--mb-rg-tx)!important}
+.mb-rg .mb-rg__av .mb-rg__st{width:100px;height:20px;-webkit-mask-size:20px 20px;mask-size:20px 20px}
+.mb-rg .mb-rg__cnt{margin:0;padding:0;font-size:13px;line-height:1.4;font-weight:500;color:var(--mb-rg-mu)!important;-webkit-text-fill-color:var(--mb-rg-mu)!important}
+.mb-rg__bars{display:flex;flex-direction:column;gap:6px;width:100%;max-width:320px;margin:0;padding:0}
+.mb-rg__bar{display:flex;align-items:center;gap:8px;margin:0;padding:0;font-size:12px;line-height:1}
+.mb-rg .mb-rg__bl{display:inline-flex;align-items:center;gap:3px;flex:none;width:26px;margin:0;padding:0;font-weight:600;color:var(--mb-rg-tx)!important;-webkit-text-fill-color:var(--mb-rg-tx)!important}
+.mb-rg .mb-rg__bl:after{content:'';display:block;width:11px;height:11px;background:var(--mb-rg-sc);-webkit-mask:var(--mb-rg-star) center/11px 11px no-repeat;mask:var(--mb-rg-star) center/11px 11px no-repeat}
+.mb-rg .mb-rg__tr{position:relative;display:block;flex:1 1 auto;height:8px;margin:0;padding:0;border-radius:4px;background:var(--mb-rg-bd);overflow:hidden}
+.mb-rg .mb-rg__tr i{display:block;width:var(--p);height:100%;margin:0;padding:0;border-radius:4px;background:var(--mb-rg-sc)}
+.mb-rg .mb-rg__bc{flex:none;width:30px;margin:0;padding:0;text-align:right;color:var(--mb-rg-mu)!important;-webkit-text-fill-color:var(--mb-rg-mu)!important}
+.mb-rg .mb-rg__btn{display:inline-flex;align-items:center;justify-content:center;max-width:100%;min-height:44px;margin:0;padding:0 28px;border:0;border-radius:999px;background:var(--mb-rg-bb);box-shadow:none;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;line-height:1;font-weight:600;text-align:center;text-decoration:none;cursor:pointer;color:var(--mb-rg-bc)!important;-webkit-text-fill-color:var(--mb-rg-bc)!important;-webkit-appearance:none;appearance:none;transition:opacity .2s ease}
+.mb-rg .mb-rg__btn:hover,.mb-rg .mb-rg__btn:focus-visible{opacity:.85;text-decoration:none}
+.mb-rg .mb-rg__wr{width:100%;max-width:320px}
+.mb-rg__grid{column-count:2;column-gap:12px;margin:0;padding:0}
+.mb-rg .mb-rg__card{display:block;width:100%;margin:0 0 12px;padding:0;background:var(--mb-rg-cbg);border:1px solid var(--mb-rg-bd);border-radius:var(--mb-rg-r);overflow:hidden;break-inside:avoid;-webkit-column-break-inside:avoid;page-break-inside:avoid;cursor:pointer;text-align:left}
+.mb-rg .mb-rg__card:focus-visible{outline:2px solid var(--mb-rg-tx);outline-offset:2px}
+.mb-rg .mb-rg__img{display:block;width:100%;max-width:100%;height:auto;margin:0;padding:0;border:0;border-radius:0;box-shadow:none;filter:none;opacity:1;transform:none;-webkit-user-drag:none}
+.mb-rg .mb-rg__ph{display:block;width:100%;margin:0;padding:0;background:#ebe7e2}
+.mb-rg__cb{margin:0;padding:12px}
+.mb-rg .mb-rg__tx{margin:8px 0 0;padding:0;overflow-wrap:anywhere;font-size:13px;line-height:1.45;font-weight:400;text-align:left;color:var(--mb-rg-tx)!important;-webkit-text-fill-color:var(--mb-rg-tx)!important;display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden}
+.mb-rg__meta{display:flex;flex-wrap:wrap;align-items:center;gap:2px 8px;margin:10px 0 0;padding:0}
+.mb-rg .mb-rg__nm{margin:0;padding:0;overflow-wrap:anywhere;min-width:0;font-size:12px;line-height:1.4;font-weight:700;color:var(--mb-rg-tx)!important;-webkit-text-fill-color:var(--mb-rg-tx)!important}
+.mb-rg .mb-rg__vf{display:inline-flex;align-items:center;gap:3px;margin:0;padding:0;font-size:11px;line-height:1.4;font-weight:600;color:var(--mb-rg-vf)!important;-webkit-text-fill-color:var(--mb-rg-vf)!important}
+.mb-rg .mb-rg__vf svg{display:block;width:12px;height:12px;margin:0;padding:0}
+.mb-rg .mb-rg__dt{display:block;width:100%;margin:0;padding:0;font-size:11px;line-height:1.4;font-weight:400;color:var(--mb-rg-mu)!important;-webkit-text-fill-color:var(--mb-rg-mu)!important}
+.mb-rg__mw{display:flex;justify-content:center;margin:12px 0 0;padding:0}
+.mb-rg .mb-rg__more{background:transparent;border:1px solid var(--mb-rg-tx);color:var(--mb-rg-tx)!important;-webkit-text-fill-color:var(--mb-rg-tx)!important}
+.mb-rg .mb-rg__dlg{width:calc(100% - 32px);max-width:480px;max-height:90vh;margin:auto;padding:0;border:0;border-radius:12px;background:var(--mb-rg-cbg);color:var(--mb-rg-tx);overflow:auto}
+.mb-rg .mb-rg__dlg::backdrop{background:rgba(0,0,0,.6)}
+.mb-rg .mb-rg__x{position:absolute;top:8px;right:8px;z-index:2;display:flex;align-items:center;justify-content:center;width:34px;height:34px;margin:0;padding:0;border:0;border-radius:50%;background:rgba(255,255,255,.92);box-shadow:0 1px 4px rgba(0,0,0,.25);font-size:20px;line-height:1;cursor:pointer;color:#222!important;-webkit-text-fill-color:#222!important}
+.mb-rg .mb-rg__dbody{position:relative;margin:0;padding:0}
+.mb-rg .mb-rg__dbody .mb-rg__tx{display:block;overflow:visible;-webkit-line-clamp:unset;font-size:14px}
+.mb-rg .mb-rg__dbody .mb-rg__img{max-height:62vh;object-fit:contain;background:#f3f1ee}
+.mb-rg .mb-rg__dbody .mb-rg__cb{padding:16px}
+@media screen and (min-width:600px){
+.mb-rg__grid{column-count:3;column-gap:16px}
+.mb-rg .mb-rg__card{margin-bottom:16px}
+}
+@media screen and (min-width:750px){
+.mb-rg{padding:var(--mb-rg-pd)}
+.mb-rg .mb-rg__t{font-size:32px}
+.mb-rg__sm{flex-direction:row;justify-content:space-between;align-items:center;gap:32px}
+.mb-rg__bars{flex:1 1 auto;max-width:360px}
+.mb-rg .mb-rg__wr{width:auto;max-width:none;flex:none}
+}
+@media screen and (min-width:900px){
+.mb-rg__grid{column-count:4}
+}
+</style>
+
+<div class="mb-rg{% if mb_bleed %} mb-rg--bleed{% endif %}" data-bleed="{{ mb_bleed }}" data-limit="{{ mb_limit }}" style="--mb-rg-bg:{{ mb_bg }};--mb-rg-cbg:{{ mb_card_bg }};--mb-rg-bd:{{ mb_border }};--mb-rg-tx:{{ mb_color_text }};--mb-rg-mu:{{ mb_color_muted }};--mb-rg-sc:{{ mb_color_star }};--mb-rg-vf:{{ mb_color_verified }};--mb-rg-bb:{{ mb_btn_bg }};--mb-rg-bc:{{ mb_btn_color }};--mb-rg-r:{{ mb_radius }};--mb-rg-max:{{ mb_max }};--mb-rg-pd:{{ mb_pad_d }};--mb-rg-pm:{{ mb_pad_m }};--mb-rg-top:{{ mb_top }};--mb-rg-bottom:{{ mb_bottom }}">
+<div class="mb-rg__in">
+{%- if mb_demo -%}<p class="mb-rg__demo">SAMPLE PREVIEW: only you can see this in the theme editor. Visitors see nothing until you add real reviews in mb_reviews.</p>{%- endif -%}
+{%- if mb_title != blank -%}<h2 class="mb-rg__t">{{ mb_title }}</h2>{%- endif -%}
+{%- if mb_summary -%}
+<div class="mb-rg__sm">
+<div class="mb-rg__av"><p class="mb-rg__num">{{ mb_avg }}</p><span class="mb-rg__st" role="img" aria-label="Average rating {{ mb_avg }} out of 5" style="--p:{{ mb_avgp }}%"><i></i></span><p class="mb-rg__cnt">Based on {{ mb_n }} review{% if mb_n != 1 %}s{% endif %}</p></div>
+<div class="mb-rg__bars">
+{%- for mb_k in (1..5) -%}
+{%- assign mb_row = 6 | minus: mb_k -%}
+{%- case mb_row -%}{%- when 5 -%}{%- assign mb_cc = mb_c5 -%}{%- when 4 -%}{%- assign mb_cc = mb_c4 -%}{%- when 3 -%}{%- assign mb_cc = mb_c3 -%}{%- when 2 -%}{%- assign mb_cc = mb_c2 -%}{%- else -%}{%- assign mb_cc = mb_c1 -%}{%- endcase -%}
+{%- assign mb_bp = mb_cc | times: 100.0 | divided_by: mb_n | round: 1 -%}
+<div class="mb-rg__bar"><span class="mb-rg__bl">{{ mb_row }}</span><span class="mb-rg__tr" style="--p:{{ mb_bp }}%"><i></i></span><span class="mb-rg__bc">{{ mb_cc }}</span></div>
+{%- endfor -%}
+</div>
+{%- if mb_write_url != blank -%}<a class="mb-rg__btn mb-rg__wr" href="{{ mb_write_url }}">{{ mb_write_text }}</a>{%- endif -%}
+</div>
+{%- endif -%}
+<div class="mb-rg__grid">
+{%- for mb_it in mb_items -%}
+{%- assign mb_chk = mb_it | strip -%}
+{%- if mb_chk != blank -%}
+{%- assign mb_f = mb_it | split: '|||' -%}
+{%- assign mb_nm = mb_f[0] | strip -%}
+{%- assign mb_sr = mb_f[1] | strip -%}
+{%- if mb_sr == blank -%}{%- assign mb_sr = 5 -%}{%- endif -%}
+{%- assign mb_s = mb_sr | plus: 0 | round | at_least: 1 | at_most: 5 -%}
+{%- assign mb_sp = mb_s | times: 20 -%}
+{%- assign mb_dt = mb_f[2] | strip -%}
+{%- assign mb_tx = mb_f[3] | strip | replace: '[br]', '<br>' -%}
+{%- assign mb_ph = mb_f[4] | strip -%}
+{%- assign mb_vf = mb_f[5] | strip | downcase -%}
+<article class="mb-rg__card" tabindex="0" aria-haspopup="dialog">
+{%- if mb_ph != blank -%}{%- if mb_ph contains 'ph:' -%}{%- assign mb_ar = mb_ph | remove: 'ph:' -%}<div class="mb-rg__ph" style="aspect-ratio:{{ mb_ar }}"></div>{%- elsif mb_ph contains 'cdn.shopify.com' or mb_ph contains '/cdn/shop/' -%}{%- if mb_ph contains '?' -%}{%- assign mb_sep = '&amp;' -%}{%- else -%}{%- assign mb_sep = '?' -%}{%- endif -%}<img class="mb-rg__img" src="{{ mb_ph }}{{ mb_sep }}width=600" srcset="{{ mb_ph }}{{ mb_sep }}width=400 400w, {{ mb_ph }}{{ mb_sep }}width=800 800w" sizes="(min-width: 900px) 260px, (min-width: 600px) 33vw, 50vw" alt="Photo from {{ mb_nm | escape }}&#39;s review" loading="lazy" decoding="async" draggable="false">{%- else -%}<img class="mb-rg__img" src="{{ mb_ph }}" alt="Photo from {{ mb_nm | escape }}&#39;s review" loading="lazy" decoding="async" draggable="false">{%- endif -%}{%- endif -%}
+<div class="mb-rg__cb"><span class="mb-rg__st" role="img" aria-label="{{ mb_s }} out of 5 stars" style="--p:{{ mb_sp }}%"><i></i></span>
+{%- if mb_tx != blank -%}<p class="mb-rg__tx">{{ mb_tx }}</p>{%- endif -%}
+<div class="mb-rg__meta">{%- if mb_nm != blank -%}<span class="mb-rg__nm">{{ mb_nm }}</span>{%- endif -%}{%- if mb_vf == 'yes' -%}<span class="mb-rg__vf"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="11" fill="currentColor"></circle><path d="M7 12.5l3.2 3.2L17 8.8" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg>Verified</span>{%- endif -%}{%- if mb_dt != blank -%}<span class="mb-rg__dt">{{ mb_dt }}</span>{%- endif -%}</div></div>
+</article>
+{%- endif -%}
+{%- endfor -%}
+</div>
+<div class="mb-rg__mw"><button class="mb-rg__btn mb-rg__more" type="button" hidden>{{ mb_more_text }}</button></div>
+<dialog class="mb-rg__dlg" aria-label="Review"><button class="mb-rg__x" type="button" aria-label="Close">&times;</button><div class="mb-rg__dbody"></div></dialog>
+</div>
+</div>
+{%- endif -%}
+
+<script>
+(function(){
+function init(root){
+if(root.getAttribute('data-on'))return;
+root.setAttribute('data-on','1');
+/* stretch edge to edge exactly, whatever the page column is */
+function bleed(){
+if(root.getAttribute('data-bleed')!=='true')return;
+root.style.marginLeft='0px';
+root.style.width=document.documentElement.clientWidth+'px';
+var l=root.getBoundingClientRect().left;
+root.style.marginLeft=(-l)+'px';
+}
+bleed();
+window.addEventListener('resize',bleed);
+window.addEventListener('load',function(){bleed();setTimeout(bleed,400)});
+/* first batch + "Show more" */
+var cards=[].slice.call(root.querySelectorAll('.mb-rg__card'));
+var lim=parseInt(root.getAttribute('data-limit'),10)||8,shown=lim;
+var more=root.querySelector('.mb-rg__more');
+function sync(){
+for(var i=0;i<cards.length;i++)cards[i].hidden=i>=shown;
+if(more)more.hidden=shown>=cards.length;
+}
+sync();
+if(more)more.addEventListener('click',function(){shown+=lim;sync()});
+/* click a card: the full review in a pop-up */
+var dlg=root.querySelector('.mb-rg__dlg'),body=root.querySelector('.mb-rg__dbody'),x=root.querySelector('.mb-rg__x');
+function show(c){
+if(!dlg||!body)return;
+body.innerHTML=c.innerHTML;
+if(dlg.showModal){if(!dlg.open)dlg.showModal()}else dlg.setAttribute('open','');
+}
+for(var j=0;j<cards.length;j++){(function(c){
+c.addEventListener('click',function(){show(c)});
+c.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();show(c)}});
+})(cards[j])}
+function shut(){if(dlg.close)dlg.close();else dlg.removeAttribute('open')}
+if(x)x.addEventListener('click',shut);
+if(dlg)dlg.addEventListener('click',function(e){if(e.target===dlg)shut()});
+}
+function all(){document.querySelectorAll('.mb-rg').forEach(init)}
+all();
+document.addEventListener('shopify:section:load',all);
+})();
+</script>
