@@ -1,9 +1,11 @@
 {%- comment -%}
   Sale price row, exact copy of Metabolae's (price, crossed-out price, sale pill). Add as a Custom Liquid block on the PRODUCT page above the bundle bars.
   Prices follow the selected variant and the selected Kaching Bundles bar. mb_label = pill text. _d = desktop, _m = mobile. mb_kaching = false if no Kaching.
+  mb_show_pill = false hides the black "Fall Sale - Save 63%" pill (only the price and the crossed-out price show). Set it to true to bring the pill back.
   If the Save % ever looks wrong with Kaching, add ?mbdebug=1 to the end of the product page address, press F12, open Console and send me what it prints.
   Do not use a straight apostrophe (') in the text, use &#39; instead.
 {%- endcomment -%}
+{%- assign mb_show_pill = false -%}
 {%- assign mb_label = 'Fall Sale - Save' -%}
 {%- assign mb_badge_bg = '#000000' -%}
 {%- assign mb_badge_color = '#ffffff' -%}
@@ -84,13 +86,13 @@
       class="bsw__compare{% unless mb_sale %} bsw__compare--hidden{% endunless %}"
       data-badge-compare
     >{% if mb_sale %}{{ mb_compare | money }}{% endif %}</span>
-  </div><span
+  </div>{%- if mb_show_pill -%}<span
     class="bsw__pill{% unless mb_sale %} bsw__pill--hidden{% endunless %}"
     data-badge-pill
     aria-hidden="true"
   >
     <span data-badge-label>{{ mb_label }}</span>&nbsp;<span data-badge-pct>{{ mb_pct }}%</span>
-  </span>
+  </span>{%- endif -%}
 </div>
 
 <style>
@@ -213,13 +215,17 @@ if (compareEl) {
 compareEl.textContent = formatMoney(compareAtCents);
 compareEl.classList.remove('bsw__compare--hidden');
 }
-pctEl.textContent = pct + '%';
+if (pctEl) pctEl.textContent = pct + '%';
+if (pillEl) {
 pillEl.classList.remove('bsw__pill--hidden');
 pillEl.setAttribute('aria-hidden', 'false');
+}
 } else {
 if (compareEl) compareEl.classList.add('bsw__compare--hidden');
+if (pillEl) {
 pillEl.classList.add('bsw__pill--hidden');
 pillEl.setAttribute('aria-hidden', 'true');
+}
 }
 }
 function updateBadge(variant) {
