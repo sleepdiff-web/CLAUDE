@@ -1,0 +1,114 @@
+{%- comment -%}
+  "As seen in" logo strip (clone of the goda.co logo bar): a cream band with thin gold lines above and below and a row of logos that glides slowly and endlessly from right to left.
+  No slider app or library (goda uses Slick): it is plain CSS animation, so it loads fast and keeps moving smoothly.
+  WHERE: best as its own full-width section: Online Store > Themes > Customize > Product page > Add section > Custom Liquid, drag it where you want it, paste this in.
+  If you paste it inside the product info column instead, set mb_bleed to false (otherwise the strip stretches across the whole screen).
+  EDIT YOUR CONTENT BELOW. Do not use a straight apostrophe (') in the text, use &#39; instead.
+  mb_logos = your logos, separated by @@ and each one written as   LOGO PICTURE LINK ||| NAME
+  (the NAME is the picture description for screen readers. With no picture link, the NAME shows as grey placeholder text so you can see the strip working.)
+  IMPORTANT: only show logos of outlets that really featured you.
+  mb_show_d / mb_show_t / mb_show_m = how many logos fit across on desktop (wider than 1200px), tablet (768 to 1200px) and phone.
+  mb_speed = seconds each logo takes to glide past (goda uses 8, bigger is slower). mb_logo_h = height of the logos.
+  mb_title = optional small heading above the logos (goda hides it), leave empty for none.
+  mb_bg = band colour. mb_line = the thin top and bottom lines. mb_color_text = heading colour. mb_pad_d / mb_pad_m = space above and below the logos on desktop / phone.
+  mb_bleed = true stretches the strip edge to edge across the screen. mb_top / mb_bottom = space above and below the block.
+{%- endcomment -%}
+{%- capture mb_logos -%}
+ ||| Your logo 1
+@@
+ ||| Your logo 2
+@@
+ ||| Your logo 3
+@@
+ ||| Your logo 4
+@@
+ ||| Your logo 5
+{%- endcapture -%}
+{%- assign mb_label = 'As seen in' -%}
+{%- assign mb_title = '' -%}
+{%- assign mb_show_d = 9 -%}
+{%- assign mb_show_t = 6 -%}
+{%- assign mb_show_m = 4 -%}
+{%- assign mb_speed = 8 -%}
+{%- assign mb_logo_h = '36px' -%}
+{%- assign mb_bg = '#f8f2e74d' -%}
+{%- assign mb_line = '#986d1d8f' -%}
+{%- assign mb_color_text = '#5e4312' -%}
+{%- assign mb_pad_d = '22px' -%}
+{%- assign mb_pad_m = '16px' -%}
+{%- assign mb_bleed = true -%}
+{%- assign mb_top = '0px' -%}
+{%- assign mb_bottom = '0px' -%}
+{%- assign mb_items = mb_logos | split: '@@' -%}
+{%- assign mb_n = 0 -%}
+{%- for mb_it in mb_items -%}{%- assign mb_chk = mb_it | strip -%}{%- if mb_chk != blank -%}{%- assign mb_n = mb_n | plus: 1 -%}{%- endif -%}{%- endfor -%}
+{%- if mb_n > 0 -%}
+{%- assign mb_max = mb_show_d | at_least: mb_show_t | at_least: mb_show_m -%}
+{%- assign mb_k = mb_n | minus: 1 | plus: mb_max | divided_by: mb_n -%}
+{%- assign mb_dur = mb_n | times: mb_k | times: mb_speed -%}
+{%- capture mb_a -%}{%- for mb_it in mb_items -%}{%- assign mb_chk = mb_it | strip -%}{%- if mb_chk != blank -%}{%- assign mb_f = mb_it | split: '|||' -%}{%- assign mb_u = mb_f[0] | strip -%}{%- assign mb_nm = mb_f[1] | strip -%}{%- if mb_u contains '?' -%}{%- assign mb_src = mb_u | append: '&amp;width=300' -%}{%- else -%}{%- assign mb_src = mb_u | append: '?width=300' -%}{%- endif -%}<div class="mb-ls__it">{%- if mb_u != blank -%}<img src="{{ mb_src }}" alt="{{ mb_nm | escape }}" loading="lazy" decoding="async" draggable="false">{%- else -%}<span class="mb-ls__ph">{{ mb_nm }}</span>{%- endif -%}</div>{%- endif -%}{%- endfor -%}{%- endcapture -%}
+{%- capture mb_b -%}{%- for mb_it in mb_items -%}{%- assign mb_chk = mb_it | strip -%}{%- if mb_chk != blank -%}{%- assign mb_f = mb_it | split: '|||' -%}{%- assign mb_u = mb_f[0] | strip -%}{%- assign mb_nm = mb_f[1] | strip -%}{%- if mb_u contains '?' -%}{%- assign mb_src = mb_u | append: '&amp;width=300' -%}{%- else -%}{%- assign mb_src = mb_u | append: '?width=300' -%}{%- endif -%}<div class="mb-ls__it" aria-hidden="true">{%- if mb_u != blank -%}<img src="{{ mb_src }}" alt="" loading="lazy" decoding="async" draggable="false">{%- else -%}<span class="mb-ls__ph">{{ mb_nm }}</span>{%- endif -%}</div>{%- endif -%}{%- endfor -%}{%- endcapture -%}
+{%- capture mb_set -%}{{ mb_a }}{%- for mb_r in (2..mb_k) -%}{{ mb_b }}{%- endfor -%}{%- endcapture -%}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600&display=swap"></noscript>
+
+<style>
+.mb-ls{box-sizing:border-box;width:100%;margin:var(--mb-ls-top) 0 var(--mb-ls-bottom);padding:var(--mb-ls-pd) 0;overflow:hidden;border-top:.5px solid var(--mb-ls-line);border-bottom:.5px solid var(--mb-ls-line);background:var(--mb-ls-bg);font-family:'Plus Jakarta Sans',sans-serif;--mb-ls-show:{{ mb_show_d }};--mb-ls-pd:{{ mb_pad_d }}}
+.mb-ls *{box-sizing:border-box}
+.mb-ls--bleed{width:100vw;max-width:none;margin-left:calc(50% - 50vw);margin-right:0}
+.mb-ls .mb-ls__h{margin:0 0 15.5px;padding:0;text-align:center;font-family:'Plus Jakarta Sans',sans-serif;font-size:21px;font-weight:400;line-height:1.3;letter-spacing:0;text-transform:none;font-style:normal;color:var(--mb-ls-tx)!important;-webkit-text-fill-color:var(--mb-ls-tx)!important}
+.mb-ls__vp{container-type:inline-size;width:100%;overflow:hidden}
+.mb-ls__trk{display:flex;width:max-content;margin:0;padding:0;animation:mb-ls-run var(--mb-ls-dur) linear infinite;will-change:transform;backface-visibility:hidden}
+.mb-ls.is-off .mb-ls__trk{animation-play-state:paused}
+.mb-ls__set{display:flex;flex:none}
+.mb-ls__it{display:flex;align-items:center;justify-content:center;flex:0 0 calc(100vw / var(--mb-ls-show));height:var(--mb-ls-h);margin:0;padding:0 12px}
+@supports (width:1cqw){.mb-ls__it{flex:0 0 calc(100cqw / var(--mb-ls-show))}}
+.mb-ls__it img{display:block;width:100%;max-width:100%;height:100%;max-height:100%;margin:0;padding:0;object-fit:contain;border:0;border-radius:0;box-shadow:none;filter:none;opacity:1;transform:none;-webkit-user-drag:none;user-select:none;pointer-events:none}
+.mb-ls .mb-ls__ph{display:block;max-width:100%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-size:13px;font-weight:600;letter-spacing:0;text-transform:none;font-style:normal;color:var(--mb-ls-tx)!important;-webkit-text-fill-color:var(--mb-ls-tx)!important;opacity:.45}
+@keyframes mb-ls-run{from{transform:translate3d(0,0,0)}to{transform:translate3d(-50%,0,0)}}
+@media screen and (max-width:1200px){
+.mb-ls{--mb-ls-show:{{ mb_show_t }}}
+}
+@media screen and (max-width:767px){
+.mb-ls{--mb-ls-show:{{ mb_show_m }};--mb-ls-pd:{{ mb_pad_m }}}
+.mb-ls .mb-ls__h{font-size:14px;margin-bottom:15px}
+}
+</style>
+
+<div class="mb-ls{% if mb_bleed %} mb-ls--bleed{% endif %}" role="group" aria-label="{{ mb_label | escape }}" style="--mb-ls-bg:{{ mb_bg }};--mb-ls-line:{{ mb_line }};--mb-ls-tx:{{ mb_color_text }};--mb-ls-h:{{ mb_logo_h }};--mb-ls-dur:{{ mb_dur }}s;--mb-ls-top:{{ mb_top }};--mb-ls-bottom:{{ mb_bottom }}" data-bleed="{{ mb_bleed }}">
+{%- if mb_title != blank -%}<p class="mb-ls__h">{{ mb_title }}</p>{%- endif -%}
+<div class="mb-ls__vp"><div class="mb-ls__trk"><div class="mb-ls__set">{{ mb_set }}</div><div class="mb-ls__set" aria-hidden="true">{{ mb_set }}</div></div></div>
+</div>
+
+<script>
+(function(){
+function init(root){
+if(root.getAttribute('data-on'))return;
+root.setAttribute('data-on','1');
+/* stretch edge to edge exactly, whatever the page column is */
+function bleed(){
+if(root.getAttribute('data-bleed')!=='true')return;
+root.style.marginLeft='0px';
+root.style.width=document.documentElement.clientWidth+'px';
+var l=root.getBoundingClientRect().left;
+root.style.marginLeft=(-l)+'px';
+}
+bleed();
+window.addEventListener('resize',bleed);
+window.addEventListener('load',function(){bleed();setTimeout(bleed,400)});
+/* pause while it is off screen (saves battery) */
+if('IntersectionObserver' in window){
+new IntersectionObserver(function(en){
+for(var i=0;i<en.length;i++){root.classList.toggle('is-off',!en[i].isIntersecting)}
+},{rootMargin:'100px'}).observe(root);
+}
+}
+function all(){document.querySelectorAll('.mb-ls').forEach(init)}
+all();
+document.addEventListener('shopify:section:load',all);
+})();
+</script>
+{%- endif -%}
