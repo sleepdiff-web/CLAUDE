@@ -1,0 +1,204 @@
+{%- comment -%}
+  Product info accordion: Details, Science, Ingredients, Customer Results, Shipping & Delivery.
+  Closed rows are rounded cards with a + sign. Open rows show a soft grey panel with the content inside.
+  WHERE: Online Store > Themes > Customize > Product page > Product information > Add block > Custom Liquid, drag it under your buy buttons, paste this in.
+  If your theme already has its own collapsible rows, hide or remove them so you do not have two sets.
+  EDIT YOUR CONTENT BELOW. Do not use a straight apostrophe (') in the text, use &#39; instead. Use &amp; for an ampersand.
+  mb_t1 ... mb_t5 = the five row titles (leave one empty to hide that row).
+  The five blocks of text are separated by @@ and each line splits its parts with |||
+    Row 1 (mb_d1) = label rows with a sparkle icon:    LABEL ||| text
+    Row 2 (mb_d2) = timeline steps:                    STEP 1 ||| text      (mb_head2 = small heading, mb_img2 = optional picture link)
+    Row 3 (mb_d3) = ingredient cards:                  Name ||| picture link (can be empty) ||| benefit one; benefit two; benefit three
+    Row 4 (mb_d4) and Row 5 (mb_d5) = paragraphs and bullet lines:
+        a plain paragraph:        text
+        a paragraph with a bold start:   Bold start ||| rest of the text
+        a bold line on its own:   Bold line |||
+        a bullet line:            - 93% ||| rest of the text        (start the line with a dash and a space)
+  mb_color_head = row title colour. mb_color_label = gold label colour. mb_color_text = body text colour. mb_icon_color = sparkle icon colour.
+  mb_border = row border. mb_panel_bg = grey panel colour. mb_radius = corner roundness. mb_gap = space between rows.
+  mb_single = true opens one row at a time. mb_open_first = true opens the first row on page load.
+  mb_top / mb_bottom = space above and below the whole block.
+{%- endcomment -%}
+{%- assign mb_t1 = 'Details' -%}
+{%- assign mb_t2 = 'Science' -%}
+{%- assign mb_t3 = 'Ingredients' -%}
+{%- assign mb_t4 = 'Customer Results' -%}
+{%- assign mb_t5 = 'Shipping &amp; Delivery' -%}
+{%- capture mb_d1 -%}
+WHAT IT IS ||| Berberine HCl with cinnamon. A dual-pathway formula, not plain berberine extract.
+@@
+SUPPORTS ||| Healthy metabolism and energy, plus healthy blood sugar and glucose metabolism.
+@@
+HOW TO TAKE ||| 2 capsules daily.
+@@
+ADD YOUR OWN LABEL ||| Replace this line with your own text.
+{%- endcapture -%}
+{%- assign mb_head2 = 'How It Works Over Time' -%}
+{%- assign mb_img2 = '' -%}
+{%- capture mb_d2 -%}
+STEP 1 ||| Describe what happens first. Replace this text with your own.
+@@
+STEP 2 ||| Describe the next stage.
+@@
+STEP 3 ||| Describe the result.
+{%- endcapture -%}
+{%- capture mb_d3 -%}
+Berberine HCl ||| ||| Add a benefit; Add a benefit; Add a benefit
+@@
+Cinnamon ||| ||| Add a benefit; Add a benefit; Add a benefit
+{%- endcapture -%}
+{%- capture mb_d4 -%}
+Add one sentence that introduces your results. Only use figures from your own customer survey.
+@@
+- 00% ||| Replace with a real result from your own survey.
+@@
+- 00% ||| Replace with another real result.
+{%- endcapture -%}
+{%- capture mb_d5 -%}
+Add your order processing time here.
+@@
+Estimated delivery times: ||| 
+@@
+- Your country: ||| Add the delivery estimate.
+@@
+- International: ||| Add the delivery estimate.
+@@
+Returns ||| Add your return policy here.
+{%- endcapture -%}
+{%- assign mb_color_head = '#5e4312' -%}
+{%- assign mb_color_label = '#9f6700' -%}
+{%- assign mb_color_text = '#1a1a1a' -%}
+{%- assign mb_icon_color = '#2a2a2a' -%}
+{%- assign mb_border = '#e1dcd2' -%}
+{%- assign mb_panel_bg = '#f5f3ee' -%}
+{%- assign mb_radius = '12px' -%}
+{%- assign mb_gap = '8px' -%}
+{%- assign mb_single = true -%}
+{%- assign mb_open_first = false -%}
+{%- assign mb_top = '16px' -%}
+{%- assign mb_bottom = '0px' -%}
+{%- assign mb_uid = 'mb-ac-' | append: section.id | append: block.id -%}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap"></noscript>
+
+<style>
+.mb-ac{box-sizing:border-box;display:flex;flex-direction:column;gap:var(--mb-ac-gap);width:100%;margin:var(--mb-ac-top) 0 var(--mb-ac-bottom);padding:0;font-family:'Plus Jakarta Sans',sans-serif;text-align:left}
+.mb-ac *{box-sizing:border-box}
+.mb-ac p,.mb-ac li,.mb-ac strong,.mb-ac span{color:var(--mb-ac-tx)!important;-webkit-text-fill-color:var(--mb-ac-tx)!important;letter-spacing:0;text-transform:none}
+.mb-ac__it{border:1px solid var(--mb-ac-bd)!important;border-radius:var(--mb-ac-r);background:#fff}
+.mb-ac .mb-ac__hd{-webkit-appearance:none;appearance:none;display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;margin:0;padding:15px 18px;border:0!important;border-radius:var(--mb-ac-r);background:transparent!important;box-shadow:none;font-family:'Plus Jakarta Sans',sans-serif;text-align:left;text-transform:none;letter-spacing:0;cursor:pointer}
+.mb-ac .mb-ac__hd .mb-ac__ti{font-size:15px;font-weight:500;line-height:1.3;color:var(--mb-ac-hd)!important;-webkit-text-fill-color:var(--mb-ac-hd)!important}
+.mb-ac__hd:focus-visible{outline:2px solid var(--mb-ac-hd);outline-offset:-2px}
+.mb-ac__ic{position:relative;display:block;flex:none;width:11px;height:11px}
+.mb-ac__ic::before,.mb-ac__ic::after{content:'';position:absolute;background:var(--mb-ac-hd);border-radius:1px;transition:transform .25s ease,opacity .25s ease}
+.mb-ac__ic::before{left:0;right:0;top:5px;height:1.6px}
+.mb-ac__ic::after{top:0;bottom:0;left:4.7px;width:1.6px}
+.mb-ac__it.is-open .mb-ac__ic::after{transform:scaleY(0);opacity:0}
+.mb-ac__pn{display:grid;grid-template-rows:0fr;transition:grid-template-rows .28s ease}
+.mb-ac__it.is-open .mb-ac__pn{grid-template-rows:1fr}
+.mb-ac__in{min-height:0;overflow:hidden;visibility:hidden;transition:visibility 0s linear .28s}
+.mb-ac__it.is-open .mb-ac__in{visibility:visible;transition-delay:0s}
+.mb-ac__bx{margin:0 11px 12px;padding:20px 17px 4px;border-radius:16px;background:var(--mb-ac-pn)}
+.mb-ac__row{display:flex;align-items:flex-start;gap:12px;margin:0 0 20px}
+.mb-ac__sp{display:block;flex:none;width:18px;height:18px;margin-top:1px}
+.mb-ac__sp svg{display:block;width:18px;height:18px;fill:none;stroke:var(--mb-ac-ic);stroke-width:1;stroke-linejoin:round;stroke-linecap:round}
+.mb-ac__sp svg path{stroke:var(--mb-ac-ic)!important}
+.mb-ac .mb-ac__lb{margin:0;padding:0;font-size:13px;font-weight:700;line-height:1.35;text-transform:uppercase;color:var(--mb-ac-lb)!important;-webkit-text-fill-color:var(--mb-ac-lb)!important}
+.mb-ac .mb-ac__tx{margin:2px 0 0;padding:0;font-size:13px;font-weight:400;line-height:22px}
+.mb-ac .mb-ac__h{margin:0 0 14px;padding:0;font-size:14px;font-weight:600;line-height:1.35;color:var(--mb-ac-lb)!important;-webkit-text-fill-color:var(--mb-ac-lb)!important}
+.mb-ac__im{display:block;width:100%;height:auto;margin:0 0 18px;border-radius:10px}
+.mb-ac__steps{position:relative;margin:0 0 4px}
+.mb-ac__steps::before{content:'';position:absolute;left:4px;top:8px;bottom:26px;width:1px;background:var(--mb-ac-lb);opacity:.35}
+.mb-ac__st{position:relative;display:flex;align-items:flex-start;gap:14px;margin:0 0 20px}
+.mb-ac__dot{position:relative;display:block;flex:none;width:9px;height:9px;margin-top:5px;border-radius:50%;background:var(--mb-ac-lb)}
+.mb-ac__ing{display:flex;align-items:flex-start;gap:14px;margin:0 0 20px}
+.mb-ac__ig{display:block;flex:none;width:64px;height:64px;border-radius:10px;object-fit:cover}
+.mb-ac .mb-ac__nm{margin:0 0 4px;padding:0;font-size:14px;font-weight:600;line-height:1.35;text-transform:capitalize}
+.mb-ac__ul{margin:0;padding:0;list-style:none}
+.mb-ac .mb-ac__ul li{position:relative;margin:0;padding:0 0 0 14px;font-size:13px;font-weight:400;line-height:21px}
+.mb-ac .mb-ac__ul li::before,.mb-ac .mb-ac__bl::before{content:'';position:absolute;left:1px;top:9px;width:4px;height:4px;border-radius:50%;background:var(--mb-ac-tx)}
+.mb-ac .mb-ac__pp{margin:0 0 14px;padding:0;font-size:13px;font-weight:400;line-height:22px}
+.mb-ac .mb-ac__bl{position:relative;margin:0 0 8px;padding:0 0 0 14px;font-size:13px;font-weight:400;line-height:22px}
+.mb-ac .mb-ac__bl::before{top:10px}
+.mb-ac strong{font-family:inherit!important;font-size:inherit!important;font-style:normal!important;line-height:inherit!important;letter-spacing:0!important;text-transform:none!important}
+.mb-ac .mb-ac__pp strong,.mb-ac .mb-ac__bl strong{font-weight:700!important}
+</style>
+
+<div class="mb-ac" id="{{ mb_uid }}" data-single="{{ mb_single }}" style="--mb-ac-hd:{{ mb_color_head }};--mb-ac-lb:{{ mb_color_label }};--mb-ac-tx:{{ mb_color_text }};--mb-ac-ic:{{ mb_icon_color }};--mb-ac-bd:{{ mb_border }};--mb-ac-pn:{{ mb_panel_bg }};--mb-ac-r:{{ mb_radius }};--mb-ac-gap:{{ mb_gap }};--mb-ac-top:{{ mb_top }};--mb-ac-bottom:{{ mb_bottom }}">
+{%- for mb_n in (1..5) -%}
+{%- case mb_n -%}
+{%- when 1 -%}{%- assign mb_t = mb_t1 -%}{%- assign mb_d = mb_d1 -%}{%- assign mb_ty = 'rows' -%}
+{%- when 2 -%}{%- assign mb_t = mb_t2 -%}{%- assign mb_d = mb_d2 -%}{%- assign mb_ty = 'steps' -%}
+{%- when 3 -%}{%- assign mb_t = mb_t3 -%}{%- assign mb_d = mb_d3 -%}{%- assign mb_ty = 'ing' -%}
+{%- when 4 -%}{%- assign mb_t = mb_t4 -%}{%- assign mb_d = mb_d4 -%}{%- assign mb_ty = 'list' -%}
+{%- when 5 -%}{%- assign mb_t = mb_t5 -%}{%- assign mb_d = mb_d5 -%}{%- assign mb_ty = 'list' -%}
+{%- endcase -%}
+{%- if mb_t != blank -%}
+{%- assign mb_isopen = false -%}
+{%- if mb_open_first and mb_n == 1 -%}{%- assign mb_isopen = true -%}{%- endif -%}
+<div class="mb-ac__it{% if mb_isopen %} is-open{% endif %}">
+<button type="button" class="mb-ac__hd" id="{{ mb_uid }}-h{{ mb_n }}" aria-expanded="{{ mb_isopen }}" aria-controls="{{ mb_uid }}-p{{ mb_n }}"><span class="mb-ac__ti">{{ mb_t }}</span><span class="mb-ac__ic" aria-hidden="true"></span></button>
+<div class="mb-ac__pn" id="{{ mb_uid }}-p{{ mb_n }}" role="region" aria-labelledby="{{ mb_uid }}-h{{ mb_n }}"><div class="mb-ac__in"><div class="mb-ac__bx">
+{%- assign mb_items = mb_d | split: '@@' -%}
+{%- case mb_ty -%}
+{%- when 'rows' -%}
+{%- for mb_it in mb_items -%}{%- assign mb_f = mb_it | split: '|||' -%}{%- assign mb_a = mb_f[0] | strip -%}{%- assign mb_b = mb_f[1] | strip -%}
+{%- if mb_a != blank -%}<div class="mb-ac__row"><span class="mb-ac__sp"><svg viewBox="0 0 18 18" aria-hidden="true" focusable="false"><path d="M11.5 6.2c.55 3 1.9 4.4 4.9 4.95-3 .55-4.35 1.95-4.9 4.95-.55-3-1.95-4.4-4.9-4.95 2.95-.55 4.35-1.95 4.9-4.95z"/><path d="M5 1.2c.35 1.8 1.1 2.55 2.9 2.9-1.8.35-2.55 1.1-2.9 2.9-.35-1.8-1.1-2.55-2.9-2.9 1.8-.35 2.55-1.1 2.9-2.9z"/></svg></span><div><p class="mb-ac__lb">{{ mb_a }}</p>{%- if mb_b != blank -%}<p class="mb-ac__tx">{{ mb_b }}</p>{%- endif -%}</div></div>{%- endif -%}
+{%- endfor -%}
+{%- when 'steps' -%}
+{%- if mb_head2 != blank -%}<p class="mb-ac__h">{{ mb_head2 }}</p>{%- endif -%}
+{%- if mb_img2 != blank -%}<img class="mb-ac__im" src="{{ mb_img2 }}" alt="" width="800" height="450" loading="lazy" decoding="async">{%- endif -%}
+<div class="mb-ac__steps">
+{%- for mb_it in mb_items -%}{%- assign mb_f = mb_it | split: '|||' -%}{%- assign mb_a = mb_f[0] | strip -%}{%- assign mb_b = mb_f[1] | strip -%}
+{%- if mb_a != blank -%}<div class="mb-ac__st"><span class="mb-ac__dot"></span><div><p class="mb-ac__lb">{{ mb_a }}</p>{%- if mb_b != blank -%}<p class="mb-ac__tx">{{ mb_b }}</p>{%- endif -%}</div></div>{%- endif -%}
+{%- endfor -%}
+</div>
+{%- when 'ing' -%}
+{%- for mb_it in mb_items -%}{%- assign mb_f = mb_it | split: '|||' -%}{%- assign mb_a = mb_f[0] | strip -%}{%- assign mb_img = mb_f[1] | strip -%}{%- assign mb_bl = mb_f[2] | split: ';' -%}
+{%- if mb_a != blank -%}<div class="mb-ac__ing">{%- if mb_img != blank -%}<img class="mb-ac__ig" src="{{ mb_img }}" alt="" width="64" height="64" loading="lazy" decoding="async">{%- endif -%}<div><p class="mb-ac__nm">{{ mb_a }}</p><ul class="mb-ac__ul">{%- for mb_x in mb_bl -%}{%- assign mb_xs = mb_x | strip -%}{%- if mb_xs != blank -%}<li>{{ mb_xs }}</li>{%- endif -%}{%- endfor -%}</ul></div></div>{%- endif -%}
+{%- endfor -%}
+{%- when 'list' -%}
+{%- for mb_it in mb_items -%}{%- assign mb_f = mb_it | split: '|||' -%}{%- assign mb_a = mb_f[0] | strip -%}{%- assign mb_b = mb_f[1] | strip -%}
+{%- assign mb_bul = false -%}
+{%- assign mb_pre = mb_a | slice: 0, 2 -%}
+{%- if mb_pre == '- ' -%}{%- assign mb_bul = true -%}{%- assign mb_a = mb_a | slice: 2, 400 | strip -%}{%- endif -%}
+{%- if mb_a != blank -%}
+{%- assign mb_bold = false -%}
+{%- if mb_it contains '|||' -%}{%- assign mb_bold = true -%}{%- endif -%}
+{%- if mb_bul -%}<p class="mb-ac__bl">{%- if mb_b != blank -%}<strong>{{ mb_a }}</strong> {{ mb_b }}{%- elsif mb_bold -%}<strong>{{ mb_a }}</strong>{%- else -%}{{ mb_a }}{%- endif -%}</p>
+{%- else -%}<p class="mb-ac__pp">{%- if mb_b != blank -%}<strong>{{ mb_a }}</strong> {{ mb_b }}{%- elsif mb_bold -%}<strong>{{ mb_a }}</strong>{%- else -%}{{ mb_a }}{%- endif -%}</p>{%- endif -%}
+{%- endif -%}
+{%- endfor -%}
+{%- endcase -%}
+</div></div></div>
+</div>
+{%- endif -%}
+{%- endfor -%}
+</div>
+
+<script>
+(function(){
+function init(root){
+if(root.getAttribute('data-on'))return;
+root.setAttribute('data-on','1');
+var single=root.getAttribute('data-single')==='true';
+root.addEventListener('click',function(e){
+var b=e.target&&e.target.closest?e.target.closest('.mb-ac__hd'):null;
+if(!b||!root.contains(b))return;
+var it=b.parentNode,open=!it.classList.contains('is-open');
+if(open&&single){
+var all=root.querySelectorAll('.mb-ac__it.is-open');
+for(var i=0;i<all.length;i++){if(all[i]!==it){all[i].classList.remove('is-open');all[i].querySelector('.mb-ac__hd').setAttribute('aria-expanded','false')}}
+}
+it.classList.toggle('is-open',open);
+b.setAttribute('aria-expanded',open?'true':'false');
+});
+}
+function all(){document.querySelectorAll('.mb-ac').forEach(init)}
+all();
+document.addEventListener('shopify:section:load',all);
+})();
+</script>
