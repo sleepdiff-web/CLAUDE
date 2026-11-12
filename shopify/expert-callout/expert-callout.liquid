@@ -1,0 +1,56 @@
+{%- comment -%}
+  Expert callout card: a cream box with a thin gold border, a check badge + title, a short quote, a bold name line, and a cut-out photo standing on the right.
+  WHERE: Online Store > Themes > Customize > Product page > Product information > Add block > Custom Liquid, drag it where you want it, paste this in.
+  EDIT YOUR CONTENT BELOW.
+  mb_title = the line next to the check badge. mb_text = the paragraph. mb_author = the bold line at the bottom (name | job title).
+  mb_img = the cut-out photo (a PNG with a see-through background looks best, shown at the bottom right). Leave '' for no photo.
+  mb_border = border + badge colour. mb_bg = box colour. mb_color = colour of all the text (locked so the theme cannot change it).
+  mb_radius = corner roundness. mb_min_h = minimum box height. mb_img_w = width kept free for the photo on desktop, mb_img_w_m = on mobile.
+  mb_top / mb_bottom = space above and below the box.
+  Do not use a straight apostrophe (') inside the text, use &#39; instead.
+{%- endcomment -%}
+{%- assign mb_title = 'Dermatologist Recommended' -%}
+{%- assign mb_text = 'More than 200 UK dermatologists and menopause specialists recommend a lipid-matched oil for skin that no longer responds to standard moisturisers.' -%}
+{%- assign mb_author = 'Dr. Claire H. | Consultant Dermatologist' -%}
+{%- assign mb_img = 'https://cdn.shopify.com/s/files/1/0847/9132/8941/files/9438a965-3f71-4456-8b8e-419d5fc73b77.png?v=1794450119' -%}
+{%- assign mb_border = '#986d1d' -%}
+{%- assign mb_bg = '#fffdf8' -%}
+{%- assign mb_color = '#5e4312' -%}
+{%- assign mb_radius = '8px' -%}
+{%- assign mb_min_h = '158px' -%}
+{%- assign mb_img_w = '170px' -%}
+{%- assign mb_img_w_m = '112px' -%}
+{%- assign mb_top = '0px' -%}
+{%- assign mb_bottom = '0px' -%}
+{%- if mb_img contains '?' -%}{%- assign mb_img_src = mb_img | append: '&amp;width=400' -%}{%- else -%}{%- assign mb_img_src = mb_img | append: '?width=400' -%}{%- endif -%}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap"></noscript>
+
+<style>
+.mb-ca{position:relative;box-sizing:border-box;width:100%;min-height:var(--mb-ca-h);margin:var(--mb-ca-top) 0 var(--mb-ca-bottom);padding:20px calc(var(--mb-ca-iw) + 4px) 18px 16px;overflow:hidden;border:1px solid var(--mb-ca-bd)!important;border-radius:var(--mb-ca-r);background:var(--mb-ca-bg)!important;font-family:'Plus Jakarta Sans',sans-serif;text-align:left}
+.mb-ca *{box-sizing:border-box}
+.mb-ca,.mb-ca *{color:var(--mb-ca-tx)!important;-webkit-text-fill-color:var(--mb-ca-tx)!important}
+.mb-ca__head{display:flex;align-items:center;gap:6px;margin:0 0 8px;padding:0}
+.mb-ca__bd{display:block;flex:none;width:12px;height:12px}
+.mb-ca__bd circle{fill:var(--mb-ca-bd)!important}
+.mb-ca__bd path{fill:none;stroke:var(--mb-ca-bg)!important;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.mb-ca__title{margin:0;padding:0;font-size:14px;font-weight:500;line-height:1.3;letter-spacing:0;text-transform:none}
+.mb-ca__p{margin:0 0 9px;padding:0;font-size:13px;font-weight:400;line-height:22px;letter-spacing:0;text-transform:none}
+.mb-ca__by{margin:0;padding:0;font-size:14px;font-weight:600;line-height:1.3;letter-spacing:0;text-transform:none}
+.mb-ca__img{position:absolute;top:0;right:0;bottom:0;width:var(--mb-ca-iw);margin:0;padding:0;pointer-events:none}
+.mb-ca__img img{display:block;width:100%;height:100%;object-fit:contain;object-position:right bottom}
+@media screen and (max-width:749px){
+.mb-ca{padding-right:calc(var(--mb-ca-iwm) + 4px)}
+.mb-ca__img{width:var(--mb-ca-iwm)}
+}
+</style>
+
+<div class="mb-ca" style="--mb-ca-bd:{{ mb_border }};--mb-ca-bg:{{ mb_bg }};--mb-ca-tx:{{ mb_color }};--mb-ca-r:{{ mb_radius }};--mb-ca-h:{{ mb_min_h }};--mb-ca-iw:{%- if mb_img != blank -%}{{ mb_img_w }}{%- else -%}0px{%- endif -%};--mb-ca-iwm:{%- if mb_img != blank -%}{{ mb_img_w_m }}{%- else -%}0px{%- endif -%};--mb-ca-top:{{ mb_top }};--mb-ca-bottom:{{ mb_bottom }}">
+<div class="mb-ca__head"><svg class="mb-ca__bd" viewBox="0 0 12 12" aria-hidden="true" focusable="false"><circle cx="6" cy="6" r="6"/><path d="M3.4 6.2l1.8 1.8 3.4-3.7"/></svg><p class="mb-ca__title">{{ mb_title }}</p></div>
+<p class="mb-ca__p">{{ mb_text }}</p>
+<p class="mb-ca__by">{{ mb_author }}</p>
+{%- if mb_img != blank -%}<div class="mb-ca__img"><img src="{{ mb_img_src }}" alt="" loading="lazy" decoding="async"></div>{%- endif -%}
+</div>
