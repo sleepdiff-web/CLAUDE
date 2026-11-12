@@ -1,0 +1,197 @@
+{%- comment -%}
+  Results slider (clone of the goda.co "Results" tab): a gold tab bar, then swipeable cards. Each card = photo on top, a big percentage that counts up, a result line, a quote and a verified name.
+  WHERE: Online Store > Themes > Customize > Product page > Product information > Add block > Custom Liquid, drag it where you want it, paste this in.
+  No slider app or library: it is plain CSS scrolling plus a tiny script (swipe on a phone, drag with the mouse, tap the dots).
+  EDIT YOUR CONTENT BELOW. Do not use a straight apostrophe (') in the text, use &#39; instead. Do not type quote marks around the quote, they are added for you.
+  The cards are separated by @@ and each card has 5 parts separated by |||   (leave a part empty to hide it)
+      PHOTO LINK ||| NUMBER ||| RESULT LINE ||| QUOTE ||| NAME
+  The NUMBER counts up from 0 to that number and shows a % sign after it (write 93 for 93%). Leave it empty for a card with no big number.
+  IMPORTANT: only use figures and reviews that come from your own real customers.
+  mb_tab = the gold bar above the cards (leave empty to hide it). mb_verified = the gold text after the name (leave empty to hide it).
+  mb_img_ratio = shape of the photo, for example 4 / 3 or 1 / 1 or 3 / 4.
+  mb_color_gold = tab text, big number, check icon and dot colour. mb_color_text = all other text. mb_card_bg = card colour. mb_card_border = card border. mb_radius = corner roundness.
+  mb_top / mb_bottom = space above and below the block.
+{%- endcomment -%}
+{%- assign mb_tab = 'Results' -%}
+{%- assign mb_verified = 'Verified Customer' -%}
+{%- capture mb_cards -%}
+ ||| 00 ||| Replace with a real result from your own survey ||| Replace this with a real customer review in their own words. ||| Customer name
+@@
+ ||| 00 ||| Replace with another real result ||| Replace this with another real customer review. ||| Customer name
+@@
+ ||| 00 ||| Replace with a third real result ||| Replace this with a third real customer review. ||| Customer name
+{%- endcapture -%}
+{%- assign mb_img_ratio = '4 / 3' -%}
+{%- assign mb_color_gold = '#986d1d' -%}
+{%- assign mb_color_text = '#5e4312' -%}
+{%- assign mb_card_bg = '#faf7f2' -%}
+{%- assign mb_card_border = '#e6dac2' -%}
+{%- assign mb_radius = '10px' -%}
+{%- assign mb_top = '16px' -%}
+{%- assign mb_bottom = '0px' -%}
+{%- assign mb_uid = 'mb-rs-' | append: section.id | append: block.id -%}
+{%- assign mb_items = mb_cards | split: '@@' -%}
+{%- assign mb_total = 0 -%}
+{%- for mb_it in mb_items -%}{%- assign mb_chk = mb_it | strip -%}{%- if mb_chk != blank -%}{%- assign mb_total = mb_total | plus: 1 -%}{%- endif -%}{%- endfor -%}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Libre+Caslon+Text:wght@400;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Libre+Caslon+Text:wght@400;700&display=swap"></noscript>
+
+<style>
+.mb-rs{box-sizing:border-box;width:100%;margin:var(--mb-rs-top) 0 var(--mb-rs-bottom);padding:0;font-family:'Plus Jakarta Sans',sans-serif;text-align:left}
+.mb-rs *{box-sizing:border-box}
+.mb-rs p,.mb-rs span,.mb-rs strong{letter-spacing:0;text-transform:none;font-style:normal;-webkit-text-fill-color:currentColor}
+.mb-rs .mb-rs__tab{display:flex;align-items:center;justify-content:center;width:100%;margin:0 0 14px;padding:11px 22px;border:1px solid transparent;border-radius:6px;background:linear-gradient(#f8f1dc,#f8f1dc) padding-box,linear-gradient(98.87deg,#997227 5.14%,#ffd78d 45.53%,#ad8844 78.01%) border-box;box-shadow:0 4px 4px rgba(0,0,0,.25);font-family:'Libre Caslon Text',Georgia,serif;font-size:19px;font-weight:400;line-height:1.2;color:#ab8131!important;-webkit-text-fill-color:#ab8131!important}
+.mb-rs__trk{position:relative;display:flex;gap:12px;margin:0;padding:0;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;scrollbar-width:none;cursor:grab}
+.mb-rs__trk::-webkit-scrollbar{display:none}
+.mb-rs__trk:focus-visible{outline:2px solid var(--mb-rs-gd);outline-offset:2px}
+.mb-rs__trk.is-drag{scroll-snap-type:none;scroll-behavior:auto;cursor:grabbing;user-select:none;-webkit-user-select:none}
+.mb-rs__cd{flex:0 0 100%;min-width:0;margin:0;padding:0;overflow:hidden;scroll-snap-align:start;scroll-snap-stop:always;border:1px solid var(--mb-rs-bd)!important;border-radius:var(--mb-rs-r);background:var(--mb-rs-bg)!important}
+.mb-rs__im{position:relative;width:100%;margin:0;padding:0;aspect-ratio:var(--mb-rs-ratio);background:#efe7d6;overflow:hidden}
+.mb-rs__im img{position:absolute;inset:0;display:block;width:100%;height:100%;margin:0;padding:0;object-fit:cover;-webkit-user-drag:none;user-select:none;pointer-events:none}
+.mb-rs__bd{padding:18px 18px 20px}
+.mb-rs .mb-rs__st{margin:0 0 12px;padding:0;color:var(--mb-rs-tx)!important;-webkit-text-fill-color:var(--mb-rs-tx)!important}
+.mb-rs .mb-rs__pc{display:block;margin:0 0 4px;padding:0;font-family:'Libre Caslon Text',Georgia,serif;font-size:38px;font-weight:400;line-height:1.1;color:var(--mb-rs-gd)!important;-webkit-text-fill-color:var(--mb-rs-gd)!important}
+.mb-rs .mb-rs__pc span{font:inherit;color:inherit!important;-webkit-text-fill-color:inherit!important}
+.mb-rs .mb-rs__sl{display:block;margin:0;padding:0;font-size:15px;font-weight:600;line-height:1.4;color:var(--mb-rs-tx)!important;-webkit-text-fill-color:var(--mb-rs-tx)!important}
+.mb-rs .mb-rs__q{margin:0;padding:0;font-size:13.5px;font-weight:400;line-height:1.7;color:var(--mb-rs-tx)!important;-webkit-text-fill-color:var(--mb-rs-tx)!important}
+.mb-rs .mb-rs__by{display:flex;align-items:center;gap:7px;margin:14px 0 0;padding:0;font-size:13px;font-weight:500;line-height:1.3;color:var(--mb-rs-tx)!important;-webkit-text-fill-color:var(--mb-rs-tx)!important}
+.mb-rs .mb-rs__by svg{display:block;flex:none;width:13px;height:12px}
+.mb-rs .mb-rs__by svg path{fill:var(--mb-rs-gd)!important}
+.mb-rs .mb-rs__by span{color:inherit!important;-webkit-text-fill-color:inherit!important}
+.mb-rs .mb-rs__by .mb-rs__vf{font-weight:400;color:var(--mb-rs-gd)!important;-webkit-text-fill-color:var(--mb-rs-gd)!important}
+.mb-rs__dots{display:flex;justify-content:center;gap:0;margin:10px 0 0;padding:0}
+.mb-rs .mb-rs__dot{-webkit-appearance:none;appearance:none;position:relative;display:block;width:22px;height:22px;min-width:0;min-height:0;margin:0;padding:0;border:0!important;border-radius:0;background:transparent!important;box-shadow:none;cursor:pointer}
+.mb-rs .mb-rs__dot::before{content:'';position:absolute;top:50%;left:50%;width:8px;height:8px;margin:-4px 0 0 -4px;border-radius:50%;background:var(--mb-rs-gd);opacity:.28;transition:opacity .2s ease,transform .2s ease}
+.mb-rs .mb-rs__dot[aria-current="true"]::before{opacity:1;transform:scale(1.15)}
+.mb-rs .mb-rs__dot:focus-visible{outline:2px solid var(--mb-rs-gd);outline-offset:-2px}
+@media screen and (min-width:750px){
+.mb-rs .mb-rs__tab{font-size:21px}
+.mb-rs .mb-rs__pc{font-size:42px}
+.mb-rs .mb-rs__sl{font-size:16px}
+.mb-rs .mb-rs__q{font-size:14px}
+.mb-rs .mb-rs__bd{padding:20px 22px 22px}
+}
+</style>
+
+<div class="mb-rs" id="{{ mb_uid }}" style="--mb-rs-gd:{{ mb_color_gold }};--mb-rs-tx:{{ mb_color_text }};--mb-rs-bg:{{ mb_card_bg }};--mb-rs-bd:{{ mb_card_border }};--mb-rs-r:{{ mb_radius }};--mb-rs-ratio:{{ mb_img_ratio }};--mb-rs-top:{{ mb_top }};--mb-rs-bottom:{{ mb_bottom }}">
+{%- if mb_tab != blank -%}<p class="mb-rs__tab">{{ mb_tab }}</p>{%- endif -%}
+<div class="mb-rs__trk" tabindex="0" role="region" aria-roledescription="carousel" aria-label="{{ mb_tab | default: 'Customer results' | escape }}">
+{%- assign mb_i = 0 -%}
+{%- for mb_it in mb_items -%}
+{%- assign mb_chk = mb_it | strip -%}
+{%- if mb_chk != blank -%}
+{%- assign mb_i = mb_i | plus: 1 -%}
+{%- assign mb_f = mb_it | split: '|||' -%}
+{%- assign mb_img = mb_f[0] | strip -%}
+{%- assign mb_num = mb_f[1] | strip -%}
+{%- assign mb_sl = mb_f[2] | strip -%}
+{%- assign mb_q = mb_f[3] | strip -%}
+{%- assign mb_nm = mb_f[4] | strip -%}
+{%- if mb_img contains '?' -%}{%- assign mb_img_src = mb_img | append: '&amp;width=700' -%}{%- else -%}{%- assign mb_img_src = mb_img | append: '?width=700' -%}{%- endif -%}
+<article class="mb-rs__cd" role="group" aria-roledescription="slide" aria-label="{{ mb_i }} of {{ mb_total }}">
+{%- if mb_img != blank -%}<div class="mb-rs__im"><img src="{{ mb_img_src }}" alt="{{ mb_sl | escape }}" loading="lazy" decoding="async" draggable="false"></div>{%- endif -%}
+<div class="mb-rs__bd">
+{%- if mb_num != blank or mb_sl != blank -%}<p class="mb-rs__st">{%- if mb_num != blank -%}<span class="mb-rs__pc"><span class="mb-rs__n" data-target="{{ mb_num }}">{{ mb_num }}</span>%</span>{%- endif -%}{%- if mb_sl != blank -%}<span class="mb-rs__sl">{{ mb_sl }}</span>{%- endif -%}</p>{%- endif -%}
+{%- if mb_q != blank -%}<p class="mb-rs__q">&ldquo;{{ mb_q }}&rdquo;</p>{%- endif -%}
+{%- if mb_nm != blank -%}<p class="mb-rs__by"><svg width="13" height="12" viewBox="0 0 13 12" fill="none" aria-hidden="true" focusable="false"><path fill-rule="evenodd" clip-rule="evenodd" d="M6.79995 11.8499C10.0308 11.8499 12.65 9.23077 12.65 5.9999C12.65 2.76904 10.0308 0.149902 6.79995 0.149902C3.56909 0.149902 0.949951 2.76904 0.949951 5.9999C0.949951 9.23077 3.56909 11.8499 6.79995 11.8499ZM6.19394 8.91323L6.64902 8.36636L9.89902 4.46597L8.90098 3.63394L6.10703 6.98647L4.65977 5.54018L3.74082 6.45913L5.69004 8.40933L6.19394 8.91323Z"/></svg><span>{{ mb_nm }}{%- if mb_verified != blank %} | <span class="mb-rs__vf">{{ mb_verified }}</span>{%- endif -%}</span></p>{%- endif -%}
+</div>
+</article>
+{%- endif -%}
+{%- endfor -%}
+</div>
+{%- if mb_total > 1 -%}
+<div class="mb-rs__dots">
+{%- for mb_d in (1..mb_total) -%}<button type="button" class="mb-rs__dot" aria-label="Go to slide {{ mb_d }} of {{ mb_total }}" aria-current="{% if forloop.first %}true{% else %}false{% endif %}"></button>{%- endfor -%}
+</div>
+{%- endif -%}
+</div>
+
+<script>
+(function(){
+function init(root){
+if(root.getAttribute('data-on'))return;
+root.setAttribute('data-on','1');
+var trk=root.querySelector('.mb-rs__trk');
+var cards=[].slice.call(root.querySelectorAll('.mb-rs__cd'));
+var dots=[].slice.call(root.querySelectorAll('.mb-rs__dot'));
+if(!trk||!cards.length)return;
+var cur=0,seen=false,ticking=false;
+function nums(c){return [].slice.call(c.querySelectorAll('.mb-rs__n'))}
+function stop(el){el._mbT=(el._mbT||0)+1;return el._mbT}
+function reset(c){nums(c).forEach(function(el){stop(el);el.textContent=el.getAttribute('data-target')})}
+function run(el){
+var t=+el.getAttribute('data-target');
+if(!isFinite(t)||t<=0){el.textContent=el.getAttribute('data-target');return}
+var tk=stop(el),n=0,inc=Math.ceil(t/200)||1;
+el.textContent='0';
+(function step(){
+if(el._mbT!==tk)return;
+if(n<t){n+=inc;el.textContent=n>t?t:n;requestAnimationFrame(step)}else{el.textContent=t}
+})();
+}
+function play(c){nums(c).forEach(run)}
+function setCur(i){
+if(i===cur)return;
+cur=i;
+for(var k=0;k<dots.length;k++)dots[k].setAttribute('aria-current',k===i?'true':'false');
+for(var j=0;j<cards.length;j++){if(j!==i)reset(cards[j])}
+if(seen)play(cards[i]);
+}
+function nearest(){
+var x=trk.scrollLeft,best=0,bd=1e9;
+for(var i=0;i<cards.length;i++){var d=Math.abs(cards[i].offsetLeft-x);if(d<bd){bd=d;best=i}}
+return best;
+}
+function go(i,smooth){
+i=Math.max(0,Math.min(cards.length-1,i));
+var left=cards[i].offsetLeft;
+if(smooth&&trk.scrollTo){try{trk.scrollTo({left:left,behavior:'smooth'})}catch(e){trk.scrollLeft=left}}else{trk.scrollLeft=left}
+}
+trk.addEventListener('scroll',function(){
+if(ticking)return;
+ticking=true;
+requestAnimationFrame(function(){ticking=false;setCur(nearest())});
+},{passive:true});
+dots.forEach(function(d,i){d.addEventListener('click',function(){go(i,true)})});
+/* mouse drag (touch uses normal swiping) */
+var drag=false,sx=0,sl=0,moved=0;
+trk.addEventListener('pointerdown',function(e){
+if(e.pointerType!=='mouse'||e.button!==0)return;
+drag=true;moved=0;sx=e.clientX;sl=trk.scrollLeft;
+trk.classList.add('is-drag');
+try{trk.setPointerCapture(e.pointerId)}catch(x){}
+});
+trk.addEventListener('pointermove',function(e){
+if(!drag)return;
+var dx=e.clientX-sx;moved=Math.max(moved,Math.abs(dx));
+trk.scrollLeft=sl-dx;
+});
+function end(e){
+if(!drag)return;
+drag=false;
+trk.classList.remove('is-drag');
+try{trk.releasePointerCapture(e.pointerId)}catch(x){}
+var dx=e.clientX-sx,i=nearest();
+if(dx<-50)i=Math.min(cards.length-1,cur+1);else if(dx>50)i=Math.max(0,cur-1);
+go(i,true);
+}
+trk.addEventListener('pointerup',end);
+trk.addEventListener('pointercancel',end);
+window.addEventListener('resize',function(){go(cur,false)});
+/* count up the first time the block is seen */
+function first(){if(seen)return;seen=true;play(cards[cur])}
+if('IntersectionObserver' in window){
+var io=new IntersectionObserver(function(en){
+for(var i=0;i<en.length;i++){if(en[i].isIntersecting){first();io.disconnect();break}}
+},{threshold:0.5});
+io.observe(trk);
+}else{first()}
+}
+function all(){document.querySelectorAll('.mb-rs').forEach(init)}
+all();
+document.addEventListener('shopify:section:load',all);
+})();
+</script>
