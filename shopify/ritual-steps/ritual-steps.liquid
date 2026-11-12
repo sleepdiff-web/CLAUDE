@@ -1,0 +1,130 @@
+{%- comment -%}
+  "Daily 2 min ritual" steps section (exact copy of the evorabody.com section, rebuilt from its own stylesheet): a two-line title (the second line in italics), then white step cards, each with a picture (a GIF works), a gold numbered circle, a bold step name and a short text.
+  Desktop and tablet: the cards sit side by side. Phones (749px and narrower): the cards stack, with the picture on the left and the words on the right.
+  No slider app or library, so it loads fast.
+  WHERE: best as its own full-width section: Online Store > Themes > Customize > Product page > Add section > Custom Liquid, drag it where you want it, paste this in.
+  If you paste it inside a narrow column instead, set mb_bleed to false.
+  EDIT YOUR CONTENT BELOW. Do not use a straight apostrophe (') in the text, use &#39; instead.
+  mb_title_1 = first title line. mb_title_2 = second title line, shown in italics on its own line (leave empty to hide either one). mb_subtitle = optional line under the title (leave empty to hide it, the original has none).
+  mb_steps = your steps, separated by @@ and each one written as   PICTURE LINK ||| NUMBER ||| STEP NAME ||| TEXT
+  (leave the NUMBER empty to hide the gold circle. With no picture link a grey square shows so you can see the layout. Add as many steps as you like.)
+  THE 2 PICTURES BELOW ARE LINKED FROM evorabody.com SO YOU CAN SEE THE SECTION WORKING. For a live store, save your own pictures or GIFs, upload them in Shopify admin > Content > Files, then paste your own links in place. That keeps the section working if the original files ever change.
+  mb_resize = true asks Shopify for a smaller copy of each picture so the page loads faster (this is what the original does). If one of your GIFs stops moving, set it to false.
+  mb_bg = section colour. mb_card_bg = card colour. mb_color_text = every text colour. mb_color_num = gold circle colour. mb_color_numtx = the number inside the circle.
+  mb_pad_d / mb_pad_m = space inside the section on desktop / phone, written as top left-right bottom, for example 52px 20px 52px.
+  mb_bleed = true stretches the section edge to edge across the screen. mb_top / mb_bottom = space above and below the block.
+{%- endcomment -%}
+{%- capture mb_steps -%}
+https://evorabody.com/cdn/shop/files/Step_2_GIF.gif?v=1780473031 ||| 1 ||| Apply ||| Dispense 2–3 pumps onto your arms, chest, hands — wherever your skin needs it most.
+@@
+https://evorabody.com/cdn/shop/files/Step_3_GIF.gif?v=1780473032 ||| 2 ||| Massage it in ||| Work it in with slow, circular motions until fully absorbed. No greasy residue — get dressed and get on with your day.
+{%- endcapture -%}
+{%- assign mb_title_1 = 'Get smooth, radiant skin in a' -%}
+{%- assign mb_title_2 = 'daily 2 min ritual' -%}
+{%- assign mb_subtitle = '' -%}
+{%- assign mb_resize = true -%}
+{%- assign mb_bg = '#faf8f5' -%}
+{%- assign mb_card_bg = '#ffffff' -%}
+{%- assign mb_color_text = '#32140e' -%}
+{%- assign mb_color_num = '#f1c40f' -%}
+{%- assign mb_color_numtx = '#ffffff' -%}
+{%- assign mb_pad_d = '52px 20px 52px' -%}
+{%- assign mb_pad_m = '24px 16px 40px' -%}
+{%- assign mb_bleed = true -%}
+{%- assign mb_top = '0px' -%}
+{%- assign mb_bottom = '0px' -%}
+{%- assign mb_items = mb_steps | split: '@@' -%}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&display=swap"></noscript>
+
+<style>
+.mb-rk{box-sizing:border-box;width:100%;margin:var(--mb-rk-top) 0 var(--mb-rk-bottom);padding:var(--mb-rk-pd);background:var(--mb-rk-bg);font-family:'Libre Caslon Text',Georgia,serif;font-weight:400;text-align:left;color:var(--mb-rk-tx)}
+.mb-rk--bleed{width:100vw;max-width:none;margin-left:calc(50% - 50vw);margin-right:0}
+.mb-rk *{box-sizing:border-box}
+.mb-rk p,.mb-rk div,.mb-rk span,.mb-rk h2,.mb-rk h3{letter-spacing:0;text-transform:none;font-style:normal}
+.mb-rk__in{max-width:1040px;margin:0 auto;padding:0}
+.mb-rk__hd{margin:0 0 38px;padding:0;text-align:center}
+.mb-rk .mb-rk__t{margin:0;padding:0;font-family:'Libre Caslon Text',Georgia,serif;font-size:36px;line-height:1.05;font-weight:400;font-style:normal;letter-spacing:0;text-transform:none;text-align:center;color:var(--mb-rk-tx)!important;-webkit-text-fill-color:var(--mb-rk-tx)!important}
+.mb-rk .mb-rk__t span{font-family:inherit;font-size:inherit;line-height:inherit;font-weight:inherit;color:inherit!important;-webkit-text-fill-color:inherit!important}
+.mb-rk .mb-rk__t .mb-rk__t2{display:block;font-style:italic}
+.mb-rk .mb-rk__st{margin:18px 0 0;padding:0;font-size:19px;line-height:1.3;font-weight:400;text-align:center;color:var(--mb-rk-tx)!important;-webkit-text-fill-color:var(--mb-rk-tx)!important}
+.mb-rk__grid{display:grid;grid-template-columns:repeat(2,1fr);gap:56px;max-width:760px;margin:0 auto;padding:0}
+.mb-rk__card{margin:0;padding:0;background:var(--mb-rk-cbg);border-radius:18px;overflow:hidden}
+.mb-rk .mb-rk__img{display:block;width:100%;max-width:100%;height:auto;aspect-ratio:1/1;margin:0;padding:0;object-fit:cover;border:0;border-radius:0;box-shadow:none;filter:none;opacity:1;transform:none;-webkit-user-drag:none}
+.mb-rk .mb-rk__img--ph{background:#ebe5d8}
+.mb-rk__bd{margin:0;padding:28px 18px 28px}
+.mb-rk .mb-rk__no{display:flex;align-items:center;justify-content:center;width:30px;height:30px;margin:0 0 16px;padding:0;border-radius:50%;background:var(--mb-rk-nb);font-size:16px;line-height:1;font-weight:700;text-align:center;color:var(--mb-rk-nt)!important;-webkit-text-fill-color:var(--mb-rk-nt)!important}
+.mb-rk .mb-rk__ti{margin:0 0 14px;padding:0;font-family:'Libre Caslon Text',Georgia,serif;font-size:16px;line-height:1.15;font-weight:700;font-style:normal;letter-spacing:0;text-transform:none;text-align:left;color:var(--mb-rk-tx)!important;-webkit-text-fill-color:var(--mb-rk-tx)!important}
+.mb-rk .mb-rk__tx{margin:0;padding:0;font-size:14px;line-height:1.35;font-weight:400;text-align:left;color:var(--mb-rk-tx)!important;-webkit-text-fill-color:var(--mb-rk-tx)!important}
+@media screen and (max-width:749px){
+.mb-rk{padding:var(--mb-rk-pm)}
+.mb-rk__hd{margin-bottom:28px}
+.mb-rk .mb-rk__t{font-size:25px;line-height:36px}
+.mb-rk .mb-rk__st{margin-top:14px;font-size:12px}
+.mb-rk__grid{display:flex;flex-direction:column;gap:16px;max-width:100%}
+.mb-rk__card{display:grid;grid-template-columns:34% 1fr;align-items:stretch;border-radius:8px;min-height:134px}
+.mb-rk .mb-rk__img{height:100%;aspect-ratio:auto;border-radius:8px 0 0 8px}
+.mb-rk__bd{padding:18px 16px;display:flex;flex-direction:column;justify-content:center}
+.mb-rk .mb-rk__no{width:25px;height:25px;font-size:17px;margin-bottom:8px}
+.mb-rk .mb-rk__ti{font-size:14px;margin-bottom:6px}
+.mb-rk .mb-rk__tx{font-size:10px;line-height:1.2}
+}
+</style>
+
+<div class="mb-rk{% if mb_bleed %} mb-rk--bleed{% endif %}" data-bleed="{{ mb_bleed }}" style="--mb-rk-bg:{{ mb_bg }};--mb-rk-cbg:{{ mb_card_bg }};--mb-rk-tx:{{ mb_color_text }};--mb-rk-nb:{{ mb_color_num }};--mb-rk-nt:{{ mb_color_numtx }};--mb-rk-pd:{{ mb_pad_d }};--mb-rk-pm:{{ mb_pad_m }};--mb-rk-top:{{ mb_top }};--mb-rk-bottom:{{ mb_bottom }}">
+<div class="mb-rk__in">
+{%- if mb_title_1 != blank or mb_title_2 != blank or mb_subtitle != blank -%}
+<div class="mb-rk__hd">
+{%- if mb_title_1 != blank or mb_title_2 != blank -%}<h2 class="mb-rk__t">{%- if mb_title_1 != blank -%}<span>{{ mb_title_1 }}</span>{%- endif %} {% if mb_title_2 != blank -%}<span class="mb-rk__t2">{{ mb_title_2 }}</span>{%- endif -%}</h2>{%- endif -%}
+{%- if mb_subtitle != blank -%}<p class="mb-rk__st">{{ mb_subtitle }}</p>{%- endif -%}
+</div>
+{%- endif -%}
+<div class="mb-rk__grid">
+{%- for mb_it in mb_items -%}
+{%- assign mb_chk = mb_it | strip -%}
+{%- if mb_chk != blank -%}
+{%- assign mb_f = mb_it | split: '|||' -%}
+{%- assign mb_u = mb_f[0] | strip -%}
+{%- assign mb_no = mb_f[1] | strip -%}
+{%- assign mb_ti = mb_f[2] | strip -%}
+{%- assign mb_tx = mb_f[3] | strip | replace: '[br]', '<br>' -%}
+{%- if mb_u contains '?' -%}{%- assign mb_sep = '&amp;' -%}{%- else -%}{%- assign mb_sep = '?' -%}{%- endif -%}
+<div class="mb-rk__card">
+{%- if mb_u != blank -%}{%- if mb_resize -%}<img class="mb-rk__img" src="{{ mb_u }}{{ mb_sep }}width=800" srcset="{{ mb_u }}{{ mb_sep }}width=352 352w, {{ mb_u }}{{ mb_sep }}width=800 800w" sizes="(min-width: 750px) 352px, 34vw" alt="" width="800" height="800" loading="lazy" decoding="async" draggable="false">{%- else -%}<img class="mb-rk__img" src="{{ mb_u }}" alt="" width="800" height="800" loading="lazy" decoding="async" draggable="false">{%- endif -%}{%- else -%}<div class="mb-rk__img mb-rk__img--ph"></div>{%- endif -%}
+<div class="mb-rk__bd">
+{%- if mb_no != blank -%}<span class="mb-rk__no">{{ mb_no }}</span>{%- endif -%}
+{%- if mb_ti != blank -%}<h3 class="mb-rk__ti">{{ mb_ti }}</h3>{%- endif -%}
+{%- if mb_tx != blank -%}<p class="mb-rk__tx">{{ mb_tx }}</p>{%- endif -%}
+</div>
+</div>
+{%- endif -%}
+{%- endfor -%}
+</div>
+</div>
+</div>
+
+<script>
+(function(){
+function init(root){
+if(root.getAttribute('data-on'))return;
+root.setAttribute('data-on','1');
+/* stretch edge to edge exactly, whatever the page column is */
+function bleed(){
+if(root.getAttribute('data-bleed')!=='true')return;
+root.style.marginLeft='0px';
+root.style.width=document.documentElement.clientWidth+'px';
+var l=root.getBoundingClientRect().left;
+root.style.marginLeft=(-l)+'px';
+}
+bleed();
+window.addEventListener('resize',bleed);
+window.addEventListener('load',function(){bleed();setTimeout(bleed,400)});
+}
+function all(){document.querySelectorAll('.mb-rk').forEach(init)}
+all();
+document.addEventListener('shopify:section:load',all);
+})();
+</script>
