@@ -51,9 +51,17 @@ STEP 5 ||| Sea buckthorn oil provides antioxidant protection and supports the sk
 STEP 6 ||| Together, six cold-pressed oils leave post-menopausal skin nourished, soft, and visibly smoother — without grease or residue.
 {%- endcapture -%}
 {%- capture mb_d3 -%}
-Berberine HCl ||| ||| Add a benefit; Add a benefit; Add a benefit
+Marula Oil ||| ||| Matches skin&#39;s natural lipid profile; Absorbs without grease or residue; Restores softness lost after menopause
 @@
-Cinnamon ||| ||| Add a benefit; Add a benefit; Add a benefit
+Rosehip Seed Oil ||| ||| Firms crepey, sagging skin; Visibly smooths dry, rough texture; Rich in vitamins A and C
+@@
+Argan Oil ||| ||| Seals moisture into the lipid barrier; Softens and nourishes dry skin; Leaves skin smooth all day
+@@
+Jojoba Oil ||| ||| Mimics the skin&#39;s natural sebum; Helps retain moisture in dry conditions; Softens rough, flaky areas
+@@
+Sea Buckthorn Oil ||| ||| Provides antioxidant protection; Supports skin renewal and firmness; Keeps skin comfortable and nourished
+@@
+Neroli Extract ||| ||| Soothes irritated, itchy skin; Supports the skin&#39;s natural repair process; Leaves a clean, soft botanical scent
 {%- endcapture -%}
 {%- capture mb_d4 -%}
 Add one sentence that introduces your results. Only use figures from your own customer survey.
@@ -165,8 +173,8 @@ Returns ||| Add your return policy here.
 {%- endfor -%}
 </div>
 {%- when 'ing' -%}
-{%- for mb_it in mb_items -%}{%- assign mb_f = mb_it | split: '|||' -%}{%- assign mb_a = mb_f[0] | strip -%}{%- assign mb_img = mb_f[1] | strip -%}{%- assign mb_bl = mb_f[2] | split: ';' -%}
-{%- if mb_a != blank -%}<div class="mb-ac__ing">{%- if mb_img != blank -%}<img class="mb-ac__ig" src="{{ mb_img }}" alt="" width="64" height="64" loading="lazy" decoding="async">{%- endif -%}<div><p class="mb-ac__nm">{{ mb_a }}</p><ul class="mb-ac__ul">{%- for mb_x in mb_bl -%}{%- assign mb_xs = mb_x | strip -%}{%- if mb_xs != blank -%}<li>{{ mb_xs }}</li>{%- endif -%}{%- endfor -%}</ul></div></div>{%- endif -%}
+{%- for mb_it in mb_items -%}{%- assign mb_f = mb_it | split: '|||' -%}{%- assign mb_a = mb_f[0] | strip -%}{%- assign mb_img = mb_f[1] | strip -%}{%- assign mb_bl = mb_f[2] | replace: '&#39;', '[apos]' | replace: '&amp;', '[amp]' | split: ';' -%}
+{%- if mb_a != blank -%}<div class="mb-ac__ing">{%- if mb_img != blank -%}<img class="mb-ac__ig" src="{{ mb_img }}" alt="" width="64" height="64" loading="lazy" decoding="async">{%- endif -%}<div><p class="mb-ac__nm">{{ mb_a }}</p><ul class="mb-ac__ul">{%- for mb_x in mb_bl -%}{%- assign mb_xs = mb_x | strip | replace: '[apos]', '&#39;' | replace: '[amp]', '&amp;' -%}{%- if mb_xs != blank -%}<li>{{ mb_xs }}</li>{%- endif -%}{%- endfor -%}</ul></div></div>{%- endif -%}
 {%- endfor -%}
 {%- when 'list' -%}
 {%- for mb_it in mb_items -%}{%- assign mb_f = mb_it | split: '|||' -%}{%- assign mb_a = mb_f[0] | strip -%}{%- assign mb_b = mb_f[1] | strip -%}
