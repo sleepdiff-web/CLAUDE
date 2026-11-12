@@ -12,7 +12,8 @@
   The NUMBER (write 94 for 94%) is drawn inside a ring that fills to that percentage. If you give a picture link instead, your picture is shown in place of the ring.
   IMPORTANT: only use figures that come from your own real customer survey.
   mb_color_num = ring and number colour. mb_color_text = all text. mb_bg = background colour of the section. mb_radius = corner roundness of the video.
-  mb_pad_d / mb_pad_m = space above and below inside the section on desktop / phone. mb_top / mb_bottom = space above and below the block.
+  mb_pad_top_d / mb_pad_top_m = space ABOVE the title on desktop / phone (small = tight). mb_pad_bot_d / mb_pad_bot_m = space BELOW the stats on desktop / phone.
+  mb_top / mb_bottom = space outside the block, above and below it.
 {%- endcomment -%}
 {%- assign mb_title_1 = 'How Our Body Oil' -%}
 {%- assign mb_title_2 = 'works on your Skin' -%}
@@ -31,8 +32,10 @@
 {%- assign mb_color_text = '#5e4312' -%}
 {%- assign mb_bg = 'transparent' -%}
 {%- assign mb_radius = '16px' -%}
-{%- assign mb_pad_d = '56px' -%}
-{%- assign mb_pad_m = '36px' -%}
+{%- assign mb_pad_top_d = '10px' -%}
+{%- assign mb_pad_top_m = '6px' -%}
+{%- assign mb_pad_bot_d = '56px' -%}
+{%- assign mb_pad_bot_m = '36px' -%}
 {%- assign mb_top = '0px' -%}
 {%- assign mb_bottom = '0px' -%}
 {%- assign mb_text_html = mb_text | replace: '[b]', '<strong>' | replace: '[/b]', '</strong>' -%}
@@ -45,7 +48,7 @@
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Libre+Caslon+Text:ital,wght@0,400;1,400&display=swap"></noscript>
 
 <style>
-.mb-hw{box-sizing:border-box;width:100%;margin:var(--mb-hw-top) 0 var(--mb-hw-bottom);padding:var(--mb-hw-pdm) 16px;background:var(--mb-hw-bg);font-family:'Plus Jakarta Sans',sans-serif;text-align:center}
+.mb-hw{box-sizing:border-box;width:100%;margin:var(--mb-hw-top) 0 var(--mb-hw-bottom);padding:var(--mb-hw-ptm) 16px var(--mb-hw-pbm);background:var(--mb-hw-bg);font-family:'Plus Jakarta Sans',sans-serif;text-align:center}
 .mb-hw *{box-sizing:border-box}
 .mb-hw p,.mb-hw strong,.mb-hw em,.mb-hw span{letter-spacing:0;text-transform:none;font-style:normal;color:var(--mb-hw-tx)!important;-webkit-text-fill-color:var(--mb-hw-tx)!important}
 .mb-hw__in{max-width:1100px;margin:0 auto}
@@ -68,7 +71,7 @@
 .mb-hw__sim{display:block;flex:none;width:76px;height:76px;margin:0;padding:0;object-fit:contain;border:0;border-radius:0;box-shadow:none;filter:none}
 .mb-hw .mb-hw__sx{margin:0;padding:0;font-size:15px;font-weight:500;line-height:1.45}
 @media screen and (min-width:750px){
-.mb-hw{padding-top:var(--mb-hw-pdd);padding-bottom:var(--mb-hw-pdd)}
+.mb-hw{padding-top:var(--mb-hw-ptd);padding-bottom:var(--mb-hw-pbd)}
 .mb-hw .mb-hw__t{margin-bottom:40px;font-size:42px}
 .mb-hw__cw{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:56px}
 .mb-hw .mb-hw__d{font-size:19px}
@@ -80,7 +83,7 @@
 }
 </style>
 
-<div class="mb-hw" style="--mb-hw-tx:{{ mb_color_text }};--mb-hw-nm:{{ mb_color_num }};--mb-hw-bg:{{ mb_bg }};--mb-hw-r:{{ mb_radius }};--mb-hw-ratio:{{ mb_video_ratio }};--mb-hw-pdd:{{ mb_pad_d }};--mb-hw-pdm:{{ mb_pad_m }};--mb-hw-top:{{ mb_top }};--mb-hw-bottom:{{ mb_bottom }}">
+<div class="mb-hw" style="--mb-hw-tx:{{ mb_color_text }};--mb-hw-nm:{{ mb_color_num }};--mb-hw-bg:{{ mb_bg }};--mb-hw-r:{{ mb_radius }};--mb-hw-ratio:{{ mb_video_ratio }};--mb-hw-ptd:{{ mb_pad_top_d }};--mb-hw-ptm:{{ mb_pad_top_m }};--mb-hw-pbd:{{ mb_pad_bot_d }};--mb-hw-pbm:{{ mb_pad_bot_m }};--mb-hw-top:{{ mb_top }};--mb-hw-bottom:{{ mb_bottom }}">
 <div class="mb-hw__in">
 {%- if mb_title_1 != blank -%}<p class="mb-hw__t">{{ mb_title_1 }}{%- if mb_title_2 != blank -%}<br><em>{{ mb_title_2 }}</em>{%- endif -%}</p>{%- endif -%}
 <div class="mb-hw__cw">
