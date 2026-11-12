@@ -1,5 +1,5 @@
 {%- comment -%}
-  Short intro paragraph, a thin divider line, then a list of benefits with a gold outline icon on each line. All in Libre Caslon Text.
+  Short intro paragraph, then a list of benefits with a gold outline icon on each line. All in Libre Caslon Text.
   WHERE: Online Store > Themes > Customize > Product page > Product information > Add block > Custom Liquid, drag it where you want it, paste this in.
   EDIT YOUR CONTENT BELOW.
   mb_intro = the paragraph at the top. Use &amp; for an ampersand and &#39; for an apostrophe.
@@ -7,7 +7,7 @@
     Each benefit gets a built-in gold icon. To use your own picture instead, add ||| and the image link after the text,
     e.g.  Deep hydration where your skin needs it most ||| https://cdn.shopify.com/...png
   mb_text = colour of all the text (locked so the theme cannot change it). mb_icon_color = colour of the built-in icons.
-  mb_line = colour of the divider line. mb_top / mb_bottom = space above and below this block.
+  mb_top / mb_bottom = space above and below this block.
   Do not use a straight apostrophe (') inside the text, use &#39; instead.
 {%- endcomment -%}
 {%- assign mb_intro = 'Say goodbye to crepey, saggy &amp; dry skin. This botanical body oil visibly restores firmness and smoothness in just 2 minutes a day. See real results in 3–4 weeks — or get your money back.' -%}
@@ -22,7 +22,6 @@ Recommended by Dermatologists
 {%- endcapture -%}
 {%- assign mb_text = '#2a110a' -%}
 {%- assign mb_icon_color = '#dea531' -%}
-{%- assign mb_line = '#e1dcd8' -%}
 {%- assign mb_top = '0px' -%}
 {%- assign mb_bottom = '0px' -%}
 
@@ -35,8 +34,7 @@ Recommended by Dermatologists
 .mb-fl{box-sizing:border-box;width:100%;margin:0;padding:var(--mb-fl-top) 0 var(--mb-fl-bottom);font-family:'Libre Caslon Text',Georgia,'Times New Roman',serif;text-align:left}
 .mb-fl *{box-sizing:border-box}
 .mb-fl__intro,.mb-fl__t{font-family:'Libre Caslon Text',Georgia,'Times New Roman',serif!important;font-weight:400!important;font-style:normal!important;letter-spacing:0!important;text-transform:none!important;text-align:left!important;color:var(--mb-fl-tx)!important;-webkit-text-fill-color:var(--mb-fl-tx)!important}
-.mb-fl__intro{margin:0;padding:0;font-size:14px;line-height:1.6}
-.mb-fl__rule{display:block;height:0;margin:9px 0 8px;padding:0;border:0;border-top:1px solid var(--mb-fl-line)}
+.mb-fl__intro{margin:0 0 18px;padding:0;font-size:14px;line-height:1.6}
 .mb-fl__list{margin:0;padding:0;list-style:none}
 .mb-fl__it{display:flex;align-items:flex-start;gap:10px;margin:0;padding:0;list-style:none}
 .mb-fl__ic{display:block;flex:none;width:24px;height:24px;margin-top:1px}
@@ -49,9 +47,8 @@ Recommended by Dermatologists
 }
 </style>
 
-<div class="mb-fl" style="--mb-fl-tx:{{ mb_text }};--mb-fl-ic:{{ mb_icon_color }};--mb-fl-line:{{ mb_line }};--mb-fl-top:{{ mb_top }};--mb-fl-bottom:{{ mb_bottom }}">
-{%- if mb_intro != blank -%}<p class="mb-fl__intro">{{ mb_intro }}</p>
-<hr class="mb-fl__rule">{%- endif -%}
+<div class="mb-fl" style="--mb-fl-tx:{{ mb_text }};--mb-fl-ic:{{ mb_icon_color }};--mb-fl-top:{{ mb_top }};--mb-fl-bottom:{{ mb_bottom }}">
+{%- if mb_intro != blank -%}<p class="mb-fl__intro">{{ mb_intro }}</p>{%- endif -%}
 <ul class="mb-fl__list">
 {%- assign mb_items = mb_data | split: '@@' -%}
 {%- for mb_item in mb_items -%}
