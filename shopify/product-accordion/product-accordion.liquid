@@ -15,6 +15,7 @@
         a paragraph with a bold start:   Bold start ||| rest of the text
         a bold line on its own:   Bold line |||
         a bullet line:            - 93% ||| rest of the text        (start the line with a dash and a space)
+        bold words anywhere in a line:   [b]bold words[/b]        a line break inside a line:   [br]
   mb_color_head = row title colour. mb_color_label = gold label colour. mb_color_text = body text colour. mb_icon_color = sparkle icon colour. mb_color_num = colour of the big % numbers in Customer Results.
   mb_border = row border. mb_panel_bg = grey panel colour. mb_radius = corner roundness. mb_gap = space between rows.
   mb_single = true opens one row at a time. mb_open_first = true opens the first row on page load.
@@ -76,15 +77,17 @@ Nerola is backed by real results — here&#39;s what our customers reported:
 92% ||| said it worked better than any moisturiser they had tried before
 {%- endcapture -%}
 {%- capture mb_d5 -%}
-Add your order processing time here.
+[b]We aim to process all orders within 1–3 business days. Once shipped, delivery times are:[/b]
 @@
-Estimated delivery times: ||| 
+[b]Estimated Delivery Times:[/b]
 @@
-- Your country: ||| Add the delivery estimate.
+- USA: [b]2–5 business days[/b]
 @@
-- International: ||| Add the delivery estimate.
+- UK: [b]4–7 business days[/b]
 @@
-Returns ||| Add your return policy here.
+- International: [b]5–10 business days[/b]
+@@
+[b]Returns[/b][br]We offer a 30-day satisfaction guarantee.
 {%- endcapture -%}
 {%- assign mb_color_head = '#5e4312' -%}
 {%- assign mb_color_label = '#9f6700' -%}
@@ -196,6 +199,8 @@ Returns ||| Add your return policy here.
 {%- assign mb_bul = false -%}
 {%- assign mb_pre = mb_a | slice: 0, 2 -%}
 {%- if mb_pre == '- ' -%}{%- assign mb_bul = true -%}{%- assign mb_a = mb_a | slice: 2, 400 | strip -%}{%- endif -%}
+{%- assign mb_a = mb_a | replace: '[b]', '<strong>' | replace: '[/b]', '</strong>' | replace: '[br]', '<br>' -%}
+{%- assign mb_b = mb_b | replace: '[b]', '<strong>' | replace: '[/b]', '</strong>' | replace: '[br]', '<br>' -%}
 {%- if mb_a != blank -%}
 {%- assign mb_bold = false -%}
 {%- if mb_it contains '|||' -%}{%- assign mb_bold = true -%}{%- endif -%}
