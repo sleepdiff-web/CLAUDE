@@ -1,19 +1,18 @@
 {%- comment -%}
-  "Skin-Loving Ingredients" section (copy of the evorabody.com section): an italic serif title, a short line under it, a grid of 6 ingredient cards (round-cornered square picture, name, short description) and a "View all ingredients" button that slides open the full ingredient list.
-  Desktop (wider than 1023px) = 3 across. Tablet = 3 across. Phone = 2 across (change with mb_cols_d / mb_cols_t / mb_cols_m).
-  No slider app or library: the button is a few lines of plain code, so it loads fast.
+  "Skin-Loving Ingredients" section (exact copy of the evorabody.com section, rebuilt from its own stylesheet): an italic title, a short line, a row of cream ingredient cards that you swipe or drag sideways (the scroll bar is hidden), and a "View all ingredients" button that slides open the full ingredient list.
+  Cards are 275px wide on desktop and tablet and 75% of the screen width on phones. The cards snap into place as you swipe. Mouse users can also click and drag the row (set mb_drag to false to turn that off).
+  No slider app or library, so it loads fast.
   WHERE: best as its own full-width section: Online Store > Themes > Customize > Product page > Add section > Custom Liquid, drag it where you want it, paste this in.
   If you paste it inside a narrow column instead, set mb_bleed to false.
   EDIT YOUR CONTENT BELOW. Do not use a straight apostrophe (') in the text, use &#39; instead.
   mb_title = the italic title. mb_subtitle = the line under it (leave empty to hide it).
   mb_cards = your ingredient cards, separated by @@ and each one written as   PICTURE LINK ||| NAME ||| DESCRIPTION
-  (use [br] inside a description for a line break. With no picture link, a grey square shows so you can see the layout.)
-  mb_breaks_m = true keeps the [br] line breaks on phones too, false lets the text flow naturally on phones (they are always kept on tablet and desktop).
+  (use [br] inside a description for a line break. With no picture link, a grey square shows so you can see the layout. Add as many cards as you like.)
   mb_btn = the button text. mb_list = the full ingredient list that opens under the button (leave empty to hide the button).
   THE 6 PICTURES BELOW ARE LINKED FROM evorabody.com SO YOU CAN SEE THE SECTION WORKING. For a live store, save each picture, upload it in Shopify admin > Content > Files, then paste your own links in place. That keeps the section working if the original files ever change.
   IMPORTANT: the six ingredients, their descriptions and the full list below must match what is really in your product and printed on your label.
-  mb_bg = section colour. mb_color_title = title colour. mb_color_text = every other text colour. mb_radius = how round the picture corners are.
-  mb_pad_d / mb_pad_m = space above and below the content on desktop / phone.
+  mb_bg = section colour. mb_card_bg = card colour. mb_color_text = every text colour. mb_card_w = card width on desktop and tablet. mb_gap = space between cards.
+  mb_pad_d / mb_pad_m = space inside the section on desktop / phone, written as top left-right bottom, for example 50px 0 50px.
   mb_bleed = true stretches the section edge to edge across the screen. mb_top / mb_bottom = space above and below the block.
 {%- endcomment -%}
 {%- capture mb_cards -%}
@@ -33,16 +32,14 @@ https://evorabody.com/cdn/shop/files/38b1e0ea-fe62-46a6-965c-b66465e9923e_fafd0e
 {%- assign mb_subtitle = 'Every ingredient in the Botanical Body Oil earns its spot by smoothing, firming or rebuilding crepey skin.' -%}
 {%- assign mb_btn = 'View all ingredients' -%}
 {%- assign mb_list = 'Caprylic/Capric Triglyceride, Prunus Amygdalus Dulcis (Sweet Almond) Oil, Simmondsia Chinensis (Jojoba) Seed Oil, Oryza Sativa (Rice) Bran Oil, Squalane, Rosa Canina (Rosehip) Fruit Oil, Bertholletia Excelsa (Brazil Nut) Seed Oil, Camellia Japonica Seed Oil, Argania Spinosa (Argan) Kernel Oil, Passiflora Edulis (Passionflower) Seed Oil, Helianthus Annuus (Sunflower) Seed Oil, Undaria Pinnatifida (Wakame) Extract, Tocopherol (Vitamin E), Ascorbyl Tetraisopalmitate (Vitamin C), Bisabolol, Vanilla Planifolia Fruit Extract.' -%}
-{%- assign mb_cols_d = 3 -%}
-{%- assign mb_cols_t = 3 -%}
-{%- assign mb_cols_m = 2 -%}
-{%- assign mb_breaks_m = true -%}
-{%- assign mb_bg = '#ffffff' -%}
-{%- assign mb_color_title = '#000000' -%}
-{%- assign mb_color_text = '#2a110a' -%}
-{%- assign mb_radius = '12px' -%}
-{%- assign mb_pad_d = '64px' -%}
-{%- assign mb_pad_m = '40px' -%}
+{%- assign mb_bg = '#faf8f5' -%}
+{%- assign mb_card_bg = '#fcf0d8' -%}
+{%- assign mb_color_text = '#2b110a' -%}
+{%- assign mb_card_w = '275px' -%}
+{%- assign mb_gap = '16px' -%}
+{%- assign mb_pad_d = '50px 0 50px' -%}
+{%- assign mb_pad_m = '30px 0 34px' -%}
+{%- assign mb_drag = true -%}
 {%- assign mb_bleed = true -%}
 {%- assign mb_top = '0px' -%}
 {%- assign mb_bottom = '0px' -%}
@@ -50,57 +47,54 @@ https://evorabody.com/cdn/shop/files/38b1e0ea-fe62-46a6-965c-b66465e9923e_fafd0e
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&display=swap" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&display=swap"></noscript>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&display=swap"></noscript>
 
 <style>
-.mb-ig{box-sizing:border-box;width:100%;margin:var(--mb-ig-top) 0 var(--mb-ig-bottom);background:var(--mb-ig-bg);font-family:'Plus Jakarta Sans',sans-serif;text-align:center}
+.mb-ig{box-sizing:border-box;width:100%;margin:var(--mb-ig-top) 0 var(--mb-ig-bottom);padding:var(--mb-ig-pd);background:var(--mb-ig-bg);font-family:'Libre Caslon Text',Georgia,serif;font-weight:400;text-align:left;color:var(--mb-ig-tx)}
 .mb-ig--bleed{width:100vw;max-width:none;margin-left:calc(50% - 50vw);margin-right:0}
 .mb-ig *{box-sizing:border-box}
 .mb-ig p,.mb-ig div,.mb-ig span,.mb-ig em{letter-spacing:0;text-transform:none;font-style:normal}
-.mb-ig__in{max-width:1200px;margin:0 auto;padding:var(--mb-ig-pdm) 20px}
-.mb-ig__hd{margin:0 0 32px;padding:0}
-.mb-ig .mb-ig__t{margin:0 0 12px;padding:0;font-family:'Libre Caslon Text',Georgia,serif;font-size:28px;line-height:34px;font-weight:400;font-style:italic;letter-spacing:0;text-transform:none;text-align:center;color:var(--mb-ig-ti)!important;-webkit-text-fill-color:var(--mb-ig-ti)!important}
+.mb-ig__in{max-width:1500px;margin:0 auto;padding:0 20px}
+.mb-ig__hd{margin:0 0 36px;padding:0;text-align:center}
+.mb-ig .mb-ig__t{margin:0;padding:0;font-family:'Libre Caslon Text',Georgia,serif;font-size:36px;line-height:1;font-weight:400;font-style:normal;letter-spacing:0;text-transform:none;text-align:center;color:var(--mb-ig-tx)!important;-webkit-text-fill-color:var(--mb-ig-tx)!important}
 .mb-ig .mb-ig__t em{font-family:inherit;font-size:inherit;line-height:inherit;font-weight:inherit;font-style:italic;letter-spacing:0;text-transform:none;color:inherit!important;-webkit-text-fill-color:inherit!important}
-.mb-ig .mb-ig__st{max-width:560px;margin:0 auto;padding:0;font-size:15px;line-height:24px;font-weight:400;color:var(--mb-ig-tx)!important;-webkit-text-fill-color:var(--mb-ig-tx)!important}
-.mb-ig__grid{display:grid;grid-template-columns:repeat(var(--mb-ig-cm),minmax(0,1fr));gap:28px 14px;margin:0;padding:0}
-.mb-ig__card{display:flex;flex-direction:column;align-items:center;min-width:0;margin:0;padding:0}
-.mb-ig__im{width:100%;aspect-ratio:1/1;margin:0;padding:0;overflow:hidden;border-radius:var(--mb-ig-rad);background:#ebe5d8}
-.mb-ig__im img{display:block;width:100%;max-width:100%;height:100%;margin:0;padding:0;object-fit:cover;border:0;border-radius:0;box-shadow:none;filter:none;opacity:1;transform:none}
-.mb-ig .mb-ig__cn{margin:14px 0 6px;padding:0;font-size:16px;line-height:22px;font-weight:700;text-align:center;color:var(--mb-ig-tx)!important;-webkit-text-fill-color:var(--mb-ig-tx)!important}
-.mb-ig .mb-ig__cd{margin:0;padding:0;font-size:14px;line-height:21px;font-weight:400;text-align:center;color:var(--mb-ig-tx)!important;-webkit-text-fill-color:var(--mb-ig-tx)!important}
-@media screen and (max-width:749px){
-.mb-ig--nobrm .mb-ig__br{display:none}
-}
-.mb-ig__va{display:flex;flex-direction:column;align-items:center;margin:32px 0 0;padding:0}
-.mb-ig .mb-ig__btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;width:auto;min-height:0;margin:0;padding:12px 24px;border:1px solid var(--mb-ig-tx);border-radius:999px;background:transparent;box-shadow:none;font-family:inherit;font-size:15px;line-height:20px;font-weight:600;letter-spacing:0;text-transform:none;text-decoration:none;color:var(--mb-ig-tx)!important;-webkit-text-fill-color:var(--mb-ig-tx)!important;-webkit-appearance:none;appearance:none;cursor:pointer}
+.mb-ig .mb-ig__st{margin:8px 0 0;padding:0;font-size:16px;line-height:1.25;font-weight:400;text-align:center;color:var(--mb-ig-tx)!important;-webkit-text-fill-color:var(--mb-ig-tx)!important}
+.mb-ig__grid{display:flex;gap:var(--mb-ig-gap);margin:0;padding:0 0 24px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.mb-ig__grid::-webkit-scrollbar{display:none}
+.mb-ig--drag .mb-ig__grid{cursor:grab}
+.mb-ig--drag .mb-ig__grid.is-drag{cursor:grabbing;scroll-snap-type:none;user-select:none;-webkit-user-select:none}
+.mb-ig__card{flex:0 0 var(--mb-ig-cw);scroll-snap-align:start;margin:0;background:var(--mb-ig-cbg);border-radius:12px;padding:15px 12px;text-align:center;overflow:hidden}
+.mb-ig .mb-ig__img{display:block;width:100%;max-width:100%;height:auto;aspect-ratio:1/1;margin:0;padding:0;object-fit:cover;border:0;border-radius:8px;box-shadow:none;filter:none;opacity:1;transform:none;-webkit-user-drag:none;user-select:none}
+.mb-ig .mb-ig__img--ph{background:#ebe5d8}
+.mb-ig .mb-ig__cn{margin:18px 0 12px;padding:0;font-size:20px;line-height:1.1;font-weight:700;text-align:center;color:var(--mb-ig-tx)!important;-webkit-text-fill-color:var(--mb-ig-tx)!important}
+.mb-ig .mb-ig__cd{margin:0;padding:0 8px 0;font-size:12px;line-height:1.25;font-weight:400;text-align:center;color:var(--mb-ig-tx)!important;-webkit-text-fill-color:var(--mb-ig-tx)!important}
+.mb-ig .mb-ig__cd p{margin:0;padding:0;font-size:inherit;line-height:inherit;font-weight:inherit;text-align:center;color:inherit!important;-webkit-text-fill-color:inherit!important}
+.mb-ig__va{margin:0;padding:0;text-align:center}
+.mb-ig .mb-ig__btn{display:inline-flex;align-items:center;gap:12px;width:auto;min-height:0;margin:0;padding:0;border:0;border-radius:0;background:transparent;box-shadow:none;-webkit-appearance:none;appearance:none;font-family:inherit;font-size:14px;line-height:normal;font-weight:700;font-style:normal;letter-spacing:0;text-transform:none;text-decoration:underline;text-underline-offset:3px;cursor:pointer;color:var(--mb-ig-tx)!important;-webkit-text-fill-color:var(--mb-ig-tx)!important}
 .mb-ig .mb-ig__btn span{font:inherit;color:inherit!important;-webkit-text-fill-color:inherit!important}
-.mb-ig__btn svg{display:block;flex:none;width:16px;height:16px;transition:transform .25s ease}
-.mb-ig__btn[aria-expanded="true"] svg{transform:rotate(180deg)}
-.mb-ig__ex{display:grid;grid-template-rows:0fr;width:100%;visibility:hidden;transition:grid-template-rows .35s ease,visibility 0s linear .35s}
-.mb-ig__ex.is-open{grid-template-rows:1fr;visibility:visible;transition-delay:0s}
-.mb-ig__exc{min-height:0;overflow:hidden}
-.mb-ig .mb-ig__list{max-width:900px;margin:0 auto;padding:24px 0 0;font-size:13px;line-height:20px;font-weight:400;text-align:center;opacity:.8;color:var(--mb-ig-tx)!important;-webkit-text-fill-color:var(--mb-ig-tx)!important}
-@media screen and (min-width:750px){
-.mb-ig__in{padding-left:24px;padding-right:24px}
-.mb-ig__grid{grid-template-columns:repeat(var(--mb-ig-ct),minmax(0,1fr));gap:36px 24px}
-.mb-ig .mb-ig__st{font-size:16px}
-}
-@media screen and (min-width:1024px){
-.mb-ig__in{padding-top:var(--mb-ig-pdd);padding-bottom:var(--mb-ig-pdd)}
-.mb-ig__hd{margin-bottom:48px}
-.mb-ig .mb-ig__t{font-size:36px;line-height:42px}
-.mb-ig__grid{grid-template-columns:repeat(var(--mb-ig-cd),minmax(0,1fr));gap:44px 32px}
-.mb-ig .mb-ig__cn{font-size:18px;line-height:24px}
-.mb-ig .mb-ig__cd{font-size:15px;line-height:22px}
+.mb-ig__btn svg{display:block;flex:none;width:18px;height:18px;transition:transform .25s ease}
+.mb-ig__btn.expanded svg{transform:rotate(180deg)}
+.mb-ig__ex{display:grid;grid-template-rows:0fr;overflow:hidden;transition:grid-template-rows .3s ease}
+.mb-ig__ex.expanded{grid-template-rows:1fr}
+.mb-ig__exc{min-height:0}
+.mb-ig .mb-ig__list{margin:18px 0 0;padding:0;font-size:12px;line-height:1.5;font-weight:400;text-align:center;color:var(--mb-ig-tx)!important;-webkit-text-fill-color:var(--mb-ig-tx)!important}
+@media screen and (max-width:749px){
+.mb-ig{padding:var(--mb-ig-pm)}
+.mb-ig__hd{margin-bottom:24px}
+.mb-ig .mb-ig__t{font-size:25px}
+.mb-ig .mb-ig__st{font-size:14px}
+.mb-ig__card{flex:0 0 75%}
+.mb-ig .mb-ig__cn{font-size:18px}
+.mb-ig .mb-ig__cd{font-size:12px;line-height:18px}
 }
 @media (prefers-reduced-motion:reduce){
 .mb-ig__ex,.mb-ig__btn svg{transition:none}
 }
 </style>
-<noscript><style>.mb-ig__ex{grid-template-rows:1fr;visibility:visible}</style></noscript>
+<noscript><style>.mb-ig__ex{grid-template-rows:1fr}</style></noscript>
 
-<div class="mb-ig{% if mb_bleed %} mb-ig--bleed{% endif %}{% unless mb_breaks_m %} mb-ig--nobrm{% endunless %}" data-bleed="{{ mb_bleed }}" style="--mb-ig-bg:{{ mb_bg }};--mb-ig-ti:{{ mb_color_title }};--mb-ig-tx:{{ mb_color_text }};--mb-ig-rad:{{ mb_radius }};--mb-ig-cd:{{ mb_cols_d }};--mb-ig-ct:{{ mb_cols_t }};--mb-ig-cm:{{ mb_cols_m }};--mb-ig-pdd:{{ mb_pad_d }};--mb-ig-pdm:{{ mb_pad_m }};--mb-ig-top:{{ mb_top }};--mb-ig-bottom:{{ mb_bottom }}">
+<div class="mb-ig{% if mb_bleed %} mb-ig--bleed{% endif %}{% if mb_drag %} mb-ig--drag{% endif %}" data-bleed="{{ mb_bleed }}" data-drag="{{ mb_drag }}" style="--mb-ig-bg:{{ mb_bg }};--mb-ig-cbg:{{ mb_card_bg }};--mb-ig-tx:{{ mb_color_text }};--mb-ig-cw:{{ mb_card_w }};--mb-ig-gap:{{ mb_gap }};--mb-ig-pd:{{ mb_pad_d }};--mb-ig-pm:{{ mb_pad_m }};--mb-ig-top:{{ mb_top }};--mb-ig-bottom:{{ mb_bottom }}">
 <div class="mb-ig__in">
 {%- if mb_title != blank or mb_subtitle != blank -%}
 <div class="mb-ig__hd">
@@ -115,9 +109,9 @@ https://evorabody.com/cdn/shop/files/38b1e0ea-fe62-46a6-965c-b66465e9923e_fafd0e
 {%- assign mb_f = mb_it | split: '|||' -%}
 {%- assign mb_u = mb_f[0] | strip -%}
 {%- assign mb_nm = mb_f[1] | strip -%}
-{%- assign mb_ds = mb_f[2] | strip | replace: '[br]', ' <br class="mb-ig__br">' -%}
+{%- assign mb_ds = mb_f[2] | strip | replace: '[br]', '<br>' -%}
 {%- if mb_u contains '?' -%}{%- assign mb_sep = '&amp;' -%}{%- else -%}{%- assign mb_sep = '?' -%}{%- endif -%}
-<div class="mb-ig__card"><div class="mb-ig__im">{%- if mb_u != blank -%}<img src="{{ mb_u }}{{ mb_sep }}width=700" srcset="{{ mb_u }}{{ mb_sep }}width=352 352w, {{ mb_u }}{{ mb_sep }}width=700 700w" sizes="(min-width: 1224px) 365px, (min-width: 750px) 33vw, 50vw" alt="" width="700" height="700" loading="lazy" decoding="async">{%- endif -%}</div>{%- if mb_nm != blank -%}<div class="mb-ig__cn">{{ mb_nm }}</div>{%- endif -%}{%- if mb_ds != blank -%}<p class="mb-ig__cd">{{ mb_ds }}</p>{%- endif -%}</div>
+<div class="mb-ig__card">{%- if mb_u != blank -%}<img class="mb-ig__img" src="{{ mb_u }}{{ mb_sep }}width=700" srcset="{{ mb_u }}{{ mb_sep }}width=352 352w, {{ mb_u }}{{ mb_sep }}width=700 700w" sizes="(min-width: 750px) 251px, calc((100vw - 40px) * .75 - 24px)" alt="" width="700" height="700" loading="lazy" decoding="async" draggable="false">{%- else -%}<div class="mb-ig__img mb-ig__img--ph"></div>{%- endif -%}{%- if mb_nm != blank -%}<div class="mb-ig__cn">{{ mb_nm }}</div>{%- endif -%}{%- if mb_ds != blank -%}<div class="mb-ig__cd"><p>{{ mb_ds }}</p></div>{%- endif -%}</div>
 {%- endif -%}
 {%- endfor -%}
 </div>
@@ -150,9 +144,37 @@ window.addEventListener('load',function(){bleed();setTimeout(bleed,400)});
 var btn=root.querySelector('.mb-ig__btn'),ex=root.querySelector('.mb-ig__ex');
 if(btn&&ex){
 btn.addEventListener('click',function(){
-var open=ex.classList.toggle('is-open');
+var open=!ex.classList.contains('expanded');
+ex.classList.toggle('expanded',open);
+btn.classList.toggle('expanded',open);
 btn.setAttribute('aria-expanded',open?'true':'false');
 });
+}
+/* click and drag the row with a mouse (touch screens already swipe) */
+var g=root.querySelector('.mb-ig__grid');
+if(g&&root.getAttribute('data-drag')==='true'){
+var down=false,moved=false,sx=0,sl=0;
+g.addEventListener('pointerdown',function(e){
+if(e.pointerType!=='mouse'||e.button!==0)return;
+down=true;moved=false;sx=e.clientX;sl=g.scrollLeft;
+});
+g.addEventListener('pointermove',function(e){
+if(!down)return;
+var dx=e.clientX-sx;
+if(!moved){
+if(Math.abs(dx)<4)return;
+moved=true;g.classList.add('is-drag');
+try{g.setPointerCapture(e.pointerId)}catch(x){}
+}
+g.scrollLeft=sl-dx;
+});
+var end=function(e){
+if(!down)return;
+down=false;
+if(moved){g.classList.remove('is-drag');try{g.releasePointerCapture(e.pointerId)}catch(x){}}
+};
+g.addEventListener('pointerup',end);
+g.addEventListener('pointercancel',end);
 }
 }
 function all(){document.querySelectorAll('.mb-ig').forEach(init)}
