@@ -1,0 +1,190 @@
+{%- comment -%}
+  "Frequently Asked Questions" section (copy of the evorabody.com FAQ): a centred serif title, then one rounded cream box holding all the questions. Each question is a bold line with a small circle + arrow on the right. Click it and the answer slides open under it; click again to close. Questions open and close on their own, so several can be open at once.
+  No slider app or library, so it loads fast. It also works without JavaScript (the answers just open without the slide), and it adds the FAQ information Google can read (turn off with mb_schema = false).
+  WHERE: best as its own full-width section: Online Store > Themes > Customize > Add section > Custom Liquid, drag it where you want it, paste this in.
+  If you paste it inside a narrow column instead, set mb_bleed to false.
+  EDIT YOUR CONTENT BELOW. Do not use a straight apostrophe (') in the text, use &#39; instead, and write & as &amp;
+  mb_title = the title (leave empty to hide it).
+  mb_items = your questions, separated by @@ and each one written as   QUESTION ||| ANSWER
+  Inside an ANSWER you can write [b]bold words[/b], [br] for a line break and [p] to start a new paragraph. Add as many questions as you like.
+  IMPORTANT: the answers below are evorabody.com&#39;s wording. Only keep what is really true for your product (the ingredients it is free from, the dermatologist claim, the results timing and the 90-day guarantee).
+  mb_note = a small centred line under the box, the original shows the support email there, for example Email: help@yourstore.com (leave empty to hide it).
+  mb_open_first = true opens the first question when the page loads (the original has all of them closed).
+  mb_schema = true adds the FAQ information for Google (a hidden code block, nothing visible).
+  mb_bg = section colour (transparent = none). mb_box_bg = the cream box colour. mb_color_text = every text colour. mb_line = the thin lines between questions and around the circle.
+  mb_width_d = how wide the title, box and note are on screens 1000px and wider (60% in the original).
+  mb_max = the widest the content gets inside the side spacing.
+  mb_pad_m / mb_pad_t / mb_pad_d / mb_pad_l = space inside the section on phones / tablets (700px and up) / laptops (1000px and up) / big screens (1400px and up), each written as top-and-bottom left-and-right, for example 56px 48px.
+  mb_bleed = true stretches the section edge to edge across the screen. mb_top / mb_bottom = space above and below the block.
+{%- endcomment -%}
+{%- capture mb_faq -%}
+How to apply? ||| [b]Step 1:[/b] Shower first — warm water opens your skin up and gets it ready to absorb.[p][b]Step 2:[/b] Apply straight after, while your skin is still warm. 2–3 pumps onto your arms, chest, or wherever you need it most.[p][b]Step 3:[/b] Massage in using circular motions until fully absorbed. No residue, no waiting.[p][b]Step 4:[/b] Stay consistent. Use it daily and you&#39;ll start seeing real change in 3–4 weeks.
+@@
+Will this actually work if I&#39;ve tried creams before and nothing happened? ||| Because creams are water-based — and water is repelled by your skin&#39;s natural lipid barrier. That&#39;s why they sit on the surface and disappear within an hour. This oil is biologically compatible with your skin&#39;s own lipids, which means it absorbs through the barrier and reaches the deeper layer where crepey skin actually starts. Creams were never getting there. This does.
+@@
+How quickly will I see results? ||| Most women notice their skin feeling softer and more hydrated within the first 1–2 weeks. Visible improvement in crepey texture typically becomes noticeable at 3–4 weeks with consistent daily use. Results build week by week — the longer you stay consistent, the more pronounced the change.
+@@
+Is it greasy? Can I get dressed straight after? ||| No. It absorbs fully within minutes of massage, leaving skin feeling velvety rather than oily. Apply, massage until absorbed, and get dressed as normal.
+@@
+Is it safe for sensitive skin? ||| Yes. The formula is free from parabens, synthetic fragrances, and silicones — the ingredients most likely to cause irritation on mature skin. It&#39;s been dermatologist-reviewed and tested on all skin types. If you have a specific sensitivity, check the full ingredient list and consult your dermatologist if needed.
+@@
+What if I don&#39;t see results? ||| We back every order with a 90-day money-back guarantee. Use it daily for the full period — if you don&#39;t see a visible improvement in your skin&#39;s texture and firmness, contact us and we&#39;ll refund you in full. No questions asked.
+@@
+How does the money back guarantee work? ||| See visible results with zero risk. Nerola Botanical Oil comes with a complete satisfaction promise — if you don&#39;t see a difference, we&#39;ll make it right with a full refund, no questions asked.[p]If you don&#39;t see visible results within 90 days, simply let us know and we&#39;ll process your full refund immediately.
+{%- endcapture -%}
+{%- assign mb_title = 'Frequently Asked Questions' -%}
+{%- assign mb_note = '' -%}
+{%- assign mb_open_first = false -%}
+{%- assign mb_schema = true -%}
+{%- assign mb_bg = 'transparent' -%}
+{%- assign mb_box_bg = '#f4f0e6' -%}
+{%- assign mb_color_text = '#2a110a' -%}
+{%- assign mb_line = 'rgba(42,17,10,.12)' -%}
+{%- assign mb_width_d = '60%' -%}
+{%- assign mb_max = '1344px' -%}
+{%- assign mb_pad_m = '32px 20px' -%}
+{%- assign mb_pad_t = '48px 32px' -%}
+{%- assign mb_pad_d = '56px 48px' -%}
+{%- assign mb_pad_l = '64px 48px' -%}
+{%- assign mb_bleed = true -%}
+{%- assign mb_top = '0px' -%}
+{%- assign mb_bottom = '0px' -%}
+{%- assign mb_items = mb_faq | split: '@@' -%}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:wght@400;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:wght@400;700&display=swap"></noscript>
+
+<style>
+.mb-qa{box-sizing:border-box;width:100%;margin:var(--mb-qa-top) 0 var(--mb-qa-bottom);padding:var(--mb-qa-pm);background:var(--mb-qa-bg);font-family:'Libre Caslon Text',Georgia,serif;font-size:14px;line-height:1.5;font-weight:400;text-align:left;color:var(--mb-qa-tx)}
+.mb-qa--bleed{width:100vw;max-width:none;margin-left:calc(50% - 50vw);margin-right:0}
+.mb-qa *{box-sizing:border-box}
+.mb-qa p,.mb-qa div,.mb-qa span,.mb-qa strong,.mb-qa h2,.mb-qa summary{letter-spacing:0;text-transform:none;font-style:normal}
+.mb-qa__in{display:flex;flex-direction:column;align-items:center;row-gap:32px;max-width:var(--mb-qa-max);margin:0 auto;padding:0}
+.mb-qa__hd,.mb-qa__box,.mb-qa__note{width:100%;margin:0;padding:0}
+.mb-qa .mb-qa__t{margin:0;padding:0;text-align:center;font-family:'Libre Caslon Text',Georgia,serif;font-size:24px;line-height:1.1;font-weight:500;font-style:normal;letter-spacing:0;text-transform:none;color:var(--mb-qa-tx)!important;-webkit-text-fill-color:var(--mb-qa-tx)!important}
+.mb-qa__box{background:var(--mb-qa-bx);border-radius:12px;overflow:hidden}
+.mb-qa .mb-qa__ac{display:block;margin:0;padding:0;border:0;background:transparent}
+.mb-qa .mb-qa__ac+.mb-qa__ac{border-top:1px solid var(--mb-qa-ln)}
+.mb-qa .mb-qa__tg{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:0;padding:16px 20px;list-style:none;cursor:pointer;font-family:'Libre Caslon Text',Georgia,serif;font-size:15px;line-height:1.3;font-weight:700;text-align:left;color:var(--mb-qa-tx)!important;-webkit-text-fill-color:var(--mb-qa-tx)!important;-webkit-tap-highlight-color:transparent}
+.mb-qa .mb-qa__tg::-webkit-details-marker{display:none}
+.mb-qa .mb-qa__tg::marker{content:''}
+.mb-qa .mb-qa__tg:focus-visible{outline:2px solid var(--mb-qa-tx);outline-offset:-2px}
+.mb-qa .mb-qa__q{flex:1 1 auto;min-width:0;margin:0;padding:0;font:inherit;color:inherit!important;-webkit-text-fill-color:inherit!important}
+.mb-qa .mb-qa__cc{display:inline-flex;flex:none;align-items:center;justify-content:center;width:28px;height:28px;margin:0;padding:0;border:1px solid var(--mb-qa-ln);border-radius:50%;background:transparent;color:var(--mb-qa-tx);transition:background-color .2s ease,color .2s ease,transform .25s ease}
+.mb-qa .mb-qa__cc svg{display:block;width:8px;height:6px;margin:0;padding:0}
+.mb-qa .mb-qa__ac:hover .mb-qa__cc,.mb-qa .mb-qa__ac.is-open .mb-qa__cc,.mb-qa:not(.mb-js) .mb-qa__ac[open] .mb-qa__cc{background:var(--mb-qa-tx);color:var(--mb-qa-bx)}
+.mb-qa .mb-qa__ac.is-open .mb-qa__cc,.mb-qa:not(.mb-js) .mb-qa__ac[open] .mb-qa__cc{transform:rotate(180deg)}
+.mb-qa .mb-qa__ct{overflow:hidden;margin:0;padding:0}
+.mb-qa .mb-qa__pr{margin:0;padding:0 20px 16px;font-size:14px;line-height:1.6;font-weight:400;text-align:left}
+.mb-qa .mb-qa__pr p{margin:0 0 1em;padding:0;font-size:inherit;line-height:inherit;font-weight:inherit;text-align:left;color:var(--mb-qa-tx)!important;-webkit-text-fill-color:var(--mb-qa-tx)!important}
+.mb-qa .mb-qa__pr p:last-child{margin-bottom:0}
+.mb-qa .mb-qa__pr strong{font-weight:700;font-style:normal;color:inherit!important;-webkit-text-fill-color:inherit!important}
+.mb-qa .mb-qa__note{text-align:center;font-size:14px;line-height:1.5;font-weight:400;color:var(--mb-qa-tx)!important;-webkit-text-fill-color:var(--mb-qa-tx)!important}
+@media screen and (min-width:700px){
+.mb-qa{padding:var(--mb-qa-pt)}
+.mb-qa__in{row-gap:40px}
+.mb-qa .mb-qa__t{font-size:28px}
+.mb-qa .mb-qa__tg{padding:20px 24px;font-size:16px}
+.mb-qa .mb-qa__pr{padding:0 24px 20px}
+}
+@media screen and (min-width:1000px){
+.mb-qa{padding:var(--mb-qa-pd)}
+.mb-qa__hd,.mb-qa__box,.mb-qa__note{width:var(--mb-qa-w)}
+}
+@media screen and (min-width:1150px){
+.mb-qa__in{row-gap:48px}
+}
+@media screen and (min-width:1400px){
+.mb-qa{padding:var(--mb-qa-pl)}
+.mb-qa .mb-qa__t{font-size:40px}
+}
+@media (prefers-reduced-motion:reduce){
+.mb-qa .mb-qa__cc{transition:none}
+}
+</style>
+
+<div class="mb-qa{% if mb_bleed %} mb-qa--bleed{% endif %}" data-bleed="{{ mb_bleed }}" style="--mb-qa-bg:{{ mb_bg }};--mb-qa-bx:{{ mb_box_bg }};--mb-qa-tx:{{ mb_color_text }};--mb-qa-ln:{{ mb_line }};--mb-qa-w:{{ mb_width_d }};--mb-qa-max:{{ mb_max }};--mb-qa-pm:{{ mb_pad_m }};--mb-qa-pt:{{ mb_pad_t }};--mb-qa-pd:{{ mb_pad_d }};--mb-qa-pl:{{ mb_pad_l }};--mb-qa-top:{{ mb_top }};--mb-qa-bottom:{{ mb_bottom }}">
+<div class="mb-qa__in">
+{%- if mb_title != blank -%}<div class="mb-qa__hd"><h2 class="mb-qa__t">{{ mb_title }}</h2></div>{%- endif -%}
+<div class="mb-qa__box">
+{%- assign mb_i = 0 -%}
+{%- for mb_it in mb_items -%}
+{%- assign mb_chk = mb_it | strip -%}
+{%- if mb_chk != blank -%}
+{%- assign mb_i = mb_i | plus: 1 -%}
+{%- assign mb_f = mb_it | split: '|||' -%}
+{%- assign mb_q = mb_f[0] | strip -%}
+{%- assign mb_ps = mb_f[1] | split: '[p]' -%}
+<details class="mb-qa__ac{% if mb_open_first and mb_i == 1 %} is-open{% endif %}"{% if mb_open_first and mb_i == 1 %} open{% endif %}><summary class="mb-qa__tg"><span class="mb-qa__q">{{ mb_q }}</span><span class="mb-qa__cc" aria-hidden="true"><svg role="presentation" focusable="false" width="8" height="6" viewBox="0 0 8 6"><path d="m1 1.5 3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.5"></path></svg></span></summary><div class="mb-qa__ct"><div class="mb-qa__pr">
+{%- for mb_p in mb_ps -%}{%- assign mb_pt = mb_p | strip -%}{%- if mb_pt != blank -%}<p>{{ mb_pt | replace: '[b]', '<strong>' | replace: '[/b]', '</strong>' | replace: '[br]', '<br>' }}</p>{%- endif -%}{%- endfor -%}
+</div></div></details>
+{%- endif -%}
+{%- endfor -%}
+</div>
+{%- if mb_note != blank -%}<p class="mb-qa__note">{{ mb_note }}</p>{%- endif -%}
+</div>
+</div>
+{%- if mb_schema -%}
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+{%- assign mb_i = 0 -%}
+{%- for mb_it in mb_items -%}
+{%- assign mb_chk = mb_it | strip -%}
+{%- if mb_chk != blank -%}
+{%- assign mb_i = mb_i | plus: 1 -%}
+{%- assign mb_f = mb_it | split: '|||' -%}
+{%- assign mb_pq = mb_f[0] | strip | replace: '&#39;', "'" | replace: '&amp;', '&' -%}
+{%- assign mb_pa = mb_f[1] | strip | replace: '[p]', ' ' | replace: '[br]', ' ' | replace: '[b]', '' | replace: '[/b]', '' | replace: '&#39;', "'" | replace: '&amp;', '&' -%}
+{%- if mb_i > 1 -%},{%- endif -%}
+{"@type":"Question","name":{{ mb_pq | json }},"acceptedAnswer":{"@type":"Answer","text":{{ mb_pa | json }}}}
+{%- endif -%}
+{%- endfor -%}
+]}</script>
+{%- endif -%}
+
+<script>
+(function(){
+function init(root){
+if(root.getAttribute('data-on'))return;
+root.setAttribute('data-on','1');
+root.classList.add('mb-js');
+/* stretch edge to edge exactly, whatever the page column is */
+function bleed(){
+if(root.getAttribute('data-bleed')!=='true')return;
+root.style.marginLeft='0px';
+root.style.width=document.documentElement.clientWidth+'px';
+var l=root.getBoundingClientRect().left;
+root.style.marginLeft=(-l)+'px';
+}
+bleed();
+window.addEventListener('resize',bleed);
+window.addEventListener('load',function(){bleed();setTimeout(bleed,400)});
+/* questions slide open and shut; each one works on its own */
+var still=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+function go(d,c,open){
+var from=d.open?c.getBoundingClientRect().height:0;
+if(d._a){d._a.cancel();d._a=null}
+d.classList.toggle('is-open',open);
+if(open)d.open=true;
+if(still){if(!open)d.open=false;return}
+var to=open?c.scrollHeight:0;
+var a=c.animate([{height:from+'px'},{height:to+'px'}],{duration:250,easing:'ease',fill:open?'none':'forwards'});
+d._a=a;
+a.onfinish=function(){if(!open)d.open=false;a.cancel();if(d._a===a)d._a=null};
+}
+var list=root.querySelectorAll('details.mb-qa__ac');
+for(var i=0;i<list.length;i++){(function(d){
+var s=d.querySelector('summary'),c=d.querySelector('.mb-qa__ct');
+if(!s||!c)return;
+s.addEventListener('click',function(e){
+e.preventDefault();
+go(d,c,!d.classList.contains('is-open'));
+});
+})(list[i])}
+}
+function all(){document.querySelectorAll('.mb-qa').forEach(init)}
+all();
+document.addEventListener('shopify:section:load',all);
+})();
+</script>
