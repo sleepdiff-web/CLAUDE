@@ -1,0 +1,139 @@
+{%- comment -%}
+  "Why Nerola?" comparison table (exact copy of the evorabody.com section, rebuilt from its own stylesheet): a centred title with an italic last word, then a white rounded card. Every row has a feature on the left, a gold column for your brand with a white tick, and an "Others" column with a grey cross. The gold column sticks up above the card with rounded top corners.
+  No slider app or library, so it loads fast.
+  WHERE: best as its own full-width section: Online Store > Themes > Customize > Product page > Add section > Custom Liquid, drag it where you want it, paste this in.
+  If you paste it inside a narrow column instead, set mb_bleed to false.
+  EDIT YOUR CONTENT BELOW. Do not use a straight apostrophe (') in the text, use &#39; instead, and write & as &amp;
+  mb_title_1 = the title start (for example Why). mb_title_2 = the italic last word (for example Nerola?). Leave either one empty to hide it.
+  mb_logo = a picture of your logo for the top of the gold column (a link to a picture, ideally white or light on a transparent background). If you leave it empty, mb_brand (your brand name in white writing) shows there instead. Leave both empty for an empty gold top.
+  mb_others = the title of the right-hand column.
+  mb_rows = your rows, separated by @@ and each one written as   FEATURE ||| YOUR BRAND ||| OTHERS
+  For the last two parts write yes (white tick) or no (grey cross), or leave empty for nothing. Add as many rows as you like.
+  IMPORTANT: the five rows below are evorabody.com&#39;s wording. Only keep the ones that are really true for your product, and make the guarantee row match your real guarantee.
+  mb_bg = section colour. mb_card_bg = card colour. mb_card_border = card edge line. mb_row_line = line between rows. mb_color_text = all dark writing. mb_brand_bg = gold column colour. mb_brand_tx = writing in the gold column (your brand name). mb_check_bg / mb_check_tx = tick circle / tick. mb_cross_bg / mb_cross_tx = cross circle / cross.
+  mb_pad_d / mb_pad_m = space inside the section on desktop / phone, written as top left-right bottom, for example 52px 20px 100px.
+  mb_bleed = true stretches the section edge to edge across the screen. mb_top / mb_bottom = space above and below the block.
+{%- endcomment -%}
+{%- capture mb_rows -%}
+Hydrates the Skin from within ||| yes ||| no
+@@
+Non-greasy &amp; fast absorbing ||| yes ||| no
+@@
+100% natural ingredients ||| yes ||| no
+@@
+Visible results in 3–4 weeks ||| yes ||| no
+@@
+90-day money-back guarantee ||| yes ||| no
+{%- endcapture -%}
+{%- assign mb_title_1 = 'Why' -%}
+{%- assign mb_title_2 = 'Nerola?' -%}
+{%- assign mb_logo = '' -%}
+{%- assign mb_logo_alt = 'Nerola' -%}
+{%- assign mb_brand = 'Nerola' -%}
+{%- assign mb_others = 'Others' -%}
+{%- assign mb_bg = '#f4efe5' -%}
+{%- assign mb_card_bg = '#ffffff' -%}
+{%- assign mb_card_border = '#e8e5df' -%}
+{%- assign mb_row_line = '#d9d9d9' -%}
+{%- assign mb_color_text = '#32140e' -%}
+{%- assign mb_brand_bg = '#dda531' -%}
+{%- assign mb_brand_tx = '#ffffff' -%}
+{%- assign mb_check_bg = '#ffffff' -%}
+{%- assign mb_check_tx = '#dda531' -%}
+{%- assign mb_cross_bg = '#666666' -%}
+{%- assign mb_cross_tx = '#ffffff' -%}
+{%- assign mb_pad_d = '52px 20px 100px' -%}
+{%- assign mb_pad_m = '34px 20px 60px' -%}
+{%- assign mb_bleed = true -%}
+{%- assign mb_top = '0px' -%}
+{%- assign mb_bottom = '0px' -%}
+{%- assign mb_items = mb_rows | split: '@@' -%}
+{%- if mb_logo contains '?' -%}{%- assign mb_sep = '&amp;' -%}{%- else -%}{%- assign mb_sep = '?' -%}{%- endif -%}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&display=swap"></noscript>
+
+<style>
+.mb-cw{box-sizing:border-box;width:100%;margin:var(--mb-cw-top) 0 var(--mb-cw-bottom);padding:var(--mb-cw-pd);background:var(--mb-cw-bg);font-family:'Libre Caslon Text',Georgia,serif;font-weight:400;text-align:left;color:var(--mb-cw-tx)}
+.mb-cw--bleed{width:100vw;max-width:none;margin-left:calc(50% - 50vw);margin-right:0}
+.mb-cw *{box-sizing:border-box}
+.mb-cw p,.mb-cw div,.mb-cw span,.mb-cw em,.mb-cw h2{letter-spacing:0;text-transform:none;font-style:normal}
+.mb-cw .mb-cw__t{margin:0 0 92px;padding:0;text-align:center;font-family:'Libre Caslon Text',Georgia,serif;font-size:35px;line-height:1.1;font-weight:400;font-style:normal;letter-spacing:0;text-transform:none;color:var(--mb-cw-tx)!important;-webkit-text-fill-color:var(--mb-cw-tx)!important}
+.mb-cw .mb-cw__t em{font-family:inherit;font-size:inherit;line-height:inherit;font-weight:inherit;font-style:italic;letter-spacing:0;text-transform:none;color:inherit!important;-webkit-text-fill-color:inherit!important}
+.mb-cw .mb-cw__card{max-width:980px;margin:0 auto;padding:0;background:var(--mb-cw-cbg);border:1px solid var(--mb-cw-cbd);border-radius:18px;overflow:visible}
+.mb-cw .mb-cw__row{display:grid;grid-template-columns:55% 22% 23%;margin:0;padding:0;border:0;border-bottom:1px solid var(--mb-cw-rl)}
+.mb-cw .mb-cw__row:last-child{border-bottom:0}
+.mb-cw .mb-cw__cell{min-height:66px;margin:0;padding:28px 36px;border:0;background:transparent;display:flex;align-items:center;font-size:16px;line-height:1.25;font-weight:400;color:var(--mb-cw-tx)!important;-webkit-text-fill-color:var(--mb-cw-tx)!important}
+.mb-cw .mb-cw__feature{justify-content:flex-start;text-align:left;font-weight:400}
+.mb-cw .mb-cw__brand{justify-content:center;text-align:center;background:var(--mb-cw-bb);color:var(--mb-cw-bt)!important;-webkit-text-fill-color:var(--mb-cw-bt)!important}
+.mb-cw .mb-cw__other{justify-content:center;text-align:center}
+.mb-cw .mb-cw__hrow .mb-cw__cell{min-height:60px}
+.mb-cw .mb-cw__bh{min-height:calc(60px + 28px);margin-top:-28px;border-radius:24px 24px 0 0}
+.mb-cw .mb-cw__logo{display:block;width:100%;max-width:112px;height:auto;margin:0 auto;padding:0;border:0;border-radius:0;box-shadow:none;filter:none;opacity:1;transform:none}
+.mb-cw .mb-cw__bt{background:transparent;font-size:34px;font-weight:400;line-height:inherit;color:var(--mb-cw-bt)!important;-webkit-text-fill-color:var(--mb-cw-bt)!important}
+.mb-cw .mb-cw__oh{font-size:14px;font-weight:400}
+.mb-cw .mb-cw__ic{width:32px;height:32px;margin:0;padding:0;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:24px;line-height:1;font-weight:700;font-style:normal;letter-spacing:0;text-transform:none}
+.mb-cw .mb-cw__ic--y{background:var(--mb-cw-yb);color:var(--mb-cw-yt)!important;-webkit-text-fill-color:var(--mb-cw-yt)!important}
+.mb-cw .mb-cw__ic--n{background:var(--mb-cw-nb);color:var(--mb-cw-nt)!important;-webkit-text-fill-color:var(--mb-cw-nt)!important}
+@media screen and (max-width:749px){
+.mb-cw{padding:var(--mb-cw-pm)}
+.mb-cw .mb-cw__t{font-size:25px;margin-bottom:40px}
+.mb-cw .mb-cw__card{width:100%;border-radius:16px}
+.mb-cw .mb-cw__row{grid-template-columns:40% 30% 30%}
+.mb-cw .mb-cw__cell{min-height:60px;padding:8px 6px;font-size:10px;line-height:1.15}
+.mb-cw .mb-cw__hrow .mb-cw__cell{min-height:50px}
+.mb-cw .mb-cw__bh{min-height:calc(50px + 24px);margin-top:-24px;border-radius:10px 10px 0 0}
+.mb-cw .mb-cw__logo{max-width:52px}
+.mb-cw .mb-cw__bt{font-size:24px}
+.mb-cw .mb-cw__oh{font-size:14px}
+.mb-cw .mb-cw__ic{width:20px;height:20px;font-size:16px}
+}
+</style>
+
+<div class="mb-cw{% if mb_bleed %} mb-cw--bleed{% endif %}" data-bleed="{{ mb_bleed }}" style="--mb-cw-bg:{{ mb_bg }};--mb-cw-cbg:{{ mb_card_bg }};--mb-cw-cbd:{{ mb_card_border }};--mb-cw-rl:{{ mb_row_line }};--mb-cw-tx:{{ mb_color_text }};--mb-cw-bb:{{ mb_brand_bg }};--mb-cw-bt:{{ mb_brand_tx }};--mb-cw-yb:{{ mb_check_bg }};--mb-cw-yt:{{ mb_check_tx }};--mb-cw-nb:{{ mb_cross_bg }};--mb-cw-nt:{{ mb_cross_tx }};--mb-cw-pd:{{ mb_pad_d }};--mb-cw-pm:{{ mb_pad_m }};--mb-cw-top:{{ mb_top }};--mb-cw-bottom:{{ mb_bottom }}">
+{%- if mb_title_1 != blank or mb_title_2 != blank -%}<h2 class="mb-cw__t">{%- if mb_title_1 != blank -%}{{ mb_title_1 }}{%- endif %} {% if mb_title_2 != blank -%}<em>{{ mb_title_2 }}</em>{%- endif -%}</h2>{%- endif -%}
+<div class="mb-cw__card">
+<div class="mb-cw__row mb-cw__hrow"><div class="mb-cw__cell mb-cw__feature"></div><div class="mb-cw__cell mb-cw__brand mb-cw__bh">
+{%- if mb_logo != blank -%}<img class="mb-cw__logo" src="{{ mb_logo }}{{ mb_sep }}width=400" srcset="{{ mb_logo }}{{ mb_sep }}width=352 352w, {{ mb_logo }}{{ mb_sep }}width=400 400w" sizes="(min-width: 750px) 112px, 52px" alt="{{ mb_logo_alt | escape }}" width="400" height="101" loading="lazy" decoding="async">{%- elsif mb_brand != blank -%}<span class="mb-cw__bt">{{ mb_brand }}</span>{%- endif -%}
+</div><div class="mb-cw__cell mb-cw__other mb-cw__oh">{{ mb_others }}</div></div>
+{%- for mb_it in mb_items -%}
+{%- assign mb_chk = mb_it | strip -%}
+{%- if mb_chk != blank -%}
+{%- assign mb_f = mb_it | split: '|||' -%}
+{%- assign mb_ft = mb_f[0] | strip -%}
+{%- assign mb_b = mb_f[1] | strip | downcase -%}
+{%- assign mb_o = mb_f[2] | strip | downcase -%}
+<div class="mb-cw__row"><div class="mb-cw__cell mb-cw__feature">{{ mb_ft }}</div><div class="mb-cw__cell mb-cw__brand">
+{%- if mb_b == 'yes' -%}<span class="mb-cw__ic mb-cw__ic--y" role="img" aria-label="Yes">✓</span>{%- elsif mb_b == 'no' -%}<span class="mb-cw__ic mb-cw__ic--n" role="img" aria-label="No">×</span>{%- endif -%}
+</div><div class="mb-cw__cell mb-cw__other">
+{%- if mb_o == 'yes' -%}<span class="mb-cw__ic mb-cw__ic--y" role="img" aria-label="Yes">✓</span>{%- elsif mb_o == 'no' -%}<span class="mb-cw__ic mb-cw__ic--n" role="img" aria-label="No">×</span>{%- endif -%}
+</div></div>
+{%- endif -%}
+{%- endfor -%}
+</div>
+</div>
+
+<script>
+(function(){
+function init(root){
+if(root.getAttribute('data-on'))return;
+root.setAttribute('data-on','1');
+/* stretch edge to edge exactly, whatever the page column is */
+function bleed(){
+if(root.getAttribute('data-bleed')!=='true')return;
+root.style.marginLeft='0px';
+root.style.width=document.documentElement.clientWidth+'px';
+var l=root.getBoundingClientRect().left;
+root.style.marginLeft=(-l)+'px';
+}
+bleed();
+window.addEventListener('resize',bleed);
+window.addEventListener('load',function(){bleed();setTimeout(bleed,400)});
+}
+function all(){document.querySelectorAll('.mb-cw').forEach(init)}
+all();
+document.addEventListener('shopify:section:load',all);
+})();
+</script>
