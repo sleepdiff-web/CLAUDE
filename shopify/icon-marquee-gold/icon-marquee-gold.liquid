@@ -1,0 +1,100 @@
+{%- comment -%}
+  Gold trust-icon strip (exact copy of the evorabody.com bar): a gold band with a small icon and a short word for each point (Vegan, 100% natural...), thin faint dividers between them, gliding slowly and endlessly from right to left.
+  No slider app or library: it is plain CSS animation, so it loads fast and keeps moving smoothly.
+  WHERE: best as its own full-width section: Online Store > Themes > Customize > add section > Custom Liquid, drag it where you want it (for example right under the header), paste this in.
+  If you paste it inside a narrow column instead, set mb_bleed to false.
+  EDIT YOUR CONTENT BELOW. Do not use a straight apostrophe (') in the text, use &#39; instead.
+  mb_items = your points, separated by @@ and each one written as   ICON LINK ||| TEXT
+  (the icon is a small picture, an .svg or .png link. With no icon link just the text shows.)
+  THE 5 ICONS BELOW ARE LINKED FROM evorabody.com SO YOU CAN SEE THE STRIP WORKING. For a live store, save each icon, upload it in Shopify admin > Content > Files, then paste your own links in place. That keeps the strip working if the original files ever change.
+  IMPORTANT: only keep the points that are really true for your product (Vegan, 100% natural, Paraben Free, Sulfate Free, Cruelty Free).
+  mb_icon_alt = the description of every icon for screen readers (leave empty for none, which is better because the words already sit next to each icon).
+  mb_speed = seconds for one full glide (the original uses 20, bigger is slower).
+  mb_bg = band colour. mb_color_text = text and divider colour. mb_pad = space above and below the row.
+  mb_bleed = true stretches the band edge to edge across the screen. mb_top / mb_bottom = space above and below the block.
+{%- endcomment -%}
+{%- capture mb_items -%}
+https://evorabody.com/cdn/shop/files/1420e7cf-53e7-46a8-bedc-7debde597b16.svg?v=1780471927 ||| Vegan
+@@
+https://evorabody.com/cdn/shop/files/22866a96-37c9-4f42-898e-8b1d8ad9ea27.svg?v=1780471927 ||| 100% natural
+@@
+https://evorabody.com/cdn/shop/files/862d5dbb-ca6c-4943-ab42-e89fdc1a28ef.svg?v=1780471927 ||| Paraben Free
+@@
+https://evorabody.com/cdn/shop/files/1a00f185-a542-4d82-8001-0de6ab37bfa8.svg?v=1780471927 ||| Sulfate Free
+@@
+https://evorabody.com/cdn/shop/files/2dd28d93-d45c-4bbe-9408-5f10626bb11d.svg?v=1780471927 ||| Cruelty Free
+{%- endcapture -%}
+{%- assign mb_icon_alt = 'Nerola' -%}
+{%- assign mb_speed = 20 -%}
+{%- assign mb_bg = '#dda531' -%}
+{%- assign mb_color_text = '#faf8f5' -%}
+{%- assign mb_pad = '12px' -%}
+{%- assign mb_bleed = true -%}
+{%- assign mb_top = '0px' -%}
+{%- assign mb_bottom = '0px' -%}
+{%- assign mb_list = mb_items | split: '@@' -%}
+{%- capture mb_set -%}{%- for mb_it in mb_list -%}{%- assign mb_chk = mb_it | strip -%}{%- if mb_chk != blank -%}{%- assign mb_f = mb_it | split: '|||' -%}{%- assign mb_u = mb_f[0] | strip -%}{%- assign mb_tx = mb_f[1] | strip -%}{%- if mb_u contains '?' -%}{%- assign mb_sep = '&amp;' -%}{%- else -%}{%- assign mb_sep = '?' -%}{%- endif -%}<li class="mb-gm__it">{%- if mb_u != blank -%}<img class="mb-gm__ic" src="{{ mb_u }}{{ mb_sep }}width=120" alt="{{ mb_icon_alt | escape }}" width="45" height="45" loading="lazy" decoding="async">{%- endif -%}<div class="mb-gm__tx">{{ mb_tx }}</div></li>{%- endif -%}{%- endfor -%}{%- endcapture -%}
+{%- capture mb_set_h -%}{%- for mb_it in mb_list -%}{%- assign mb_chk = mb_it | strip -%}{%- if mb_chk != blank -%}{%- assign mb_f = mb_it | split: '|||' -%}{%- assign mb_u = mb_f[0] | strip -%}{%- assign mb_tx = mb_f[1] | strip -%}{%- if mb_u contains '?' -%}{%- assign mb_sep = '&amp;' -%}{%- else -%}{%- assign mb_sep = '?' -%}{%- endif -%}<li class="mb-gm__it">{%- if mb_u != blank -%}<img class="mb-gm__ic" src="{{ mb_u }}{{ mb_sep }}width=120" alt="" width="45" height="45" loading="lazy" decoding="async">{%- endif -%}<div class="mb-gm__tx">{{ mb_tx }}</div></li>{%- endif -%}{%- endfor -%}{%- endcapture -%}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600&display=swap"></noscript>
+
+<style>
+.mb-gm{box-sizing:border-box;width:100%;margin:var(--mb-gm-top) 0 var(--mb-gm-bottom);padding:var(--mb-gm-pd) 0;overflow:hidden;background:var(--mb-gm-bg);font-family:'Plus Jakarta Sans',sans-serif}
+.mb-gm--bleed{width:100vw;max-width:none;margin-left:calc(50% - 50vw);margin-right:0}
+.mb-gm *{box-sizing:border-box}
+.mb-gm__c{position:relative;display:flex;align-items:center;overflow-x:hidden;margin:0;padding:0;scrollbar-width:none;-ms-overflow-style:none}
+.mb-gm__c::-webkit-scrollbar{display:none}
+.mb-gm .mb-gm__l{display:flex;flex-shrink:0;align-items:center;margin:0;padding:0;list-style:none;animation:mb-gm-slide var(--mb-gm-dur) linear infinite;will-change:transform;backface-visibility:hidden}
+.mb-gm.is-off .mb-gm__l{animation-play-state:paused}
+.mb-gm .mb-gm__it{display:flex;align-items:center;gap:12px;flex-shrink:0;position:relative;margin:0;padding:0 24px;list-style:none;white-space:nowrap;color:var(--mb-gm-tx)}
+.mb-gm .mb-gm__it::before{content:none}
+.mb-gm .mb-gm__it::marker{content:''}
+.mb-gm .mb-gm__it::after{content:'';position:absolute;right:0;top:50%;transform:translateY(-50%);width:1px;height:40px;background:var(--mb-gm-tx);opacity:.25}
+.mb-gm .mb-gm__ic{display:block;flex:none;width:45px;height:45px;max-width:none;margin:0;padding:0;object-fit:contain;border:0;border-radius:0;box-shadow:none;filter:none;opacity:1;transform:none}
+.mb-gm .mb-gm__tx{margin:0;padding:0;font-size:16px;line-height:normal;font-weight:400;font-style:normal;letter-spacing:0;text-transform:none;text-align:left;color:var(--mb-gm-tx)!important;-webkit-text-fill-color:var(--mb-gm-tx)!important}
+@keyframes mb-gm-slide{0%{transform:translate3d(0,0,0)}100%{transform:translate3d(-100%,0,0)}}
+@media screen and (max-width:749px){
+.mb-gm .mb-gm__ic{width:36px;height:36px}
+}
+</style>
+
+<div class="mb-gm{% if mb_bleed %} mb-gm--bleed{% endif %}" data-bleed="{{ mb_bleed }}" style="--mb-gm-bg:{{ mb_bg }};--mb-gm-tx:{{ mb_color_text }};--mb-gm-pd:{{ mb_pad }};--mb-gm-dur:{{ mb_speed }}s;--mb-gm-top:{{ mb_top }};--mb-gm-bottom:{{ mb_bottom }}">
+<div class="mb-gm__c">
+<ul class="mb-gm__l">{{ mb_set }}</ul>
+<ul class="mb-gm__l" aria-hidden="true">{{ mb_set_h }}</ul>
+<ul class="mb-gm__l" aria-hidden="true">{{ mb_set_h }}</ul>
+<ul class="mb-gm__l" aria-hidden="true">{{ mb_set_h }}</ul>
+</div>
+</div>
+
+<script>
+(function(){
+function init(root){
+if(root.getAttribute('data-on'))return;
+root.setAttribute('data-on','1');
+/* stretch edge to edge exactly, whatever the page column is */
+function bleed(){
+if(root.getAttribute('data-bleed')!=='true')return;
+root.style.marginLeft='0px';
+root.style.width=document.documentElement.clientWidth+'px';
+var l=root.getBoundingClientRect().left;
+root.style.marginLeft=(-l)+'px';
+}
+bleed();
+window.addEventListener('resize',bleed);
+window.addEventListener('load',function(){bleed();setTimeout(bleed,400)});
+/* pause while it is off screen (saves battery) */
+if('IntersectionObserver' in window){
+new IntersectionObserver(function(en){
+for(var i=0;i<en.length;i++){root.classList.toggle('is-off',!en[i].isIntersecting)}
+},{rootMargin:'100px'}).observe(root);
+}
+}
+function all(){document.querySelectorAll('.mb-gm').forEach(init)}
+all();
+document.addEventListener('shopify:section:load',all);
+})();
+</script>

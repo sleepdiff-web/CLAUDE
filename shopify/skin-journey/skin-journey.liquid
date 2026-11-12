@@ -1,0 +1,142 @@
+{%- comment -%}
+  "Your journey to smooth, radiant skin" section (copy of the evorabody.com section): a big picture on one side, and on the other an italic-ending title, a short line and a vertical timeline of 4 steps (small icon, a "Day 1" style badge, a step title and a short text).
+  Desktop (wider than 1023px) = picture left, timeline right, vertically centred. Phone and tablet = picture first, timeline underneath.
+  No slider app or library, so it loads fast.
+  WHERE: best as its own full-width section: Online Store > Themes > Customize > Product page > Add section > Custom Liquid, drag it where you want it, paste this in.
+  If you paste it inside a narrow column instead, set mb_bleed to false.
+  EDIT YOUR CONTENT BELOW. Do not use a straight apostrophe (') in the text, use &#39; instead. For an ampersand use &amp;.
+  mb_title_1 = the first part of the title. mb_title_2 = the last part, shown in italics. Leave mb_title_2 empty for a plain title.
+  mb_subtitle = the line under the title (leave empty to hide it).
+  mb_img = the big picture (a link to a picture). mb_img_alt = its description for screen readers (empty is fine for a decorative picture).
+  mb_steps = your steps, separated by @@ and each one written as   ICON LINK ||| BADGE ||| STEP TITLE ||| TEXT
+  (the icon is a small square picture. With no icon link that step just has no icon.)
+  THE PICTURES BELOW ARE LINKED FROM evorabody.com SO YOU CAN SEE THE SECTION WORKING. For a live store, save the big picture and each icon, upload them in Shopify admin > Content > Files, then paste your own links in place. That keeps the section working if the original files ever change.
+  IMPORTANT: the timeline is a promise to your customers. Only keep the results and the times that your product and your own testing really support.
+  mb_bg = section colour. mb_color_title = title colour. mb_color_text = every other text colour.
+  mb_color_accent = the dots and the badge colour. mb_color_badge_text = the writing on the badge. mb_color_line = the line joining the dots.
+  mb_radius = how round the big picture corners are. mb_pad_d / mb_pad_m = space above and below the content on desktop / phone.
+  mb_bleed = true stretches the section edge to edge across the screen. mb_top / mb_bottom = space above and below the block.
+{%- endcomment -%}
+{%- assign mb_title_1 = 'Your Journey To Smooth,' -%}
+{%- assign mb_title_2 = 'Radiant Skin' -%}
+{%- assign mb_subtitle = 'Reclaim your confidence and wear what you love again.' -%}
+{%- assign mb_img = 'https://evorabody.com/cdn/shop/files/EBO-Model-2_9e537b39-d768-4a88-819c-04cda12398e0.png?v=1788333163' -%}
+{%- assign mb_img_alt = '' -%}
+{%- capture mb_steps -%}
+https://evorabody.com/cdn/shop/files/173f4125-189d-4fea-b615-1ea0feb70c77.png?v=1780468144 ||| Day 1 ||| Instant Glow &amp; Absorption ||| Skin drinks it in immediately. You&#39;ll feel the difference the moment you massage it in — softer, more nourished, and without any greasy residue.
+@@
+https://evorabody.com/cdn/shop/files/9abe28c3-241c-433d-971f-689fa9a710a5.png?v=1780468170 ||| Week 2–3 ||| First Visible Changes ||| The crepey texture starts to soften. Skin that felt thin and papery begins to feel like it has something underneath it again.
+@@
+https://evorabody.com/cdn/shop/files/487d7692-6fd8-4f54-9a62-053e19bb51bb.png?v=1780468170 ||| Week 6-8 ||| Smoother, Firmer Skin ||| Visibly firmer, smoother skin. You&#39;ll notice it first by touch — then in the mirror. Other people start noticing too.
+@@
+https://evorabody.com/cdn/shop/files/4ed2c3f6-5ca5-42c2-90ad-faa2a7e8ff2c.png?v=1780468170 ||| Week 8-12 ||| Total Body Confidence ||| Sleeveless tops. Bracelets. Reaching across the table without thinking about it. Your skin, reclaimed.
+{%- endcapture -%}
+{%- assign mb_bg = '#faf8f5' -%}
+{%- assign mb_color_title = '#000000' -%}
+{%- assign mb_color_text = '#2a110a' -%}
+{%- assign mb_color_accent = '#dea431' -%}
+{%- assign mb_color_badge_text = '#2a110a' -%}
+{%- assign mb_color_line = '#dea431' -%}
+{%- assign mb_radius = '16px' -%}
+{%- assign mb_pad_d = '64px' -%}
+{%- assign mb_pad_m = '40px' -%}
+{%- assign mb_bleed = true -%}
+{%- assign mb_top = '0px' -%}
+{%- assign mb_bottom = '0px' -%}
+{%- assign mb_items = mb_steps | split: '@@' -%}
+{%- if mb_img contains '?' -%}{%- assign mb_im_sep = '&amp;' -%}{%- else -%}{%- assign mb_im_sep = '?' -%}{%- endif -%}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&display=swap"></noscript>
+
+<style>
+.mb-jt{box-sizing:border-box;width:100%;margin:var(--mb-jt-top) 0 var(--mb-jt-bottom);background:var(--mb-jt-bg);font-family:'Plus Jakarta Sans',sans-serif;text-align:left}
+.mb-jt--bleed{width:100vw;max-width:none;margin-left:calc(50% - 50vw);margin-right:0}
+.mb-jt *{box-sizing:border-box}
+.mb-jt p,.mb-jt div,.mb-jt span,.mb-jt em{letter-spacing:0;text-transform:none;font-style:normal}
+.mb-jt__in{max-width:1200px;margin:0 auto;padding:var(--mb-jt-pdm) 20px}
+.mb-jt__wrap{display:flex;flex-direction:column;gap:32px;margin:0;padding:0}
+.mb-jt__im{width:100%;aspect-ratio:1/1;margin:0;padding:0;overflow:hidden;border-radius:var(--mb-jt-rad);background:#ebe5d8}
+.mb-jt__im img{display:block;width:100%;max-width:100%;height:100%;margin:0;padding:0;object-fit:cover;border:0;border-radius:0;box-shadow:none;filter:none;opacity:1;transform:none}
+.mb-jt__co{min-width:0}
+.mb-jt .mb-jt__t{margin:0 0 12px;padding:0;font-family:'Libre Caslon Text',Georgia,serif;font-size:28px;line-height:34px;font-weight:400;font-style:normal;letter-spacing:0;text-transform:none;text-align:left;color:var(--mb-jt-ti)!important;-webkit-text-fill-color:var(--mb-jt-ti)!important}
+.mb-jt .mb-jt__t em{font-family:inherit;font-size:inherit;line-height:inherit;font-weight:inherit;font-style:italic;letter-spacing:0;text-transform:none;color:inherit!important;-webkit-text-fill-color:inherit!important}
+.mb-jt .mb-jt__st{margin:0 0 32px;padding:0;font-size:16px;line-height:24px;font-weight:400;color:var(--mb-jt-tx)!important;-webkit-text-fill-color:var(--mb-jt-tx)!important}
+.mb-jt__tl{position:relative;margin:0;padding:0}
+.mb-jt__it{position:relative;margin:0 0 28px;padding:0 0 0 34px}
+.mb-jt__it:last-child{margin-bottom:0}
+.mb-jt__it:not(:last-child)::before{content:'';position:absolute;left:6px;top:20px;width:2px;height:calc(100% + 28px);background:var(--mb-jt-ln)}
+.mb-jt .mb-jt__dot{position:absolute;left:0;top:13px;display:block;width:14px;height:14px;margin:0;padding:0;border-radius:50%;background:var(--mb-jt-ac)}
+.mb-jt__main{margin:0;padding:0}
+.mb-jt__hd{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin:0 0 8px;padding:0}
+.mb-jt__ic{flex:none;width:40px;height:40px;margin:0;padding:0}
+.mb-jt__ic img{display:block;width:40px;max-width:none;height:40px;margin:0;padding:0;object-fit:contain;border:0;border-radius:0;box-shadow:none;filter:none;opacity:1;transform:none}
+.mb-jt .mb-jt__bd{display:inline-block;flex:none;margin:0;padding:4px 12px;border-radius:999px;background:var(--mb-jt-ac);font-size:13px;line-height:18px;font-weight:600;letter-spacing:0;text-transform:none;font-style:normal;white-space:nowrap;color:var(--mb-jt-bt)!important;-webkit-text-fill-color:var(--mb-jt-bt)!important}
+.mb-jt .mb-jt__nm{flex:1 1 100%;margin:0;padding:0;font-family:'Plus Jakarta Sans',sans-serif;font-size:18px;line-height:24px;font-weight:700;letter-spacing:0;text-transform:none;font-style:normal;text-align:left;color:var(--mb-jt-ti)!important;-webkit-text-fill-color:var(--mb-jt-ti)!important}
+.mb-jt .mb-jt__tx{margin:0;padding:0;font-size:15px;line-height:24px;font-weight:400;color:var(--mb-jt-tx)!important;-webkit-text-fill-color:var(--mb-jt-tx)!important}
+@media screen and (min-width:750px){
+.mb-jt__in{padding-left:24px;padding-right:24px}
+.mb-jt__im{max-width:640px;margin:0 auto}
+.mb-jt .mb-jt__nm{flex:1 1 auto}
+}
+@media screen and (min-width:1024px){
+.mb-jt__in{padding-top:var(--mb-jt-pdd);padding-bottom:var(--mb-jt-pdd)}
+.mb-jt__wrap{flex-direction:row;align-items:center;gap:64px}
+.mb-jt__im{flex:1 1 0;max-width:none;margin:0}
+.mb-jt__co{flex:1 1 0}
+.mb-jt .mb-jt__t{font-size:36px;line-height:42px}
+.mb-jt .mb-jt__st{font-size:17px;line-height:26px}
+.mb-jt .mb-jt__tx{font-size:16px}
+}
+</style>
+
+<div class="mb-jt{% if mb_bleed %} mb-jt--bleed{% endif %}" data-bleed="{{ mb_bleed }}" style="--mb-jt-bg:{{ mb_bg }};--mb-jt-ti:{{ mb_color_title }};--mb-jt-tx:{{ mb_color_text }};--mb-jt-ac:{{ mb_color_accent }};--mb-jt-bt:{{ mb_color_badge_text }};--mb-jt-ln:{{ mb_color_line }};--mb-jt-rad:{{ mb_radius }};--mb-jt-pdd:{{ mb_pad_d }};--mb-jt-pdm:{{ mb_pad_m }};--mb-jt-top:{{ mb_top }};--mb-jt-bottom:{{ mb_bottom }}">
+<div class="mb-jt__in">
+<div class="mb-jt__wrap">
+{%- if mb_img != blank -%}<div class="mb-jt__im"><img src="{{ mb_img }}{{ mb_im_sep }}width=1200" srcset="{{ mb_img }}{{ mb_im_sep }}width=352 352w, {{ mb_img }}{{ mb_im_sep }}width=832 832w, {{ mb_img }}{{ mb_im_sep }}width=1200 1200w" sizes="(min-width: 1224px) 568px, (min-width: 1024px) 45vw, (min-width: 750px) 640px, 100vw" alt="{{ mb_img_alt | escape }}" width="1200" height="1200" loading="lazy" decoding="async"></div>{%- endif -%}
+<div class="mb-jt__co">
+{%- if mb_title_1 != blank -%}<h2 class="mb-jt__t">{{ mb_title_1 }}{%- if mb_title_2 != blank %} <em>{{ mb_title_2 }}</em>{% endif -%}</h2>{%- endif -%}
+{%- if mb_subtitle != blank -%}<p class="mb-jt__st">{{ mb_subtitle }}</p>{%- endif -%}
+<div class="mb-jt__tl">
+{%- for mb_it in mb_items -%}
+{%- assign mb_chk = mb_it | strip -%}
+{%- if mb_chk != blank -%}
+{%- assign mb_f = mb_it | split: '|||' -%}
+{%- assign mb_u = mb_f[0] | strip -%}
+{%- assign mb_bd = mb_f[1] | strip -%}
+{%- assign mb_nm = mb_f[2] | strip -%}
+{%- assign mb_tx = mb_f[3] | strip -%}
+{%- if mb_u contains '?' -%}{%- assign mb_sep = '&amp;' -%}{%- else -%}{%- assign mb_sep = '?' -%}{%- endif -%}
+<div class="mb-jt__it"><span class="mb-jt__dot"></span><div class="mb-jt__main"><div class="mb-jt__hd">{%- if mb_u != blank -%}<div class="mb-jt__ic"><img src="{{ mb_u }}{{ mb_sep }}width=80" alt="" width="80" height="80" loading="lazy" decoding="async"></div>{%- endif -%}{%- if mb_bd != blank -%}<span class="mb-jt__bd">{{ mb_bd }}</span>{%- endif -%}{%- if mb_nm != blank -%}<h3 class="mb-jt__nm">{{ mb_nm }}</h3>{%- endif -%}</div>{%- if mb_tx != blank -%}<p class="mb-jt__tx">{{ mb_tx }}</p>{%- endif -%}</div></div>
+{%- endif -%}
+{%- endfor -%}
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<script>
+(function(){
+function init(root){
+if(root.getAttribute('data-on'))return;
+root.setAttribute('data-on','1');
+/* stretch edge to edge exactly, whatever the page column is */
+function bleed(){
+if(root.getAttribute('data-bleed')!=='true')return;
+root.style.marginLeft='0px';
+root.style.width=document.documentElement.clientWidth+'px';
+var l=root.getBoundingClientRect().left;
+root.style.marginLeft=(-l)+'px';
+}
+bleed();
+window.addEventListener('resize',bleed);
+window.addEventListener('load',function(){bleed();setTimeout(bleed,400)});
+}
+function all(){document.querySelectorAll('.mb-jt').forEach(init)}
+all();
+document.addEventListener('shopify:section:load',all);
+})();
+</script>
