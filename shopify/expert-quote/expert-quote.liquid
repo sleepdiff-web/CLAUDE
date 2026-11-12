@@ -1,0 +1,115 @@
+{%- comment -%}
+  "Formulated by experts" quote section (exact copy of the evorabody.com section): a cream band, a two-line title (second line bold), a doctor's quote and a small signature picture on the left, and a doctor's photo on the right.
+  Desktop (wider than 1023px) = text 60% left, photo 40% right, vertically centred. Phone and tablet = text first, photo underneath.
+  WHERE: best as its own full-width section: Online Store > Themes > Customize > Product page > Add section > Custom Liquid, drag it where you want it, paste this in.
+  If you paste it inside a narrow column instead, set mb_bleed to false.
+  EDIT YOUR CONTENT BELOW. Do not use a straight apostrophe (') in the text, use &#39; instead. Do not type quote marks around the quote, they are added for you.
+  mb_title_1 = first title line. mb_title_2 = second title line (shown in bold). Leave mb_title_2 empty for a one-line title.
+  mb_quote = the quote. mb_name / mb_job = optional name and job title shown under the quote (leave empty to hide them).
+  mb_sign = the small signature picture under the quote (a link to a picture, leave empty for none). mb_sign_alt = its description for screen readers.
+  mb_photo = the doctor photo (a link to a picture). mb_photo_alt = its description. mb_photo_pos = which part of the photo stays in view when it is cropped, for example center center, center top or center 20%.
+  THE TWO PICTURES BELOW ARE LINKED FROM evorabody.com SO YOU CAN SEE THE SECTION WORKING. For a live store, save both pictures, upload them in Shopify admin > Content > Files, then paste your own links in place. That keeps the section working if the original files ever change.
+  IMPORTANT: only show a doctor, a photo and a quote that the doctor has really agreed to.
+  mb_bg = band colour. mb_color_title = title colour. mb_color_text = quote, name and job colour.
+  mb_photo_h_d / mb_photo_h_m = photo height on desktop / phone. mb_pad_top / mb_pad_bottom = space above and below the content inside the band.
+  mb_bleed = true stretches the band edge to edge across the screen. mb_top / mb_bottom = space above and below the block.
+{%- endcomment -%}
+{%- assign mb_title_1 = 'Formulated By Experts,' -%}
+{%- assign mb_title_2 = 'Dermatologist Approved' -%}
+{%- assign mb_quote = 'Evora&#39;s Botanical Body Oil works the way mature skin actually needs it to — the oil base penetrates the lipid barrier rather than sitting on top of it, delivering its ingredients into the layer where crepey skin begins.' -%}
+{%- assign mb_name = '' -%}
+{%- assign mb_job = '' -%}
+{%- assign mb_sign = 'https://evorabody.com/cdn/shop/files/ChatGPT_Image_Jun_8_2026_04_35_39_PM.png?v=1780918590' -%}
+{%- assign mb_sign_alt = 'Evora' -%}
+{%- assign mb_photo = 'https://evorabody.com/cdn/shop/files/Dr._Elena_Dinkollari_-_PDP.png?v=1780935653' -%}
+{%- assign mb_photo_alt = 'Dr. Elena Dinkollari' -%}
+{%- assign mb_photo_pos = 'center center' -%}
+{%- assign mb_photo_h_d = '400px' -%}
+{%- assign mb_photo_h_m = '380px' -%}
+{%- assign mb_bg = '#f4efe5' -%}
+{%- assign mb_color_title = '#000000' -%}
+{%- assign mb_color_text = '#2a110a' -%}
+{%- assign mb_pad_top = '40px' -%}
+{%- assign mb_pad_bottom = '40px' -%}
+{%- assign mb_bleed = true -%}
+{%- assign mb_top = '0px' -%}
+{%- assign mb_bottom = '0px' -%}
+{%- if mb_photo contains '?' -%}{%- assign mb_ph_sep = '&amp;' -%}{%- else -%}{%- assign mb_ph_sep = '?' -%}{%- endif -%}
+{%- if mb_sign contains '?' -%}{%- assign mb_sg_sep = '&amp;' -%}{%- else -%}{%- assign mb_sg_sep = '?' -%}{%- endif -%}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Libre+Caslon+Text:wght@400;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Libre+Caslon+Text:wght@400;700&display=swap"></noscript>
+
+<style>
+.mb-ct{box-sizing:border-box;width:100%;margin:var(--mb-ct-top) 0 var(--mb-ct-bottom);background:var(--mb-ct-bg);font-family:'Plus Jakarta Sans',sans-serif;text-align:left}
+.mb-ct--bleed{width:100vw;max-width:none;margin-left:calc(50% - 50vw);margin-right:0}
+.mb-ct *{box-sizing:border-box}
+.mb-ct p,.mb-ct strong,.mb-ct span{letter-spacing:0;text-transform:none;font-style:normal}
+.mb-ct__in{max-width:1200px;margin:0 auto;padding:var(--mb-ct-pt) 20px var(--mb-ct-pb)}
+.mb-ct__ct{display:flex;flex-direction:column;gap:20px;margin:0;padding:0;border-radius:0}
+.mb-ct__tx{text-align:left}
+.mb-ct .mb-ct__t{margin:0 0 20px;padding:0;font-family:'Libre Caslon Text',Georgia,serif;font-size:22px;line-height:24px;font-weight:400;color:var(--mb-ct-ti)!important;-webkit-text-fill-color:var(--mb-ct-ti)!important}
+.mb-ct .mb-ct__t strong{font-family:inherit;font-size:inherit;line-height:inherit;font-weight:700;color:inherit!important;-webkit-text-fill-color:inherit!important}
+.mb-ct .mb-ct__q{margin:0 0 20px;padding:0;font-size:16px;line-height:24px;font-weight:400;color:var(--mb-ct-tx)!important;-webkit-text-fill-color:var(--mb-ct-tx)!important}
+.mb-ct__sa{display:flex;flex-direction:column;align-items:flex-start;gap:8px;margin:0;padding:0}
+.mb-ct .mb-ct__nm{margin:0;padding:0;font-size:15px;line-height:21px;font-weight:700;color:var(--mb-ct-tx)!important;-webkit-text-fill-color:var(--mb-ct-tx)!important}
+.mb-ct .mb-ct__jb{margin:0;padding:0;font-size:13px;line-height:18px;font-weight:400;opacity:.7;color:var(--mb-ct-tx)!important;-webkit-text-fill-color:var(--mb-ct-tx)!important}
+.mb-ct__sg{width:100%;max-width:156px;margin:0;padding:0}
+.mb-ct__sg img{display:block;width:100%;max-width:100%;height:auto;margin:0;padding:0;border:0;border-radius:0;box-shadow:none;filter:none;opacity:1;transform:none}
+.mb-ct__ph{width:100%;margin:0;padding:0;overflow:hidden;border-radius:0}
+.mb-ct__ph img{display:block;width:100%;max-width:100%;height:var(--mb-ct-phm);margin:0;padding:0;object-fit:cover;object-position:var(--mb-ct-pos);border:0;border-radius:0;box-shadow:none;filter:none;opacity:1;transform:none}
+@media screen and (min-width:1024px){
+.mb-ct__in{padding-left:24px;padding-right:24px}
+.mb-ct__ct{flex-direction:row;align-items:center;gap:40px}
+.mb-ct__tx{flex:0 1 60%;text-align:left}
+.mb-ct__ph{flex:0 1 40%}
+.mb-ct .mb-ct__t{font-size:32px;line-height:35px}
+.mb-ct .mb-ct__q{font-size:17px;line-height:21px}
+.mb-ct .mb-ct__nm{font-size:16px;line-height:22px}
+.mb-ct .mb-ct__jb{font-size:14px;line-height:20px}
+.mb-ct__sg{max-width:208px}
+.mb-ct__ph img{height:var(--mb-ct-phd)}
+}
+</style>
+
+<div class="mb-ct{% if mb_bleed %} mb-ct--bleed{% endif %}" data-bleed="{{ mb_bleed }}" style="--mb-ct-bg:{{ mb_bg }};--mb-ct-ti:{{ mb_color_title }};--mb-ct-tx:{{ mb_color_text }};--mb-ct-pt:{{ mb_pad_top }};--mb-ct-pb:{{ mb_pad_bottom }};--mb-ct-phd:{{ mb_photo_h_d }};--mb-ct-phm:{{ mb_photo_h_m }};--mb-ct-pos:{{ mb_photo_pos }};--mb-ct-top:{{ mb_top }};--mb-ct-bottom:{{ mb_bottom }}">
+<div class="mb-ct__in">
+<div class="mb-ct__ct">
+<div class="mb-ct__tx">
+{%- if mb_title_1 != blank -%}<p class="mb-ct__t">{{ mb_title_1 }}{%- if mb_title_2 != blank -%}<br><strong>{{ mb_title_2 }}</strong>{%- endif -%}</p>{%- endif -%}
+{%- if mb_quote != blank -%}<p class="mb-ct__q">&ldquo;{{ mb_quote }}&rdquo;</p>{%- endif -%}
+<div class="mb-ct__sa">
+{%- if mb_name != blank -%}<p class="mb-ct__nm">{{ mb_name }}</p>{%- endif -%}
+{%- if mb_job != blank -%}<p class="mb-ct__jb">{{ mb_job }}</p>{%- endif -%}
+{%- if mb_sign != blank -%}<div class="mb-ct__sg"><picture><source media="(max-width: 769px)" srcset="{{ mb_sign }}{{ mb_sg_sep }}width=375 1x, {{ mb_sign }}{{ mb_sg_sep }}width=500 2x"><source media="(min-width: 770px)" srcset="{{ mb_sign }}{{ mb_sg_sep }}width=375 1x, {{ mb_sign }}{{ mb_sg_sep }}width=750 2x"><img src="{{ mb_sign }}{{ mb_sg_sep }}width=375" alt="{{ mb_sign_alt | escape }}" width="375" height="49" loading="lazy" decoding="async"></picture></div>{%- endif -%}
+</div>
+</div>
+{%- if mb_photo != blank -%}<div class="mb-ct__ph"><picture><source media="(max-width: 769px)" srcset="{{ mb_photo }}{{ mb_ph_sep }}width=375 1x, {{ mb_photo }}{{ mb_ph_sep }}width=500 2x"><source media="(min-width: 770px)" srcset="{{ mb_photo }}{{ mb_ph_sep }}width=375 1x, {{ mb_photo }}{{ mb_ph_sep }}width=750 2x"><img src="{{ mb_photo }}{{ mb_ph_sep }}width=375" alt="{{ mb_photo_alt | escape }}" width="375" height="375" loading="lazy" decoding="async"></picture></div>{%- endif -%}
+</div>
+</div>
+</div>
+
+<script>
+(function(){
+function init(root){
+if(root.getAttribute('data-on'))return;
+root.setAttribute('data-on','1');
+/* stretch edge to edge exactly, whatever the page column is */
+function bleed(){
+if(root.getAttribute('data-bleed')!=='true')return;
+root.style.marginLeft='0px';
+root.style.width=document.documentElement.clientWidth+'px';
+var l=root.getBoundingClientRect().left;
+root.style.marginLeft=(-l)+'px';
+}
+bleed();
+window.addEventListener('resize',bleed);
+window.addEventListener('load',function(){bleed();setTimeout(bleed,400)});
+}
+function all(){document.querySelectorAll('.mb-ct').forEach(init)}
+all();
+document.addEventListener('shopify:section:load',all);
+})();
+</script>
