@@ -15,7 +15,7 @@
         a paragraph with a bold start:   Bold start ||| rest of the text
         a bold line on its own:   Bold line |||
         a bullet line:            - 93% ||| rest of the text        (start the line with a dash and a space)
-  mb_color_head = row title colour. mb_color_label = gold label colour. mb_color_text = body text colour. mb_icon_color = sparkle icon colour.
+  mb_color_head = row title colour. mb_color_label = gold label colour. mb_color_text = body text colour. mb_icon_color = sparkle icon colour. mb_color_num = colour of the big % numbers in Customer Results.
   mb_border = row border. mb_panel_bg = grey panel colour. mb_radius = corner roundness. mb_gap = space between rows.
   mb_single = true opens one row at a time. mb_open_first = true opens the first row on page load.
   mb_top / mb_bottom = space above and below the whole block.
@@ -90,6 +90,7 @@ Returns ||| Add your return policy here.
 {%- assign mb_color_label = '#9f6700' -%}
 {%- assign mb_color_text = '#1a1a1a' -%}
 {%- assign mb_icon_color = '#2a2a2a' -%}
+{%- assign mb_color_num = '#dea431' -%}
 {%- assign mb_border = '#e1dcd2' -%}
 {%- assign mb_panel_bg = '#f5f3ee' -%}
 {%- assign mb_radius = '12px' -%}
@@ -144,7 +145,7 @@ Returns ||| Add your return policy here.
 .mb-ac .mb-ac__ri{margin:0 0 16px;padding:0;font-size:15px;font-weight:400;line-height:1.5}
 .mb-ac__sr{display:flex;align-items:center;gap:12px;margin:0;padding:20px 0 22px;border-bottom:1px solid var(--mb-ac-tx)!important}
 .mb-ac__sr:last-child{margin-bottom:22px}
-.mb-ac .mb-ac__sn{flex:none;min-width:2.05em;margin:0;padding:0;font-family:'Poppins','Plus Jakarta Sans',sans-serif;font-size:52px;font-weight:600;line-height:1;letter-spacing:-.03em;color:var(--mb-ac-lb)!important;-webkit-text-fill-color:var(--mb-ac-lb)!important}
+.mb-ac .mb-ac__sn{flex:none;min-width:2.05em;margin:0;padding:0;font-family:'Poppins','Plus Jakarta Sans',sans-serif;font-size:52px;font-weight:600;line-height:1;letter-spacing:-.03em;color:var(--mb-ac-nm)!important;-webkit-text-fill-color:var(--mb-ac-nm)!important}
 .mb-ac .mb-ac__sx{margin:0;padding:0;font-size:14.5px;font-weight:400;line-height:1.35}
 .mb-ac .mb-ac__pp{margin:0 0 14px;padding:0;font-size:13px;font-weight:400;line-height:22px}
 .mb-ac .mb-ac__bl{position:relative;margin:0 0 8px;padding:0 0 0 14px;font-size:13px;font-weight:400;line-height:22px}
@@ -153,7 +154,7 @@ Returns ||| Add your return policy here.
 .mb-ac .mb-ac__pp strong,.mb-ac .mb-ac__bl strong{font-weight:700!important}
 </style>
 
-<div class="mb-ac" id="{{ mb_uid }}" data-single="{{ mb_single }}" style="--mb-ac-hd:{{ mb_color_head }};--mb-ac-lb:{{ mb_color_label }};--mb-ac-tx:{{ mb_color_text }};--mb-ac-ic:{{ mb_icon_color }};--mb-ac-bd:{{ mb_border }};--mb-ac-pn:{{ mb_panel_bg }};--mb-ac-r:{{ mb_radius }};--mb-ac-gap:{{ mb_gap }};--mb-ac-top:{{ mb_top }};--mb-ac-bottom:{{ mb_bottom }}">
+<div class="mb-ac" id="{{ mb_uid }}" data-single="{{ mb_single }}" style="--mb-ac-hd:{{ mb_color_head }};--mb-ac-lb:{{ mb_color_label }};--mb-ac-tx:{{ mb_color_text }};--mb-ac-ic:{{ mb_icon_color }};--mb-ac-nm:{{ mb_color_num }};--mb-ac-bd:{{ mb_border }};--mb-ac-pn:{{ mb_panel_bg }};--mb-ac-r:{{ mb_radius }};--mb-ac-gap:{{ mb_gap }};--mb-ac-top:{{ mb_top }};--mb-ac-bottom:{{ mb_bottom }}">
 {%- for mb_n in (1..5) -%}
 {%- case mb_n -%}
 {%- when 1 -%}{%- assign mb_t = mb_t1 -%}{%- assign mb_d = mb_d1 -%}{%- assign mb_ty = 'rows' -%}
