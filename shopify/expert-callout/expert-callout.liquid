@@ -6,7 +6,8 @@
   mb_img = the cut-out photo (a PNG with a see-through background looks best, shown at the bottom right). Leave '' for no photo.
   mb_border = border + badge colour. mb_bg = box colour. mb_color = colour of all the text (locked so the theme cannot change it).
   mb_italic = true for an italic quote paragraph (like the example), false for upright text.
-  mb_radius = corner roundness. mb_min_h = minimum box height. mb_img_w = width kept free for the photo on desktop, mb_img_w_m = on mobile.
+  mb_radius = corner roundness. mb_min_h = minimum box height (desktop). mb_img_w = width kept free for the photo on desktop.
+  mb_img_w_m = the biggest the photo gets on a phone (it shrinks with the card). On a phone the title runs the full width and the photo sits bottom right.
   mb_top = space ABOVE the box. mb_bottom = space below the box.
   Do not use a straight apostrophe (') inside the text, use &#39; instead.
 {%- endcomment -%}
@@ -32,7 +33,8 @@
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Poppins:wght@400;500;600;700&display=swap"></noscript>
 
 <style>
-.mb-ca{position:relative;box-sizing:border-box;width:100%;min-height:var(--mb-ca-h);margin:var(--mb-ca-top) 0 var(--mb-ca-bottom);padding:20px calc(var(--mb-ca-iw) + 4px) 18px 16px;overflow:hidden;border:1px solid var(--mb-ca-bd)!important;border-radius:var(--mb-ca-r);background:var(--mb-ca-bg)!important;font-family:'Plus Jakarta Sans',sans-serif;text-align:left}
+.mb-ca-wrap{container-type:inline-size;width:100%;margin:var(--mb-ca-top) 0 var(--mb-ca-bottom);padding:0}
+.mb-ca{position:relative;box-sizing:border-box;width:100%;min-height:var(--mb-ca-h);margin:0;padding:20px calc(var(--mb-ca-iw) + 4px) 18px 16px;overflow:hidden;border:1px solid var(--mb-ca-bd)!important;border-radius:var(--mb-ca-r);background:var(--mb-ca-bg)!important;font-family:'Plus Jakarta Sans',sans-serif;text-align:left}
 .mb-ca *{box-sizing:border-box}
 .mb-ca,.mb-ca *{color:var(--mb-ca-tx)!important;-webkit-text-fill-color:var(--mb-ca-tx)!important}
 .mb-ca__head{display:flex;align-items:center;gap:6px;margin:0 0 8px;padding:0}
@@ -45,14 +47,21 @@
 .mb-ca__img{position:absolute;top:0;right:0;bottom:0;width:var(--mb-ca-iw);margin:0;padding:0;pointer-events:none}
 .mb-ca__img img{display:block;width:100%;height:100%;object-fit:contain;object-position:right bottom}
 @media screen and (max-width:749px){
-.mb-ca{padding-right:calc(var(--mb-ca-iwm) + 4px)}
-.mb-ca__img{width:var(--mb-ca-iwm)}
+.mb-ca{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"hd hd" "tx im" "by im";align-items:start;min-height:0;padding:16px 0 0 14px}
+.mb-ca__head{grid-area:hd;margin:0 12px 7px 0}
+.mb-ca__title{font-size:13px;font-size:clamp(12px,4.3cqw,14px)}
+.mb-ca__p{grid-area:tx;margin:0 8px 6px 0;font-size:12px;font-size:clamp(11.5px,4cqw,13px);line-height:1.65;text-wrap:pretty}
+.mb-ca__by{grid-area:by;margin:0 8px 14px 0;font-size:13px;font-size:clamp(12px,4.3cqw,14px);text-wrap:balance}
+.mb-ca__img{position:static;grid-area:im;align-self:end;justify-self:end;width:var(--mb-ca-iwm);width:clamp(68px,28cqw,var(--mb-ca-iwm));height:auto;max-height:150px}
+.mb-ca__img img{width:100%;height:auto;max-height:150px;object-fit:contain;object-position:right bottom}
 }
 </style>
 
-<div class="mb-ca" style="--mb-ca-bd:{{ mb_border }};--mb-ca-bg:{{ mb_bg }};--mb-ca-tx:{{ mb_color }};--mb-ca-r:{{ mb_radius }};--mb-ca-fst:{%- if mb_italic -%}italic{%- else -%}normal{%- endif -%};--mb-ca-h:{{ mb_min_h }};--mb-ca-iw:{%- if mb_img != blank -%}{{ mb_img_w }}{%- else -%}0px{%- endif -%};--mb-ca-iwm:{%- if mb_img != blank -%}{{ mb_img_w_m }}{%- else -%}0px{%- endif -%};--mb-ca-top:{{ mb_top }};--mb-ca-bottom:{{ mb_bottom }}">
+<div class="mb-ca-wrap" style="--mb-ca-bd:{{ mb_border }};--mb-ca-bg:{{ mb_bg }};--mb-ca-tx:{{ mb_color }};--mb-ca-r:{{ mb_radius }};--mb-ca-fst:{%- if mb_italic -%}italic{%- else -%}normal{%- endif -%};--mb-ca-h:{{ mb_min_h }};--mb-ca-iw:{%- if mb_img != blank -%}{{ mb_img_w }}{%- else -%}0px{%- endif -%};--mb-ca-iwm:{%- if mb_img != blank -%}{{ mb_img_w_m }}{%- else -%}0px{%- endif -%};--mb-ca-top:{{ mb_top }};--mb-ca-bottom:{{ mb_bottom }}">
+<div class="mb-ca">
 <div class="mb-ca__head"><svg class="mb-ca__bd" width="12" height="11" viewBox="0 0 12 11" aria-hidden="true" focusable="false"><ellipse cx="6" cy="5.5" rx="6" ry="5.5"/><path d="M3.4 5.7l1.8 1.8 3.4-3.7"/></svg><p class="mb-ca__title">{{ mb_title }}</p></div>
 <p class="mb-ca__p">{{ mb_text }}</p>
 <p class="mb-ca__by">{{ mb_author }}</p>
 {%- if mb_img != blank -%}<div class="mb-ca__img"><img src="{{ mb_img_src }}" alt="" loading="lazy" decoding="async"></div>{%- endif -%}
+</div>
 </div>
