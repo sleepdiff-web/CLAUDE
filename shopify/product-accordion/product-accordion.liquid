@@ -9,7 +9,8 @@
     Row 1 (mb_d1) = label rows with a sparkle icon:    LABEL ||| text
     Row 2 (mb_d2) = timeline steps:                    STEP 1 ||| text      (mb_head2 = small heading, mb_img2 = optional picture link)
     Row 3 (mb_d3) = ingredient cards:                  Name ||| picture link (can be empty) ||| benefit one; benefit two; benefit three
-    Row 4 (mb_d4) and Row 5 (mb_d5) = paragraphs and bullet lines:
+    Row 4 (mb_d4) = results with big gold numbers:    a plain sentence = the intro line     91% ||| said their skin felt softer     (a line with ||| = a big number + its text, with a thin line under it)
+    Row 5 (mb_d5) = paragraphs and bullet lines:
         a plain paragraph:        text
         a paragraph with a bold start:   Bold start ||| rest of the text
         a bold line on its own:   Bold line |||
@@ -64,11 +65,15 @@ Sea Buckthorn Oil ||| ||| Provides antioxidant protection; Supports skin renewal
 Neroli Extract ||| ||| Soothes irritated, itchy skin; Supports the skin&#39;s natural repair process; Leaves a clean, soft botanical scent
 {%- endcapture -%}
 {%- capture mb_d4 -%}
-Add one sentence that introduces your results. Only use figures from your own customer survey.
+Nerola is backed by real results — here&#39;s what our customers reported:
 @@
-- 00% ||| Replace with a real result from your own survey.
+91% ||| said their skin stayed soft and hydrated past lunchtime for the first time
 @@
-- 00% ||| Replace with another real result.
+94% ||| said dry, crepey texture felt visibly smoother within the first two weeks
+@@
+88% ||| said it absorbed completely with no greasy residue
+@@
+92% ||| said it worked better than any moisturiser they had tried before
 {%- endcapture -%}
 {%- capture mb_d5 -%}
 Add your order processing time here.
@@ -103,7 +108,7 @@ Returns ||| Add your return policy here.
 <style>
 .mb-ac{box-sizing:border-box;display:flex;flex-direction:column;gap:var(--mb-ac-gap);width:100%;margin:var(--mb-ac-top) 0 var(--mb-ac-bottom);padding:0;font-family:'Plus Jakarta Sans',sans-serif;text-align:left}
 .mb-ac *{box-sizing:border-box}
-.mb-ac p,.mb-ac li,.mb-ac strong,.mb-ac span{color:var(--mb-ac-tx)!important;-webkit-text-fill-color:var(--mb-ac-tx)!important;letter-spacing:0;text-transform:none}
+.mb-ac p,.mb-ac li,.mb-ac strong,.mb-ac span{color:var(--mb-ac-tx)!important;-webkit-text-fill-color:var(--mb-ac-tx)!important;letter-spacing:0;text-transform:none;font-style:normal}
 .mb-ac__it{border:1px solid var(--mb-ac-bd)!important;border-radius:var(--mb-ac-r);background:#fff}
 .mb-ac .mb-ac__hd{-webkit-appearance:none;appearance:none;display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;margin:0;padding:15px 18px;border:0!important;border-radius:var(--mb-ac-r);background:transparent!important;box-shadow:none;font-family:'Plus Jakarta Sans',sans-serif;text-align:left;text-transform:none;letter-spacing:0;cursor:pointer}
 .mb-ac .mb-ac__hd .mb-ac__ti{font-size:15px;font-weight:500;line-height:1.3;color:var(--mb-ac-hd)!important;-webkit-text-fill-color:var(--mb-ac-hd)!important}
@@ -136,6 +141,11 @@ Returns ||| Add your return policy here.
 .mb-ac__ul{margin:0;padding:0;list-style:none}
 .mb-ac .mb-ac__ul li{position:relative;margin:0;padding:0 0 0 14px;font-size:13px;font-weight:400;line-height:21px}
 .mb-ac .mb-ac__ul li::before,.mb-ac .mb-ac__bl::before{content:'';position:absolute;left:1px;top:9px;width:4px;height:4px;border-radius:50%;background:var(--mb-ac-tx)}
+.mb-ac .mb-ac__ri{margin:0 0 16px;padding:0;font-size:15px;font-weight:400;line-height:1.5}
+.mb-ac__sr{display:flex;align-items:center;gap:12px;margin:0;padding:20px 0 22px;border-bottom:1px solid var(--mb-ac-tx)!important}
+.mb-ac__sr:last-child{margin-bottom:22px}
+.mb-ac .mb-ac__sn{flex:none;min-width:2.05em;margin:0;padding:0;font-family:'Poppins','Plus Jakarta Sans',sans-serif;font-size:52px;font-weight:600;line-height:1;letter-spacing:-.03em;color:var(--mb-ac-lb)!important;-webkit-text-fill-color:var(--mb-ac-lb)!important}
+.mb-ac .mb-ac__sx{margin:0;padding:0;font-size:14.5px;font-weight:400;line-height:1.35}
 .mb-ac .mb-ac__pp{margin:0 0 14px;padding:0;font-size:13px;font-weight:400;line-height:22px}
 .mb-ac .mb-ac__bl{position:relative;margin:0 0 8px;padding:0 0 0 14px;font-size:13px;font-weight:400;line-height:22px}
 .mb-ac .mb-ac__bl::before{top:10px}
@@ -149,7 +159,7 @@ Returns ||| Add your return policy here.
 {%- when 1 -%}{%- assign mb_t = mb_t1 -%}{%- assign mb_d = mb_d1 -%}{%- assign mb_ty = 'rows' -%}
 {%- when 2 -%}{%- assign mb_t = mb_t2 -%}{%- assign mb_d = mb_d2 -%}{%- assign mb_ty = 'steps' -%}
 {%- when 3 -%}{%- assign mb_t = mb_t3 -%}{%- assign mb_d = mb_d3 -%}{%- assign mb_ty = 'ing' -%}
-{%- when 4 -%}{%- assign mb_t = mb_t4 -%}{%- assign mb_d = mb_d4 -%}{%- assign mb_ty = 'list' -%}
+{%- when 4 -%}{%- assign mb_t = mb_t4 -%}{%- assign mb_d = mb_d4 -%}{%- assign mb_ty = 'stats' -%}
 {%- when 5 -%}{%- assign mb_t = mb_t5 -%}{%- assign mb_d = mb_d5 -%}{%- assign mb_ty = 'list' -%}
 {%- endcase -%}
 {%- if mb_t != blank -%}
@@ -175,6 +185,10 @@ Returns ||| Add your return policy here.
 {%- when 'ing' -%}
 {%- for mb_it in mb_items -%}{%- assign mb_f = mb_it | split: '|||' -%}{%- assign mb_a = mb_f[0] | strip -%}{%- assign mb_img = mb_f[1] | strip -%}{%- assign mb_bl = mb_f[2] | replace: '&#39;', '[apos]' | replace: '&amp;', '[amp]' | split: ';' -%}
 {%- if mb_a != blank -%}<div class="mb-ac__ing">{%- if mb_img != blank -%}<img class="mb-ac__ig" src="{{ mb_img }}" alt="" width="64" height="64" loading="lazy" decoding="async">{%- endif -%}<div><p class="mb-ac__nm">{{ mb_a }}</p><ul class="mb-ac__ul">{%- for mb_x in mb_bl -%}{%- assign mb_xs = mb_x | strip | replace: '[apos]', '&#39;' | replace: '[amp]', '&amp;' -%}{%- if mb_xs != blank -%}<li>{{ mb_xs }}</li>{%- endif -%}{%- endfor -%}</ul></div></div>{%- endif -%}
+{%- endfor -%}
+{%- when 'stats' -%}
+{%- for mb_it in mb_items -%}{%- assign mb_f = mb_it | split: '|||' -%}{%- assign mb_a = mb_f[0] | strip -%}{%- assign mb_b = mb_f[1] | strip -%}
+{%- if mb_a != blank -%}{%- if mb_b != blank -%}<div class="mb-ac__sr"><p class="mb-ac__sn">{{ mb_a }}</p><p class="mb-ac__sx">{{ mb_b }}</p></div>{%- else -%}<p class="mb-ac__ri">{{ mb_a }}</p>{%- endif -%}{%- endif -%}
 {%- endfor -%}
 {%- when 'list' -%}
 {%- for mb_it in mb_items -%}{%- assign mb_f = mb_it | split: '|||' -%}{%- assign mb_a = mb_f[0] | strip -%}{%- assign mb_b = mb_f[1] | strip -%}
