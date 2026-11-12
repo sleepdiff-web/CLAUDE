@@ -6,7 +6,9 @@
   EDIT YOUR CONTENT BELOW.
   mb_label = the big text. mb_note = the small line with the shield (leave '' to hide it).
   mb_bg = button colour. mb_text = colour of all the text and the shield (locked so the theme cannot change it).
-  mb_radius = corner roundness. mb_height = minimum button height. mb_top / mb_bottom = space above and below the button.
+  mb_radius = corner roundness. mb_height = minimum button height. mb_bottom = space below the button.
+  mb_top = the space between the bundle bars and the button, in px (Metabolae: 12px). mb_fix_gap = true makes the code measure the real gap on the page
+  and correct it to exactly mb_top, whatever your theme or Kaching add on top. Set it to false to use plain CSS spacing only.
   Do not use a straight apostrophe (') inside the text, use &#39; instead.
 {%- endcomment -%}
 {%- assign mb_label = 'Add To Cart' -%}
@@ -17,6 +19,7 @@
 {%- assign mb_height = '55px' -%}
 {%- assign mb_top = '12px' -%}
 {%- assign mb_bottom = '0px' -%}
+{%- assign mb_fix_gap = true -%}
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -27,6 +30,7 @@
 .mb-atc-wrap{box-sizing:border-box;width:100%;margin:var(--mb-atc-top) 0 var(--mb-atc-bottom);padding:0}
 .mb-atc-wrap *{box-sizing:border-box}
 [data-mb-atc-hidden]{display:none!important}
+[data-mb-atc-form]{margin-top:0!important}
 .mb-atc{-webkit-appearance:none;appearance:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;width:100%;min-height:var(--mb-atc-h);margin:0;padding:10px 12px;border:0!important;border-radius:var(--mb-atc-r);background:var(--mb-atc-bg)!important;box-shadow:none;font-family:'Plus Jakarta Sans',sans-serif;text-align:center;text-transform:none;cursor:pointer;transition:opacity .15s ease}
 .mb-atc,.mb-atc *{color:var(--mb-atc-tx)!important;-webkit-text-fill-color:var(--mb-atc-tx)!important}
 .mb-atc:hover{opacity:.92}
@@ -38,7 +42,7 @@
 .mb-atc__n svg{display:block;flex:none;width:9px;height:10px;fill:none;stroke:currentColor;stroke-width:1.1;stroke-linecap:round;stroke-linejoin:round}
 </style>
 
-<div class="mb-atc-wrap" style="--mb-atc-bg:{{ mb_bg }};--mb-atc-tx:{{ mb_text }};--mb-atc-r:{{ mb_radius }};--mb-atc-h:{{ mb_height }};--mb-atc-top:{{ mb_top }};--mb-atc-bottom:{{ mb_bottom }}">
+<div class="mb-atc-wrap" style="--mb-atc-bg:{{ mb_bg }};--mb-atc-tx:{{ mb_text }};--mb-atc-r:{{ mb_radius }};--mb-atc-h:{{ mb_height }};--mb-atc-top:{{ mb_top }};--mb-atc-bottom:{{ mb_bottom }}" data-gap="{{ mb_top | replace: 'px', '' | strip }}" data-fix="{{ mb_fix_gap }}">
 <button type="button" class="mb-atc" data-btn>
 <span class="mb-atc__t" data-label>{{ mb_label }}</span>
 {%- if mb_note != blank -%}<span class="mb-atc__n"><svg viewBox="0 0 12 14" aria-hidden="true" focusable="false"><path d="M6 1l4.5 1.6v3.9c0 3-1.9 5.2-4.5 6.5C3.4 11.7 1.5 9.5 1.5 6.5V2.6z"/><path d="M4.1 6.9l1.3 1.3 2.5-2.7"/></svg>{{ mb_note }}</span>{%- endif -%}
@@ -74,14 +78,53 @@ function hook(){
 var r=find();
 if(!r)return!!real;
 if(r!==real){
-if(real)real.removeAttribute('data-mb-atc-hidden');
+if(real){real.removeAttribute('data-mb-atc-hidden');var op=real.closest('product-form,.product-form');if(op)op.removeAttribute('data-mb-atc-form')}
 real=r;
 real.setAttribute('data-mb-atc-hidden','');
+var pf=real.closest('product-form,.product-form');
+if(pf)pf.setAttribute('data-mb-atc-form','');
 if(obs)obs.disconnect();
 obs=new MutationObserver(sync);
 obs.observe(real,{attributes:true,attributeFilter:['disabled','aria-disabled','class'],childList:true,subtree:true,characterData:true});
 sync()}
 return true}
+var want=parseFloat(root.getAttribute('data-gap')),fixOn=root.getAttribute('data-fix')!=='false'&&want>=0,busyFix=false,raf=0;
+function shown(e){return e.offsetHeight>0&&getComputedStyle(e).visibility!=='hidden'}
+function above(){
+var n=root,up,p,par,k,o;
+for(up=0;up<4&&n;up++){
+p=n.previousElementSibling;
+while(p){
+if(shown(p)){
+var b=-1e9,d=p.querySelectorAll('*'),i,e,c,r;
+for(i=0;i<d.length;i++){e=d[i];if(!shown(e))continue;c=getComputedStyle(e);if(c.position==='absolute'||c.position==='fixed')continue;r=e.getBoundingClientRect();if(r.height>0&&r.bottom>b)b=r.bottom}
+return b>-1e9?b:p.getBoundingClientRect().bottom}
+p=p.previousElementSibling}
+par=n.parentElement;
+if(!par||par===document.body)break;
+o=0;
+for(k=0;k<par.children.length;k++){if(par.children[k]!==n&&shown(par.children[k]))o++}
+if(o)break;
+n=par}
+return null}
+function fixGap(){
+if(!fixOn||busyFix)return;
+busyFix=true;
+for(var n=0;n<4;n++){
+var a=above();
+if(a===null)break;
+var gap=root.getBoundingClientRect().top-a;
+if(Math.abs(gap-want)<.75)break;
+var cur=parseFloat(getComputedStyle(root).marginTop)||0;
+root.style.marginTop=Math.max(-150,Math.min(150,cur+want-gap))+'px'}
+busyFix=false}
+function soon(){if(raf)return;raf=requestAnimationFrame(function(){raf=0;fixGap()})}
+if(fixOn){
+fixGap();
+window.addEventListener('load',function(){fixGap();setTimeout(fixGap,400);setTimeout(fixGap,1200);setTimeout(fixGap,2500)});
+window.addEventListener('resize',soon);
+if(window.ResizeObserver){var ro=new ResizeObserver(soon),w=[root.parentElement,root.closest('.product__info-container,[id^="MainProduct"],product-info,section,main')];w.forEach(function(x,j){if(x&&w.indexOf(x)===j)ro.observe(x)})}
+document.addEventListener('click',function(e){if(e.target&&e.target.closest&&e.target.closest('.kaching-bundles'))setTimeout(fixGap,150)},true)}
 btn.addEventListener('click',function(e){
 e.preventDefault();
 if(btn.disabled||btn.classList.contains('is-busy'))return;
