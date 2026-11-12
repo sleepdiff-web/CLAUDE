@@ -1,0 +1,99 @@
+{%- comment -%}
+  Black "Add To Cart" button with a small money-back line and shield icon underneath the label (inside the button).
+  WHERE: Online Store > Themes > Customize > Product page > Product information > Add block > Custom Liquid, drag it to sit right under your bundle bars.
+  IMPORTANT: keep the theme's own Buy buttons block on the page. This code hides the theme's Add to cart button and presses it for you when
+  someone taps this one, so your bundles, cart drawer and tracking keep working exactly as before.
+  EDIT YOUR CONTENT BELOW.
+  mb_label = the big text. mb_note = the small line with the shield (leave '' to hide it).
+  mb_bg = button colour. mb_text = colour of all the text and the shield (locked so the theme cannot change it).
+  mb_radius = corner roundness. mb_height = minimum button height. mb_top / mb_bottom = space above and below the button.
+  Do not use a straight apostrophe (') inside the text, use &#39; instead.
+{%- endcomment -%}
+{%- assign mb_label = 'Add To Cart' -%}
+{%- assign mb_note = '90-Day Money-Back Guarantee' -%}
+{%- assign mb_bg = '#000000' -%}
+{%- assign mb_text = '#ffffff' -%}
+{%- assign mb_radius = '8px' -%}
+{%- assign mb_height = '55px' -%}
+{%- assign mb_top = '12px' -%}
+{%- assign mb_bottom = '0px' -%}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap"></noscript>
+
+<style>
+.mb-atc-wrap{box-sizing:border-box;width:100%;margin:var(--mb-atc-top) 0 var(--mb-atc-bottom);padding:0}
+.mb-atc-wrap *{box-sizing:border-box}
+[data-mb-atc-hidden]{display:none!important}
+.mb-atc{-webkit-appearance:none;appearance:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;width:100%;min-height:var(--mb-atc-h);margin:0;padding:10px 12px;border:0!important;border-radius:var(--mb-atc-r);background:var(--mb-atc-bg)!important;box-shadow:none;font-family:'Plus Jakarta Sans',sans-serif;text-align:center;text-transform:none;cursor:pointer;transition:opacity .15s ease}
+.mb-atc,.mb-atc *{color:var(--mb-atc-tx)!important;-webkit-text-fill-color:var(--mb-atc-tx)!important}
+.mb-atc:hover{opacity:.92}
+.mb-atc:focus-visible{outline:2px solid var(--mb-atc-bg);outline-offset:2px}
+.mb-atc.is-busy{opacity:.7;cursor:progress}
+.mb-atc:disabled{opacity:.5;cursor:not-allowed}
+.mb-atc__t{display:block;margin:0;padding:0;font-size:15px;font-weight:700;line-height:1.2;letter-spacing:0;text-transform:none}
+.mb-atc__n{display:flex;align-items:center;justify-content:center;gap:4px;margin:0;padding:0;font-size:8px;font-weight:700;line-height:1.2;letter-spacing:0;text-transform:none}
+.mb-atc__n svg{display:block;flex:none;width:9px;height:10px;fill:none;stroke:currentColor;stroke-width:1.1;stroke-linecap:round;stroke-linejoin:round}
+</style>
+
+<div class="mb-atc-wrap" style="--mb-atc-bg:{{ mb_bg }};--mb-atc-tx:{{ mb_text }};--mb-atc-r:{{ mb_radius }};--mb-atc-h:{{ mb_height }};--mb-atc-top:{{ mb_top }};--mb-atc-bottom:{{ mb_bottom }}">
+<button type="button" class="mb-atc" data-btn>
+<span class="mb-atc__t" data-label>{{ mb_label }}</span>
+{%- if mb_note != blank -%}<span class="mb-atc__n"><svg viewBox="0 0 12 14" aria-hidden="true" focusable="false"><path d="M6 1l4.5 1.6v3.9c0 3-1.9 5.2-4.5 6.5C3.4 11.7 1.5 9.5 1.5 6.5V2.6z"/><path d="M4.1 6.9l1.3 1.3 2.5-2.7"/></svg>{{ mb_note }}</span>{%- endif -%}
+</button>
+</div>
+
+<script>
+(function(){
+function txt(el){var s=el.querySelector('span');return((s||el).textContent||'').replace(/\s+/g,' ').trim()}
+function init(root){
+if(root.getAttribute('data-on'))return;
+root.setAttribute('data-on','1');
+var btn=root.querySelector('[data-btn]'),lbl=root.querySelector('[data-label]');
+if(!btn||!lbl)return;
+var def=lbl.textContent,real=null,obs=null;
+function scope(){return root.closest('.shopify-section')||document}
+function find(){
+var sel='form[action*="/cart/add"] [type="submit"],form[action*="/cart/add"] button[name="add"]',a=[scope(),document];
+for(var k=0;k<2;k++){
+var l=a[k].querySelectorAll(sel);
+for(var i=0;i<l.length;i++){var b=l[i];if(root.contains(b)||b.classList.contains('shopify-payment-button__button')||b.closest('.shopify-payment-button'))continue;return b}
+}
+return null}
+function sync(){
+if(!real)return;
+var dis=real.disabled||real.hasAttribute('disabled');
+var busy=!dis&&(real.getAttribute('aria-disabled')==='true'||real.classList.contains('loading'));
+btn.disabled=dis;
+btn.classList.toggle('is-busy',busy);
+btn.setAttribute('aria-busy',busy?'true':'false');
+lbl.textContent=dis?(txt(real)||def):def}
+function hook(){
+var r=find();
+if(!r)return!!real;
+if(r!==real){
+if(real)real.removeAttribute('data-mb-atc-hidden');
+real=r;
+real.setAttribute('data-mb-atc-hidden','');
+if(obs)obs.disconnect();
+obs=new MutationObserver(sync);
+obs.observe(real,{attributes:true,attributeFilter:['disabled','aria-disabled','class'],childList:true,subtree:true,characterData:true});
+sync()}
+return true}
+btn.addEventListener('click',function(e){
+e.preventDefault();
+if(btn.disabled||btn.classList.contains('is-busy'))return;
+hook();
+if(real){real.click();return}
+var f=scope().querySelector('form[action*="/cart/add"]')||document.querySelector('form[action*="/cart/add"]');
+if(f){if(f.requestSubmit)f.requestSubmit();else f.submit()}});
+if(!hook()){
+var n=0,t=setInterval(function(){n++;if(hook()||n>40)clearInterval(t)},250);
+document.addEventListener('DOMContentLoaded',hook)}}
+function all(){document.querySelectorAll('.mb-atc-wrap').forEach(init)}
+all();
+document.addEventListener('shopify:section:load',all);
+})();
+</script>
