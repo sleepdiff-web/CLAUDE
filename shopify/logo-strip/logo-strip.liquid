@@ -7,6 +7,7 @@
   mb_logos = your logos, separated by @@ and each one written as   LOGO PICTURE LINK ||| NAME
   (the NAME is the picture description for screen readers. With no picture link, the NAME shows as grey placeholder text so you can see the strip working.)
   IMPORTANT: only show logos of outlets that really featured you.
+  THE 5 LOGOS BELOW ARE LINKED FROM goda.co's FILES SO YOU CAN SEE THE STRIP WORKING. Before you go live: save each logo, upload it in Shopify admin > Content > Files, paste your own file link in place of the goda.co one, and change "Press logo 1" etc. to the outlet name (it is the picture description for screen readers). If goda.co ever changes those files, the strip would go blank.
   mb_show_d / mb_show_t / mb_show_m = how many logos fit across on desktop (wider than 1200px), tablet (768 to 1200px) and phone.
   mb_speed = seconds each logo takes to glide past (goda uses 8, bigger is slower). mb_logo_h = height of the logos.
   mb_title = optional small heading above the logos (goda hides it), leave empty for none.
@@ -14,15 +15,15 @@
   mb_bleed = true stretches the strip edge to edge across the screen. mb_top / mb_bottom = space above and below the block.
 {%- endcomment -%}
 {%- capture mb_logos -%}
- ||| Your logo 1
+https://goda.co/cdn/shop/files/image_2.png?v=1744788544 ||| Press logo 1
 @@
- ||| Your logo 2
+https://goda.co/cdn/shop/files/image_1_8486bc90-90e1-4b65-834f-c2780cd1bdc1.png?v=1744788555 ||| Press logo 2
 @@
- ||| Your logo 3
+https://goda.co/cdn/shop/files/image_3.png?v=1744788568 ||| Press logo 3
 @@
- ||| Your logo 4
+https://goda.co/cdn/shop/files/image_240.png?v=1744788576 ||| Press logo 4
 @@
- ||| Your logo 5
+https://goda.co/cdn/shop/files/image_4.png?v=1744788589 ||| Press logo 5
 {%- endcapture -%}
 {%- assign mb_label = 'As seen in' -%}
 {%- assign mb_title = '' -%}
