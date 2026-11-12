@@ -1,6 +1,7 @@
 {%- comment -%}
   Sale price row, exact copy of Metabolae's (price, crossed-out price, sale pill). Add as a Custom Liquid block on the PRODUCT page above the bundle bars.
   Prices follow the selected variant and the selected Kaching Bundles bar. mb_label = pill text. _d = desktop, _m = mobile. mb_kaching = false if no Kaching.
+  If the Save % ever looks wrong with Kaching, add ?mbdebug=1 to the end of the product page address, press F12, open Console and send me what it prints.
   Do not use a straight apostrophe (') in the text, use &#39; instead.
 {%- endcomment -%}
 {%- assign mb_label = 'Fall Sale - Save' -%}
@@ -172,10 +173,14 @@ var priceEl = wrap.querySelector('[data-badge-price]');
 var compareEl = wrap.querySelector('[data-badge-compare]');
 var pillEl = wrap.querySelector('[data-badge-pill]');
 var pctEl = wrap.querySelector('[data-badge-pct]');
+var DBG = /[?&]mbdebug=1/.test(location.search);
+function log() { if (DBG && window.console) console.log.apply(console, ['[sale-badge]'].concat([].slice.call(arguments))); }
 var variants = [{%- if product -%}{%- for v in product.variants -%}{"id":{{ v.id }},"price":{{ v.price }},"compare_at_price":{{ v.compare_at_price | default: 0 }}}{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%}{%- endif -%}];
 var variantMap = {};
 variants.forEach(function (v) { variantMap[v.id] = v; });
 var moneyFmt = {{ shop.money_format | json }};
+var kachingOn = false;
+var lastKey = '';
 function formatMoney(cents) {
 var amount = (cents / 100).toFixed(2);
 var amountNoD = String(Math.round(cents / 100));
@@ -187,7 +192,7 @@ return moneyFmt
 .replace(/\{\{\s*amount_no_decimals_with_comma_separator\s*\}\}/g, amountNoD.replace('.', ','));
 }
 function parseToCents(str) {
-var s = str.replace(/[^\d.,]/g, '');
+var s = String(str || '').replace(/[^\d.,]/g, '');
 if (!s) return 0;
 if (/,\d{2}$/.test(s) && s.indexOf('.') === -1) {
 s = s.replace(',', '.');
@@ -195,6 +200,10 @@ s = s.replace(',', '.');
 s = s.replace(/,/g, '');
 }
 return Math.round(parseFloat(s) * 100) || 0;
+}
+function amountOf(t) {
+var m = String(t || '').match(/\d[\d.,]*/);
+return m ? parseToCents(m[0]) : 0;
 }
 function updateBadgeFromCents(priceCents, compareAtCents) {
 if (priceEl) priceEl.textContent = formatMoney(priceCents);
@@ -215,6 +224,8 @@ pillEl.setAttribute('aria-hidden', 'true');
 }
 function updateBadge(variant) {
 if (!variant) return;
+if (kachingOn) { kSoon(0); return; }
+lastKey = '';
 updateBadgeFromCents(variant.price, variant.compare_at_price || 0);
 }
 function getVariant(id) {
@@ -235,7 +246,7 @@ if (v) updateBadge(v);
 }
 {%- if mb_kaching %}
 if (el.name === 'selling_plan') {
-setTimeout(readKachingPrices, 250);
+kBurst();
 }
 {%- endif %}
 });
@@ -260,122 +271,100 @@ if (v) updateBadge(v);
 }, 200);
 }
 {%- if mb_kaching %}
-var _kTimer = null;
-var _kLastPrice = -1;
-var _kLastCompare = -1;
-function getActiveKachingElements() {
-var selBar = document.querySelector('.kaching-bundles__bar--selected, .kaching-bundles__bar--active');
-if (selBar) {
-var sbp = selBar.querySelector('.kaching-bundles__bar-price');
-var sbfp = selBar.querySelector('.kaching-bundles__bar-full-price');
-if (sbp && sbfp) return { barPrice: sbp, barFullPrice: sbfp };
+/* Kaching Bundles: the selected bar is the only source of the price, the crossed-out price and the Save x%. */
+var kRootEl = null;
+var kObs = null;
+function kRoot() {
+return document.querySelector('.kaching-bundles') || document.querySelector('[class*="kaching-bundles"]');
 }
-var kachingWrap = document.querySelector('.kaching-bundles');
-if (kachingWrap) {
-var checked = kachingWrap.querySelector('input[type="radio"]:checked');
-if (checked) {
-var row = checked.parentElement;
-while (row && row !== kachingWrap) {
-var bp = row.querySelector('.kaching-bundles__bar-price');
-var bfp = row.querySelector('.kaching-bundles__bar-full-price');
-if (bp && bfp) return { barPrice: bp, barFullPrice: bfp };
-row = row.parentElement;
+function kBars(root) {
+var l = [].slice.call(root.querySelectorAll('.kaching-bundles__bar'));
+if (l.length) return l;
+l = [].slice.call(root.querySelectorAll('[role="radio"], [role="radiogroup"] > *, label'));
+return l.filter(function (b) { return /\d/.test(b.textContent || ''); });
 }
+function isSel(b) {
+if (/--(selected|active|checked)(\s|$)|(^|\s)(is-)?(selected|active|checked)(\s|$)/.test(String(b.className || ''))) return true;
+if (b.getAttribute('aria-checked') === 'true' || b.getAttribute('aria-selected') === 'true' || b.getAttribute('data-selected') === 'true') return true;
+return !!b.querySelector('input:checked, [aria-checked="true"], [aria-selected="true"]');
 }
+function kSelected(bars) {
+var i;
+for (i = 0; i < bars.length; i++) { if (isSel(bars[i])) return bars[i]; }
+if (bars.length > 2) {
+var keys = bars.map(function (b) { var s = getComputedStyle(b); return s.borderTopColor + '|' + s.borderTopWidth + '|' + s.backgroundColor; });
+var uniq = [];
+for (i = 0; i < bars.length; i++) {
+if (keys.filter(function (k) { return k === keys[i]; }).length === 1) uniq.push(bars[i]);
 }
-var activeCandidates = [
-'.kaching-bundles__bar--selected',
-'.kaching-bundles__bar--active',
-'.kaching-bundles__bar.is-selected',
-'.kaching-bundles__bar.is-active',
-'.kaching-bundles__bar.selected',
-'.kaching-bundles__bar.active'
-];
-for (var i = 0; i < activeCandidates.length; i++) {
-var activeRow = document.querySelector(activeCandidates[i]);
-if (activeRow) {
-var abp = activeRow.querySelector('.kaching-bundles__bar-price');
-var abfp = activeRow.querySelector('.kaching-bundles__bar-full-price');
-if (abp && abfp) return { barPrice: abp, barFullPrice: abfp };
+if (uniq.length === 1) return uniq[0];
 }
+return bars[0] || null;
 }
-return {
-barPrice: document.querySelector('.kaching-bundles__bar-price'),
-barFullPrice: document.querySelector('.kaching-bundles__bar-full-price')
-};
+function kRead(b) {
+var pe = b.querySelector('.kaching-bundles__bar-price');
+var ce = b.querySelector('.kaching-bundles__bar-full-price');
+var p = pe ? amountOf(pe.innerText || pe.textContent) : 0;
+var c = ce ? amountOf(ce.innerText || ce.textContent) : 0;
+if (p > 0) return { p: p, c: c, how: 'classes' };
+var els = b.querySelectorAll('*'), i, e, t, s, a;
+p = 0; c = 0;
+for (i = 0; i < els.length; i++) {
+e = els[i];
+if (e.children.length) continue;
+t = (e.textContent || '').trim();
+if (!t || t.length > 16 || !/\d/.test(t) || /save|off|each|per|free|%|\//i.test(t)) continue;
+a = amountOf(t);
+if (!a) continue;
+s = getComputedStyle(e);
+if (/line-through/.test(s.textDecorationLine || s.textDecoration || '')) { if (!c) c = a; } else if (!p) { p = a; }
 }
-function readKachingPrices() {
-if (_kTimer) clearTimeout(_kTimer);
-_kTimer = setTimeout(function () {
-var els = getActiveKachingElements();
-var barPrice = els.barPrice;
-var barFullPrice = els.barFullPrice;
-if (!barPrice || !barFullPrice) return;
-var priceText = (barPrice.innerText || '').trim();
-var fullPriceText = (barFullPrice.innerText || '').trim();
-if (!priceText || !fullPriceText) return;
-var priceCents = parseToCents(priceText);
-var compareAtCents = parseToCents(fullPriceText);
-if (priceCents <= 0 || compareAtCents <= 0) return;
-if (priceCents === _kLastPrice && compareAtCents === _kLastCompare) return;
-_kLastPrice = priceCents;
-_kLastCompare = compareAtCents;
-updateBadgeFromCents(priceCents, compareAtCents);
-}, 50);
+return { p: p, c: c, how: 'scan' };
 }
-function attachKachingObserver() {
-var barPrice = document.querySelector('.kaching-bundles__bar-price');
-var barFullPrice = document.querySelector('.kaching-bundles__bar-full-price');
-if (!barPrice || !barFullPrice) return false;
-readKachingPrices();
-var directObs = new MutationObserver(readKachingPrices);
-directObs.observe(barPrice, { subtree: true, childList: true, characterData: true });
-directObs.observe(barFullPrice, { subtree: true, childList: true, characterData: true });
-var kachingRoot = (
-document.querySelector('.kaching-bundles__bar-pricing') ||
-document.querySelector('.kaching-bundles__bar-wrapper') ||
-document.querySelector('.kaching-bundles') ||
-document.querySelector('[id^="MainProduct"]') ||
-document.querySelector('.product__info-container') ||
-document.querySelector('.product-single') ||
-document.querySelector('[data-product-form]') ||
-document.querySelector('main')
-);
-if (kachingRoot) {
-new MutationObserver(readKachingPrices)
-.observe(kachingRoot, { subtree: true, childList: true, characterData: true });
+function kApply(why) {
+var root = kRoot();
+if (!root) return false;
+var bars = kBars(root);
+if (!bars.length) return false;
+var sel = kSelected(bars);
+var r = kRead(sel);
+if (why !== 'poll') log(why, 'bars:', bars.length, 'selected #', bars.indexOf(sel), r);
+if (!(r.p > 0)) return false;
+kachingOn = true;
+var key = r.p + '/' + r.c;
+if (key === lastKey) return true;
+lastKey = key;
+updateBadgeFromCents(r.p, r.c);
+return true;
 }
-var barsRoot = document.querySelector('.kaching-bundles__bars') || document.querySelector('.kaching-bundles');
-if (barsRoot) {
-new MutationObserver(readKachingPrices).observe(barsRoot, {
-attributes: true,
-attributeFilter: ['class', 'checked', 'aria-checked', 'aria-selected'],
-subtree: true
-});
+function kSoon(delay) {
+setTimeout(function () { kApply('event'); }, delay || 0);
+}
+function kBurst() {
+kSoon(0); kSoon(80); kSoon(250); kSoon(600);
+}
+function kAttach() {
+var root = kRoot();
+if (!root) return false;
+if (root !== kRootEl) {
+if (kObs) kObs.disconnect();
+kRootEl = root;
+kObs = new MutationObserver(function () { kSoon(30); });
+kObs.observe(root, { subtree: true, childList: true, characterData: true, attributes: true, attributeFilter: ['class', 'checked', 'aria-checked', 'aria-selected', 'data-selected'] });
+kApply('attach');
 }
 return true;
 }
-document.addEventListener('click', function (e) {
-if (e.target && e.target.closest && e.target.closest('.kaching-bundles')) setTimeout(readKachingPrices, 80);
-}, true);
-document.addEventListener('change', function (e) {
-if (e.target && e.target.closest && e.target.closest('.kaching-bundles')) setTimeout(readKachingPrices, 80);
-}, true);
-if (!attachKachingObserver()) {
-var _kPollN = 0;
-var _kPoll = setInterval(function () {
-_kPollN++;
-if (attachKachingObserver() || _kPollN >= 50) {
-clearInterval(_kPoll);
+function inKaching(e) {
+return e.target && e.target.closest && e.target.closest('[class*="kaching-bundles"]');
 }
-}, 100);
-}
-document.addEventListener('kaching:price:updated', readKachingPrices);
-document.addEventListener('kaching:bundle:selected', readKachingPrices);
-document.addEventListener('kaching:subscription:changed', readKachingPrices);
-document.addEventListener('kaching:subscription:toggled', readKachingPrices);
-document.addEventListener('kaching:autoship:changed', readKachingPrices);
-document.addEventListener('kaching:selling_plan:changed', readKachingPrices);
+document.addEventListener('click', function (e) { if (inKaching(e)) kBurst(); }, true);
+document.addEventListener('change', function (e) { if (inKaching(e)) kBurst(); }, true);
+kAttach();
+setInterval(function () { if (!document.hidden) { kAttach(); kApply('poll'); } }, 700);
+['kaching:price:updated', 'kaching:bundle:selected', 'kaching:subscription:changed', 'kaching:subscription:toggled', 'kaching:autoship:changed', 'kaching:selling_plan:changed'].forEach(function (ev) {
+document.addEventListener(ev, kBurst);
+});
 {%- endif %}
 })();
 </script>
