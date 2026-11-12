@@ -1,29 +1,58 @@
 {%- comment -%}
-  Product title: "Berberine Metabolic Support Complex (500mg)".
-  mb_title = the title text.
-  mb_color = text colour (locked, so the theme cannot change it).
-  mb_tag = h1 for a real page heading, or div if the page already has a heading elsewhere. It looks identical either way.
-  mb_top / mb_top_mobile / mb_bottom / mb_bottom_mobile = space above and below (desktop / phone). The top is a small 10px (8px on phones) under the line above it; the theme's own gap above it is switched off. Set mb_top / mb_top_mobile to 0px to sit tight, or raise them for more space. Margins merge with neighbouring blocks.
-  Do not use a straight apostrophe (') inside mb_title (use &#39; instead).
+  Product name with a star rating line above it, in Libre Caslon Text.
+  WHERE: Online Store > Themes > Customize > Product page > Product information > Add block > Custom Liquid, drag it to the top (above the price), paste this in.
+  Then hide or remove the theme's own Title block so the product name is not shown twice.
+  EDIT YOUR CONTENT BELOW.
+  mb_title = leave '' to use the product's own name from Shopify, or type your own text to override it.
+  mb_rating = the number. mb_count = the text after it, shown in brackets.
+  mb_star = star colour. mb_text = colour of the name and the rating text (locked so the theme cannot change it).
+  mb_weight = thickness of the name (400 regular, 700 bold).
+  mb_top / mb_bottom = space above and below this block.
+  Do not use a straight apostrophe (') inside the text, use &#39; instead.
 {%- endcomment -%}
-{%- assign mb_title = 'Berberine Metabolic Support Complex (500mg)' -%}
-{%- assign mb_color = '#121212' -%}
-{%- assign mb_tag = 'h1' -%}
-{%- assign mb_top = '10px' -%}
-{%- assign mb_top_mobile = '8px' -%}
-{%- assign mb_bottom = '12px' -%}
-{%- assign mb_bottom_mobile = '16px' -%}
+{%- assign mb_title = '' -%}
+{%- assign mb_rating = '4.9' -%}
+{%- assign mb_count = '10,012+ Reviews' -%}
+{%- assign mb_star = '#fcd560' -%}
+{%- assign mb_text = '#34282C' -%}
+{%- assign mb_weight = 700 -%}
+{%- assign mb_top = '0px' -%}
+{%- assign mb_bottom = '0px' -%}
+{%- if mb_title == blank -%}{%- assign mb_title = product.title | escape | default: 'Berberine' -%}{%- endif -%}
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600&display=swap" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600&display=swap"></noscript>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:wght@400;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:wght@400;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"></noscript>
 
 <style>
-.mb-tt{display:block;margin:var(--mb-tt-mt,0px) 0 var(--mb-tt-mb,12px);margin-top:var(--mb-tt-mt,0px)!important;padding:0;font-family:Poppins,sans-serif;font-size:26px;font-style:normal;font-weight:600;line-height:1.25;letter-spacing:normal;text-align:left;text-transform:none;word-break:break-word}
+.mb-pt{box-sizing:border-box;width:100%;margin:0;padding:var(--mb-pt-top) 0 var(--mb-pt-bottom);text-align:left}
+.mb-pt *{box-sizing:border-box}
+.mb-pt__rate{display:flex;align-items:center;gap:8px;margin:0 0 6px;padding:0}
+.mb-pt__stars{display:flex;align-items:center;gap:2px;flex:none}
+.mb-pt__stars svg{display:block;width:16px;height:16px;fill:var(--mb-pt-star)!important}
+.mb-pt__stars path{fill:var(--mb-pt-star)!important}
+.mb-pt__rt{margin:0;padding:0;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:500;line-height:1.3;letter-spacing:0;text-transform:none;color:var(--mb-pt-tx)!important;-webkit-text-fill-color:var(--mb-pt-tx)!important}
+.mb-pt__title{margin:0!important;padding:0!important;border:0;font-family:'Libre Caslon Text',Georgia,'Times New Roman',serif!important;font-size:30px!important;font-weight:var(--mb-pt-w)!important;font-style:normal!important;line-height:110%!important;letter-spacing:0!important;text-transform:none!important;text-align:left!important;word-break:break-word;color:var(--mb-pt-tx)!important;-webkit-text-fill-color:var(--mb-pt-tx)!important}
+@media screen and (min-width:750px){
+.mb-pt__stars svg{width:18px;height:18px}
+.mb-pt__rt{font-size:15px}
+}
 @media screen and (max-width:749px){
-.mb-tt{font-size:21px;margin-top:var(--mb-tt-mtm,0px)!important;margin-bottom:var(--mb-tt-mbm,16px)}
+.mb-pt__title{font-size:26px!important;line-height:111%!important}
 }
 </style>
 
-<{{ mb_tag }} class="mb-tt" style="--mb-tt-mt:{{ mb_top }};--mb-tt-mtm:{{ mb_top_mobile }};--mb-tt-mb:{{ mb_bottom }};--mb-tt-mbm:{{ mb_bottom_mobile }};color:{{ mb_color }}!important;-webkit-text-fill-color:{{ mb_color }}!important">{{ mb_title }}</{{ mb_tag }}>
+<div class="mb-pt" style="--mb-pt-star:{{ mb_star }};--mb-pt-tx:{{ mb_text }};--mb-pt-w:{{ mb_weight }};--mb-pt-top:{{ mb_top }};--mb-pt-bottom:{{ mb_bottom }}">
+<div class="mb-pt__rate">
+<div class="mb-pt__stars" role="img" aria-label="Rated {{ mb_rating }} out of 5 stars">
+<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 1.8l3 6.6 7.2.8-5.4 4.8 1.5 7.1L12 17.4l-6.3 3.7 1.5-7.1L1.8 9.2l7.2-.8z"/></svg>
+<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 1.8l3 6.6 7.2.8-5.4 4.8 1.5 7.1L12 17.4l-6.3 3.7 1.5-7.1L1.8 9.2l7.2-.8z"/></svg>
+<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 1.8l3 6.6 7.2.8-5.4 4.8 1.5 7.1L12 17.4l-6.3 3.7 1.5-7.1L1.8 9.2l7.2-.8z"/></svg>
+<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 1.8l3 6.6 7.2.8-5.4 4.8 1.5 7.1L12 17.4l-6.3 3.7 1.5-7.1L1.8 9.2l7.2-.8z"/></svg>
+<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 1.8l3 6.6 7.2.8-5.4 4.8 1.5 7.1L12 17.4l-6.3 3.7 1.5-7.1L1.8 9.2l7.2-.8z"/></svg>
+</div>
+<p class="mb-pt__rt">{{ mb_rating }} ({{ mb_count }})</p>
+</div>
+<h1 class="mb-pt__title">{{ mb_title }}</h1>
+</div>
