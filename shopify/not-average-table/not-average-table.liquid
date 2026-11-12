@@ -1,23 +1,24 @@
 {%- comment -%}
-  "Not your average ..." section (copy of the goda.co block): a centred title, one big picture (your comparison picture), an "Add To Cart" button that scrolls to the product, and a small tick + "30 Day Money Back Guarantee" line under it.
+  "Not your average ..." section (copy of the goda.co block, sized from a screenshot of the real section): a small centred serif title, one comparison picture, a black "Add To Cart" button that scrolls to the product, and a small tick + "30 Day Money Back Guarantee" line under it.
   No slider app or library, so it loads fast.
   WHERE: best as its own full-width section: Online Store > Themes > Customize > Product page > Add section > Custom Liquid, drag it where you want it, paste this in.
   If you paste it inside a narrow column instead, set mb_bleed to false.
   EDIT YOUR CONTENT BELOW. Do not use a straight apostrophe (') in the text, use &#39; instead.
-  mb_title = the title. mb_img = the big picture (a link to a picture). mb_img_m = a different picture just for phones (leave empty to use the same one on phones). mb_img_alt = its description for screen readers.
-  mb_img_max = the widest the picture gets on desktop. mb_img_ratio = the picture shape as width / height, for example 3 / 2 (optional: it only saves space for the picture while it loads, leave empty if you do not know it).
+  mb_title = the title. mb_img = the comparison picture (a link to a picture). mb_img_m = a different picture just for phones (leave empty to use the same one on phones). mb_img_alt = its description for screen readers.
+  mb_img_max = the widest the picture gets on desktop. mb_img_ratio = the picture shape as width / height, for example 1.22 (optional: it only saves space for the picture while it loads, leave empty if you do not know it).
   THE PICTURE BELOW IS LINKED FROM YOUR OWN SHOPIFY FILES, so it keeps working.
   mb_btn_text = the button text (leave empty to hide the button). mb_btn_link = where it goes. #scroll_product is goda&#39;s name for the product area: if there is no element with that name on your page, the button smoothly scrolls to the product&#39;s Add to cart form instead. You can also put a normal link like /cart or /products/your-product.
   mb_guarantee = the line next to the tick (leave empty to hide it).
-  mb_color_text = title and guarantee colour. mb_color_icon = the tick colour. mb_btn_bg / mb_btn_color = button colour / its writing. mb_btn_radius = how round the button is. mb_btn_h = button height.
-  mb_pad_d / mb_pad_m = space above and below the content on desktop / phone. mb_bg = band colour (transparent = none).
+  mb_color_text = title and guarantee colour. mb_color_icon = the tick colour. mb_btn_bg / mb_btn_color = button colour / its writing. mb_btn_radius = how round the button is. mb_btn_w / mb_btn_h = button width (on desktop, and the most it gets on phones) / height.
+  mb_scale = makes the whole DESKTOP version bigger or smaller in one go: 1 = the size measured from the goda screenshot, 0.9 = 10% smaller, 1.1 = 10% bigger. Phones are not affected.
+  mb_pad_d / mb_pad_m = space above, left-right and below the content on desktop / phone, written as top left-right bottom, for example 32px 20px 40px. mb_bg = band colour (transparent = none).
   mb_bleed = true stretches the band edge to edge across the screen. mb_top / mb_bottom = space above and below the block.
 {%- endcomment -%}
 {%- assign mb_title = 'Not Your Average Body Oil' -%}
 {%- assign mb_img = 'https://cdn.shopify.com/s/files/1/0847/9132/8941/files/eab8c8ee-9944-472a-9064-fa046f55eca3.png?v=1794481483' -%}
 {%- assign mb_img_m = '' -%}
 {%- assign mb_img_alt = 'Nerola Botanical Body Oil compared with other body oils' -%}
-{%- assign mb_img_max = '1000px' -%}
+{%- assign mb_img_max = '517px' -%}
 {%- assign mb_img_ratio = '' -%}
 {%- assign mb_btn_text = 'Add To Cart' -%}
 {%- assign mb_btn_link = '#scroll_product' -%}
@@ -25,54 +26,57 @@
 {%- assign mb_bg = 'transparent' -%}
 {%- assign mb_color_text = '#50422f' -%}
 {%- assign mb_color_icon = '#000000' -%}
-{%- assign mb_btn_bg = '#50422f' -%}
+{%- assign mb_btn_bg = '#000000' -%}
 {%- assign mb_btn_color = '#ffffff' -%}
-{%- assign mb_btn_radius = '8px' -%}
-{%- assign mb_btn_h = '56px' -%}
-{%- assign mb_pad_d = '60px' -%}
-{%- assign mb_pad_m = '36px' -%}
+{%- assign mb_btn_radius = '5px' -%}
+{%- assign mb_btn_w = '327px' -%}
+{%- assign mb_btn_h = '50px' -%}
+{%- assign mb_scale = 1 -%}
+{%- assign mb_pad_d = '32px 20px 40px' -%}
+{%- assign mb_pad_m = '24px 20px 32px' -%}
 {%- assign mb_bleed = true -%}
 {%- assign mb_top = '0px' -%}
 {%- assign mb_bottom = '0px' -%}
+{%- if mb_scale == blank -%}{%- assign mb_scale = 1 -%}{%- endif -%}
 {%- if mb_img contains '?' -%}{%- assign mb_sep = '&amp;' -%}{%- else -%}{%- assign mb_sep = '?' -%}{%- endif -%}
 {%- if mb_img_m contains '?' -%}{%- assign mb_sep_m = '&amp;' -%}{%- else -%}{%- assign mb_sep_m = '?' -%}{%- endif -%}
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Libre+Caslon+Text:wght@400;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Libre+Caslon+Text:wght@400;700&display=swap"></noscript>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700&family=Libre+Caslon+Text:wght@400&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700&family=Libre+Caslon+Text:wght@400&display=swap"></noscript>
 
 <style>
 .mb-na{box-sizing:border-box;width:100%;margin:var(--mb-na-top) 0 var(--mb-na-bottom);background:var(--mb-na-bg);font-family:'Plus Jakarta Sans',sans-serif;text-align:center;color:var(--mb-na-tx)}
 .mb-na--bleed{width:100vw;max-width:none;margin-left:calc(50% - 50vw);margin-right:0}
 .mb-na *{box-sizing:border-box}
 .mb-na p,.mb-na div,.mb-na span{letter-spacing:0;text-transform:none;font-style:normal}
-.mb-na__in{max-width:1200px;margin:0 auto;padding:var(--mb-na-pdm) 20px;display:flex;flex-direction:column;align-items:center}
-.mb-na .mb-na__t{margin:0 0 20px;padding:0;font-family:'Libre Caslon Text',Georgia,serif;font-size:28px;line-height:34px;font-weight:400;font-style:normal;letter-spacing:0;text-transform:none;text-align:center;color:var(--mb-na-tx)!important;-webkit-text-fill-color:var(--mb-na-tx)!important}
+.mb-na__in{max-width:1200px;margin:0 auto;padding:var(--mb-na-pdm);display:flex;flex-direction:column;align-items:center}
+.mb-na .mb-na__t{margin:0 0 20px;padding:0;font-family:'Libre Caslon Text',Georgia,serif;font-size:21px;line-height:1.25;font-weight:400;font-style:normal;letter-spacing:0;text-transform:none;text-align:center;color:var(--mb-na-tx)!important;-webkit-text-fill-color:var(--mb-na-tx)!important}
 .mb-na__im{width:100%;max-width:var(--mb-na-imw);margin:0 auto;padding:0}
 .mb-na__im img{display:block;width:100%;max-width:100%;height:auto;aspect-ratio:var(--mb-na-r,auto);margin:0;padding:0;border:0;border-radius:0;box-shadow:none;filter:none;opacity:1;transform:none}
 .mb-na__bt{width:100%;margin:24px 0 0;padding:0;display:flex;justify-content:center}
-.mb-na .mb-na__btn{display:inline-flex;align-items:center;justify-content:center;width:100%;max-width:420px;min-height:var(--mb-na-bh);margin:0;padding:0 40px;border:0;border-radius:var(--mb-na-br);background:var(--mb-na-bb);box-shadow:none;font-family:'Plus Jakarta Sans',sans-serif;font-size:16px;line-height:20px;font-weight:600;font-style:normal;letter-spacing:0;text-transform:none;text-decoration:none;text-align:center;color:var(--mb-na-bc)!important;-webkit-text-fill-color:var(--mb-na-bc)!important;cursor:pointer;-webkit-appearance:none;appearance:none;transition:opacity .2s ease}
+.mb-na .mb-na__btn{display:inline-flex;align-items:center;justify-content:center;width:100%;max-width:var(--mb-na-bw);height:var(--mb-na-bh);margin:0;padding:0 20px;border:0;border-radius:var(--mb-na-br);background:var(--mb-na-bb);box-shadow:none;font-family:'Plus Jakarta Sans',sans-serif;font-size:14.5px;line-height:1;font-weight:700;font-style:normal;letter-spacing:0;text-transform:none;text-decoration:none;text-align:center;color:var(--mb-na-bc)!important;-webkit-text-fill-color:var(--mb-na-bc)!important;cursor:pointer;-webkit-appearance:none;appearance:none;transition:opacity .2s ease}
 .mb-na .mb-na__btn:hover,.mb-na .mb-na__btn:focus-visible{opacity:.88;text-decoration:none}
-.mb-na__gt{display:flex;align-items:center;justify-content:center;gap:8px;margin:16px 0 0;padding:0}
-.mb-na__ck{display:block;flex:none;width:26px;height:27px;margin:0;padding:0}
-.mb-na .mb-na__gx{margin:0;padding:0;font-size:14px;line-height:20px;font-weight:500;color:var(--mb-na-tx)!important;-webkit-text-fill-color:var(--mb-na-tx)!important}
+.mb-na__gt{display:flex;align-items:center;justify-content:center;gap:6px;margin:12px 0 0;padding:0}
+.mb-na__ck{display:block;flex:none;width:15px;height:15.6px;margin:0;padding:0}
+.mb-na .mb-na__gx{margin:0;padding:0;font-size:12px;line-height:20px;font-weight:500;color:var(--mb-na-tx)!important;-webkit-text-fill-color:var(--mb-na-tx)!important}
 @media screen and (min-width:750px){
-.mb-na__in{padding-left:24px;padding-right:24px}
-.mb-na .mb-na__btn{width:auto;min-width:300px}
-.mb-na .mb-na__gx{font-size:15px;line-height:22px}
-}
-@media screen and (min-width:1024px){
-.mb-na__in{padding-top:var(--mb-na-pdd);padding-bottom:var(--mb-na-pdd)}
-.mb-na .mb-na__t{margin-bottom:28px;font-size:40px;line-height:48px}
-.mb-na__bt{margin-top:32px}
+.mb-na__in{padding:var(--mb-na-pdd)}
+.mb-na .mb-na__t{margin-bottom:calc(24px*var(--mb-na-k));font-size:calc(23px*var(--mb-na-k))}
+.mb-na__im{max-width:calc(var(--mb-na-imw)*var(--mb-na-k))}
+.mb-na__bt{margin-top:calc(32px*var(--mb-na-k))}
+.mb-na .mb-na__btn{width:calc(var(--mb-na-bw)*var(--mb-na-k));max-width:none;height:calc(var(--mb-na-bh)*var(--mb-na-k));border-radius:calc(var(--mb-na-br)*var(--mb-na-k));font-size:calc(14.5px*var(--mb-na-k))}
+.mb-na__gt{gap:calc(6px*var(--mb-na-k));margin-top:calc(12px*var(--mb-na-k))}
+.mb-na__ck{width:calc(15px*var(--mb-na-k));height:calc(15.6px*var(--mb-na-k))}
+.mb-na .mb-na__gx{font-size:calc(12px*var(--mb-na-k));line-height:calc(20px*var(--mb-na-k))}
 }
 </style>
 
-<div class="mb-na{% if mb_bleed %} mb-na--bleed{% endif %}" data-bleed="{{ mb_bleed }}" style="--mb-na-bg:{{ mb_bg }};--mb-na-tx:{{ mb_color_text }};--mb-na-bb:{{ mb_btn_bg }};--mb-na-bc:{{ mb_btn_color }};--mb-na-br:{{ mb_btn_radius }};--mb-na-bh:{{ mb_btn_h }};--mb-na-imw:{{ mb_img_max }};{% if mb_img_ratio != blank %}--mb-na-r:auto {{ mb_img_ratio }};{% endif %}--mb-na-pdd:{{ mb_pad_d }};--mb-na-pdm:{{ mb_pad_m }};--mb-na-top:{{ mb_top }};--mb-na-bottom:{{ mb_bottom }}">
+<div class="mb-na{% if mb_bleed %} mb-na--bleed{% endif %}" data-bleed="{{ mb_bleed }}" style="--mb-na-bg:{{ mb_bg }};--mb-na-tx:{{ mb_color_text }};--mb-na-bb:{{ mb_btn_bg }};--mb-na-bc:{{ mb_btn_color }};--mb-na-br:{{ mb_btn_radius }};--mb-na-bw:{{ mb_btn_w }};--mb-na-bh:{{ mb_btn_h }};--mb-na-imw:{{ mb_img_max }};{% if mb_img_ratio != blank %}--mb-na-r:auto {{ mb_img_ratio }};{% endif %}--mb-na-k:{{ mb_scale }};--mb-na-pdd:{{ mb_pad_d }};--mb-na-pdm:{{ mb_pad_m }};--mb-na-top:{{ mb_top }};--mb-na-bottom:{{ mb_bottom }}">
 <div class="mb-na__in">
 {%- if mb_title != blank -%}<h2 class="mb-na__t">{{ mb_title }}</h2>{%- endif -%}
-{%- if mb_img != blank -%}<div class="mb-na__im"><picture>{%- if mb_img_m != blank -%}<source media="(max-width: 749px)" srcset="{{ mb_img_m }}{{ mb_sep_m }}width=500 500w, {{ mb_img_m }}{{ mb_sep_m }}width=800 800w, {{ mb_img_m }}{{ mb_sep_m }}width=1100 1100w" sizes="100vw">{%- endif -%}<img src="{{ mb_img }}{{ mb_sep }}width=1200" srcset="{{ mb_img }}{{ mb_sep }}width=600 600w, {{ mb_img }}{{ mb_sep }}width=900 900w, {{ mb_img }}{{ mb_sep }}width=1200 1200w, {{ mb_img }}{{ mb_sep }}width=1600 1600w" sizes="(min-width: 1100px) {{ mb_img_max }}, 100vw" alt="{{ mb_img_alt | escape }}" loading="lazy" decoding="async"></picture></div>{%- endif -%}
+{%- if mb_img != blank -%}<div class="mb-na__im"><picture>{%- if mb_img_m != blank -%}<source media="(max-width: 749px)" srcset="{{ mb_img_m }}{{ mb_sep_m }}width=500 500w, {{ mb_img_m }}{{ mb_sep_m }}width=800 800w, {{ mb_img_m }}{{ mb_sep_m }}width=1100 1100w" sizes="100vw">{%- endif -%}<img src="{{ mb_img }}{{ mb_sep }}width=1200" srcset="{{ mb_img }}{{ mb_sep }}width=600 600w, {{ mb_img }}{{ mb_sep }}width=900 900w, {{ mb_img }}{{ mb_sep }}width=1200 1200w, {{ mb_img }}{{ mb_sep }}width=1600 1600w" sizes="(min-width: 750px) {{ mb_img_max }}, 100vw" alt="{{ mb_img_alt | escape }}" loading="lazy" decoding="async"></picture></div>{%- endif -%}
 {%- if mb_btn_text != blank -%}<div class="mb-na__bt"><a class="mb-na__btn" href="{{ mb_btn_link }}">{{ mb_btn_text }}</a></div>{%- endif -%}
 {%- if mb_guarantee != blank -%}<div class="mb-na__gt"><svg class="mb-na__ck" width="26" height="27" viewBox="0 0 26 27" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><circle cx="13" cy="13.6504" r="9.75" stroke="{{ mb_color_icon }}" stroke-width="1.3"></circle><path d="M8.66659 13.6504L11.9166 16.9004L17.3333 10.4004" stroke="{{ mb_color_icon }}" stroke-width="1.3"></path></svg><p class="mb-na__gx">{{ mb_guarantee }}</p></div>{%- endif -%}
 </div>
