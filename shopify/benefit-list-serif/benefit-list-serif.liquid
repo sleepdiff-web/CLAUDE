@@ -1,0 +1,76 @@
+{%- comment -%}
+  Short intro paragraph, a thin divider line, then a list of benefits with a gold outline icon on each line. All in Libre Caslon Text.
+  WHERE: Online Store > Themes > Customize > Product page > Product information > Add block > Custom Liquid, drag it where you want it, paste this in.
+  EDIT YOUR CONTENT BELOW.
+  mb_intro = the paragraph at the top. Use &amp; for an ampersand and &#39; for an apostrophe.
+  mb_data = one benefit per line, with @@ on its own line between them.
+    Each benefit gets a built-in gold icon. To use your own picture instead, add ||| and the image link after the text,
+    e.g.  Deep hydration where your skin needs it most ||| https://cdn.shopify.com/...png
+  mb_text = colour of all the text (locked so the theme cannot change it). mb_icon_color = colour of the built-in icons.
+  mb_line = colour of the divider line. mb_top / mb_bottom = space above and below this block.
+  Do not use a straight apostrophe (') inside the text, use &#39; instead.
+{%- endcomment -%}
+{%- assign mb_intro = 'Say goodbye to crepey, saggy &amp; dry skin. This botanical body oil visibly restores firmness and smoothness in just 2 minutes a day. See real results in 3–4 weeks — or get your money back.' -%}
+{%- capture mb_data -%}
+Deep hydration where your skin needs it most
+@@
+Non-greasy and absorbs in seconds
+@@
+Hand-Picked botanical formula
+@@
+Recommended by Dermatologists
+{%- endcapture -%}
+{%- assign mb_text = '#2a110a' -%}
+{%- assign mb_icon_color = '#dea531' -%}
+{%- assign mb_line = '#e1dcd8' -%}
+{%- assign mb_top = '0px' -%}
+{%- assign mb_bottom = '0px' -%}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:wght@400;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:wght@400;700&display=swap"></noscript>
+
+<style>
+.mb-fl{box-sizing:border-box;width:100%;margin:0;padding:var(--mb-fl-top) 0 var(--mb-fl-bottom);font-family:'Libre Caslon Text',Georgia,'Times New Roman',serif;text-align:left}
+.mb-fl *{box-sizing:border-box}
+.mb-fl__intro,.mb-fl__t{font-family:'Libre Caslon Text',Georgia,'Times New Roman',serif!important;font-weight:400!important;font-style:normal!important;letter-spacing:0!important;text-transform:none!important;text-align:left!important;color:var(--mb-fl-tx)!important;-webkit-text-fill-color:var(--mb-fl-tx)!important}
+.mb-fl__intro{margin:0;padding:0;font-size:14px;line-height:1.6}
+.mb-fl__rule{display:block;height:0;margin:9px 0 8px;padding:0;border:0;border-top:1px solid var(--mb-fl-line)}
+.mb-fl__list{margin:0;padding:0;list-style:none}
+.mb-fl__it{display:flex;align-items:flex-start;gap:10px;margin:0;padding:0;list-style:none}
+.mb-fl__ic{display:block;flex:none;width:24px;height:24px;margin-top:1px}
+.mb-fl__ic svg,.mb-fl__ic img{display:block;width:24px;height:24px;object-fit:contain}
+.mb-fl__ic svg{fill:none;stroke:var(--mb-fl-ic)!important;stroke-width:1;stroke-linecap:round;stroke-linejoin:round}
+.mb-fl__ic svg *{stroke:var(--mb-fl-ic)!important;fill:none!important}
+.mb-fl__t{margin:0;padding:0;font-size:16px;line-height:26px}
+@media screen and (max-width:749px){
+.mb-fl__t{font-size:clamp(13.5px,3.75vw,16px)}
+}
+</style>
+
+<div class="mb-fl" style="--mb-fl-tx:{{ mb_text }};--mb-fl-ic:{{ mb_icon_color }};--mb-fl-line:{{ mb_line }};--mb-fl-top:{{ mb_top }};--mb-fl-bottom:{{ mb_bottom }}">
+{%- if mb_intro != blank -%}<p class="mb-fl__intro">{{ mb_intro }}</p>
+<hr class="mb-fl__rule">{%- endif -%}
+<ul class="mb-fl__list">
+{%- assign mb_items = mb_data | split: '@@' -%}
+{%- for mb_item in mb_items -%}
+{%- assign mb_f = mb_item | split: '|||' -%}
+{%- assign mb_t = mb_f[0] | strip -%}
+{%- assign mb_i = mb_f[1] | strip -%}
+{%- if mb_t != blank -%}
+<li class="mb-fl__it"><span class="mb-fl__ic">
+{%- if mb_i != blank -%}<img src="{{ mb_i }}" width="24" height="24" alt="" loading="lazy" decoding="async">
+{%- else -%}
+{%- case forloop.index -%}
+{%- when 1 -%}<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="11"/><g transform="rotate(-45 12 12)"><path d="M9 5C9 9 15 9 15 12S9 15 9 19"/><path d="M15 5C15 9 9 9 9 12S15 15 15 19"/><path d="M9.8 7.2h4.4M9.4 16.8h5.2"/></g></svg>
+{%- when 2 -%}<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="2.5" y="12.5" width="19" height="9" rx="1.2"/><path d="M2.5 15.6h19"/><path d="M6 18.6h.01M10 18.6h.01M14 18.6h.01M18 18.6h.01M8 20h.01M12 20h.01M16 20h.01" stroke-width="1.6"/><path d="M6 4v2.4M4.8 5.2h2.4M12 2.4v2.4M10.8 3.6h2.4M18 4v2.4M16.8 5.2h2.4M9 8.6h.01M15 8.6h.01M12 9.6h.01"/></svg>
+{%- when 4 -%}<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5.5 2.5h9l4 4V11M5.5 2.5v18h6.5M14.5 2.5v4h4"/><path d="M8.5 9h5M8.5 12h3.5M8.5 15h2"/><circle cx="15.5" cy="16.5" r="3.5"/><path d="M18 19l3 3"/></svg>
+{%- else -%}<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="11"/><circle cx="9.6" cy="10" r="4"/><circle cx="14.6" cy="10" r="4"/><circle cx="12" cy="14.8" r="4"/><circle cx="14.6" cy="10" r="1.3"/></svg>
+{%- endcase -%}
+{%- endif -%}
+</span><span class="mb-fl__t">{{ mb_t }}</span></li>
+{%- endif -%}
+{%- endfor -%}
+</ul>
+</div>
