@@ -1,0 +1,134 @@
+{%- comment -%}
+  "Skin Transformations" picture marquee (a copy of the Quasi section built from its markup, which came without its CSS, so spacing, sizes and speed are a close best guess): a centred title, and under it one endless row of pictures that slides slowly to the left and loops with no jump. Your 4 pictures repeat twice per round, like the original (8 tiles).
+  No slider library, no app. Pure CSS movement, so it is smooth and fast. It pauses while a visitor hovers over it (computers), it stops for visitors who switch animations off on their device (they get a swipeable row instead), and it works without JavaScript too.
+
+  WHERE: best as its own full-width section: Online Store > Themes > Customize > Product page > Add section > Custom Liquid, drag it where you want it, paste this in.
+  If you paste it inside a narrow column instead, set mb_bleed to false.
+  EDIT YOUR CONTENT BELOW. Do not use a straight apostrophe (') in the text, use &#39; instead, and write & as &amp;
+  mb_title = the title (leave empty to hide it). The "300,000+" is Quasi&#39;s own number: put a number that is TRUE for your own store, or take the number out. mb_title_d / mb_title_m = title size on desktop (750px and up) / phone.
+  mb_images = your pictures, one link each, separated by @@. mb_repeat = how many times the list repeats inside one round (2 like the original; use 1 if you have 8 or more different pictures).
+  mb_alt = a short description for Google and screen readers (empty is fine).
+  mb_tile_d / mb_tile_m = the width of each picture on desktop / phone (write it in px). The height follows the picture&#39;s own shape. mb_ratio = force one shape on every picture, for example 3/4 or 1/1 (empty = each picture keeps its own shape). mb_gap_d / mb_gap_m = space between pictures. mb_radius = how round the picture corners are.
+  mb_dur_d / mb_dur_m = how many seconds one full round takes on desktop / phone (bigger = slower). mb_dir = left or right (which way it slides). mb_pause = true pauses it when the mouse is over it.
+  mb_eager = true loads the pictures straight away (use it when this is near the top of the page), false waits until you scroll near them.
+  mb_bg = section colour. mb_color_title = title colour. mb_pad_d / mb_pad_m = space inside the section on desktop / phone, written as top-and-bottom left-and-right, for example 56px 0.
+  mb_bleed = true stretches the section edge to edge across the screen. mb_top / mb_bottom = space above and below the block.
+{%- endcomment -%}
+{%- assign mb_title = '300,000+ Skin Transformations✨' -%}
+{%- capture mb_images -%}
+https://cdn.shopify.com/s/files/1/0847/9132/8941/files/2_45bfe3ff-2755-42c3-a731-1b1976dff3f7.png?v=1794565852
+@@
+https://cdn.shopify.com/s/files/1/0847/9132/8941/files/5_b585d3ad-c3d4-43fe-8b77-181635911fa5.png?v=1794565946
+@@
+https://cdn.shopify.com/s/files/1/0847/9132/8941/files/1_d1270dce-151d-4fbc-8c8e-e848bce2a67c.png?v=1794565852
+@@
+https://cdn.shopify.com/s/files/1/0847/9132/8941/files/3_f5790afb-e8e7-4ab5-8bc2-0a5e7f780169.png?v=1794565852
+{%- endcapture -%}
+{%- assign mb_repeat = 2 -%}
+{%- assign mb_alt = '' -%}
+{%- assign mb_tile_d = '300px' -%}
+{%- assign mb_tile_m = '200px' -%}
+{%- assign mb_ratio = '' -%}
+{%- assign mb_gap_d = '16px' -%}
+{%- assign mb_gap_m = '12px' -%}
+{%- assign mb_radius = '12px' -%}
+{%- assign mb_dur_d = '50s' -%}
+{%- assign mb_dur_m = '35s' -%}
+{%- assign mb_dir = 'left' -%}
+{%- assign mb_pause = true -%}
+{%- assign mb_eager = false -%}
+{%- assign mb_title_d = '36px' -%}
+{%- assign mb_title_m = '26px' -%}
+{%- assign mb_bg = '#ffffff' -%}
+{%- assign mb_color_title = '#2a110a' -%}
+{%- assign mb_pad_d = '56px 0' -%}
+{%- assign mb_pad_m = '36px 0' -%}
+{%- assign mb_bleed = true -%}
+{%- assign mb_top = '0px' -%}
+{%- assign mb_bottom = '0px' -%}
+{%- assign mb_list = mb_images | split: '@@' -%}
+{%- assign mb_rep = mb_repeat | plus: 0 | at_least: 1 | at_most: 6 -%}
+{%- if mb_eager -%}{%- assign mb_load = 'loading="eager"' -%}{%- else -%}{%- assign mb_load = 'loading="lazy"' -%}{%- endif -%}
+{%- capture mb_tiles -%}
+{%- for mb_r in (1..mb_rep) -%}
+{%- for mb_it in mb_list -%}
+{%- assign mb_u = mb_it | strip -%}
+{%- if mb_u != blank -%}
+{%- if mb_u contains 'cdn.shopify.com' or mb_u contains '/cdn/shop/' -%}
+{%- if mb_u contains '?' -%}{%- assign mb_sep = '&amp;' -%}{%- else -%}{%- assign mb_sep = '?' -%}{%- endif -%}
+<div class="mb-tm__i"><img class="mb-tm__img" src="{{ mb_u }}{{ mb_sep }}width=600" srcset="{{ mb_u }}{{ mb_sep }}width=300 300w, {{ mb_u }}{{ mb_sep }}width=600 600w, {{ mb_u }}{{ mb_sep }}width=900 900w" sizes="(max-width: 749px) {{ mb_tile_m }}, {{ mb_tile_d }}" alt="{{ mb_alt | escape_once }}" {{ mb_load }} decoding="async" draggable="false"></div>
+{%- else -%}
+<div class="mb-tm__i"><img class="mb-tm__img" src="{{ mb_u }}" alt="{{ mb_alt | escape_once }}" {{ mb_load }} decoding="async" draggable="false"></div>
+{%- endif -%}
+{%- endif -%}
+{%- endfor -%}
+{%- endfor -%}
+{%- endcapture -%}
+{%- assign mb_tprobe = mb_tiles | strip -%}
+{%- if mb_title != blank or mb_tprobe != blank -%}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&display=swap"></noscript>
+
+<style>
+.mb-tm{box-sizing:border-box;width:100%;margin:var(--mb-tm-top) 0 var(--mb-tm-bottom);padding:var(--mb-tm-pm);background:var(--mb-tm-bg);overflow:hidden;font-family:'Libre Caslon Text',Georgia,serif;font-size:14px;line-height:1.5;font-weight:400;text-align:center;color:var(--mb-tm-tc)}
+.mb-tm--bleed{width:100vw;max-width:none;margin-left:calc(50% - 50vw);margin-right:0}
+.mb-tm *{box-sizing:border-box}
+.mb-tm .mb-tm__h{margin:0 0 24px;padding:0;text-align:center;font-family:'Libre Caslon Text',Georgia,serif!important;font-size:var(--mb-tm-tsm)!important;font-weight:400!important;font-style:normal!important;line-height:1.2!important;letter-spacing:0!important;text-transform:none!important;color:var(--mb-tm-tc)!important;-webkit-text-fill-color:var(--mb-tm-tc)!important}
+.mb-tm .mb-tm__vp{display:block;width:100%;margin:0;padding:0;overflow:hidden}
+.mb-tm .mb-tm__tr{display:flex;flex-wrap:nowrap;width:max-content;margin:0;padding:0;animation:mb-tm-run var(--mb-tm-dm) linear infinite;animation-direction:var(--mb-tm-dir);will-change:transform}
+.mb-tm .mb-tm__g{display:flex;flex:none;flex-wrap:nowrap;margin:0;padding:0}
+.mb-tm .mb-tm__i{flex:none;width:var(--mb-tm-wm);margin:0 var(--mb-tm-gm) 0 0;padding:0;border-radius:var(--mb-tm-r);overflow:hidden;line-height:0}
+.mb-tm .mb-tm__img{display:block;width:100%!important;max-width:100%!important;height:auto!important;aspect-ratio:var(--mb-tm-ar);object-fit:cover;margin:0!important;padding:0!important;border:0!important;border-radius:0!important;box-shadow:none!important;filter:none!important;-webkit-user-drag:none;user-select:none}
+@keyframes mb-tm-run{from{transform:translate3d(0,0,0)}to{transform:translate3d(-33.333333%,0,0)}}
+@media screen and (min-width:750px){
+.mb-tm{padding:var(--mb-tm-pd)}
+.mb-tm .mb-tm__h{font-size:var(--mb-tm-td)!important;margin-bottom:28px}
+.mb-tm .mb-tm__tr{animation-duration:var(--mb-tm-dd)}
+.mb-tm .mb-tm__i{width:var(--mb-tm-wd);margin-right:var(--mb-tm-gd)}
+}
+@media (hover:hover) and (min-width:750px){
+.mb-tm--pause .mb-tm__vp:hover .mb-tm__tr{animation-play-state:paused}
+}
+@media (prefers-reduced-motion:reduce){
+.mb-tm .mb-tm__vp{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.mb-tm .mb-tm__tr{animation:none;width:auto}
+.mb-tm .mb-tm__g:not(:first-child){display:none}
+}
+</style>
+
+<div class="mb-tm{% if mb_bleed %} mb-tm--bleed{% endif %}{% if mb_pause %} mb-tm--pause{% endif %}" data-bleed="{{ mb_bleed }}" style="--mb-tm-bg:{{ mb_bg }};--mb-tm-tc:{{ mb_color_title }};--mb-tm-tsm:{{ mb_title_m }};--mb-tm-td:{{ mb_title_d }};--mb-tm-wm:{{ mb_tile_m }};--mb-tm-wd:{{ mb_tile_d }};--mb-tm-gm:{{ mb_gap_m }};--mb-tm-gd:{{ mb_gap_d }};--mb-tm-r:{{ mb_radius }};--mb-tm-ar:{% if mb_ratio != blank %}{{ mb_ratio }}{% else %}auto{% endif %};--mb-tm-dm:{{ mb_dur_m }};--mb-tm-dd:{{ mb_dur_d }};--mb-tm-dir:{% if mb_dir == 'right' %}reverse{% else %}normal{% endif %};--mb-tm-pm:{{ mb_pad_m }};--mb-tm-pd:{{ mb_pad_d }};--mb-tm-top:{{ mb_top }};--mb-tm-bottom:{{ mb_bottom }}">
+{%- if mb_title != blank -%}<h2 class="mb-tm__h">{{ mb_title }}</h2>{%- endif -%}
+{%- if mb_tprobe != blank -%}
+<div class="mb-tm__vp"><div class="mb-tm__tr">
+<div class="mb-tm__g">{{ mb_tiles }}</div>
+<div class="mb-tm__g" aria-hidden="true">{{ mb_tiles }}</div>
+<div class="mb-tm__g" aria-hidden="true">{{ mb_tiles }}</div>
+</div></div>
+{%- endif -%}
+</div>
+{%- endif -%}
+
+<script>
+(function(){
+function init(root){
+if(root.getAttribute('data-on'))return;
+root.setAttribute('data-on','1');
+/* stretch edge to edge exactly, whatever the page column is */
+function bleed(){
+if(root.getAttribute('data-bleed')!=='true')return;
+root.style.marginLeft='0px';
+root.style.width=document.documentElement.clientWidth+'px';
+var l=root.getBoundingClientRect().left;
+root.style.marginLeft=(-l)+'px';
+}
+bleed();
+window.addEventListener('resize',bleed);
+window.addEventListener('load',function(){bleed();setTimeout(bleed,400)});
+}
+function all(){document.querySelectorAll('.mb-tm').forEach(init)}
+all();
+document.addEventListener('shopify:section:load',all);
+})();
+</script>
