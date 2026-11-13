@@ -1,0 +1,187 @@
+{%- comment -%}
+  "Real Women. Real Results." customer cards (a copy of the evorabody.com section, built from its markup, which came without its CSS, so the card spacing and text sizes are a close best guess; every colour, the 4 columns, the 20px gap, the 3:4 picture shape and the 12px round corners are exactly the values from the original): a centred two-tone heading (second part in gold italic), a row of 4 cards (a picture on top, a cream box under it with the customer&#39;s name in gold and her words), and a gold button under the cards.
+  Computer = 4 cards in a row. Tablet = 2 per row. Phone = 2 per row, smaller text, full width button. All of this can be changed below.
+  No slider, no app, loads fast (pictures load as you scroll near them, each at the right size for the screen).
+
+  THE NAMES AND WORDS BELONG TO YOUR OWN CUSTOMERS. The original section shows real, named customers of another brand and their own quotes. They are NOT copied here, on purpose: showing someone&#39;s real name and quote under a different product would be a fake testimonial. Type in only what your own real customers have really said, with their OK (a name like "Anna K." is fine), and only use real customer photos. Until you add text, visitors see only the pictures; in the theme editor (Customize) you see grey placeholder text so you can check the layout, and that placeholder is never shown on your live store.
+  The heading says "Real Women. Real Results.": if any of the pictures are not real customers (for example stock or AI pictures), change the heading.
+
+  WHERE: best as its own full-width section: Online Store > Themes > Customize > Product page > Add section > Custom Liquid, drag it where you want it, paste this in.
+  If you paste it inside a narrow column instead, set mb_bleed to false.
+  EDIT YOUR CONTENT BELOW. Do not use a straight apostrophe (') in the text, use &#39; instead, and write & as &amp;
+  mb_heading_1 / mb_heading_2 = the heading in two pieces: normal, then gold italic. Leave a piece empty to skip it.
+  mb_cards = the cards, separated by @@, each one written as   PICTURE LINK ||| NAME ||| WORDS
+  Example:   https://cdn.shopify.com/s/files/.../photo.png ||| Anna K. ||| &ldquo;I use it every night and love it.&rdquo;
+  Leave NAME and WORDS empty for a card with only a picture. You can have more or fewer than 4 cards.
+  mb_btn_text / mb_btn_url = the button text and where it goes (empty text hides the button).
+  mb_cols_d / mb_cols_t / mb_cols_m = cards per row on computer (990px and up) / tablet / phone. mb_gap_d / mb_gap_m = space between cards (computer and tablet / phone). mb_ratio = the shape of the pictures, for example 3/4 or 1/1. mb_img_pos = which part of a picture stays in view when it is cropped (center, top, bottom, or for example center 20%). mb_radius = how round the cards are.
+  mb_bg = section colour. mb_color_heading / mb_color_accent = heading colour / gold part. mb_card_bg = picture side of the card. mb_card_body_bg = the cream box. mb_color_name = the name colour. mb_color_text = the words colour. mb_btn_bg / mb_btn_hover / mb_btn_color = button colour / when hovered / its writing.
+  mb_max = the widest the content gets. mb_pad_d / mb_pad_m = space inside the section on desktop (750px and up) / phone, written as top-and-bottom left-and-right, for example 64px 24px.
+  mb_bleed = true stretches the section edge to edge across the screen. mb_top / mb_bottom = space above and below the block.
+{%- endcomment -%}
+{%- assign mb_heading_1 = 'Real Women.' -%}
+{%- assign mb_heading_2 = 'Real Results.&nbsp;' -%}
+{%- capture mb_cards -%}
+https://cdn.shopify.com/s/files/1/0847/9132/8941/files/9f000ef3-c060-4aed-8ecc-2d1c18b9770e.png?v=1794568449 ||| |||
+@@
+https://cdn.shopify.com/s/files/1/0847/9132/8941/files/Elegant_Nerola_Body_Oil_Presentation.png?v=1794568385 ||| |||
+@@
+https://cdn.shopify.com/s/files/1/0847/9132/8941/files/Warm_Portrait_with_Nerola_Botanical_Oil.png?v=1794568385 ||| |||
+@@
+https://cdn.shopify.com/s/files/1/0847/9132/8941/files/Warm_Portrait_with_Nerola_Botanical_Oil.png?v=1794568385 ||| |||
+{%- endcapture -%}
+{%- assign mb_btn_text = 'Reclaim My Skin' -%}
+{%- assign mb_btn_url = '/products/botanical-body-oil-vt' -%}
+{%- assign mb_cols_d = 4 -%}
+{%- assign mb_cols_t = 2 -%}
+{%- assign mb_cols_m = 2 -%}
+{%- assign mb_gap_d = '20px' -%}
+{%- assign mb_gap_m = '12px' -%}
+{%- assign mb_ratio = '3/4' -%}
+{%- assign mb_img_pos = 'center' -%}
+{%- assign mb_radius = '12px' -%}
+{%- assign mb_bg = '#faf8f5' -%}
+{%- assign mb_color_heading = '#1a1a1a' -%}
+{%- assign mb_color_accent = '#dda531' -%}
+{%- assign mb_card_bg = '#ffffff' -%}
+{%- assign mb_card_body_bg = '#f4f0e6' -%}
+{%- assign mb_color_name = '#dda531' -%}
+{%- assign mb_color_text = '#2a110a' -%}
+{%- assign mb_btn_bg = '#dda531' -%}
+{%- assign mb_btn_hover = '#dda531' -%}
+{%- assign mb_btn_color = '#ffffff' -%}
+{%- assign mb_max = '1200px' -%}
+{%- assign mb_pad_d = '64px 24px' -%}
+{%- assign mb_pad_m = '40px 16px' -%}
+{%- assign mb_bleed = true -%}
+{%- assign mb_top = '0px' -%}
+{%- assign mb_bottom = '0px' -%}
+{%- assign mb_list = mb_cards | split: '@@' -%}
+{%- assign mb_cd = mb_cols_d | plus: 0 | at_least: 1 | at_most: 6 -%}
+{%- assign mb_ct = mb_cols_t | plus: 0 | at_least: 1 | at_most: 6 -%}
+{%- assign mb_cm = mb_cols_m | plus: 0 | at_least: 1 | at_most: 4 -%}
+{%- assign mb_vwd = 100 | divided_by: mb_cd -%}
+{%- assign mb_vwt = 100 | divided_by: mb_ct -%}
+{%- assign mb_vwm = 100 | divided_by: mb_cm -%}
+{%- assign mb_n = 0 -%}
+{%- assign mb_has_text = false -%}
+{%- for mb_it in mb_list -%}
+{%- assign mb_chk = mb_it | strip -%}
+{%- if mb_chk != blank -%}
+{%- assign mb_n = mb_n | plus: 1 -%}
+{%- assign mb_f = mb_it | split: '|||' -%}
+{%- assign mb_a = mb_f[1] | strip -%}
+{%- assign mb_b = mb_f[2] | strip -%}
+{%- if mb_a != blank or mb_b != blank -%}{%- assign mb_has_text = true -%}{%- endif -%}
+{%- endif -%}
+{%- endfor -%}
+{%- if mb_has_text == false and request.design_mode -%}{%- assign mb_demo = true -%}{%- else -%}{%- assign mb_demo = false -%}{%- endif -%}
+{%- if mb_n > 0 or mb_heading_1 != blank or mb_heading_2 != blank -%}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&display=swap"></noscript>
+
+<style>
+.mb-sc{box-sizing:border-box;width:100%;margin:var(--mb-sc-top) 0 var(--mb-sc-bottom);padding:var(--mb-sc-pm);background:var(--mb-sc-bg);font-family:'Libre Caslon Text',Georgia,serif;font-size:14px;line-height:1.5;font-weight:400;text-align:center;color:var(--mb-sc-tx)}
+.mb-sc--bleed{width:100vw;max-width:none;margin-left:calc(50% - 50vw);margin-right:0}
+.mb-sc *{box-sizing:border-box}
+.mb-sc .mb-sc__in{max-width:var(--mb-sc-max);margin:0 auto;padding:0}
+.mb-sc .mb-sc__demo{margin:0 0 20px;padding:10px 14px;border:2px dashed #c0392b;border-radius:8px;background:#fff5f3;font-size:13px!important;line-height:1.4!important;font-weight:700!important;text-align:center;color:#c0392b!important;-webkit-text-fill-color:#c0392b!important}
+.mb-sc .mb-sc__hd{margin:0 0 28px;padding:0;text-align:center}
+.mb-sc .mb-sc__h{margin:0;padding:0;text-align:center;font-family:'Libre Caslon Text',Georgia,serif!important;font-size:clamp(28px,3.5vw,46px)!important;font-weight:500!important;font-style:normal!important;line-height:1.15!important;letter-spacing:-.01em!important;text-transform:none!important;color:var(--mb-sc-hc)!important;-webkit-text-fill-color:var(--mb-sc-hc)!important}
+.mb-sc .mb-sc__hp,.mb-sc .mb-sc__ha{font-size:inherit!important;font-weight:inherit!important;line-height:inherit!important;letter-spacing:inherit!important;text-transform:inherit!important}
+.mb-sc .mb-sc__hp{font-style:normal!important;color:var(--mb-sc-hc)!important;-webkit-text-fill-color:var(--mb-sc-hc)!important;margin-right:.22em}
+.mb-sc .mb-sc__ha{font-style:italic!important;color:var(--mb-sc-ac)!important;-webkit-text-fill-color:var(--mb-sc-ac)!important}
+.mb-sc .mb-sc__grid{display:grid;grid-template-columns:repeat(var(--mb-sc-cm),minmax(0,1fr));gap:var(--mb-sc-gm);margin:0;padding:0}
+.mb-sc .mb-sc__card{display:flex;flex-direction:column;min-width:0;margin:0;padding:0;background:var(--mb-sc-cb);border-radius:var(--mb-sc-r);overflow:hidden;text-align:left;box-shadow:0 4px 20px rgba(0,0,0,.06)}
+.mb-sc .mb-sc__iw{display:block;margin:0;padding:0;aspect-ratio:var(--mb-sc-ar);overflow:hidden;line-height:0;background:var(--mb-sc-cb)}
+.mb-sc .mb-sc__img{display:block;width:100%!important;max-width:100%!important;height:100%!important;margin:0!important;padding:0!important;border:0!important;border-radius:0!important;box-shadow:none!important;filter:none!important;object-fit:cover;object-position:var(--mb-sc-pos);-webkit-user-drag:none}
+.mb-sc .mb-sc__bd{flex:1 1 auto;margin:0;padding:12px;background:var(--mb-sc-bb)}
+.mb-sc .mb-sc__nm{margin:0 0 6px;padding:0;font-size:14px!important;font-weight:700!important;font-style:normal!important;line-height:1.3!important;letter-spacing:0!important;text-transform:none!important;color:var(--mb-sc-nc)!important;-webkit-text-fill-color:var(--mb-sc-nc)!important}
+.mb-sc .mb-sc__tx{margin:0;padding:0;font-size:12.5px!important;font-weight:400!important;font-style:normal!important;line-height:1.5!important;letter-spacing:0!important;text-transform:none!important;color:var(--mb-sc-tc)!important;-webkit-text-fill-color:var(--mb-sc-tc)!important}
+.mb-sc .mb-sc__ph{opacity:.55;font-style:italic!important}
+.mb-sc .mb-sc__cta{margin:32px 0 0;padding:0;text-align:center}
+.mb-sc .mb-sc__btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;width:100%;margin:0;padding:16px 24px;background-color:var(--mb-sc-bgb)!important;color:var(--mb-sc-bt)!important;-webkit-text-fill-color:var(--mb-sc-bt)!important;font-family:'Libre Caslon Text',Georgia,serif!important;font-size:15px!important;font-weight:700!important;font-style:normal!important;line-height:1.5!important;letter-spacing:.03em!important;text-transform:uppercase!important;text-decoration:none!important;border:none;border-radius:6px;cursor:pointer;transition:background-color .2s ease,transform .15s ease,box-shadow .2s ease;box-shadow:0 4px 14px rgba(0,0,0,.18);-webkit-appearance:none;appearance:none}
+.mb-sc .mb-sc__btn:hover,.mb-sc .mb-sc__btn:focus-visible{background-color:var(--mb-sc-bh)!important;transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,0,0,.22);color:var(--mb-sc-bt)!important;-webkit-text-fill-color:var(--mb-sc-bt)!important;text-decoration:none!important}
+.mb-sc .mb-sc__btn:active{transform:translateY(0);box-shadow:0 2px 8px rgba(0,0,0,.18)}
+@media screen and (min-width:600px){
+.mb-sc .mb-sc__grid{grid-template-columns:repeat(var(--mb-sc-ct),minmax(0,1fr));gap:var(--mb-sc-gd)}
+.mb-sc .mb-sc__bd{padding:20px}
+.mb-sc .mb-sc__nm{font-size:17px!important;margin-bottom:8px}
+.mb-sc .mb-sc__tx{font-size:15px!important;line-height:1.55!important}
+.mb-sc .mb-sc__btn{width:auto;padding:15px 36px;font-size:16px!important}
+}
+@media screen and (min-width:750px){
+.mb-sc{padding:var(--mb-sc-pd)}
+.mb-sc .mb-sc__hd{margin-bottom:40px}
+.mb-sc .mb-sc__cta{margin-top:40px}
+}
+@media screen and (min-width:990px){
+.mb-sc .mb-sc__grid{grid-template-columns:repeat(var(--mb-sc-cd),minmax(0,1fr))}
+}
+</style>
+
+<div class="mb-sc{% if mb_bleed %} mb-sc--bleed{% endif %}" data-bleed="{{ mb_bleed }}" style="--mb-sc-bg:{{ mb_bg }};--mb-sc-hc:{{ mb_color_heading }};--mb-sc-ac:{{ mb_color_accent }};--mb-sc-tx:{{ mb_color_text }};--mb-sc-cb:{{ mb_card_bg }};--mb-sc-bb:{{ mb_card_body_bg }};--mb-sc-nc:{{ mb_color_name }};--mb-sc-tc:{{ mb_color_text }};--mb-sc-bgb:{{ mb_btn_bg }};--mb-sc-bt:{{ mb_btn_color }};--mb-sc-bh:{{ mb_btn_hover }};--mb-sc-r:{{ mb_radius }};--mb-sc-ar:{{ mb_ratio }};--mb-sc-pos:{{ mb_img_pos }};--mb-sc-cd:{{ mb_cd }};--mb-sc-ct:{{ mb_ct }};--mb-sc-cm:{{ mb_cm }};--mb-sc-gd:{{ mb_gap_d }};--mb-sc-gm:{{ mb_gap_m }};--mb-sc-max:{{ mb_max }};--mb-sc-pd:{{ mb_pad_d }};--mb-sc-pm:{{ mb_pad_m }};--mb-sc-top:{{ mb_top }};--mb-sc-bottom:{{ mb_bottom }}">
+<div class="mb-sc__in">
+{%- if mb_demo -%}<p class="mb-sc__demo">EDITOR ONLY: the grey text is a placeholder. Visitors see only the pictures until you type your own customers&#39; real names and words in mb_cards.</p>{%- endif -%}
+{%- if mb_heading_1 != blank or mb_heading_2 != blank -%}
+<div class="mb-sc__hd"><h2 class="mb-sc__h">{%- if mb_heading_1 != blank -%}<span class="mb-sc__hp">{{ mb_heading_1 }}</span>{%- endif -%}{%- if mb_heading_2 != blank -%}<span class="mb-sc__ha">{{ mb_heading_2 }}</span>{%- endif -%}</h2></div>
+{%- endif -%}
+{%- if mb_n > 0 -%}
+<div class="mb-sc__grid">
+{%- for mb_it in mb_list -%}
+{%- assign mb_chk = mb_it | strip -%}
+{%- if mb_chk != blank -%}
+{%- assign mb_f = mb_it | split: '|||' -%}
+{%- assign mb_u = mb_f[0] | strip -%}
+{%- assign mb_nm = mb_f[1] | strip -%}
+{%- assign mb_qt = mb_f[2] | strip -%}
+<div class="mb-sc__card">
+{%- if mb_u != blank -%}
+<div class="mb-sc__iw">
+{%- if mb_u contains 'cdn.shopify.com' or mb_u contains '/cdn/shop/' -%}
+{%- if mb_u contains '?' -%}{%- assign mb_sep = '&amp;' -%}{%- else -%}{%- assign mb_sep = '?' -%}{%- endif -%}
+<img class="mb-sc__img" src="{{ mb_u }}{{ mb_sep }}width=700" srcset="{{ mb_u }}{{ mb_sep }}width=360 360w, {{ mb_u }}{{ mb_sep }}width=540 540w, {{ mb_u }}{{ mb_sep }}width=700 700w, {{ mb_u }}{{ mb_sep }}width=900 900w" sizes="(min-width: 990px) {{ mb_vwd }}vw, (min-width: 600px) {{ mb_vwt }}vw, {{ mb_vwm }}vw" alt="{{ mb_nm | escape_once }}" loading="lazy" decoding="async" draggable="false">
+{%- else -%}
+<img class="mb-sc__img" src="{{ mb_u }}" alt="{{ mb_nm | escape_once }}" loading="lazy" decoding="async" draggable="false">
+{%- endif -%}
+</div>
+{%- endif -%}
+{%- if mb_nm != blank or mb_qt != blank -%}
+<div class="mb-sc__bd">{%- if mb_nm != blank -%}<p class="mb-sc__nm">{{ mb_nm }}</p>{%- endif -%}{%- if mb_qt != blank -%}<p class="mb-sc__tx">{{ mb_qt }}</p>{%- endif -%}</div>
+{%- elsif mb_demo -%}
+<div class="mb-sc__bd"><p class="mb-sc__nm mb-sc__ph">Customer name</p><p class="mb-sc__tx mb-sc__ph">Your customer&#39;s own words go here.</p></div>
+{%- endif -%}
+</div>
+{%- endif -%}
+{%- endfor -%}
+</div>
+{%- endif -%}
+{%- if mb_btn_text != blank -%}<div class="mb-sc__cta"><a href="{{ mb_btn_url }}" class="mb-sc__btn">{{ mb_btn_text }}</a></div>{%- endif -%}
+</div>
+</div>
+{%- endif -%}
+
+<script>
+(function(){
+function init(root){
+if(root.getAttribute('data-on'))return;
+root.setAttribute('data-on','1');
+/* stretch edge to edge exactly, whatever the page column is */
+function bleed(){
+if(root.getAttribute('data-bleed')!=='true')return;
+root.style.marginLeft='0px';
+root.style.width=document.documentElement.clientWidth+'px';
+var l=root.getBoundingClientRect().left;
+root.style.marginLeft=(-l)+'px';
+}
+bleed();
+window.addEventListener('resize',bleed);
+window.addEventListener('load',function(){bleed();setTimeout(bleed,400)});
+}
+function all(){document.querySelectorAll('.mb-sc').forEach(init)}
+all();
+document.addEventListener('shopify:section:load',all);
+})();
+</script>
