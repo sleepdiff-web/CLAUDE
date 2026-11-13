@@ -1,0 +1,155 @@
+{%- comment -%}
+  "We Don&#39;t Compromise on Quality" section (a copy of the Quasi section built from its markup, which came without its CSS, so spacing, sizes and the look of the icons are a close best guess): a centred title, one line under it, and four small "promise" items, each with an icon and a short text. Optional picture next to the text.
+  Phone = everything centred, items in 2 columns, the picture (if you add one) under them. Computer = with a picture: text and picture side by side and the items in 2 columns. Without a picture: everything centred and the 4 items in one row.
+  The icons are drawn in the page itself (no extra downloads) and take the gold colour you set. No app, no slider, loads fast.
+
+  WHERE: best as its own full-width section: Online Store > Themes > Customize > Product page > Add section > Custom Liquid, drag it where you want it, paste this in.
+  If you paste it inside a narrow column instead, set mb_bleed to false.
+  EDIT YOUR CONTENT BELOW. Do not use a straight apostrophe (') in the text, use &#39; instead, and write & as &amp;
+  mb_title = the title (leave empty to hide it). mb_sub = the line under it (leave empty to hide it).
+  mb_items = the promise items, separated by @@, each one written as   ICON ||| TEXT
+  ICON can be one of these words: flask, leaf, cross, heart, shield, drop, star, check. Or a picture link (starting with https:// or /) if you want your own icon. Leave it empty for no icon.
+  Only keep promises that are TRUE for your own product (for example "Dermatologist Tested" or "Clinically proven" need proof behind them). The ones here came with the section this was copied from.
+  mb_img = an optional picture shown next to (or under) the text, empty = no picture. mb_img_alt = a short description of it. mb_side = right or left (which side the picture is on, computer only). mb_radius = how round its corners are.
+  mb_icon = icon size. mb_icon_text = text size of the items.
+  mb_bg = section colour. mb_color_text = normal writing. mb_color_icon = icon colour.
+  mb_max = the widest the content gets. mb_pad_d / mb_pad_m = space inside the section on desktop (750px and up) / phone, written as top-and-bottom left-and-right, for example 64px 24px.
+  mb_bleed = true stretches the section edge to edge across the screen. mb_top / mb_bottom = space above and below the block.
+{%- endcomment -%}
+{%- assign mb_title = 'At Nerola, We Don&#39;t Compromise on Quality' -%}
+{%- assign mb_sub = 'We use only clean, effective ingredients that deliver professional results, no harsh chemicals or fillers.' -%}
+{%- capture mb_items -%}
+flask ||| Clinically proven ingredients
+@@
+leaf ||| Safe For Sensitive Skin
+@@
+cross ||| Dermatologist Tested
+@@
+heart ||| Cruelty-Free Formulas
+{%- endcapture -%}
+{%- assign mb_img = '' -%}
+{%- assign mb_img_alt = '' -%}
+{%- assign mb_side = 'right' -%}
+{%- assign mb_radius = '16px' -%}
+{%- assign mb_icon = '48px' -%}
+{%- assign mb_icon_text = '16px' -%}
+{%- assign mb_bg = '#faf8f5' -%}
+{%- assign mb_color_text = '#2a110a' -%}
+{%- assign mb_color_icon = '#dda531' -%}
+{%- assign mb_max = '1200px' -%}
+{%- assign mb_pad_d = '64px 24px' -%}
+{%- assign mb_pad_m = '40px 16px' -%}
+{%- assign mb_bleed = true -%}
+{%- assign mb_top = '0px' -%}
+{%- assign mb_bottom = '0px' -%}
+{%- assign mb_list = mb_items | split: '@@' -%}
+{%- assign mb_iprobe = mb_items | strip -%}
+{%- if mb_side == 'left' -%}{%- assign mb_sd = 'l' -%}{%- else -%}{%- assign mb_sd = 'r' -%}{%- endif -%}
+{%- if mb_title != blank or mb_sub != blank or mb_iprobe != blank -%}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&display=swap"></noscript>
+
+<style>
+.mb-qp{box-sizing:border-box;width:100%;margin:var(--mb-qp-top) 0 var(--mb-qp-bottom);padding:var(--mb-qp-pm);background:var(--mb-qp-bg);font-family:'Libre Caslon Text',Georgia,serif;font-size:14px;line-height:1.5;font-weight:400;text-align:center;color:var(--mb-qp-tx)}
+.mb-qp--bleed{width:100vw;max-width:none;margin-left:calc(50% - 50vw);margin-right:0}
+.mb-qp *{box-sizing:border-box}
+.mb-qp .mb-qp__in{display:grid;grid-template-columns:minmax(0,1fr);gap:28px;align-items:center;max-width:var(--mb-qp-max);margin:0 auto;padding:0}
+.mb-qp .mb-qp__tx{margin:0;padding:0;min-width:0}
+.mb-qp .mb-qp__h{margin:0 0 12px;padding:0;text-align:inherit!important;font-family:'Libre Caslon Text',Georgia,serif!important;font-size:26px!important;font-weight:400!important;font-style:normal!important;line-height:1.2!important;letter-spacing:0!important;text-transform:none!important;color:var(--mb-qp-tx)!important;-webkit-text-fill-color:var(--mb-qp-tx)!important}
+.mb-qp .mb-qp__s{max-width:640px;margin:0 auto 28px;padding:0;text-align:inherit!important;font-size:16px!important;font-weight:400!important;font-style:normal!important;line-height:1.5!important;letter-spacing:0!important;text-transform:none!important;color:var(--mb-qp-tx)!important;-webkit-text-fill-color:var(--mb-qp-tx)!important}
+.mb-qp .mb-qp__ls{list-style:none!important;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 16px;margin:0!important;padding:0!important}
+.mb-qp .mb-qp__li{display:flex;flex-direction:column;align-items:center;gap:10px;margin:0!important;padding:0!important;list-style:none!important;text-align:center}
+.mb-qp .mb-qp__li::before,.mb-qp .mb-qp__li::marker{content:none}
+.mb-qp .mb-qp__ic{display:flex;align-items:center;justify-content:center;flex:none;width:var(--mb-qp-ic);height:var(--mb-qp-ic);margin:0;padding:0;color:var(--mb-qp-icc)!important}
+.mb-qp .mb-qp__ic svg{display:block;width:70%!important;height:70%!important;margin:0;padding:0;fill:none!important;stroke:currentColor!important;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.mb-qp .mb-qp__ic img{display:block;width:100%!important;max-width:100%!important;height:100%!important;margin:0!important;padding:0!important;border:0!important;border-radius:0!important;box-shadow:none!important;object-fit:contain}
+.mb-qp .mb-qp__lb{margin:0;padding:0;font-size:var(--mb-qp-it)!important;font-weight:400!important;font-style:normal!important;line-height:1.35!important;letter-spacing:0!important;text-transform:none!important;color:var(--mb-qp-tx)!important;-webkit-text-fill-color:var(--mb-qp-tx)!important}
+.mb-qp .mb-qp__md{margin:0;padding:0;min-width:0}
+.mb-qp .mb-qp__img{display:block;width:100%!important;max-width:100%!important;height:auto!important;margin:0!important;padding:0!important;border:0!important;border-radius:var(--mb-qp-r)!important;box-shadow:none!important;object-fit:cover}
+@media screen and (min-width:750px){
+.mb-qp{padding:var(--mb-qp-pd)}
+.mb-qp .mb-qp__h{font-size:36px!important;margin-bottom:14px}
+.mb-qp .mb-qp__s{margin-bottom:36px}
+.mb-qp .mb-qp__ls{gap:28px 24px}
+.mb-qp .mb-qp__in:not(.mb-qp__in--img) .mb-qp__ls{grid-template-columns:repeat(4,minmax(0,1fr))}
+}
+@media screen and (min-width:990px){
+.mb-qp .mb-qp__in--img{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:56px;text-align:left}
+.mb-qp .mb-qp__in--img .mb-qp__s{margin-left:0;margin-right:0}
+.mb-qp .mb-qp__in--img .mb-qp__li{flex-direction:row;text-align:left;gap:14px}
+.mb-qp .mb-qp__in--l .mb-qp__tx{order:2}
+.mb-qp .mb-qp__in--l .mb-qp__md{order:1}
+}
+</style>
+
+<div class="mb-qp{% if mb_bleed %} mb-qp--bleed{% endif %}" data-bleed="{{ mb_bleed }}" style="--mb-qp-bg:{{ mb_bg }};--mb-qp-tx:{{ mb_color_text }};--mb-qp-icc:{{ mb_color_icon }};--mb-qp-ic:{{ mb_icon }};--mb-qp-it:{{ mb_icon_text }};--mb-qp-r:{{ mb_radius }};--mb-qp-max:{{ mb_max }};--mb-qp-pd:{{ mb_pad_d }};--mb-qp-pm:{{ mb_pad_m }};--mb-qp-top:{{ mb_top }};--mb-qp-bottom:{{ mb_bottom }}">
+<div class="mb-qp__in{% if mb_img != blank %} mb-qp__in--img mb-qp__in--{{ mb_sd }}{% endif %}">
+<div class="mb-qp__tx">
+{%- if mb_title != blank -%}<h2 class="mb-qp__h">{{ mb_title }}</h2>{%- endif -%}
+{%- if mb_sub != blank -%}<p class="mb-qp__s">{{ mb_sub }}</p>{%- endif -%}
+{%- if mb_iprobe != blank -%}
+<ul class="mb-qp__ls" role="list">
+{%- for mb_it in mb_list -%}
+{%- assign mb_chk = mb_it | strip -%}
+{%- if mb_chk != blank -%}
+{%- assign mb_f = mb_it | split: '|||' -%}
+{%- assign mb_ic = mb_f[0] | strip -%}
+{%- assign mb_k = mb_ic | downcase -%}
+{%- assign mb_tx = mb_f[1] | strip -%}
+<li class="mb-qp__li">
+{%- if mb_ic != blank -%}<span class="mb-qp__ic" aria-hidden="true">
+{%- if mb_ic contains '/' -%}<img src="{{ mb_ic }}" alt="" width="48" height="48" loading="lazy" decoding="async" draggable="false">
+{%- elsif mb_k == 'flask' -%}<svg viewBox="0 0 24 24"><path d="M9 3h6M10 3v6.2L5.2 18a2 2 0 0 0 1.8 3h10a2 2 0 0 0 1.8-3L14 9.2V3"/><path d="M7.5 15h9"/></svg>
+{%- elsif mb_k == 'leaf' -%}<svg viewBox="0 0 24 24"><path d="M5 19c0-8 5-14 15-14 0 10-6 15-14 15"/><path d="M5 19c3-5 6-8 10-10"/></svg>
+{%- elsif mb_k == 'cross' -%}<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>
+{%- elsif mb_k == 'heart' -%}<svg viewBox="0 0 24 24"><path d="M12 20s-7.5-4.6-7.5-10A4.3 4.3 0 0 1 12 7.4 4.3 4.3 0 0 1 19.5 10c0 5.4-7.5 10-7.5 10z"/></svg>
+{%- elsif mb_k == 'shield' -%}<svg viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.5-3 8.2-7 10-4-1.8-7-5.5-7-10V6z"/><path d="M9 12l2.2 2.2L15.5 10"/></svg>
+{%- elsif mb_k == 'drop' -%}<svg viewBox="0 0 24 24"><path d="M12 3s6 6.2 6 10.5a6 6 0 0 1-12 0C6 9.2 12 3 12 3z"/></svg>
+{%- elsif mb_k == 'star' -%}<svg viewBox="0 0 24 24"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg>
+{%- else -%}<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.7 2.7L16 9.5"/></svg>
+{%- endif -%}
+</span>{%- endif -%}
+<p class="mb-qp__lb">{{ mb_tx }}</p></li>
+{%- endif -%}
+{%- endfor -%}
+</ul>
+{%- endif -%}
+</div>
+{%- if mb_img != blank -%}
+<div class="mb-qp__md">
+{%- if mb_img contains 'cdn.shopify.com' or mb_img contains '/cdn/shop/' -%}
+{%- if mb_img contains '?' -%}{%- assign mb_sep = '&amp;' -%}{%- else -%}{%- assign mb_sep = '?' -%}{%- endif -%}
+<img class="mb-qp__img" src="{{ mb_img }}{{ mb_sep }}width=820" srcset="{{ mb_img }}{{ mb_sep }}width=400 400w, {{ mb_img }}{{ mb_sep }}width=640 640w, {{ mb_img }}{{ mb_sep }}width=820 820w, {{ mb_img }}{{ mb_sep }}width=1100 1100w" sizes="(min-width: 990px) 50vw, 100vw" alt="{{ mb_img_alt | escape_once }}" loading="lazy" decoding="async">
+{%- else -%}
+<img class="mb-qp__img" src="{{ mb_img }}" alt="{{ mb_img_alt | escape_once }}" loading="lazy" decoding="async">
+{%- endif -%}
+</div>
+{%- endif -%}
+</div>
+</div>
+{%- endif -%}
+
+<script>
+(function(){
+function init(root){
+if(root.getAttribute('data-on'))return;
+root.setAttribute('data-on','1');
+/* stretch edge to edge exactly, whatever the page column is */
+function bleed(){
+if(root.getAttribute('data-bleed')!=='true')return;
+root.style.marginLeft='0px';
+root.style.width=document.documentElement.clientWidth+'px';
+var l=root.getBoundingClientRect().left;
+root.style.marginLeft=(-l)+'px';
+}
+bleed();
+window.addEventListener('resize',bleed);
+window.addEventListener('load',function(){bleed();setTimeout(bleed,400)});
+}
+function all(){document.querySelectorAll('.mb-qp').forEach(init)}
+all();
+document.addEventListener('shopify:section:load',all);
+})();
+</script>
