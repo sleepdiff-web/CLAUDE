@@ -3,7 +3,7 @@
   Computer = 4 cards in a row. Tablet = 2 per row. Phone = 2 per row, smaller text, full width button. All of this can be changed below.
   No slider, no app, loads fast (pictures load as you scroll near them, each at the right size for the screen).
 
-  THE NAMES AND WORDS BELONG TO YOUR OWN CUSTOMERS. The original section shows real, named customers of another brand and their own quotes. They are NOT copied here, on purpose: showing someone&#39;s real name and quote under a different product would be a fake testimonial. Type in only what your own real customers have really said, with their OK (a name like "Anna K." is fine), and only use real customer photos. Until you add text, visitors see only the pictures; in the theme editor (Customize) you see grey placeholder text so you can check the layout, and that placeholder is never shown on your live store.
+  THE NAMES AND WORDS BELONG TO YOUR OWN CUSTOMERS. The original section shows real, named customers of another brand and their own quotes. They are NOT copied here, on purpose: showing someone&#39;s real name and quote under a different product would be a fake testimonial. Type in only what your own real customers have really said, with their OK (a name like "Anna K." is fine), and only use real customer photos. Until you add text, visitors (and you, in the theme editor) see only the pictures.
   The heading says "Real Women. Real Results.": if any of the pictures are not real customers (for example stock or AI pictures), change the heading.
 
   WHERE: best as its own full-width section: Online Store > Themes > Customize > Product page > Add section > Custom Liquid, drag it where you want it, paste this in.
@@ -64,18 +64,13 @@ https://cdn.shopify.com/s/files/1/0847/9132/8941/files/Warm_Portrait_with_Nerola
 {%- assign mb_vwt = 100 | divided_by: mb_ct -%}
 {%- assign mb_vwm = 100 | divided_by: mb_cm -%}
 {%- assign mb_n = 0 -%}
-{%- assign mb_has_text = false -%}
 {%- for mb_it in mb_list -%}
 {%- assign mb_chk = mb_it | strip -%}
 {%- if mb_chk != blank -%}
 {%- assign mb_n = mb_n | plus: 1 -%}
 {%- assign mb_f = mb_it | split: '|||' -%}
-{%- assign mb_a = mb_f[1] | strip -%}
-{%- assign mb_b = mb_f[2] | strip -%}
-{%- if mb_a != blank or mb_b != blank -%}{%- assign mb_has_text = true -%}{%- endif -%}
 {%- endif -%}
 {%- endfor -%}
-{%- if mb_has_text == false and request.design_mode -%}{%- assign mb_demo = true -%}{%- else -%}{%- assign mb_demo = false -%}{%- endif -%}
 {%- if mb_n > 0 or mb_heading_1 != blank or mb_heading_2 != blank -%}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -87,7 +82,6 @@ https://cdn.shopify.com/s/files/1/0847/9132/8941/files/Warm_Portrait_with_Nerola
 .mb-sc--bleed{width:100vw;max-width:none;margin-left:calc(50% - 50vw);margin-right:0}
 .mb-sc *{box-sizing:border-box}
 .mb-sc .mb-sc__in{max-width:var(--mb-sc-max);margin:0 auto;padding:0}
-.mb-sc .mb-sc__demo{margin:0 0 20px;padding:10px 14px;border:2px dashed #c0392b;border-radius:8px;background:#fff5f3;font-size:13px!important;line-height:1.4!important;font-weight:700!important;text-align:center;color:#c0392b!important;-webkit-text-fill-color:#c0392b!important}
 .mb-sc .mb-sc__hd{margin:0 0 28px;padding:0;text-align:center}
 .mb-sc .mb-sc__h{margin:0;padding:0;text-align:center;font-family:'Libre Caslon Text',Georgia,serif!important;font-size:clamp(28px,3.5vw,46px)!important;font-weight:500!important;font-style:normal!important;line-height:1.15!important;letter-spacing:-.01em!important;text-transform:none!important;color:var(--mb-sc-hc)!important;-webkit-text-fill-color:var(--mb-sc-hc)!important}
 .mb-sc .mb-sc__hp,.mb-sc .mb-sc__ha{font-size:inherit!important;font-weight:inherit!important;line-height:inherit!important;letter-spacing:inherit!important;text-transform:inherit!important}
@@ -100,7 +94,6 @@ https://cdn.shopify.com/s/files/1/0847/9132/8941/files/Warm_Portrait_with_Nerola
 .mb-sc .mb-sc__bd{flex:1 1 auto;margin:0;padding:12px;background:var(--mb-sc-bb)}
 .mb-sc .mb-sc__nm{margin:0 0 6px;padding:0;font-size:14px!important;font-weight:700!important;font-style:normal!important;line-height:1.3!important;letter-spacing:0!important;text-transform:none!important;color:var(--mb-sc-nc)!important;-webkit-text-fill-color:var(--mb-sc-nc)!important}
 .mb-sc .mb-sc__tx{margin:0;padding:0;font-size:12.5px!important;font-weight:400!important;font-style:normal!important;line-height:1.5!important;letter-spacing:0!important;text-transform:none!important;color:var(--mb-sc-tc)!important;-webkit-text-fill-color:var(--mb-sc-tc)!important}
-.mb-sc .mb-sc__ph{opacity:.55;font-style:italic!important}
 .mb-sc .mb-sc__cta{margin:32px 0 0;padding:0;text-align:center}
 .mb-sc .mb-sc__btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;width:100%;margin:0;padding:16px 24px;background-color:var(--mb-sc-bgb)!important;color:var(--mb-sc-bt)!important;-webkit-text-fill-color:var(--mb-sc-bt)!important;font-family:'Libre Caslon Text',Georgia,serif!important;font-size:15px!important;font-weight:700!important;font-style:normal!important;line-height:1.5!important;letter-spacing:.03em!important;text-transform:uppercase!important;text-decoration:none!important;border:none;border-radius:6px;cursor:pointer;transition:background-color .2s ease,transform .15s ease,box-shadow .2s ease;box-shadow:0 4px 14px rgba(0,0,0,.18);-webkit-appearance:none;appearance:none}
 .mb-sc .mb-sc__btn:hover,.mb-sc .mb-sc__btn:focus-visible{background-color:var(--mb-sc-bh)!important;transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,0,0,.22);color:var(--mb-sc-bt)!important;-webkit-text-fill-color:var(--mb-sc-bt)!important;text-decoration:none!important}
@@ -124,7 +117,6 @@ https://cdn.shopify.com/s/files/1/0847/9132/8941/files/Warm_Portrait_with_Nerola
 
 <div class="mb-sc{% if mb_bleed %} mb-sc--bleed{% endif %}" data-bleed="{{ mb_bleed }}" style="--mb-sc-bg:{{ mb_bg }};--mb-sc-hc:{{ mb_color_heading }};--mb-sc-ac:{{ mb_color_accent }};--mb-sc-tx:{{ mb_color_text }};--mb-sc-cb:{{ mb_card_bg }};--mb-sc-bb:{{ mb_card_body_bg }};--mb-sc-nc:{{ mb_color_name }};--mb-sc-tc:{{ mb_color_text }};--mb-sc-bgb:{{ mb_btn_bg }};--mb-sc-bt:{{ mb_btn_color }};--mb-sc-bh:{{ mb_btn_hover }};--mb-sc-r:{{ mb_radius }};--mb-sc-ar:{{ mb_ratio }};--mb-sc-pos:{{ mb_img_pos }};--mb-sc-cd:{{ mb_cd }};--mb-sc-ct:{{ mb_ct }};--mb-sc-cm:{{ mb_cm }};--mb-sc-gd:{{ mb_gap_d }};--mb-sc-gm:{{ mb_gap_m }};--mb-sc-max:{{ mb_max }};--mb-sc-pd:{{ mb_pad_d }};--mb-sc-pm:{{ mb_pad_m }};--mb-sc-top:{{ mb_top }};--mb-sc-bottom:{{ mb_bottom }}">
 <div class="mb-sc__in">
-{%- if mb_demo -%}<p class="mb-sc__demo">EDITOR ONLY: the grey text is a placeholder. Visitors see only the pictures until you type your own customers&#39; real names and words in mb_cards.</p>{%- endif -%}
 {%- if mb_heading_1 != blank or mb_heading_2 != blank -%}
 <div class="mb-sc__hd"><h2 class="mb-sc__h">{%- if mb_heading_1 != blank -%}<span class="mb-sc__hp">{{ mb_heading_1 }}</span>{%- endif -%}{%- if mb_heading_2 != blank -%}<span class="mb-sc__ha">{{ mb_heading_2 }}</span>{%- endif -%}</h2></div>
 {%- endif -%}
@@ -150,8 +142,6 @@ https://cdn.shopify.com/s/files/1/0847/9132/8941/files/Warm_Portrait_with_Nerola
 {%- endif -%}
 {%- if mb_nm != blank or mb_qt != blank -%}
 <div class="mb-sc__bd">{%- if mb_nm != blank -%}<p class="mb-sc__nm">{{ mb_nm }}</p>{%- endif -%}{%- if mb_qt != blank -%}<p class="mb-sc__tx">{{ mb_qt }}</p>{%- endif -%}</div>
-{%- elsif mb_demo -%}
-<div class="mb-sc__bd"><p class="mb-sc__nm mb-sc__ph">Customer name</p><p class="mb-sc__tx mb-sc__ph">Your customer&#39;s own words go here.</p></div>
 {%- endif -%}
 </div>
 {%- endif -%}
