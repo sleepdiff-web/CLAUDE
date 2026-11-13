@@ -1,0 +1,208 @@
+{%- comment -%}
+  "Hero Impossible" section (exact copy of the evorabody.com hero): a rating badge (square green star tiles + "1.000+ Reviews"), a big two-tone heading (the middle words in gold italic), optional sub line, a 2-column tick list, a gold button with an arrow, a small shield "guarantee" line, and a big rounded picture with a soft shadow on the other side.
+  Desktop (wider than 989px) = text and picture side by side, 60px apart. Tablet and phone (989px and narrower) = the picture first, then the text stacked, the button full width on phones.
+  No slider, no app, one picture, so it loads fast. The picture loads at once (it is the top of the page) and is served at the right size for every screen.
+
+  WHERE: best as its own full-width section: Online Store > Themes > Customize > Product page > Add section > Custom Liquid, drag it where you want it, paste this in.
+  If you paste it inside a narrow column instead, set mb_bleed to false.
+  EDIT YOUR CONTENT BELOW. Do not use a straight apostrophe (') in the text, use &#39; instead, and write & as &amp;
+  mb_rating = how many stars are green, from 0 to 5 (4.5 gives a half star). Empty = no stars.
+  mb_rating_text = the text next to the stars (leave empty to hide it). The "1.000+ Reviews" here is the number from the section this was copied from: change it to a number that is TRUE for your own store, or empty it. If both mb_rating and mb_rating_text are empty the whole badge disappears.
+  mb_heading_1 / mb_heading_2 / mb_heading_3 = the heading in three pieces: normal, then gold italic, then normal again. Leave a piece empty to skip it.
+  mb_sub = optional line under the heading (empty in the original).
+  mb_bullets = the tick list, items separated by @@ (leave empty to hide the list). mb_cols = 2 (two columns, like the original) or 1.
+  mb_btn_text / mb_btn_url / mb_btn_arrow = the button text, where it goes, and the little arrow after the text (empty = no arrow). Empty text hides the button.
+  mb_guarantee = the line under the button (empty hides it).
+  mb_img = your picture link. mb_img_alt = a short description of it (for Google and screen readers). mb_img_w / mb_img_h = the picture&#39;s real size in pixels, so the page does not jump while it loads.
+  mb_eager = true loads the picture straight away (best when this is near the top of the page), false waits until you scroll near it.
+  mb_side = which side the picture is on: right or left.
+  mb_bg = section colour. mb_color_heading / mb_color_accent = heading colour / gold words. mb_color_body = normal text. mb_color_stars = green of the star tiles. mb_color_check = tick colour. mb_btn_bg / mb_btn_hover / mb_btn_color = button colour / its colour when hovered / its writing. mb_color_guarantee = guarantee line colour.
+  mb_gap = space between the text and the picture (desktop). mb_radius = how round the picture corners are. mb_pad_t / mb_pad_b = space above / below inside the section.
+  mb_side_d = space left and right of the content on tablet and desktop, in px (40px here). On screens wider than about 1520px the content is exactly as wide as the original (1440px). The original has NO side space (0px), so on screens narrower than 1440px its text runs right up to the screen edge: type 0px if you want that exact look. mb_side_m = the same on phones (600px and narrower, 16px like the original). mb_full = true makes the content full width with 40px side space.
+  mb_bleed = true stretches the section edge to edge across the screen. mb_top / mb_bottom = space above and below the block.
+{%- endcomment -%}
+{%- assign mb_rating = '5' -%}
+{%- assign mb_rating_text = '1.000+ Reviews' -%}
+{%- assign mb_heading_1 = 'Firm,' -%}
+{%- assign mb_heading_2 = 'Smooth Skin.' -%}
+{%- assign mb_heading_3 = 'Reclaimed.' -%}
+{%- assign mb_sub = '' -%}
+{%- capture mb_bullets -%}
+Visibly firmer arms, hands &amp; thighs in weeks
+@@
+Deep hydration exactly where your skin needs it most
+@@
+Absorbs in 60 seconds — silky, never greasy
+{%- endcapture -%}
+{%- assign mb_cols = 2 -%}
+{%- assign mb_btn_text = 'Reclaim My Skin' -%}
+{%- assign mb_btn_url = '/products/botanical-body-oil-vt' -%}
+{%- assign mb_btn_arrow = '→' -%}
+{%- assign mb_guarantee = '90-Day Risk-Free Guarantee' -%}
+{%- assign mb_img = 'https://cdn.shopify.com/s/files/1/0847/9132/8941/files/5cc3c29e-f3fc-47e5-bff6-6eb8977fcb0c.png?v=1794564787' -%}
+{%- assign mb_img_alt = '' -%}
+{%- assign mb_img_w = 900 -%}
+{%- assign mb_img_h = 900 -%}
+{%- assign mb_eager = true -%}
+{%- assign mb_side = 'right' -%}
+{%- assign mb_bg = '#f4f0e6' -%}
+{%- assign mb_color_heading = '#1a1a1a' -%}
+{%- assign mb_color_accent = '#dda531' -%}
+{%- assign mb_color_body = '#2a110a' -%}
+{%- assign mb_color_stars = '#01b77f' -%}
+{%- assign mb_color_rating_text = '#333333' -%}
+{%- assign mb_color_check = '#dda531' -%}
+{%- assign mb_btn_bg = '#d1a54b' -%}
+{%- assign mb_btn_hover = '#dda531' -%}
+{%- assign mb_btn_color = '#ffffff' -%}
+{%- assign mb_color_guarantee = '#2a110a' -%}
+{%- assign mb_gap = '60px' -%}
+{%- assign mb_radius = '16px' -%}
+{%- assign mb_pad_t = '32px' -%}
+{%- assign mb_pad_b = '32px' -%}
+{%- assign mb_side_d = '40px' -%}
+{%- assign mb_side_m = '16px' -%}
+{%- assign mb_full = false -%}
+{%- assign mb_bleed = true -%}
+{%- assign mb_top = '0px' -%}
+{%- assign mb_bottom = '0px' -%}
+{%- assign mb_r = mb_rating | plus: 0 -%}
+{%- assign mb_bl_probe = mb_bullets | strip -%}
+{%- if mb_side == 'left' -%}{%- assign mb_sd = 'l' -%}{%- else -%}{%- assign mb_sd = 'r' -%}{%- endif -%}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&display=swap"></noscript>
+
+<style>
+.mb-hi{box-sizing:border-box;width:100%;margin:var(--mb-hi-top) 0 var(--mb-hi-bottom);padding:var(--mb-hi-pt) 0 var(--mb-hi-pb);background-color:var(--mb-hi-bg);font-family:'Libre Caslon Text',Georgia,serif;font-size:14px;line-height:1.5;font-weight:400;text-align:left;color:var(--mb-hi-body)}
+.mb-hi--bleed{width:100vw;max-width:none;margin-left:calc(50% - 50vw);margin-right:0}
+.mb-hi *{box-sizing:border-box}
+.mb-hi .mb-hi__c{max-width:calc(1440px + 2 * var(--mb-hi-sd));margin:0 auto;padding:0 var(--mb-hi-sd)}
+.mb-hi .mb-hi__c--full{max-width:100%;padding-left:40px;padding-right:40px}
+.mb-hi .mb-hi__l{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:var(--mb-hi-gap);margin:0;padding:0}
+.mb-hi .mb-hi__l--l .mb-hi__ct{order:2}
+.mb-hi .mb-hi__l--l .mb-hi__md{order:1}
+.mb-hi .mb-hi__l--r .mb-hi__ct{order:1}
+.mb-hi .mb-hi__l--r .mb-hi__md{order:2}
+.mb-hi .mb-hi__ct,.mb-hi .mb-hi__md{margin:0;padding:0}
+.mb-hi .mb-hi__rt{display:inline-flex;align-items:center;gap:10px;margin:0 0 20px;padding:0}
+.mb-hi .mb-hi__sts{display:flex;align-items:center;gap:3px;margin:0;padding:0}
+.mb-hi .mb-hi__st{position:relative;display:flex;align-items:center;justify-content:center;flex-shrink:0;width:20px;height:20px;margin:0;padding:0;border-radius:3px;overflow:hidden}
+.mb-hi .mb-hi__st--f{background:var(--mb-hi-rc)}
+.mb-hi .mb-hi__st--e{background:#dcdce6}
+.mb-hi .mb-hi__st--h{background:linear-gradient(to right,var(--mb-hi-rc) 50%,#dcdce6 50%)}
+.mb-hi .mb-hi__st svg{display:block;width:70%!important;height:70%!important;margin:0;padding:0;flex-shrink:0;fill:#ffffff!important}
+.mb-hi .mb-hi__rtx{margin:0;padding:0;font-size:14px!important;font-weight:600!important;font-style:normal!important;letter-spacing:.01em!important;text-transform:none!important;color:var(--mb-hi-rtc)!important;-webkit-text-fill-color:var(--mb-hi-rtc)!important}
+.mb-hi .mb-hi__h{margin:0 0 20px;padding:0;font-family:'Libre Caslon Text',Georgia,serif!important;font-size:clamp(28px,3.5vw,46px)!important;font-weight:500!important;font-style:normal!important;line-height:1.15!important;letter-spacing:-.01em!important;text-transform:none!important;color:var(--mb-hi-hc)!important;-webkit-text-fill-color:var(--mb-hi-hc)!important}
+.mb-hi .mb-hi__hp,.mb-hi .mb-hi__ha,.mb-hi .mb-hi__hq,.mb-hi .mb-hi__bt,.mb-hi .mb-hi__bti,.mb-hi .mb-hi__gt,.mb-hi .mb-hi__btn span{font-size:inherit!important;font-weight:inherit!important;line-height:inherit!important;letter-spacing:inherit!important;text-transform:inherit!important}
+.mb-hi .mb-hi__bt,.mb-hi .mb-hi__bti,.mb-hi .mb-hi__gt,.mb-hi .mb-hi__btn span{font-style:inherit!important;color:inherit!important;-webkit-text-fill-color:inherit!important}
+.mb-hi .mb-hi__hp,.mb-hi .mb-hi__hq{font-style:normal!important;color:var(--mb-hi-hc)!important;-webkit-text-fill-color:var(--mb-hi-hc)!important}
+.mb-hi .mb-hi__ha{color:var(--mb-hi-ac)!important;-webkit-text-fill-color:var(--mb-hi-ac)!important;font-style:italic!important}
+.mb-hi .mb-hi__hp{margin-right:.22em}
+.mb-hi .mb-hi__hq{margin-left:.22em}
+.mb-hi .mb-hi__sub{margin:0 0 20px;padding:0;font-size:16px!important;line-height:1.6!important;font-weight:400!important;letter-spacing:0!important;text-transform:none!important;color:var(--mb-hi-body)!important;-webkit-text-fill-color:var(--mb-hi-body)!important}
+.mb-hi .mb-hi__bl{list-style:none!important;margin:0 0 28px!important;padding:0!important;display:grid;gap:10px 20px}
+.mb-hi .mb-hi__bl--c2{grid-template-columns:1fr 1fr}
+.mb-hi .mb-hi__bl--c1{grid-template-columns:1fr}
+.mb-hi .mb-hi__b{display:flex;align-items:flex-start;gap:8px;margin:0!important;padding:0!important;list-style:none!important;font-size:15px!important;line-height:1.4!important;font-weight:400!important;letter-spacing:0!important;text-transform:none!important;color:var(--mb-hi-body)!important;-webkit-text-fill-color:var(--mb-hi-body)!important}
+.mb-hi .mb-hi__b::before,.mb-hi .mb-hi__b::marker{content:none}
+.mb-hi .mb-hi__bi{flex-shrink:0;width:18px;height:18px;margin:1px 0 0;padding:0;color:var(--mb-hi-ck)!important;display:flex;align-items:center;justify-content:center}
+.mb-hi .mb-hi__bi svg{display:block;width:100%!important;height:100%!important;margin:0;padding:0;fill:currentColor!important}
+.mb-hi .mb-hi__bt{flex:1;margin:0;padding:0}
+.mb-hi .mb-hi__cta{margin:0 0 14px;padding:0}
+.mb-hi .mb-hi__btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;margin:0;padding:15px 36px;background-color:var(--mb-hi-bb)!important;color:var(--mb-hi-bt)!important;-webkit-text-fill-color:var(--mb-hi-bt)!important;font-family:'Libre Caslon Text',Georgia,serif!important;font-size:16px!important;font-weight:700!important;font-style:normal!important;line-height:1.5!important;letter-spacing:.03em!important;text-transform:uppercase!important;text-decoration:none!important;border:none;border-radius:6px;cursor:pointer;transition:background-color .2s ease,transform .15s ease,box-shadow .2s ease;box-shadow:0 4px 14px rgba(0,0,0,.18);-webkit-appearance:none;appearance:none}
+.mb-hi .mb-hi__btn:hover,.mb-hi .mb-hi__btn:focus-visible{background-color:var(--mb-hi-bh)!important;transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,0,0,.22);color:var(--mb-hi-bt)!important;-webkit-text-fill-color:var(--mb-hi-bt)!important;text-decoration:none!important}
+.mb-hi .mb-hi__btn:active{transform:translateY(0);box-shadow:0 2px 8px rgba(0,0,0,.18)}
+.mb-hi .mb-hi__bti{margin:0;padding:0}
+.mb-hi .mb-hi__g{display:inline-flex;align-items:center;gap:7px;margin:0;padding:0;font-size:13px!important;font-weight:600!important;font-style:normal!important;letter-spacing:0!important;text-transform:none!important;color:var(--mb-hi-gc)!important;-webkit-text-fill-color:var(--mb-hi-gc)!important}
+.mb-hi .mb-hi__gi{flex-shrink:0;width:16px;height:16px;margin:0;padding:0;display:flex;align-items:center;justify-content:center}
+.mb-hi .mb-hi__gi svg{display:block;width:100%!important;height:100%!important;margin:0;padding:0;fill:currentColor!important}
+.mb-hi .mb-hi__w{margin:0;padding:0;border-radius:var(--mb-hi-rad);overflow:hidden;line-height:0;box-shadow:0 8px 40px rgba(0,0,0,.12)}
+.mb-hi .mb-hi__img{display:block;width:100%;max-width:100%;height:auto;margin:0!important;padding:0!important;border:0!important;border-radius:0!important;box-shadow:none!important;object-fit:cover}
+.mb-hi .mb-hi__ph{background:#f0f0f0;aspect-ratio:4/3;display:flex;align-items:center;justify-content:center}
+@media (max-width:989px){
+.mb-hi .mb-hi__l{grid-template-columns:1fr;gap:36px}
+.mb-hi .mb-hi__l--r .mb-hi__md,.mb-hi .mb-hi__l--l .mb-hi__md{order:-1}
+.mb-hi .mb-hi__l--r .mb-hi__ct,.mb-hi .mb-hi__l--l .mb-hi__ct{order:1}
+.mb-hi .mb-hi__bl--c2{grid-template-columns:1fr}
+}
+@media (max-width:599px){
+.mb-hi .mb-hi__c,.mb-hi .mb-hi__c.mb-hi__c--full{padding-left:var(--mb-hi-sm);padding-right:var(--mb-hi-sm)}
+.mb-hi .mb-hi__btn{width:100%;padding:16px 24px;font-size:15px!important}
+.mb-hi .mb-hi__g{display:flex;justify-content:center}
+}
+</style>
+
+<div class="mb-hi{% if mb_bleed %} mb-hi--bleed{% endif %}" data-bleed="{{ mb_bleed }}" style="--mb-hi-bg:{{ mb_bg }};--mb-hi-hc:{{ mb_color_heading }};--mb-hi-ac:{{ mb_color_accent }};--mb-hi-body:{{ mb_color_body }};--mb-hi-rc:{{ mb_color_stars }};--mb-hi-rtc:{{ mb_color_rating_text }};--mb-hi-bb:{{ mb_btn_bg }};--mb-hi-bt:{{ mb_btn_color }};--mb-hi-bh:{{ mb_btn_hover }};--mb-hi-ck:{{ mb_color_check }};--mb-hi-gc:{{ mb_color_guarantee }};--mb-hi-pt:{{ mb_pad_t }};--mb-hi-pb:{{ mb_pad_b }};--mb-hi-rad:{{ mb_radius }};--mb-hi-gap:{{ mb_gap }};--mb-hi-sd:{{ mb_side_d }};--mb-hi-sm:{{ mb_side_m }};--mb-hi-top:{{ mb_top }};--mb-hi-bottom:{{ mb_bottom }}">
+<div class="mb-hi__c{% if mb_full %} mb-hi__c--full{% endif %}"><div class="mb-hi__l mb-hi__l--{{ mb_sd }}">
+<div class="mb-hi__ct">
+{%- if mb_rating != blank or mb_rating_text != blank -%}
+<div class="mb-hi__rt">
+{%- if mb_rating != blank -%}
+<div class="mb-hi__sts" aria-label="{{ mb_rating }} out of 5 stars" role="img">
+{%- for mb_i in (1..5) -%}
+{%- assign mb_lo = mb_i | minus: 0.5 -%}
+<span class="mb-hi__st {% if mb_r >= mb_i %}mb-hi__st--f{% elsif mb_r >= mb_lo %}mb-hi__st--h{% else %}mb-hi__st--e{% endif %}" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><path d="M500 50L618.6 381.6H971.5L687.5 585.1 806.1 916.7 500 713.2 193.9 916.7 312.5 585.1 28.5 381.6H381.4Z"></path></svg></span>
+{%- endfor -%}
+</div>
+{%- endif -%}
+{%- if mb_rating_text != blank -%}<span class="mb-hi__rtx">{{ mb_rating_text }}</span>{%- endif -%}
+</div>
+{%- endif -%}
+{%- if mb_heading_1 != blank or mb_heading_2 != blank or mb_heading_3 != blank -%}
+<h2 class="mb-hi__h">{%- if mb_heading_1 != blank -%}<span class="mb-hi__hp">{{ mb_heading_1 }}</span>{%- endif -%}{%- if mb_heading_2 != blank -%}<span class="mb-hi__ha">{{ mb_heading_2 }}</span>{%- endif -%}{%- if mb_heading_3 != blank -%}<span class="mb-hi__hq">{{ mb_heading_3 }}</span>{%- endif -%}</h2>
+{%- endif -%}
+{%- if mb_sub != blank -%}<p class="mb-hi__sub">{{ mb_sub }}</p>{%- endif -%}
+{%- if mb_bl_probe != blank -%}
+{%- assign mb_bl_items = mb_bullets | split: '@@' -%}
+<ul class="mb-hi__bl mb-hi__bl--c{% if mb_cols == 1 %}1{% else %}2{% endif %}" role="list">
+{%- for mb_it in mb_bl_items -%}
+{%- assign mb_t = mb_it | strip -%}
+{%- if mb_t != blank -%}
+<li class="mb-hi__b"><span class="mb-hi__bi" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5l-4-4 1.41-1.41L10 13.67l6.59-6.59L18 8.5l-8 8z"></path></svg></span><span class="mb-hi__bt">{{ mb_t }}</span></li>
+{%- endif -%}
+{%- endfor -%}
+</ul>
+{%- endif -%}
+{%- if mb_btn_text != blank -%}<div class="mb-hi__cta"><a href="{{ mb_btn_url }}" class="mb-hi__btn"><span>{{ mb_btn_text }}</span>{%- if mb_btn_arrow != blank -%}<span class="mb-hi__bti" aria-hidden="true">{{ mb_btn_arrow }}</span>{%- endif -%}</a></div>{%- endif -%}
+{%- if mb_guarantee != blank -%}<div class="mb-hi__g"><span class="mb-hi__gi" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"></path></svg></span><span class="mb-hi__gt">{{ mb_guarantee }}</span></div>{%- endif -%}
+</div>
+<div class="mb-hi__md"><div class="mb-hi__w">
+{%- if mb_eager -%}{%- assign mb_load = 'loading="eager" fetchpriority="high"' -%}{%- else -%}{%- assign mb_load = 'loading="lazy"' -%}{%- endif -%}
+{%- if mb_img != blank -%}
+{%- if mb_img contains 'cdn.shopify.com' or mb_img contains '/cdn/shop/' -%}
+{%- if mb_img contains '?' -%}{%- assign mb_sep = '&amp;' -%}{%- else -%}{%- assign mb_sep = '?' -%}{%- endif -%}
+<img class="mb-hi__img" src="{{ mb_img }}{{ mb_sep }}width=900" srcset="{{ mb_img }}{{ mb_sep }}width=360 360w, {{ mb_img }}{{ mb_sep }}width=540 540w, {{ mb_img }}{{ mb_sep }}width=720 720w, {{ mb_img }}{{ mb_sep }}width=900 900w, {{ mb_img }}{{ mb_sep }}width=1200 1200w" sizes="(min-width: 990px) 50vw, 100vw" width="{{ mb_img_w }}" height="{{ mb_img_h }}" alt="{{ mb_img_alt | escape }}" {{ mb_load }} decoding="async">
+{%- else -%}
+<img class="mb-hi__img" src="{{ mb_img }}" width="{{ mb_img_w }}" height="{{ mb_img_h }}" alt="{{ mb_img_alt | escape }}" {{ mb_load }} decoding="async">
+{%- endif -%}
+{%- else -%}
+<div class="mb-hi__ph"></div>
+{%- endif -%}
+</div></div>
+</div></div>
+</div>
+
+<script>
+(function(){
+function init(root){
+if(root.getAttribute('data-on'))return;
+root.setAttribute('data-on','1');
+/* stretch edge to edge exactly, whatever the page column is */
+function bleed(){
+if(root.getAttribute('data-bleed')!=='true')return;
+root.style.marginLeft='0px';
+root.style.width=document.documentElement.clientWidth+'px';
+var l=root.getBoundingClientRect().left;
+root.style.marginLeft=(-l)+'px';
+}
+bleed();
+window.addEventListener('resize',bleed);
+window.addEventListener('load',function(){bleed();setTimeout(bleed,400)});
+}
+function all(){document.querySelectorAll('.mb-hi').forEach(init)}
+all();
+document.addEventListener('shopify:section:load',all);
+})();
+</script>
