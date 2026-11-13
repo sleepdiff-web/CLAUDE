@@ -1,6 +1,6 @@
 {%- comment -%}
   "We Don&#39;t Compromise on Quality" section (a copy of the Quasi section built from its markup, which came without its CSS, so spacing, sizes and the look of the icons are a close best guess): a centred title, one line under it, and four small "promise" items, each with an icon and a short text. Optional picture next to the text.
-  Phone = everything centred, items in 2 columns, the picture (if you add one) under them. Computer = with a picture: text and picture side by side and the items in 2 columns. Without a picture: everything centred and the 4 items in one row.
+  Phone = everything centred, the items in 2 columns, and the picture under them, stretched edge to edge so it fits the full width of the phone screen (nothing cut off). Tablet and computer = like the original, the picture is not shown, everything is centred and the 4 items sit in one row (set mb_img_where to all if you want the picture there too: then text and picture sit side by side).
   The icons are drawn in the page itself (no extra downloads) and take the gold colour you set. No app, no slider, loads fast.
 
   WHERE: best as its own full-width section: Online Store > Themes > Customize > Product page > Add section > Custom Liquid, drag it where you want it, paste this in.
@@ -10,7 +10,8 @@
   mb_items = the promise items, separated by @@, each one written as   ICON ||| TEXT
   ICON can be one of these words: flask, leaf, cross, heart, shield, drop, star, check. Or a picture link (starting with https:// or /) if you want your own icon. Leave it empty for no icon.
   Only keep promises that are TRUE for your own product (for example "Dermatologist Tested" or "Clinically proven" need proof behind them). The ones here came with the section this was copied from.
-  mb_img = an optional picture shown next to (or under) the text, empty = no picture. mb_img_alt = a short description of it. mb_side = right or left (which side the picture is on, computer only). mb_radius = how round its corners are.
+  mb_img = the picture (empty = no picture). mb_img_alt = a short description of it. mb_img_w / mb_img_h = the picture&#39;s real size in pixels (optional, stops the page jumping while it loads; leave both empty if you do not know them).
+  mb_img_where = mobile (the picture shows on phones only, like the original) or all (also on tablet and computer, beside the text). mb_img_edge = true makes the picture stretch across the whole phone screen from edge to edge, false keeps the side space. mb_img_flush = true makes it touch the bottom of the section on phones (no space under it). mb_side = right or left (which side the picture is on, computer only, when mb_img_where is all). mb_radius = how round its corners are (not used when it runs edge to edge on a phone).
   mb_icon = icon size. mb_icon_text = text size of the items.
   mb_bg = section colour. mb_color_text = normal writing. mb_color_icon = icon colour.
   mb_max = the widest the content gets. mb_pad_d / mb_pad_m = space inside the section on desktop (750px and up) / phone, written as top-and-bottom left-and-right, for example 64px 24px.
@@ -27,8 +28,13 @@ cross ||| Dermatologist Tested
 @@
 heart ||| Cruelty-Free Formulas
 {%- endcapture -%}
-{%- assign mb_img = '' -%}
+{%- assign mb_img = 'https://cdn.shopify.com/s/files/1/0847/9132/8941/files/26416a7a-de6d-4017-892f-49371068f94a.png?v=1794567109' -%}
 {%- assign mb_img_alt = '' -%}
+{%- assign mb_img_w = '' -%}
+{%- assign mb_img_h = '' -%}
+{%- assign mb_img_where = 'mobile' -%}
+{%- assign mb_img_edge = true -%}
+{%- assign mb_img_flush = true -%}
 {%- assign mb_side = 'right' -%}
 {%- assign mb_radius = '16px' -%}
 {%- assign mb_icon = '48px' -%}
@@ -45,6 +51,10 @@ heart ||| Cruelty-Free Formulas
 {%- assign mb_list = mb_items | split: '@@' -%}
 {%- assign mb_iprobe = mb_items | strip -%}
 {%- if mb_side == 'left' -%}{%- assign mb_sd = 'l' -%}{%- else -%}{%- assign mb_sd = 'r' -%}{%- endif -%}
+{%- assign mb_pm = mb_pad_m | split: ' ' -%}
+{%- assign mb_pm_x = mb_pm[1] | default: mb_pm[0] -%}
+{%- assign mb_pm_b = mb_pm[2] | default: mb_pm[0] -%}
+{%- if mb_img != blank and mb_img_where == 'all' -%}{%- assign mb_side_by = true -%}{%- else -%}{%- assign mb_side_by = false -%}{%- endif -%}
 {%- if mb_title != blank or mb_sub != blank or mb_iprobe != blank -%}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -68,7 +78,13 @@ heart ||| Cruelty-Free Formulas
 .mb-qp .mb-qp__lb{margin:0;padding:0;font-size:var(--mb-qp-it)!important;font-weight:400!important;font-style:normal!important;line-height:1.35!important;letter-spacing:0!important;text-transform:none!important;color:var(--mb-qp-tx)!important;-webkit-text-fill-color:var(--mb-qp-tx)!important}
 .mb-qp .mb-qp__md{margin:0;padding:0;min-width:0}
 .mb-qp .mb-qp__img{display:block;width:100%!important;max-width:100%!important;height:auto!important;margin:0!important;padding:0!important;border:0!important;border-radius:var(--mb-qp-r)!important;box-shadow:none!important;object-fit:cover}
+@media screen and (max-width:749px){
+.mb-qp .mb-qp__md--edge{margin-left:calc(-1 * var(--mb-qp-sx));margin-right:calc(-1 * var(--mb-qp-sx))}
+.mb-qp .mb-qp__md--edge .mb-qp__img{border-radius:0!important}
+.mb-qp .mb-qp__md--flush{margin-bottom:calc(-1 * var(--mb-qp-pb))}
+}
 @media screen and (min-width:750px){
+.mb-qp .mb-qp__md--m{display:none}
 .mb-qp{padding:var(--mb-qp-pd)}
 .mb-qp .mb-qp__h{font-size:36px!important;margin-bottom:14px}
 .mb-qp .mb-qp__s{margin-bottom:36px}
@@ -84,8 +100,8 @@ heart ||| Cruelty-Free Formulas
 }
 </style>
 
-<div class="mb-qp{% if mb_bleed %} mb-qp--bleed{% endif %}" data-bleed="{{ mb_bleed }}" style="--mb-qp-bg:{{ mb_bg }};--mb-qp-tx:{{ mb_color_text }};--mb-qp-icc:{{ mb_color_icon }};--mb-qp-ic:{{ mb_icon }};--mb-qp-it:{{ mb_icon_text }};--mb-qp-r:{{ mb_radius }};--mb-qp-max:{{ mb_max }};--mb-qp-pd:{{ mb_pad_d }};--mb-qp-pm:{{ mb_pad_m }};--mb-qp-top:{{ mb_top }};--mb-qp-bottom:{{ mb_bottom }}">
-<div class="mb-qp__in{% if mb_img != blank %} mb-qp__in--img mb-qp__in--{{ mb_sd }}{% endif %}">
+<div class="mb-qp{% if mb_bleed %} mb-qp--bleed{% endif %}" data-bleed="{{ mb_bleed }}" style="--mb-qp-bg:{{ mb_bg }};--mb-qp-tx:{{ mb_color_text }};--mb-qp-icc:{{ mb_color_icon }};--mb-qp-ic:{{ mb_icon }};--mb-qp-it:{{ mb_icon_text }};--mb-qp-r:{{ mb_radius }};--mb-qp-max:{{ mb_max }};--mb-qp-pd:{{ mb_pad_d }};--mb-qp-pm:{{ mb_pad_m }};--mb-qp-sx:{{ mb_pm_x }};--mb-qp-pb:{{ mb_pm_b }};--mb-qp-top:{{ mb_top }};--mb-qp-bottom:{{ mb_bottom }}">
+<div class="mb-qp__in{% if mb_side_by %} mb-qp__in--img mb-qp__in--{{ mb_sd }}{% endif %}">
 <div class="mb-qp__tx">
 {%- if mb_title != blank -%}<h2 class="mb-qp__h">{{ mb_title }}</h2>{%- endif -%}
 {%- if mb_sub != blank -%}<p class="mb-qp__s">{{ mb_sub }}</p>{%- endif -%}
@@ -118,12 +134,12 @@ heart ||| Cruelty-Free Formulas
 {%- endif -%}
 </div>
 {%- if mb_img != blank -%}
-<div class="mb-qp__md">
+<div class="mb-qp__md{% if mb_img_where != 'all' %} mb-qp__md--m{% endif %}{% if mb_img_edge %} mb-qp__md--edge{% endif %}{% if mb_img_flush %} mb-qp__md--flush{% endif %}">
 {%- if mb_img contains 'cdn.shopify.com' or mb_img contains '/cdn/shop/' -%}
 {%- if mb_img contains '?' -%}{%- assign mb_sep = '&amp;' -%}{%- else -%}{%- assign mb_sep = '?' -%}{%- endif -%}
-<img class="mb-qp__img" src="{{ mb_img }}{{ mb_sep }}width=820" srcset="{{ mb_img }}{{ mb_sep }}width=400 400w, {{ mb_img }}{{ mb_sep }}width=640 640w, {{ mb_img }}{{ mb_sep }}width=820 820w, {{ mb_img }}{{ mb_sep }}width=1100 1100w" sizes="(min-width: 990px) 50vw, 100vw" alt="{{ mb_img_alt | escape_once }}" loading="lazy" decoding="async">
+<img class="mb-qp__img" src="{{ mb_img }}{{ mb_sep }}width=820" srcset="{{ mb_img }}{{ mb_sep }}width=400 400w, {{ mb_img }}{{ mb_sep }}width=640 640w, {{ mb_img }}{{ mb_sep }}width=820 820w, {{ mb_img }}{{ mb_sep }}width=1100 1100w, {{ mb_img }}{{ mb_sep }}width=1500 1500w" sizes="(min-width: 990px) 50vw, 100vw"{% if mb_img_w != blank and mb_img_h != blank %} width="{{ mb_img_w }}" height="{{ mb_img_h }}"{% endif %} alt="{{ mb_img_alt | escape_once }}" loading="lazy" decoding="async">
 {%- else -%}
-<img class="mb-qp__img" src="{{ mb_img }}" alt="{{ mb_img_alt | escape_once }}" loading="lazy" decoding="async">
+<img class="mb-qp__img" src="{{ mb_img }}"{% if mb_img_w != blank and mb_img_h != blank %} width="{{ mb_img_w }}" height="{{ mb_img_h }}"{% endif %} alt="{{ mb_img_alt | escape_once }}" loading="lazy" decoding="async">
 {%- endif -%}
 </div>
 {%- endif -%}
