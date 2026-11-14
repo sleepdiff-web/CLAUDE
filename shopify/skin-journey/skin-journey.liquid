@@ -16,8 +16,10 @@
   mb_color_accent = the dots and the badge colour. mb_color_badge_text = the writing on the badge.
   mb_color_line = the line joining the dots. As you scroll down the page this line fills in from each dot towards the next one, and every dot lights up when the line reaches it.
   mb_color_track = the faint line that sits underneath while it is still empty (set it to transparent to have no line at all until it draws in).
-  mb_animate = true for the scroll animation, false for a plain finished line. mb_reach = how far down the screen the line reaches, as a percentage of the screen height (60 = a little below the middle, bigger = it draws sooner).
-  People who set their phone or computer to reduce motion always see the plain finished line.
+  mb_animate = true for the scroll animation, false for a plain finished line.
+  mb_reach_start / mb_reach = how far down the screen the end of the line is while it draws, as a percentage of the screen height. The line starts drawing when the first dot reaches mb_reach_start (85 = near the bottom of the screen) and is finished when the last dot reaches mb_reach (45 = a little above the middle). The further apart the two numbers are, the longer you have to scroll for the line to go all the way down (and the slower it draws).
+  The line follows your scroll in both directions: scroll down and it connects each dot to the next one, scroll back up and it draws back out. Each dot gives a small pop and a soft ring when the line reaches it.
+  People who set their phone or computer to reduce motion still see the line follow their scroll, but the dots do not pop.
   mb_radius = how round the big picture corners are. mb_pad_d / mb_pad_m = space above and below the content on desktop / phone.
   mb_bleed = true stretches the section edge to edge across the screen. mb_top / mb_bottom = space above and below the block.
 {%- endcomment -%}
@@ -43,7 +45,8 @@ https://evorabody.com/cdn/shop/files/4ed2c3f6-5ca5-42c2-90ad-faa2a7e8ff2c.png?v=
 {%- assign mb_color_line = '#dea431' -%}
 {%- assign mb_color_track = '#f1e2c0' -%}
 {%- assign mb_animate = true -%}
-{%- assign mb_reach = 60 -%}
+{%- assign mb_reach_start = 85 -%}
+{%- assign mb_reach = 45 -%}
 {%- assign mb_radius = '16px' -%}
 {%- assign mb_pad_d = '64px' -%}
 {%- assign mb_pad_m = '40px' -%}
@@ -80,7 +83,9 @@ https://evorabody.com/cdn/shop/files/4ed2c3f6-5ca5-42c2-90ad-faa2a7e8ff2c.png?v=
 .mb-jt .mb-jt__dot{position:absolute;z-index:1;left:0;top:13px;display:block;width:14px;height:14px;margin:0;padding:0;border-radius:50%;background:var(--mb-jt-ac);transition:background-color .3s ease}
 .mb-jt--anim .mb-jt__it:not(:last-child)::after{transform:scaleY(var(--p,0));will-change:transform}
 .mb-jt--anim .mb-jt__dot{background:var(--mb-jt-tk)}
-.mb-jt--anim .mb-jt__it.is-on .mb-jt__dot{background:var(--mb-jt-ac)}
+.mb-jt--anim .mb-jt__it.is-on .mb-jt__dot{background:var(--mb-jt-ac);animation:mb-jt-pop .55s ease-out}
+@keyframes mb-jt-pop{0%{transform:scale(1);box-shadow:0 0 0 0 var(--mb-jt-ac)}55%{transform:scale(1.55)}100%{transform:scale(1);box-shadow:0 0 0 10px transparent}}
+@media (prefers-reduced-motion:reduce){.mb-jt .mb-jt__dot{transition:none}.mb-jt--anim .mb-jt__it.is-on .mb-jt__dot{animation:none}}
 .mb-jt__main{margin:0;padding:0}
 .mb-jt__hd{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin:0 0 8px;padding:0}
 .mb-jt__ic{flex:none;width:40px;height:40px;margin:0;padding:0}
@@ -104,7 +109,7 @@ https://evorabody.com/cdn/shop/files/4ed2c3f6-5ca5-42c2-90ad-faa2a7e8ff2c.png?v=
 }
 </style>
 
-<div class="mb-jt{% if mb_bleed %} mb-jt--bleed{% endif %}" data-bleed="{{ mb_bleed }}" data-anim="{{ mb_animate }}" data-reach="{{ mb_reach }}" style="--mb-jt-bg:{{ mb_bg }};--mb-jt-tk:{{ mb_color_track }};--mb-jt-ti:{{ mb_color_title }};--mb-jt-tx:{{ mb_color_text }};--mb-jt-ac:{{ mb_color_accent }};--mb-jt-bt:{{ mb_color_badge_text }};--mb-jt-ln:{{ mb_color_line }};--mb-jt-rad:{{ mb_radius }};--mb-jt-pdd:{{ mb_pad_d }};--mb-jt-pdm:{{ mb_pad_m }};--mb-jt-top:{{ mb_top }};--mb-jt-bottom:{{ mb_bottom }}">
+<div class="mb-jt{% if mb_bleed %} mb-jt--bleed{% endif %}" data-bleed="{{ mb_bleed }}" data-anim="{{ mb_animate }}" data-start="{{ mb_reach_start }}" data-reach="{{ mb_reach }}" style="--mb-jt-bg:{{ mb_bg }};--mb-jt-tk:{{ mb_color_track }};--mb-jt-ti:{{ mb_color_title }};--mb-jt-tx:{{ mb_color_text }};--mb-jt-ac:{{ mb_color_accent }};--mb-jt-bt:{{ mb_color_badge_text }};--mb-jt-ln:{{ mb_color_line }};--mb-jt-rad:{{ mb_radius }};--mb-jt-pdd:{{ mb_pad_d }};--mb-jt-pdm:{{ mb_pad_m }};--mb-jt-top:{{ mb_top }};--mb-jt-bottom:{{ mb_bottom }}">
 <div class="mb-jt__in">
 <div class="mb-jt__wrap">
 {%- if mb_img != blank -%}<div class="mb-jt__im"><img src="{{ mb_img }}{{ mb_im_sep }}width=1200" srcset="{{ mb_img }}{{ mb_im_sep }}width=352 352w, {{ mb_img }}{{ mb_im_sep }}width=832 832w, {{ mb_img }}{{ mb_im_sep }}width=1200 1200w" sizes="(min-width: 1224px) 568px, (min-width: 1024px) 45vw, (min-width: 750px) 640px, 100vw" alt="{{ mb_img_alt | escape }}" width="1200" height="1200" loading="lazy" decoding="async"></div>{%- endif -%}
@@ -146,33 +151,40 @@ root.style.marginLeft=(-l)+'px';
 bleed();
 window.addEventListener('resize',bleed);
 window.addEventListener('load',function(){bleed();setTimeout(bleed,400)});
-/* scroll animation: the line fills in from dot to dot as you scroll down */
-if(root.getAttribute('data-anim')==='true'&&!(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)){
+/* scroll animation: the line fills in from dot to dot as you scroll down (and draws back out as you scroll up) */
+if(root.getAttribute('data-anim')==='true'){
 var its=root.querySelectorAll('.mb-jt__it'),dots=root.querySelectorAll('.mb-jt__dot'),n=its.length;
-var reach=parseFloat(root.getAttribute('data-reach'));
-if(!(reach>0&&reach<=100))reach=60;
+var reach=parseFloat(root.getAttribute('data-reach')),start=parseFloat(root.getAttribute('data-start'));
+if(!(reach>0&&reach<=100))reach=45;
+if(!(start>0&&start<=100))start=85;
 if(n>0&&n===dots.length){
 root.classList.add('mb-jt--anim');
 var tick=false;
+/* the box the page scrolls in: normally the window, but a few themes scroll inside an element */
+var box=function(){var e=root.parentElement,o;while(e&&e!==document.body&&e!==document.documentElement){o=window.getComputedStyle(e).overflowY;if((o==='auto'||o==='scroll')&&e.scrollHeight>e.clientHeight+1)return e;e=e.parentElement}return null};
 var update=function(){
 tick=false;
-if(!root.isConnected){window.removeEventListener('scroll',req);window.removeEventListener('resize',req);window.removeEventListener('load',req);return}
-var line=window.innerHeight*reach/100;
+if(!root.isConnected){window.removeEventListener('scroll',req,true);window.removeEventListener('resize',req);window.removeEventListener('load',req);return}
+var vh=window.innerHeight,a=vh*start/100,b=vh*reach/100;
 var top=window.pageYOffset||document.documentElement.scrollTop||0;
-var end=top+window.innerHeight>=document.documentElement.scrollHeight-2;
+var sc=box();
+var end=sc?sc.scrollTop+sc.clientHeight>=sc.scrollHeight-2:top+vh>=document.documentElement.scrollHeight-2;
 var c=[],i,r;
 for(i=0;i<n;i++){r=dots[i].getBoundingClientRect();c.push(r.top+r.height/2)}
+var L=c[n-1]-c[0],gap=a-b;if(gap<0)gap=0;
+var k=L>0?L/(L+gap):1;
+var t=(a-c[0])*k;
 for(i=0;i<n;i++){
-var p=0;
-if(i<n-1){p=end?1:(line-c[i])/(c[i+1]-c[i]);p=p<0?0:(p>1?1:p)}
-its[i].classList.toggle('is-on',end||line>=c[i]);
+var o=c[i]-c[0],p=0;
+if(i<n-1){p=end?1:(t-o)/(c[i+1]-c[i]);p=p<0?0:(p>1?1:p)}
+its[i].classList.toggle('is-on',end||t>=o-0.5);
 its[i].style.setProperty('--p',p.toFixed(4));
 }
 };
 var req=function(){if(!tick){tick=true;window.requestAnimationFrame(update)}};
-window.addEventListener('scroll',req,{passive:true});
+window.addEventListener('scroll',req,{passive:true,capture:true});
 window.addEventListener('resize',req);
-window.addEventListener('load',req);
+window.addEventListener('load',function(){req();setTimeout(req,400)});
 update();
 }
 }
