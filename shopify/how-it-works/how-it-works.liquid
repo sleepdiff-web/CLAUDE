@@ -10,6 +10,8 @@
   mb_text = the paragraph. Put [b] before and [/b] after any words you want in bold.
   mb_stats = the three stat items, separated by @@ and each one written as   NUMBER ||| TEXT ||| OPTIONAL PICTURE LINK
   The NUMBER (write 94 for 94%) is drawn inside a ring that fills to that percentage. If you give a picture link instead, your picture is shown in place of the ring.
+  mb_animate = true: when the stats scroll into view each number counts up from 0% to its figure while its ring fills (once per page visit). Set to false for no animation.
+  mb_count_ms = how long the count-up takes, in milliseconds (1600 = about a second and a half). Without JavaScript the final figures simply show.
   IMPORTANT: only use figures that come from your own real customer survey.
   mb_color_num = ring and number colour. mb_color_text = all text. mb_bg = background colour of the section. mb_radius = corner roundness of the video.
   mb_pad_top_d / mb_pad_top_m = space ABOVE the title on desktop / phone (small = tight). mb_pad_bot_d / mb_pad_bot_m = space BELOW the stats on desktop / phone.
@@ -38,6 +40,8 @@
 {%- assign mb_pad_bot_m = '36px' -%}
 {%- assign mb_top = '0px' -%}
 {%- assign mb_bottom = '0px' -%}
+{%- assign mb_animate = true -%}
+{%- assign mb_count_ms = '1600' -%}
 {%- assign mb_text_html = mb_text | replace: '[b]', '<strong>' | replace: '[/b]', '</strong>' -%}
 {%- if mb_poster contains '?' -%}{%- assign mb_poster_src = mb_poster | append: '&amp;width=1200' -%}{%- else -%}{%- assign mb_poster_src = mb_poster | append: '?width=1200' -%}{%- endif -%}
 {%- assign mb_items = mb_stats | split: '@@' -%}
@@ -67,6 +71,7 @@
 .mb-hw__ring circle{fill:none;stroke-width:5;stroke-linecap:round}
 .mb-hw__ring .mb-hw__rt{stroke:var(--mb-hw-nm);opacity:.22}
 .mb-hw__ring .mb-hw__ra{stroke:var(--mb-hw-nm)}
+.mb-hw__ring.is-pre .mb-hw__ra{opacity:0}
 .mb-hw .mb-hw__pc{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Libre Caslon Text',Georgia,serif;font-size:21px;font-weight:400;line-height:1;color:var(--mb-hw-nm)!important;-webkit-text-fill-color:var(--mb-hw-nm)!important}
 .mb-hw__sim{display:block;flex:none;width:76px;height:76px;margin:0;padding:0;object-fit:contain;border:0;border-radius:0;box-shadow:none;filter:none}
 .mb-hw .mb-hw__sx{margin:0;padding:0;font-size:15px;font-weight:500;line-height:1.45}
@@ -83,7 +88,7 @@
 }
 </style>
 
-<div class="mb-hw" style="--mb-hw-tx:{{ mb_color_text }};--mb-hw-nm:{{ mb_color_num }};--mb-hw-bg:{{ mb_bg }};--mb-hw-r:{{ mb_radius }};--mb-hw-ratio:{{ mb_video_ratio }};--mb-hw-ptd:{{ mb_pad_top_d }};--mb-hw-ptm:{{ mb_pad_top_m }};--mb-hw-pbd:{{ mb_pad_bot_d }};--mb-hw-pbm:{{ mb_pad_bot_m }};--mb-hw-top:{{ mb_top }};--mb-hw-bottom:{{ mb_bottom }}">
+<div class="mb-hw" style="--mb-hw-tx:{{ mb_color_text }};--mb-hw-nm:{{ mb_color_num }};--mb-hw-bg:{{ mb_bg }};--mb-hw-r:{{ mb_radius }};--mb-hw-ratio:{{ mb_video_ratio }};--mb-hw-ptd:{{ mb_pad_top_d }};--mb-hw-ptm:{{ mb_pad_top_m }};--mb-hw-pbd:{{ mb_pad_bot_d }};--mb-hw-pbm:{{ mb_pad_bot_m }};--mb-hw-top:{{ mb_top }};--mb-hw-bottom:{{ mb_bottom }}" data-anim="{{ mb_animate }}" data-ms="{{ mb_count_ms | strip }}">
 <div class="mb-hw__in">
 {%- if mb_title_1 != blank -%}<p class="mb-hw__t">{{ mb_title_1 }}{%- if mb_title_2 != blank -%}<br><em>{{ mb_title_2 }}</em>{%- endif -%}</p>{%- endif -%}
 <div class="mb-hw__cw">
@@ -104,7 +109,7 @@
 {%- assign mb_dash = mb_num | plus: 0 | at_most: 100 | times: 2.136 | round: 1 -%}
 <div class="mb-hw__si">
 {%- if mb_sim != blank -%}<img class="mb-hw__sim" src="{{ mb_sim }}" alt="" width="96" height="96" loading="lazy" decoding="async">
-{%- elsif mb_num != blank -%}<span class="mb-hw__ring"><svg viewBox="0 0 80 80" aria-hidden="true" focusable="false"><circle class="mb-hw__rt" cx="40" cy="40" r="34"/><circle class="mb-hw__ra" cx="40" cy="40" r="34" stroke-dasharray="{{ mb_dash }} 213.6" transform="rotate(-90 40 40)"/></svg><span class="mb-hw__pc">{{ mb_num }}%</span></span>{%- endif -%}
+{%- elsif mb_num != blank -%}<span class="mb-hw__ring" role="img" aria-label="{{ mb_num }}%" data-n="{{ mb_num }}" data-d="{{ mb_dash }}"><svg viewBox="0 0 80 80" aria-hidden="true" focusable="false"><circle class="mb-hw__rt" cx="40" cy="40" r="34"/><circle class="mb-hw__ra" cx="40" cy="40" r="34" stroke-dasharray="{{ mb_dash }} 213.6" transform="rotate(-90 40 40)"/></svg><span class="mb-hw__pc" aria-hidden="true">{{ mb_num }}%</span></span>{%- endif -%}
 {%- if mb_stx != blank -%}<p class="mb-hw__sx">{{ mb_stx }}</p>{%- endif -%}
 </div>
 {%- endif -%}
@@ -119,19 +124,65 @@ function init(root){
 if(root.getAttribute('data-on'))return;
 root.setAttribute('data-on','1');
 var v=root.querySelector('video.mb-hw__v');
-if(!v)return;
+if(v){
 v.muted=true;
 var loaded=false;
-function start(){
+var start=function(){
 if(!loaded){loaded=true;v.src=v.getAttribute('data-src');v.setAttribute('preload','auto')}
 var p=v.play();
 if(p&&p.catch)p.catch(function(){});
-}
+};
 if('IntersectionObserver' in window){
 new IntersectionObserver(function(en){
 for(var i=0;i<en.length;i++){if(en[i].isIntersecting){start()}else if(loaded){v.pause()}}
 },{threshold:0.25}).observe(v);
 }else{start()}
+}
+count(root);
+}
+function count(root){
+if(root.getAttribute('data-anim')==='false'||!('IntersectionObserver' in window))return;
+var ms=parseInt(root.getAttribute('data-ms'),10);
+if(!(ms>=200))ms=1600;
+if(ms>8000)ms=8000;
+var rings=root.querySelectorAll('.mb-hw__ring[data-n]'),items=[],i;
+for(i=0;i<rings.length;i++){
+var r=rings[i],arc=r.querySelector('.mb-hw__ra'),pc=r.querySelector('.mb-hw__pc'),str=r.getAttribute('data-n'),n=parseFloat(str),d=parseFloat(r.getAttribute('data-d'));
+if(!arc||!pc||isNaN(n)||isNaN(d))continue;
+var dot=str.indexOf('.');
+items.push({box:r.parentNode,ring:r,arc:arc,pc:pc,n:n,d:d,dec:dot<0?0:Math.min(2,str.length-dot-1),done:false});
+r.className+=' is-pre';
+arc.setAttribute('stroke-dasharray','0 213.6');
+pc.textContent=(0).toFixed(items[items.length-1].dec)+'%';
+}
+if(!items.length)return;
+function run(it,delay){
+var t0=0;
+function frame(now){
+if(!t0)t0=now;
+var k=(now-t0)/ms,e;
+if(k>1)k=1;
+e=1-Math.pow(1-k,3);
+it.arc.setAttribute('stroke-dasharray',(it.d*e).toFixed(2)+' 213.6');
+it.pc.textContent=(it.n*e).toFixed(it.dec)+'%';
+if(k<1)requestAnimationFrame(frame);
+else{it.arc.setAttribute('stroke-dasharray',it.d+' 213.6');it.pc.textContent=it.n.toFixed(it.dec)+'%'}
+}
+setTimeout(function(){
+it.ring.className=it.ring.className.replace(' is-pre','');
+requestAnimationFrame(frame);
+},delay);
+}
+var io=new IntersectionObserver(function(en){
+var seq=0;
+for(var j=0;j<en.length;j++){
+if(!en[j].isIntersecting)continue;
+for(var q=0;q<items.length;q++){
+if(items[q].box===en[j].target&&!items[q].done){items[q].done=true;io.unobserve(en[j].target);run(items[q],seq*150);seq++}
+}
+}
+},{threshold:0.4});
+for(i=0;i<items.length;i++)io.observe(items[i].box);
 }
 function all(){document.querySelectorAll('.mb-hw').forEach(init)}
 all();
