@@ -1,0 +1,86 @@
+{%- comment -%}
+  "Feature image" section (a copy of the Quasi lm-feature-image block): one picture, centred, up to 800px wide, full width on phones, with its own shape kept (nothing cropped or stretched). The picture loads as you scroll near it, at the right size for the screen.
+  No app, no library, loads fast.
+
+  PUT YOUR OWN PICTURE IN: paste its link in mb_img below (best: upload it in Shopify admin > Content > Files and copy that link). Use only pictures you own or have the right to use. Until you add a picture, visitors see nothing from this block; in the theme editor (Customize) you see a grey box so you can find it.
+
+  WHERE: Online Store > Themes > Customize > the page > Add section or block > Custom Liquid, drag it where you want it, paste this in.
+  By default it stays inside its column (like the original). If you want a full-width colour band behind it, set mb_bleed to true and give mb_bg a colour.
+  EDIT YOUR CONTENT BELOW. Do not use a straight apostrophe (') in the text, use &#39; instead.
+  mb_img = the picture link. mb_img_alt = a short description for Google and screen readers (leave empty for a purely decorative picture, like the original). mb_img_w / mb_img_h = the picture&#39;s real size in pixels (optional: stops the page jumping while it loads; fill in both or neither).
+  mb_link = optional: where the picture goes when someone clicks it (empty = not clickable).
+  mb_max = the widest the picture gets (800px like the original). mb_radius = how round the corners are.
+  mb_align = center, left or right (where a narrower-than-column picture sits).
+  mb_bg = colour behind the picture (transparent = none). mb_pad_d / mb_pad_m = space around the picture on desktop (750px and up) / phone, written as top-and-bottom left-and-right, for example 24px 0.
+  mb_eager = true loads the picture straight away (use it near the top of the page), false waits until you scroll near it (like the original).
+  mb_bleed = true stretches the band behind the picture edge to edge across the screen. mb_top / mb_bottom = space above and below the block.
+{%- endcomment -%}
+{%- assign mb_img = '' -%}
+{%- assign mb_img_alt = '' -%}
+{%- assign mb_img_w = '' -%}
+{%- assign mb_img_h = '' -%}
+{%- assign mb_link = '' -%}
+{%- assign mb_max = '800px' -%}
+{%- assign mb_radius = '0px' -%}
+{%- assign mb_align = 'center' -%}
+{%- assign mb_bg = 'transparent' -%}
+{%- assign mb_pad_d = '0' -%}
+{%- assign mb_pad_m = '0' -%}
+{%- assign mb_eager = false -%}
+{%- assign mb_bleed = false -%}
+{%- assign mb_top = '0px' -%}
+{%- assign mb_bottom = '0px' -%}
+{%- if mb_align == 'left' -%}{%- assign mb_mg = '0 auto 0 0' -%}{%- elsif mb_align == 'right' -%}{%- assign mb_mg = '0 0 0 auto' -%}{%- else -%}{%- assign mb_mg = '0 auto' -%}{%- endif -%}
+{%- if mb_eager -%}{%- assign mb_load = 'loading="eager" fetchpriority="high"' -%}{%- else -%}{%- assign mb_load = 'loading="lazy"' -%}{%- endif -%}
+{%- if mb_img != blank or request.design_mode -%}
+<style>
+.mb-fi{box-sizing:border-box;width:100%;margin:var(--mb-fi-top) 0 var(--mb-fi-bottom);padding:var(--mb-fi-pm);background:var(--mb-fi-bg);text-align:center}
+.mb-fi--bleed{width:100vw;max-width:none;margin-left:calc(50% - 50vw);margin-right:0}
+.mb-fi *{box-sizing:border-box}
+.mb-fi .mb-fi__in{display:block;width:100%;max-width:var(--mb-fi-max);margin:var(--mb-fi-mg);padding:0;line-height:0}
+.mb-fi .mb-fi__a{display:block;margin:0!important;padding:0!important;border:0!important;box-shadow:none!important;background:none!important;text-decoration:none!important}
+.mb-fi .mb-fi__img{display:block;width:100%!important;max-width:100%!important;height:auto!important;margin:0!important;padding:0!important;border:0!important;border-radius:var(--mb-fi-r)!important;box-shadow:none!important;filter:none!important;opacity:1!important;object-fit:contain}
+.mb-fi .mb-fi__ph{display:flex;align-items:center;justify-content:center;aspect-ratio:4/3;margin:0;padding:12px;border-radius:var(--mb-fi-r);background:#ebe7e2;font-family:sans-serif;font-size:13px;line-height:1.4;color:#767676}
+@media screen and (min-width:750px){.mb-fi{padding:var(--mb-fi-pd)}}
+</style>
+
+<div class="mb-fi{% if mb_bleed %} mb-fi--bleed{% endif %}" data-bleed="{{ mb_bleed }}" style="--mb-fi-bg:{{ mb_bg }};--mb-fi-max:{{ mb_max }};--mb-fi-r:{{ mb_radius }};--mb-fi-mg:{{ mb_mg }};--mb-fi-pd:{{ mb_pad_d }};--mb-fi-pm:{{ mb_pad_m }};--mb-fi-top:{{ mb_top }};--mb-fi-bottom:{{ mb_bottom }}">
+<div class="mb-fi__in">
+{%- if mb_img != blank -%}
+{%- if mb_link != blank -%}<a class="mb-fi__a" href="{{ mb_link }}">{%- endif -%}
+{%- if mb_img contains 'cdn.shopify.com' or mb_img contains '/cdn/shop/' -%}
+{%- if mb_img contains '?' -%}{%- assign mb_sep = '&amp;' -%}{%- else -%}{%- assign mb_sep = '?' -%}{%- endif -%}
+<img class="mb-fi__img" src="{{ mb_img }}{{ mb_sep }}width=800" srcset="{{ mb_img }}{{ mb_sep }}width=400 400w, {{ mb_img }}{{ mb_sep }}width=600 600w, {{ mb_img }}{{ mb_sep }}width=800 800w, {{ mb_img }}{{ mb_sep }}width=1200 1200w, {{ mb_img }}{{ mb_sep }}width=1600 1600w" sizes="(min-width: 800px) 800px, 100vw"{% if mb_img_w != blank and mb_img_h != blank %} width="{{ mb_img_w }}" height="{{ mb_img_h }}"{% endif %}{% if mb_img_alt == blank %} alt="" role="presentation"{% else %} alt="{{ mb_img_alt | escape_once }}"{% endif %} {{ mb_load }} decoding="async">
+{%- else -%}
+<img class="mb-fi__img" src="{{ mb_img }}"{% if mb_img_w != blank and mb_img_h != blank %} width="{{ mb_img_w }}" height="{{ mb_img_h }}"{% endif %}{% if mb_img_alt == blank %} alt="" role="presentation"{% else %} alt="{{ mb_img_alt | escape_once }}"{% endif %} {{ mb_load }} decoding="async">
+{%- endif -%}
+{%- if mb_link != blank -%}</a>{%- endif -%}
+{%- else -%}
+<div class="mb-fi__ph">Feature image: paste your picture link in mb_img (only you see this box, in the theme editor)</div>
+{%- endif -%}
+</div>
+</div>
+{%- endif -%}
+
+<script>
+(function(){
+function init(root){
+if(root.getAttribute('data-on'))return;
+root.setAttribute('data-on','1');
+/* stretch edge to edge exactly, whatever the page column is */
+function bleed(){
+if(root.getAttribute('data-bleed')!=='true')return;
+root.style.marginLeft='0px';
+root.style.width=document.documentElement.clientWidth+'px';
+var l=root.getBoundingClientRect().left;
+root.style.marginLeft=(-l)+'px';
+}
+bleed();
+window.addEventListener('resize',bleed);
+window.addEventListener('load',function(){bleed();setTimeout(bleed,400)});
+}
+function all(){document.querySelectorAll('.mb-fi').forEach(init)}
+all();
+document.addEventListener('shopify:section:load',all);
+})();
+</script>
