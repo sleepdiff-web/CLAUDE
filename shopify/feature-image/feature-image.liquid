@@ -11,7 +11,7 @@
   mb_link = optional: where the picture goes when someone clicks it (empty = not clickable).
   mb_max = the widest the picture gets (800px like the original). mb_radius = how round the corners are.
   mb_align = center, left or right (where a narrower-than-column picture sits).
-  mb_bg = colour behind the picture (transparent = none). mb_pad_d / mb_pad_m = space around the picture on desktop (750px and up) / phone, written as top, left-and-right, bottom, for example 0 0 48px = nothing on top or sides and 48px underneath (make the last number bigger for more space under the picture).
+  mb_bg = colour behind the picture (transparent = none). mb_pad_d / mb_pad_m = space around the picture on desktop (750px and up) / phone, written as top, left-and-right, bottom, for example 0 0 32px = nothing on top or sides and 32px underneath (make the last number bigger for more space under the picture).
   mb_eager = true loads the picture straight away (use it near the top of the page), false waits until you scroll near it (like the original).
   mb_bleed = true stretches the band behind the picture edge to edge across the screen. mb_top / mb_bottom = space above and below the block.
 {%- endcomment -%}
@@ -24,8 +24,8 @@
 {%- assign mb_radius = '0px' -%}
 {%- assign mb_align = 'center' -%}
 {%- assign mb_bg = 'transparent' -%}
-{%- assign mb_pad_d = '0 0 48px' -%}
-{%- assign mb_pad_m = '0 0 48px' -%}
+{%- assign mb_pad_d = '0 0 32px' -%}
+{%- assign mb_pad_m = '0 0 32px' -%}
 {%- assign mb_eager = false -%}
 {%- assign mb_bleed = false -%}
 {%- assign mb_top = '0px' -%}
