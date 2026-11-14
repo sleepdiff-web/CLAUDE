@@ -47,8 +47,8 @@ https://goda.co/cdn/shop/files/image_4.png?v=1744788589 ||| Press logo 5
 {%- assign mb_max = mb_show_d | at_least: mb_show_t | at_least: mb_show_m -%}
 {%- assign mb_k = mb_n | minus: 1 | plus: mb_max | divided_by: mb_n -%}
 {%- assign mb_dur = mb_n | times: mb_k | times: mb_speed -%}
-{%- capture mb_a -%}{%- for mb_it in mb_items -%}{%- assign mb_chk = mb_it | strip -%}{%- if mb_chk != blank -%}{%- assign mb_f = mb_it | split: '|||' -%}{%- assign mb_u = mb_f[0] | strip -%}{%- assign mb_nm = mb_f[1] | strip -%}{%- if mb_u contains '?' -%}{%- assign mb_src = mb_u | append: '&amp;width=300' -%}{%- else -%}{%- assign mb_src = mb_u | append: '?width=300' -%}{%- endif -%}<div class="mb-ls__it">{%- if mb_u != blank -%}<img src="{{ mb_src }}" alt="{{ mb_nm | escape }}" loading="lazy" decoding="async" draggable="false">{%- else -%}<span class="mb-ls__ph">{{ mb_nm }}</span>{%- endif -%}</div>{%- endif -%}{%- endfor -%}{%- endcapture -%}
-{%- capture mb_b -%}{%- for mb_it in mb_items -%}{%- assign mb_chk = mb_it | strip -%}{%- if mb_chk != blank -%}{%- assign mb_f = mb_it | split: '|||' -%}{%- assign mb_u = mb_f[0] | strip -%}{%- assign mb_nm = mb_f[1] | strip -%}{%- if mb_u contains '?' -%}{%- assign mb_src = mb_u | append: '&amp;width=300' -%}{%- else -%}{%- assign mb_src = mb_u | append: '?width=300' -%}{%- endif -%}<div class="mb-ls__it" aria-hidden="true">{%- if mb_u != blank -%}<img src="{{ mb_src }}" alt="" loading="lazy" decoding="async" draggable="false">{%- else -%}<span class="mb-ls__ph">{{ mb_nm }}</span>{%- endif -%}</div>{%- endif -%}{%- endfor -%}{%- endcapture -%}
+{%- capture mb_a -%}{%- for mb_it in mb_items -%}{%- assign mb_chk = mb_it | strip -%}{%- if mb_chk != blank -%}{%- assign mb_f = mb_it | split: '|||' -%}{%- assign mb_u = mb_f[0] | strip -%}{%- assign mb_nm = mb_f[1] | strip -%}{%- if mb_u contains '?' -%}{%- assign mb_src = mb_u | append: '&amp;width=300' -%}{%- else -%}{%- assign mb_src = mb_u | append: '?width=300' -%}{%- endif -%}<div class="mb-ls__it">{%- if mb_u != blank -%}<img src="{{ mb_src }}" alt="{{ mb_nm | escape }}" loading="lazy" decoding="async" draggable="false" onerror="this.parentNode.classList.add('is-bad')">{%- else -%}<span class="mb-ls__ph">{{ mb_nm }}</span>{%- endif -%}</div>{%- endif -%}{%- endfor -%}{%- endcapture -%}
+{%- capture mb_b -%}{%- for mb_it in mb_items -%}{%- assign mb_chk = mb_it | strip -%}{%- if mb_chk != blank -%}{%- assign mb_f = mb_it | split: '|||' -%}{%- assign mb_u = mb_f[0] | strip -%}{%- assign mb_nm = mb_f[1] | strip -%}{%- if mb_u contains '?' -%}{%- assign mb_src = mb_u | append: '&amp;width=300' -%}{%- else -%}{%- assign mb_src = mb_u | append: '?width=300' -%}{%- endif -%}<div class="mb-ls__it" aria-hidden="true">{%- if mb_u != blank -%}<img src="{{ mb_src }}" alt="" loading="lazy" decoding="async" draggable="false" onerror="this.parentNode.classList.add('is-bad')">{%- else -%}<span class="mb-ls__ph">{{ mb_nm }}</span>{%- endif -%}</div>{%- endif -%}{%- endfor -%}{%- endcapture -%}
 {%- capture mb_set -%}{{ mb_a }}{%- for mb_r in (2..mb_k) -%}{{ mb_b }}{%- endfor -%}{%- endcapture -%}
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -67,9 +67,15 @@ https://goda.co/cdn/shop/files/image_4.png?v=1744788589 ||| Press logo 5
 .mb-ls__set{display:flex;flex:none}
 .mb-ls__it{display:flex;align-items:center;justify-content:center;flex:0 0 calc(100vw / var(--mb-ls-show));height:var(--mb-ls-h);margin:0;padding:0 12px}
 @supports (width:1cqw){.mb-ls__it{flex:0 0 calc(100cqw / var(--mb-ls-show))}}
-.mb-ls__it img{display:block;width:100%;max-width:100%;height:100%;max-height:100%;margin:0;padding:0;object-fit:contain;border:0;border-radius:0;box-shadow:none;filter:none;opacity:1;transform:none;-webkit-user-drag:none;user-select:none;pointer-events:none}
+.mb-ls .mb-ls__it img{display:block!important;width:100%!important;max-width:100%!important;height:100%!important;max-height:100%!important;min-width:0!important;margin:0!important;padding:0!important;object-fit:contain!important;border:0!important;border-radius:0!important;box-shadow:none!important;filter:none!important;opacity:1!important;transform:none!important;-webkit-user-drag:none;user-select:none;pointer-events:none}
+.mb-ls .mb-ls__it.is-bad img{visibility:hidden!important}
+.mb-ls .mb-ls__note{display:none;margin:0;padding:6px 16px;text-align:center;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:600;line-height:1.5;letter-spacing:0;text-transform:none;font-style:normal;color:var(--mb-ls-tx)!important;-webkit-text-fill-color:var(--mb-ls-tx)!important}
+.mb-ls.is-warn .mb-ls__note{display:block}
+.mb-ls.is-warn .mb-ls__vp{display:none}
+.mb-ls.is-empty{display:none!important}
 .mb-ls .mb-ls__ph{display:block;max-width:100%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-size:13px;font-weight:600;letter-spacing:0;text-transform:none;font-style:normal;color:var(--mb-ls-tx)!important;-webkit-text-fill-color:var(--mb-ls-tx)!important;opacity:.45}
 @keyframes mb-ls-run{from{transform:translate3d(0,0,0)}to{transform:translate3d(-50%,0,0)}}
+@media (prefers-reduced-motion:reduce){.mb-ls__trk{animation:none}}
 @media screen and (max-width:1200px){
 .mb-ls{--mb-ls-show:{{ mb_show_t }}}
 }
@@ -79,8 +85,9 @@ https://goda.co/cdn/shop/files/image_4.png?v=1744788589 ||| Press logo 5
 }
 </style>
 
-<div class="mb-ls{% if mb_bleed %} mb-ls--bleed{% endif %}" role="group" aria-label="{{ mb_label | escape }}" style="--mb-ls-bg:{{ mb_bg }};--mb-ls-line:{{ mb_line }};--mb-ls-tx:{{ mb_color_text }};--mb-ls-h:{{ mb_logo_h }};--mb-ls-dur:{{ mb_dur }}s;--mb-ls-top:{{ mb_top }};--mb-ls-bottom:{{ mb_bottom }}" data-bleed="{{ mb_bleed }}">
+<div class="mb-ls{% if mb_bleed %} mb-ls--bleed{% endif %}" role="group" aria-label="{{ mb_label | escape }}" style="--mb-ls-bg:{{ mb_bg }};--mb-ls-line:{{ mb_line }};--mb-ls-tx:{{ mb_color_text }};--mb-ls-h:{{ mb_logo_h }};--mb-ls-dur:{{ mb_dur }}s;--mb-ls-top:{{ mb_top }};--mb-ls-bottom:{{ mb_bottom }}" data-bleed="{{ mb_bleed }}" data-n="{{ mb_n }}" data-design="{{ request.design_mode }}">
 {%- if mb_title != blank -%}<p class="mb-ls__h">{{ mb_title }}</p>{%- endif -%}
+<p class="mb-ls__note">None of your logos could be loaded. Check the picture links in mb_logos (only you see this note, in the theme editor).</p>
 <div class="mb-ls__vp"><div class="mb-ls__trk"><div class="mb-ls__set">{{ mb_set }}</div><div class="mb-ls__set" aria-hidden="true">{{ mb_set }}</div></div></div>
 </div>
 
@@ -100,6 +107,26 @@ root.style.marginLeft=(-l)+'px';
 bleed();
 window.addEventListener('resize',bleed);
 window.addEventListener('load',function(){bleed();setTimeout(bleed,400)});
+/* a logo whose picture cannot load is hidden (no broken-picture icon); if NONE load, the strip hides itself (in the theme editor it shows a note instead) */
+var design=root.getAttribute('data-design')==='true',nn=parseInt(root.getAttribute('data-n'),10)||0;
+function sweep(){
+var all=root.querySelectorAll('.mb-ls__it'),first=root.querySelector('.mb-ls__set'),i,j,im,x,src,fails=0,tot=0;
+if(!first)return;
+var fi=first.querySelectorAll('.mb-ls__it');
+for(i=0;i<fi.length&&i<nn;i++){
+im=fi[i].querySelector('img');
+if(!im)continue;
+tot++;
+if(fi[i].classList.contains('is-bad')){
+fails++;
+src=im.getAttribute('src');
+for(j=0;j<all.length;j++){x=all[j].querySelector('img');if(x&&x.getAttribute('src')===src)all[j].classList.add('is-bad')}
+}
+}
+if(tot>0&&fails===tot)root.classList.add(design?'is-warn':'is-empty');
+}
+root.addEventListener('error',function(e){var t=e.target;if(t&&t.tagName==='IMG'&&t.parentNode){t.parentNode.classList.add('is-bad');sweep()}},true);
+sweep();
 /* pause while it is off screen (saves battery) */
 if('IntersectionObserver' in window){
 new IntersectionObserver(function(en){
