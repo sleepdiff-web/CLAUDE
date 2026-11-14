@@ -2,7 +2,7 @@
   "Feature image" section (a copy of the Quasi lm-feature-image block): one picture, centred, up to 800px wide, full width on phones, with its own shape kept (nothing cropped or stretched). The picture loads as you scroll near it, at the right size for the screen.
   No app, no library, loads fast.
 
-  PUT YOUR OWN PICTURE IN: paste its link in mb_img below (best: upload it in Shopify admin > Content > Files and copy that link). Use only pictures you own or have the right to use. Until you add a picture, visitors see nothing from this block; in the theme editor (Customize) you see a grey box so you can find it.
+  THE PICTURE BELOW IS LINKED FROM officialquasi.com so you can see the section working. That picture belongs to Quasi: they can change or remove it at any time (then your block shows a broken picture), and you need the right to use it. For a live store, save the picture (or use your own), upload it in Shopify admin > Content > Files, copy the new link and paste it in mb_img instead. If the picture is empty, visitors see nothing from this block; in the theme editor (Customize) you see a grey box so you can find it.
 
   WHERE: Online Store > Themes > Customize > the page > Add section or block > Custom Liquid, drag it where you want it, paste this in.
   By default it stays inside its column (like the original). If you want a full-width colour band behind it, set mb_bleed to true and give mb_bg a colour.
@@ -15,7 +15,7 @@
   mb_eager = true loads the picture straight away (use it near the top of the page), false waits until you scroll near it (like the original).
   mb_bleed = true stretches the band behind the picture edge to edge across the screen. mb_top / mb_bottom = space above and below the block.
 {%- endcomment -%}
-{%- assign mb_img = '' -%}
+{%- assign mb_img = 'https://officialquasi.com/cdn/shop/files/Screenshot_2025-04-02_at_19.21.02.png?v=1743610847' -%}
 {%- assign mb_img_alt = '' -%}
 {%- assign mb_img_w = '' -%}
 {%- assign mb_img_h = '' -%}
