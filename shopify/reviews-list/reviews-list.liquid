@@ -2,18 +2,18 @@
   "They Felt the Shift" customer reviews list: a small rating line (stars, "Rated 4.9 / 5", "Trusted by ..."), a heading, then review cards (rating + stars, the review, and small tag pills). On phones only the first 2 reviews show with a "Read More Reviews" link that opens the rest (and "Read Less Reviews" closes them again and scrolls back up). On desktop the first 4 reviews show.
   EDIT YOUR REVIEWS BELOW. One review = rating ||| review text ||| tag ;; tag. Put @@ on its own line between reviews. Separate the tags with ;; (two semicolons). Add as many reviews as you like.
   mb_show_mobile / mb_show_desktop = how many reviews show before "Read More". The link only appears when there are more reviews than that (so with 3 reviews it shows on phones only, like the original).
-  mb_accent = the stars (your red, #943434). mb_tag_color / mb_tag_bg = the tag pills (text and border colour, and the pale fill). mb_bg = section background. mb_card_bg / mb_card_border = the review boxes. mb_heading_color = heading. mb_text_color = review text, rating numbers and the "Read More" link. mb_meta_color = the small rating line at the top.
+  mb_accent = the stars (gold, #dea431). mb_tag_color / mb_tag_bg = the tag pills (text and border colour, and the pale fill). mb_bg = section background. mb_card_bg / mb_card_border = the review boxes. mb_heading_color = heading. mb_text_color = review text, rating numbers and the "Read More" link. mb_meta_color = the small rating line at the top.
   These colours are locked, so the theme cannot turn them black.
   Do not use a straight apostrophe (') in the text, use &#39; instead. Do not type three | in a row or ;; inside a review except as the separators.
 {%- endcomment -%}
-{%- assign mb_rating_line = 'Rated 4.9 / 5' -%}
-{%- assign mb_trusted = 'Trusted by <strong>4,000+</strong>' -%}
+{%- assign mb_rating_line = '4.9 Stars' -%}
+{%- assign mb_trusted = '<strong>10,000+</strong> reviews' -%}
 {%- assign mb_heading = 'They Felt the Shift. You Will Too.' -%}
 {%- assign mb_more = 'Read More Reviews' -%}
 {%- assign mb_less = 'Read Less Reviews' -%}
 {%- assign mb_show_mobile = 2 -%}
 {%- assign mb_show_desktop = 4 -%}
-{%- assign mb_accent = '#943434' -%}
+{%- assign mb_accent = '#dea431' -%}
 {%- assign mb_tag_color = '#943434' -%}
 {%- assign mb_tag_bg = 'rgba(148, 52, 52, 0.05)' -%}
 {%- assign mb_bg = '#ffffff' -%}
@@ -47,7 +47,8 @@
 .mb-rl .mb-rl__row{display:inline-flex;align-items:center;justify-content:center;gap:8px}
 .mb-rl .mb-rl__tr{display:inline-flex;align-items:center;justify-content:center;gap:6px;font-weight:400;color:var(--mb-rl-mc)!important;-webkit-text-fill-color:var(--mb-rl-mc)!important}
 .mb-rl .mb-rl__tr strong{font-weight:700!important}
-.mb-rl .mb-rl__top .mb-rl__st{display:inline-block;font-size:20px!important;line-height:1;letter-spacing:1px}
+.mb-rl .mb-rl__top .mb-rl__st{display:inline-block;font-size:20px!important;line-height:1;letter-spacing:1px!important}
+.mb-rl .mb-rl__top span:not(.mb-rl__st){letter-spacing:.6px!important;text-transform:none!important}
 .mb-rl .mb-rl__st{color:var(--mb-rl-ac)!important;-webkit-text-fill-color:var(--mb-rl-ac)!important}
 .mb-rl .mb-rl__top span,.mb-rl .mb-rl__top strong{color:var(--mb-rl-mc)!important;-webkit-text-fill-color:var(--mb-rl-mc)!important}
 .mb-rl .mb-rl__top .mb-rl__st{color:var(--mb-rl-ac)!important;-webkit-text-fill-color:var(--mb-rl-ac)!important}
@@ -58,7 +59,7 @@
 @keyframes mb-rl-in{to{opacity:1;transform:translateY(0)}}
 .mb-rl .mb-rl__cs{display:flex;align-items:center;gap:8px;margin-bottom:12px;font-size:15px;font-weight:700;line-height:1;color:var(--mb-rl-tc)!important}
 .mb-rl .mb-rl__cs span:first-child{color:var(--mb-rl-tc)!important;-webkit-text-fill-color:var(--mb-rl-tc)!important}
-.mb-rl .mb-rl__cs .mb-rl__st{font-size:18px!important;line-height:1;letter-spacing:1.5px}
+.mb-rl .mb-rl__cs .mb-rl__st{font-size:18px!important;line-height:1;letter-spacing:1.5px!important}
 .mb-rl .mb-rl__tx{margin:0 0 16px;padding:0;font-size:15px!important;font-weight:400!important;line-height:1.6;color:var(--mb-rl-tc)!important;-webkit-text-fill-color:var(--mb-rl-tc)!important}
 .mb-rl .mb-rl__tx strong{font-weight:700!important}
 .mb-rl .mb-rl__tags{display:flex;flex-wrap:wrap;gap:8px}
@@ -67,6 +68,9 @@
 .mb-rl .mb-rl__tb{padding:8px 16px;border:none;background:transparent!important;font-size:15px;font-weight:400!important;text-decoration:underline;cursor:pointer;transition:opacity .2s ease;color:var(--mb-rl-tc)!important;-webkit-text-fill-color:var(--mb-rl-tc)!important}
 .mb-rl .mb-rl__tb:hover{opacity:.8}
 @media screen and (max-width:749px){
+.mb-rl .mb-rl__top{flex-direction:row;flex-wrap:nowrap;gap:8px;white-space:nowrap;font-size:clamp(11.5px,3.7vw,14.5px)}
+.mb-rl .mb-rl__top .mb-rl__st{font-size:clamp(15px,5vw,20px)!important;letter-spacing:.5px!important}
+.mb-rl .mb-rl__row,.mb-rl .mb-rl__tr{flex:none;gap:clamp(4px,1.5vw,6px)}
 .mb-rl .mb-rl__tw.mb-m{display:block}
 .mb-rl .mb-rl__card.mb-mh{display:none!important}
 }
