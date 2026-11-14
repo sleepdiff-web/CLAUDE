@@ -1,6 +1,8 @@
 {%- comment -%}
   "They Felt the Shift" customer reviews list: a small rating line (stars, "4.9 Stars", "10,000+ reviews", all on one line on phones), a heading, then review cards (rating + stars, the review, and small tag pills). On phones only the first 2 reviews show with a "Read More Reviews" link that opens the rest (and "Read Less Reviews" closes them again and scrolls back up). On desktop the first 4 reviews show.
   EDIT YOUR REVIEWS BELOW. One review = rating ||| review text ||| tag ;; tag. Put @@ on its own line between reviews. Separate the tags with ;; (two semicolons). Add as many reviews as you like.
+  The rating is optional: leave it empty (just write ||| at the start) and that review shows no rating number and no stars. Only type a rating when it is that customer&#39;s real star rating.
+  Only put in words that real customers have really said. The reviews below are the real customer quotes from the original Evora section, word for word; the tags only repeat what each customer said.
   mb_show_mobile / mb_show_desktop = how many reviews show before "Read More". The link only appears when there are more reviews than that (so with 3 reviews it shows on phones only, like the original).
   mb_accent = the stars (gold, #dea431). mb_tag_color / mb_tag_bg = the tag pills (text and border colour, and the pale fill). mb_bg = section background. mb_card_bg / mb_card_border = the review boxes. mb_heading_color = heading. mb_text_color = review text, rating numbers and the "Read More" link. mb_meta_color = the small rating line at the top.
   These colours are locked, so the theme cannot turn them black.
@@ -23,11 +25,13 @@
 {%- assign mb_text_color = '#000000' -%}
 {%- assign mb_meta_color = '#2b2b2b' -%}
 {%- capture mb_reviews -%}
-4.9 ||| I&#39;ve been taking two capsules every morning for almost two months now, and the bloating I had every single afternoon is just gone. The first few weeks I didn&#39;t notice much, but by week six something shifted. Sticking with it daily is what made it work. ||| Consistent Use ;; Less Bloating
+||| I have had several people ask me what I&rsquo;ve done to my arms. I tell them about the product ||| Noticed By Others ;; Arms
 @@
-5.0 ||| I was skeptical because I had already tried plain berberine and felt nothing. Three months of daily use later, the belly that had not moved in two years is noticeably flatter, and my energy through the afternoon is steadier than it has been in a long time. It is not a quick fix but for me the consistency paid off. ||| Long-Term Results ;; Hormonal Belly Fat
+||| I love it. My arms feel soft and firm again.. Easy to use and you see the benefits soon after the first use. ||| Softer Arms ;; Firmer Feel ;; Easy To Use
 @@
-4.9 ||| The key for me was just not skipping days. Once I made it part of my morning routine alongside breakfast, my energy levelled out and that tight heavy feeling around my middle started to ease week by week. Small habit, real difference. ||| Daily Routine ;; Steady Energy
+||| I&#39;m 69 years old and my skin feels so much better feels softer and more youthful. ||| Softer Skin ;; More Youthful
+@@
+||| I have been using the Evora Body Oil and I see a great improvement on my arms and legs overall, I will continue to use it forever. ||| Arms &amp; Legs ;; Long-Term Use
 {%- endcapture -%}
 {%- assign mb_items = mb_reviews | split: '@@' -%}
 {%- assign mb_count = mb_items | size -%}
@@ -96,10 +100,10 @@
         {%- assign mb_txt = mb_f[1] | strip -%}
         {%- assign mb_tags = mb_f[2] | split: ';;' -%}
       <div class="mb-rl__card{% if forloop.index > mb_show_mobile %} mb-mh{% endif %}{% if forloop.index > mb_show_desktop %} mb-dh{% endif %}" style="background-color:{{ mb_card_bg }}!important">
-        <div class="mb-rl__cs">
+        {%- if mb_rate != blank -%}<div class="mb-rl__cs">
           <span>{{ mb_rate }}</span>
           <span class="mb-rl__st">★★★★★</span>
-        </div>
+        </div>{%- endif -%}
 
         <p class="mb-rl__tx">{{ mb_txt }}</p><div class="mb-rl__tags">
           {%- for mb_tg in mb_tags -%}<span class="mb-rl__tag">{{ mb_tg | strip }}</span>{%- endfor -%}
