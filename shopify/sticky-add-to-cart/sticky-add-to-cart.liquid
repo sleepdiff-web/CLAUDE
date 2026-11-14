@@ -1,10 +1,10 @@
 {%- comment -%}
   STICKY ADD TO CART bar. A slim bar fixed to the bottom of the screen that slides up once the main Add To Cart button has scrolled out of sight, so the buy button is always one tap away.
-  It shows the product picture, its name, the price (it follows the selected Kaching bundle, or the selected variant) and a black Add To Cart button.
+  It shows the product picture (tablet and desktop only), its name, the price (it follows the selected Kaching bundle, or the selected variant) and a black Add To Cart button.
   The button presses the theme's own Add To Cart for you, so your cart drawer, bundles, tracking and the sold out state keep working exactly as before. It is hidden again when the footer comes into view and while a cart drawer or popup is open.
   WHERE: Online Store > Themes > Customize > Product page > Add block (or Add section) > Custom Liquid, paste this in. It can sit anywhere on the product page (it is fixed to the screen), for example right under your Add To Cart. Keep the theme's own Buy buttons block on the page. If your theme has its own sticky add to cart option, switch that off so you do not get two bars.
   EDIT YOUR CONTENT BELOW. Do not use a straight apostrophe (') in the text, use &#39; instead, and write & as &amp;
-  mb_label = the button text. mb_title = the name shown (leave empty to use the product name). mb_img = a picture link for the little thumbnail (leave empty to use the product's first picture). mb_show_thumb = true / false.
+  mb_label = the button text. mb_title = the name shown (leave empty to use the product name). mb_img = a picture link for the little thumbnail (leave empty to use the product's first picture). mb_show_thumb = true / false (the thumbnail is only shown on tablet and desktop, never on phones, so the name and price get the room).
   mb_show_price = true shows the price (and the crossed-out price). mb_kaching = true makes the price follow the selected Kaching Bundles bar; set it to false if you do not use Kaching Bundles.
   mb_note = the small guarantee line next to the button on tablet and desktop (leave empty to hide it; it is never shown on phones, there is no room).
   mb_desktop = false shows the bar on phones and tablets only. mb_hide_at_footer = true hides the bar when the footer is on screen.
@@ -44,7 +44,7 @@
 .mb-sa.is-on{transform:translateY(0);visibility:visible;transition:transform .28s ease,visibility 0s}
 .mb-sa *{box-sizing:border-box}
 .mb-sa .mb-sa__in{display:flex;align-items:center;gap:12px;max-width:1100px;margin:0 auto!important;padding:0!important}
-.mb-sa .mb-sa__img{display:block!important;flex:none;width:44px!important;height:44px!important;max-width:none!important;margin:0!important;padding:0!important;border:0!important;border-radius:8px!important;box-shadow:none!important;object-fit:cover;background:#f3efe6}
+.mb-sa .mb-sa__img{display:none!important;flex:none;width:44px!important;height:44px!important;max-width:none!important;margin:0!important;padding:0!important;border:0!important;border-radius:8px!important;box-shadow:none!important;object-fit:cover;background:#f3efe6}
 .mb-sa .mb-sa__tx{flex:1 1 auto;min-width:0;margin:0!important;padding:0!important}
 .mb-sa .mb-sa__t{display:block!important;margin:0!important;padding:0!important;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-family:'Plus Jakarta Sans',sans-serif!important;font-size:14px!important;font-weight:700!important;font-style:normal!important;line-height:1.3!important;letter-spacing:0!important;text-transform:none!important;color:var(--mb-sa-tx)!important;-webkit-text-fill-color:var(--mb-sa-tx)!important}
 .mb-sa .mb-sa__p{display:flex!important;align-items:baseline;gap:6px;margin:2px 0 0!important;padding:0!important;white-space:nowrap}
@@ -64,7 +64,7 @@
 @media screen and (min-width:750px){
 .mb-sa{padding-left:24px;padding-right:24px}
 .mb-sa .mb-sa__in{gap:16px}
-.mb-sa .mb-sa__img{width:52px!important;height:52px!important}
+.mb-sa .mb-sa__img{display:block!important;width:52px!important;height:52px!important}
 .mb-sa .mb-sa__t{font-size:15px!important}
 .mb-sa .mb-sa__now{font-size:15px!important}
 .mb-sa .mb-sa__g{display:inline-flex!important}
