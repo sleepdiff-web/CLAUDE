@@ -1,10 +1,11 @@
 {%- comment -%}
-  "They Felt the Shift" customer reviews list: a small rating line (stars, "4.9 Stars", "10,000+ reviews", all on one line on phones), a heading, then review cards (rating + stars, the review, and small tag pills). On phones only the first 2 reviews show with a "Read More Reviews" link that opens the rest (and "Read Less Reviews" closes them again and scrolls back up). On desktop the first 4 reviews show.
-  EDIT YOUR REVIEWS BELOW. One review = rating ||| review text ||| tag ;; tag. Put @@ on its own line between reviews. Separate the tags with ;; (two semicolons). Add as many reviews as you like.
+  "They Felt the Shift" customer reviews list: a small rating line (stars, "4.9 Stars", "10,000+ reviews", all on one line on phones), a heading, then review cards (an optional rating + stars, the review headline, the review, small tag pills and the customer&#39;s name). On phones only the first 2 reviews show with a "Read More Reviews" link that opens the rest (and "Read Less Reviews" closes them again and scrolls back up). On desktop the first 4 reviews show.
+  EDIT YOUR REVIEWS BELOW. One review = rating ||| review text ||| tag ;; tag ||| headline ||| name. Put @@ on its own line between reviews. Separate the tags with ;; (two semicolons). Add as many reviews as you like.
+  The headline (bold line above the review) and the name (small line under the tags) are optional: leave them off and they do not show.
   The rating is optional: leave it empty (just write ||| at the start) and that review shows no rating number and no stars. Only type a rating when it is that customer&#39;s real star rating.
-  Only put in words that real customers have really said. The reviews below are the real customer quotes from the original Evora section, word for word; the tags only repeat what each customer said.
+  Only put in words that real customers have really said, with their name as they agreed to show it.
   mb_show_mobile / mb_show_desktop = how many reviews show before "Read More". The link only appears when there are more reviews than that (so with 3 reviews it shows on phones only, like the original).
-  mb_accent = the stars (gold, #dea431). mb_tag_color / mb_tag_bg = the tag pills (text and border colour, and the pale fill). mb_bg = section background. mb_card_bg / mb_card_border = the review boxes. mb_heading_color = heading. mb_text_color = review text, rating numbers and the "Read More" link. mb_meta_color = the small rating line at the top.
+  mb_accent = the stars (gold, #dea431). mb_tag_color / mb_tag_bg = the tag pills (text and border colour, gold #dea431, and the pale gold fill). mb_bg = section background. mb_card_bg / mb_card_border = the review boxes. mb_heading_color = heading. mb_text_color = review text, rating numbers and the "Read More" link. mb_meta_color = the small rating line at the top.
   These colours are locked, so the theme cannot turn them black.
   Do not use a straight apostrophe (') in the text, use &#39; instead. Do not type three | in a row or ;; inside a review except as the separators.
 {%- endcomment -%}
@@ -16,8 +17,8 @@
 {%- assign mb_show_mobile = 2 -%}
 {%- assign mb_show_desktop = 4 -%}
 {%- assign mb_accent = '#dea431' -%}
-{%- assign mb_tag_color = '#943434' -%}
-{%- assign mb_tag_bg = 'rgba(148, 52, 52, 0.05)' -%}
+{%- assign mb_tag_color = '#dea431' -%}
+{%- assign mb_tag_bg = 'rgba(222, 164, 49, 0.08)' -%}
 {%- assign mb_bg = '#ffffff' -%}
 {%- assign mb_card_bg = '#ffffff' -%}
 {%- assign mb_card_border = '#e0e0e0' -%}
@@ -25,13 +26,11 @@
 {%- assign mb_text_color = '#000000' -%}
 {%- assign mb_meta_color = '#2b2b2b' -%}
 {%- capture mb_reviews -%}
-||| I have had several people ask me what I&rsquo;ve done to my arms. I tell them about the product ||| Noticed By Others ;; Arms
+||| For years my skin was all over the place and every shower stressed me out. I felt like no matter how much lotion I used or how many I tried, my skin never stayed soft. Since starting Nerola, everything feels calmer and the dry, tight feeling by lunchtime doesn&#39;t control me anymore. My skin stays soft all day and I&#39;m not constantly reaching for the lotion or scratching at night. For the first time in a long time, I feel like my skin is something I don&#39;t have to think about. ||| Soft Skin ;; Calm Nights ||| Finally Back in Comfort! ||| Melanie H.
 @@
-||| I love it. My arms feel soft and firm again.. Easy to use and you see the benefits soon after the first use. ||| Softer Arms ;; Firmer Feel ;; Easy To Use
+||| I used to step out of the shower already dreading what my skin would do by lunchtime. I tried every lotion going and nothing really moved the needle. With Nerola, my skin feels soft and settled when I get dressed, my arms don&#39;t feel like a husk, and the itch that used to wake me at night has gone. I&#39;m not dealing with that tight, cracked feeling by mid-morning anymore, and my foundation sits properly. It feels good knowing I&#39;ve found something simple that actually works. ||| Soft by Lunchtime ;; Quiet Nights ||| Mornings Finally Feel Comfortable ||| Vanessa A.
 @@
-||| I&#39;m 69 years old and my skin feels so much better feels softer and more youthful. ||| Softer Skin ;; More Youthful
-@@
-||| I have been using the Evora Body Oil and I see a great improvement on my arms and legs overall, I will continue to use it forever. ||| Arms &amp; Legs ;; Long-Term Use
+||| I was sceptical about another body product because I&#39;d tried so many that did nothing. But my friend insisted this one was different because it&#39;s all oil instead of a water-based lotion. After 4 weeks, my sister noticed my arms looked smoother and asked what I&#39;d changed. I told her about Nerola and she said whatever I&#39;m doing, keep it up. No stinging or irritation like the other brands gave me either. ||| Visibly Smoother ;; Gentle on Skin ||| My Sister Asked What I&#39;d Changed! ||| Margaret R.
 {%- endcapture -%}
 {%- assign mb_items = mb_reviews | split: '@@' -%}
 {%- assign mb_count = mb_items | size -%}
@@ -64,6 +63,8 @@
 .mb-rl .mb-rl__cs{display:flex;align-items:center;gap:8px;margin-bottom:12px;font-size:15px;font-weight:700;line-height:1;color:var(--mb-rl-tc)!important}
 .mb-rl .mb-rl__cs span:first-child{color:var(--mb-rl-tc)!important;-webkit-text-fill-color:var(--mb-rl-tc)!important}
 .mb-rl .mb-rl__cs .mb-rl__st{font-size:18px!important;line-height:1;letter-spacing:1.5px!important}
+.mb-rl .mb-rl__ti{margin:0 0 8px;padding:0;font-size:16px!important;font-weight:700!important;font-style:normal!important;line-height:1.4!important;letter-spacing:.2px!important;text-transform:none!important;color:var(--mb-rl-tc)!important;-webkit-text-fill-color:var(--mb-rl-tc)!important}
+.mb-rl .mb-rl__nm{margin:14px 0 0;padding:0;font-size:13px!important;font-weight:600!important;font-style:normal!important;line-height:1.4!important;letter-spacing:.3px!important;text-transform:none!important;color:var(--mb-rl-tc)!important;-webkit-text-fill-color:var(--mb-rl-tc)!important}
 .mb-rl .mb-rl__tx{margin:0 0 16px;padding:0;font-size:15px!important;font-weight:400!important;line-height:1.6;color:var(--mb-rl-tc)!important;-webkit-text-fill-color:var(--mb-rl-tc)!important}
 .mb-rl .mb-rl__tx strong{font-weight:700!important}
 .mb-rl .mb-rl__tags{display:flex;flex-wrap:wrap;gap:8px}
@@ -99,15 +100,17 @@
         {%- assign mb_rate = mb_f[0] | strip -%}
         {%- assign mb_txt = mb_f[1] | strip -%}
         {%- assign mb_tags = mb_f[2] | split: ';;' -%}
+        {%- assign mb_ttl = mb_f[3] | strip -%}
+        {%- assign mb_nm = mb_f[4] | strip -%}
       <div class="mb-rl__card{% if forloop.index > mb_show_mobile %} mb-mh{% endif %}{% if forloop.index > mb_show_desktop %} mb-dh{% endif %}" style="background-color:{{ mb_card_bg }}!important">
         {%- if mb_rate != blank -%}<div class="mb-rl__cs">
           <span>{{ mb_rate }}</span>
           <span class="mb-rl__st">★★★★★</span>
         </div>{%- endif -%}
 
-        <p class="mb-rl__tx">{{ mb_txt }}</p><div class="mb-rl__tags">
+        {%- if mb_ttl != blank -%}<p class="mb-rl__ti">{{ mb_ttl }}</p>{%- endif -%}<p class="mb-rl__tx">{{ mb_txt }}</p><div class="mb-rl__tags">
           {%- for mb_tg in mb_tags -%}<span class="mb-rl__tag">{{ mb_tg | strip }}</span>{%- endfor -%}
-        </div></div>
+        </div>{%- if mb_nm != blank -%}<p class="mb-rl__nm">{{ mb_nm }}</p>{%- endif -%}</div>
       {%- endfor -%}
     </div>
 
