@@ -1,94 +1,45 @@
 {%- comment -%}
-  "Stock bar" section (a copy of the Bioroot "November Batch / 83% Sold" bar, matched to a screenshot of it): one soft pink strip with the title in red on the left, a solid red "% Sold" tag, and a thin red progress bar that takes up the rest of the row. When the bar scrolls into view it fills up smoothly to your number, then a soft light sweeps along it. Visitors who have "reduce motion" switched on see the finished bar with no movement.
-  No app, no library, loads fast. The Poppins font loads without slowing the page (set mb_poppins to false to use your theme font instead).
+  "Stock bar" section: an exact copy of the Bioroot "November Batch / 83% Sold" bar, built from their own code. One pale pink strip: the title in red, a solid red "% Sold" tag, and a thin red progress bar that fills the rest of the row. Same sizes, colours and spacing as the original. Like the original it has no animation (their code has none), so it is just a still bar.
+  No app, no script, no library, loads fast. The Poppins font (the one Bioroot uses) loads without slowing the page; set mb_poppins to false to use your theme font instead.
 
   WHERE: Online Store > Themes > Customize > the page > Add section or block > Custom Liquid, drag it where you want it (for example under the benefits list, above the Add to cart button), paste this in.
   EDIT YOUR CONTENT BELOW. Do not use a straight apostrophe (') in the text, use &#39; instead.
   mb_label = the title on the left. mb_percent = how much is sold, a number from 0 to 100 (no % sign). mb_tag = the text in the red tag (leave empty and it writes it for you, for example 83% Sold).
-  mb_max = the widest the strip gets (100% = the full width of its column). mb_align = center, left or right (where a narrower strip sits).
-  mb_bg = colour of the pink strip (transparent = none). mb_band_radius = how round the strip corners are (the original is square). mb_pad = space inside the strip, top-and-bottom then left-and-right. mb_gap = space between the title, the tag and the bar.
-  mb_label_color / mb_label_size / mb_label_weight = the title. mb_tag_color / mb_tag_bg / mb_tag_size / mb_tag_weight / mb_tag_radius = the tag.
-  mb_track = colour of the empty part of the bar. mb_fill = colour of the filled part. mb_height = how thick the bar is. mb_radius = bar corner roundness (999px = fully round).
-  mb_animate = true fills the bar when it scrolls into view, false shows it already filled. mb_shine = true adds the soft moving light on the filled part, false keeps it flat.
-  mb_poppins = true loads the Poppins font (the original look), false uses your theme font. mb_top / mb_bottom = space above and below the strip.
+  The other lines are the original values (colours, sizes, spacing). Only change them if you want it different from Bioroot: mb_margin = space above and below the strip (top-and-bottom then left-and-right).
 {%- endcomment -%}
 {%- assign mb_label = 'November Batch' -%}
 {%- assign mb_percent = '83' -%}
 {%- assign mb_tag = '' -%}
-{%- assign mb_max = '100%' -%}
-{%- assign mb_align = 'center' -%}
+{%- assign mb_poppins = true -%}
 {%- assign mb_bg = '#fdf0f2' -%}
-{%- assign mb_band_radius = '0px' -%}
-{%- assign mb_pad = '6px 16px' -%}
-{%- assign mb_gap = '12px' -%}
-{%- assign mb_label_color = '#c8102e' -%}
-{%- assign mb_label_size = '14px' -%}
-{%- assign mb_label_weight = '400' -%}
-{%- assign mb_tag_color = '#ffffff' -%}
+{%- assign mb_color = '#c8102e' -%}
 {%- assign mb_tag_bg = '#c8102e' -%}
-{%- assign mb_tag_size = '14px' -%}
-{%- assign mb_tag_weight = '600' -%}
-{%- assign mb_tag_radius = '2px' -%}
+{%- assign mb_tag_color = '#ffffff' -%}
 {%- assign mb_track = '#f5c6cf' -%}
 {%- assign mb_fill = '#c8102e' -%}
-{%- assign mb_height = '8px' -%}
-{%- assign mb_radius = '999px' -%}
-{%- assign mb_animate = true -%}
-{%- assign mb_shine = true -%}
-{%- assign mb_poppins = true -%}
-{%- assign mb_top = '0px' -%}
-{%- assign mb_bottom = '0px' -%}
+{%- assign mb_margin = '16px 0' -%}
 {%- assign mb_p = mb_percent | plus: 0 -%}
 {%- if mb_p < 0 -%}{%- assign mb_p = 0 -%}{%- elsif mb_p > 100 -%}{%- assign mb_p = 100 -%}{%- endif -%}
 {%- if mb_tag != blank -%}{%- assign mb_tag_txt = mb_tag -%}{%- else -%}{%- assign mb_tag_txt = mb_p | append: '% Sold' -%}{%- endif -%}
 {%- if mb_poppins -%}{%- assign mb_ff = "'Poppins',sans-serif" -%}{%- else -%}{%- assign mb_ff = 'inherit' -%}{%- endif -%}
-{%- if mb_align == 'left' -%}{%- assign mb_mg = mb_top | append: ' auto ' | append: mb_bottom | append: ' 0' -%}{%- elsif mb_align == 'right' -%}{%- assign mb_mg = mb_top | append: ' 0 ' | append: mb_bottom | append: ' auto' -%}{%- else -%}{%- assign mb_mg = mb_top | append: ' auto ' | append: mb_bottom -%}{%- endif -%}
 {%- if mb_poppins -%}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"></noscript>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap"></noscript>
 {%- endif -%}
 <style>
-.mb-sb{box-sizing:border-box;display:flex;flex-wrap:nowrap;align-items:center;gap:var(--mb-sb-gap);width:100%;max-width:var(--mb-sb-max);margin:var(--mb-sb-mg);padding:var(--mb-sb-pad);background:var(--mb-sb-bg);border-radius:var(--mb-sb-br);text-align:left;font-family:var(--mb-sb-ff)}
+.mb-sb{display:flex;align-items:center;gap:12px;box-sizing:border-box;width:100%;margin:var(--mb-sb-mg);padding:6px 16px;background:var(--mb-sb-bg);color:var(--mb-sb-c);font-family:var(--mb-sb-ff);font-size:14px;font-weight:500;line-height:1.45;letter-spacing:0;text-align:left;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility}
 .mb-sb *{box-sizing:border-box}
-.mb-sb .mb-sb__label{display:block;flex:0 1 auto;min-width:0;margin:0!important;padding:0!important;font-family:var(--mb-sb-ff)!important;font-size:var(--mb-sb-ls)!important;font-weight:var(--mb-sb-lw)!important;font-style:normal!important;line-height:1.3!important;letter-spacing:0!important;text-transform:none!important;text-align:left!important;color:var(--mb-sb-lc)!important}
-.mb-sb .mb-sb__tag{display:block;flex:0 0 auto;height:24px!important;margin:0!important;padding:0 12px!important;border:0!important;border-radius:var(--mb-sb-tr)!important;background:var(--mb-sb-tb)!important;font-family:var(--mb-sb-ff)!important;font-size:var(--mb-sb-ts)!important;font-weight:var(--mb-sb-tw)!important;font-style:normal!important;line-height:24px!important;letter-spacing:0!important;text-transform:none!important;white-space:nowrap;color:var(--mb-sb-tc)!important}
-.mb-sb .mb-sb__bar{display:block!important;flex:1 1 60px;min-width:60px;position:relative;overflow:hidden!important;height:var(--mb-sb-h)!important;font-size:0!important;line-height:0!important;margin:0!important;padding:0!important;border:0!important;border-radius:var(--mb-sb-r)!important;background:var(--mb-sb-track)!important}
-.mb-sb .mb-sb__fill{display:block!important;position:relative;overflow:hidden!important;width:var(--mb-sb-p)!important;height:100%!important;margin:0!important;padding:0!important;border:0!important;border-radius:0!important;background:var(--mb-sb-fill)!important}
-.mb-sb.is-pre .mb-sb__fill{width:0!important}
-.mb-sb.is-in .mb-sb__fill{transition:width 1.4s cubic-bezier(.22,.8,.24,1)}
-.mb-sb--shine .mb-sb__fill::after{content:"";position:absolute;top:0;bottom:0;left:0;width:60%;background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.4),rgba(255,255,255,0));transform:translateX(-100%);animation:mb-sb-shine 2.4s ease-in-out 1.4s infinite}
-@keyframes mb-sb-shine{0%{transform:translateX(-100%)}60%,100%{transform:translateX(260%)}}
-@media (prefers-reduced-motion:reduce){.mb-sb .mb-sb__fill{transition:none!important}.mb-sb--shine .mb-sb__fill::after{animation:none!important;display:none}}
+.mb-sb .mb-sb__label{display:inline;margin:0!important;padding:0!important;border:0!important;background:none!important;font-family:var(--mb-sb-ff)!important;font-size:14px!important;font-weight:500!important;font-style:normal!important;line-height:1.45!important;letter-spacing:0!important;text-transform:none!important;text-align:left!important;white-space:nowrap;color:var(--mb-sb-c)!important}
+.mb-sb .mb-sb__tag{display:inline;flex:none;margin:0!important;padding:2px 12px!important;border:0!important;border-radius:2px!important;background:var(--mb-sb-tb)!important;font-family:var(--mb-sb-ff)!important;font-size:14px!important;font-weight:500!important;font-style:normal!important;line-height:1.45!important;letter-spacing:0!important;text-transform:none!important;white-space:nowrap;color:var(--mb-sb-tc)!important}
+.mb-sb .mb-sb__bar{display:block!important;flex:1;min-width:40px;height:8px!important;margin:0!important;padding:0!important;border:0!important;border-radius:9px!important;overflow:hidden!important;background:var(--mb-sb-track)!important}
+.mb-sb .mb-sb__fill{display:block!important;width:var(--mb-sb-p)!important;height:100%!important;margin:0!important;padding:0!important;border:0!important;border-radius:0!important;background:var(--mb-sb-fill)!important}
 </style>
 
-<div class="mb-sb{% if mb_shine %} mb-sb--shine{% endif %}" data-animate="{{ mb_animate }}" style="--mb-sb-p:{{ mb_p }}%;--mb-sb-max:{{ mb_max }};--mb-sb-mg:{{ mb_mg }};--mb-sb-pad:{{ mb_pad }};--mb-sb-gap:{{ mb_gap }};--mb-sb-bg:{{ mb_bg }};--mb-sb-br:{{ mb_band_radius }};--mb-sb-ff:{{ mb_ff }};--mb-sb-lc:{{ mb_label_color }};--mb-sb-ls:{{ mb_label_size }};--mb-sb-lw:{{ mb_label_weight }};--mb-sb-tc:{{ mb_tag_color }};--mb-sb-tb:{{ mb_tag_bg }};--mb-sb-ts:{{ mb_tag_size }};--mb-sb-tw:{{ mb_tag_weight }};--mb-sb-tr:{{ mb_tag_radius }};--mb-sb-track:{{ mb_track }};--mb-sb-fill:{{ mb_fill }};--mb-sb-h:{{ mb_height }};--mb-sb-r:{{ mb_radius }}">
+<div class="mb-sb" style="--mb-sb-p:{{ mb_p }}%;--mb-sb-mg:{{ mb_margin }};--mb-sb-ff:{{ mb_ff }};--mb-sb-bg:{{ mb_bg }};--mb-sb-c:{{ mb_color }};--mb-sb-tb:{{ mb_tag_bg }};--mb-sb-tc:{{ mb_tag_color }};--mb-sb-track:{{ mb_track }};--mb-sb-fill:{{ mb_fill }}">
 <span class="mb-sb__label">{{ mb_label | escape_once }}</span><span class="mb-sb__tag">{{ mb_tag_txt | escape_once }}</span>
   <span class="mb-sb__bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ mb_p }}" aria-label="{{ mb_tag_txt | escape_once }}">
     <span class="mb-sb__fill" style="width: {{ mb_p }}%;"></span>
   </span>
 </div>
-
-<script>
-(function(){
-function init(root){
-if(root.getAttribute('data-on'))return;
-root.setAttribute('data-on','1');
-if(root.getAttribute('data-animate')!=='true')return;
-var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-if(reduce||!('IntersectionObserver' in window))return;
-/* start empty, then fill once the bar is on screen */
-root.classList.add('is-pre');
-var io=new IntersectionObserver(function(es){
-es.forEach(function(e){
-if(e.isIntersecting){io.disconnect();root.classList.remove('is-pre');root.classList.add('is-in')}
-});
-},{threshold:0.4});
-io.observe(root);
-}
-function all(){document.querySelectorAll('.mb-sb').forEach(init)}
-all();
-document.addEventListener('shopify:section:load',all);
-})();
-</script>
