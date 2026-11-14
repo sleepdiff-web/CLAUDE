@@ -1,0 +1,253 @@
+{%- comment -%}
+  STICKY ADD TO CART bar. A slim bar fixed to the bottom of the screen that slides up once the main Add To Cart button has scrolled out of sight, so the buy button is always one tap away.
+  It shows the product picture, its name, the price (it follows the selected Kaching bundle, or the selected variant) and a black Add To Cart button.
+  The button presses the theme's own Add To Cart for you, so your cart drawer, bundles, tracking and the sold out state keep working exactly as before. It is hidden again when the footer comes into view and while a cart drawer or popup is open.
+  WHERE: Online Store > Themes > Customize > Product page > Add block (or Add section) > Custom Liquid, paste this in. It can sit anywhere on the product page (it is fixed to the screen), for example right under your Add To Cart. Keep the theme's own Buy buttons block on the page. If your theme has its own sticky add to cart option, switch that off so you do not get two bars.
+  EDIT YOUR CONTENT BELOW. Do not use a straight apostrophe (') in the text, use &#39; instead, and write & as &amp;
+  mb_label = the button text. mb_title = the name shown (leave empty to use the product name). mb_img = a picture link for the little thumbnail (leave empty to use the product's first picture). mb_show_thumb = true / false.
+  mb_show_price = true shows the price (and the crossed-out price). mb_kaching = true makes the price follow the selected Kaching Bundles bar; set it to false if you do not use Kaching Bundles.
+  mb_note = the small guarantee line next to the button on tablet and desktop (leave empty to hide it; it is never shown on phones, there is no room).
+  mb_desktop = false shows the bar on phones and tablets only. mb_hide_at_footer = true hides the bar when the footer is on screen.
+  mb_show_after = only used if the code cannot find the main Add To Cart button: the bar appears after the visitor has scrolled this many pixels.
+  mb_bg = bar colour. mb_color_text = name and price. mb_color_muted = crossed-out price and the guarantee line. mb_border = line on top of the bar. mb_btn_bg / mb_btn_text = button colour / its writing. mb_radius = button corner roundness. mb_btn_h = button height.
+  mb_z = how far in front of the page the bar sits (raise it if something covers the bar, lower it if the bar covers a menu or popup).
+{%- endcomment -%}
+{%- assign mb_label = 'Add To Cart' -%}
+{%- assign mb_title = '' -%}
+{%- assign mb_img = '' -%}
+{%- assign mb_show_thumb = true -%}
+{%- assign mb_show_price = true -%}
+{%- assign mb_kaching = true -%}
+{%- assign mb_note = '90-Day Money-Back Guarantee' -%}
+{%- assign mb_desktop = true -%}
+{%- assign mb_hide_at_footer = true -%}
+{%- assign mb_show_after = 600 -%}
+{%- assign mb_bg = '#ffffff' -%}
+{%- assign mb_color_text = '#1a1a1a' -%}
+{%- assign mb_color_muted = '#6b6b6b' -%}
+{%- assign mb_border = '#e6e1d6' -%}
+{%- assign mb_btn_bg = '#000000' -%}
+{%- assign mb_btn_text = '#ffffff' -%}
+{%- assign mb_radius = '8px' -%}
+{%- assign mb_btn_h = '48px' -%}
+{%- assign mb_z = '40' -%}
+{%- if mb_title != blank -%}{%- assign mb_t = mb_title -%}{%- else -%}{%- assign mb_t = product.title -%}{%- endif -%}
+{%- if mb_img contains '?' -%}{%- assign mb_q = '&amp;' -%}{%- else -%}{%- assign mb_q = '?' -%}{%- endif -%}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap"></noscript>
+
+<style>
+.mb-sa{position:fixed!important;left:0!important;right:0!important;bottom:0!important;top:auto!important;z-index:var(--mb-sa-z)!important;box-sizing:border-box;width:100%;margin:0!important;padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px));background:var(--mb-sa-bg);border-top:1px solid var(--mb-sa-bd);box-shadow:0 -4px 20px rgba(0,0,0,.08);font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;line-height:1.25;text-align:left;transform:translateY(105%);visibility:hidden;transition:transform .28s ease,visibility 0s linear .28s}
+.mb-sa.is-on{transform:translateY(0);visibility:visible;transition:transform .28s ease,visibility 0s}
+.mb-sa *{box-sizing:border-box}
+.mb-sa .mb-sa__in{display:flex;align-items:center;gap:12px;max-width:1100px;margin:0 auto!important;padding:0!important}
+.mb-sa .mb-sa__img{display:block!important;flex:none;width:44px!important;height:44px!important;max-width:none!important;margin:0!important;padding:0!important;border:0!important;border-radius:8px!important;box-shadow:none!important;object-fit:cover;background:#f3efe6}
+.mb-sa .mb-sa__tx{flex:1 1 auto;min-width:0;margin:0!important;padding:0!important}
+.mb-sa .mb-sa__t{display:block!important;margin:0!important;padding:0!important;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-family:'Plus Jakarta Sans',sans-serif!important;font-size:14px!important;font-weight:700!important;font-style:normal!important;line-height:1.3!important;letter-spacing:0!important;text-transform:none!important;color:var(--mb-sa-tx)!important;-webkit-text-fill-color:var(--mb-sa-tx)!important}
+.mb-sa .mb-sa__p{display:flex!important;align-items:baseline;gap:6px;margin:2px 0 0!important;padding:0!important;white-space:nowrap}
+.mb-sa .mb-sa__p[hidden]{display:none!important}
+.mb-sa .mb-sa__now,.mb-sa .mb-sa__was{margin:0!important;padding:0!important;font-family:'Plus Jakarta Sans',sans-serif!important;font-style:normal!important;letter-spacing:0!important;text-transform:none!important;background:none!important}
+.mb-sa .mb-sa__now{font-size:14px!important;font-weight:800!important;line-height:1.2!important;color:var(--mb-sa-tx)!important;-webkit-text-fill-color:var(--mb-sa-tx)!important}
+.mb-sa .mb-sa__was{font-size:12px!important;font-weight:500!important;line-height:1.2!important;text-decoration:line-through!important;color:var(--mb-sa-mu)!important;-webkit-text-fill-color:var(--mb-sa-mu)!important}
+.mb-sa .mb-sa__was[hidden]{display:none!important}
+.mb-sa .mb-sa__g{display:none!important;align-items:center;gap:5px;flex:none;margin:0!important;padding:0!important;font-family:'Plus Jakarta Sans',sans-serif!important;font-size:12px!important;font-weight:600!important;font-style:normal!important;line-height:1.2!important;letter-spacing:0!important;text-transform:none!important;white-space:nowrap;color:var(--mb-sa-mu)!important;-webkit-text-fill-color:var(--mb-sa-mu)!important}
+.mb-sa .mb-sa__g svg{display:block;flex:none;width:11px;height:12px;margin:0;fill:none;stroke:currentColor;stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round}
+.mb-sa .mb-sa__btn{-webkit-appearance:none;appearance:none;display:inline-flex!important;align-items:center;justify-content:center;flex:none;width:auto!important;min-width:150px;min-height:var(--mb-sa-h)!important;height:auto!important;margin:0!important;padding:0 22px!important;border:0!important;border-radius:var(--mb-sa-r)!important;background:var(--mb-sa-bb)!important;box-shadow:none!important;font-family:'Plus Jakarta Sans',sans-serif!important;font-size:15px!important;font-weight:700!important;font-style:normal!important;line-height:1.2!important;letter-spacing:0!important;text-transform:none!important;text-decoration:none!important;white-space:nowrap;cursor:pointer;color:var(--mb-sa-bt)!important;-webkit-text-fill-color:var(--mb-sa-bt)!important;transition:opacity .15s ease}
+.mb-sa .mb-sa__btn *{margin:0!important;padding:0!important;font-size:inherit!important;font-weight:inherit!important;font-style:normal!important;line-height:inherit!important;letter-spacing:inherit!important;text-transform:inherit!important;color:var(--mb-sa-bt)!important;-webkit-text-fill-color:var(--mb-sa-bt)!important}
+.mb-sa .mb-sa__btn:hover{opacity:.92}
+.mb-sa .mb-sa__btn:focus-visible{outline:2px solid #dea431;outline-offset:2px}
+.mb-sa .mb-sa__btn.is-busy{opacity:.7;cursor:progress}
+.mb-sa .mb-sa__btn:disabled{opacity:.5;cursor:not-allowed}
+@media screen and (min-width:750px){
+.mb-sa{padding-left:24px;padding-right:24px}
+.mb-sa .mb-sa__in{gap:16px}
+.mb-sa .mb-sa__img{width:52px!important;height:52px!important}
+.mb-sa .mb-sa__t{font-size:15px!important}
+.mb-sa .mb-sa__now{font-size:15px!important}
+.mb-sa .mb-sa__g{display:inline-flex!important}
+.mb-sa .mb-sa__btn{min-width:240px}
+.mb-sa.mb-sa--mob{display:none!important}
+}
+</style>
+
+<div class="mb-sa{% unless mb_desktop %} mb-sa--mob{% endunless %}" role="region" aria-label="Quick add to cart" aria-hidden="true" data-after="{{ mb_show_after }}" data-footer="{{ mb_hide_at_footer }}" style="--mb-sa-bg:{{ mb_bg }};--mb-sa-tx:{{ mb_color_text }};--mb-sa-mu:{{ mb_color_muted }};--mb-sa-bd:{{ mb_border }};--mb-sa-bb:{{ mb_btn_bg }};--mb-sa-bt:{{ mb_btn_text }};--mb-sa-r:{{ mb_radius }};--mb-sa-h:{{ mb_btn_h }};--mb-sa-z:{{ mb_z }}">
+<script type="application/json" class="mb-sa__data">{"id":{{ product.id | default: 0 }},"kaching":{{ mb_kaching }},"price":{{ mb_show_price }},"variant":{{ product.selected_or_first_available_variant.id | default: 0 }},"variants":[{%- for v in product.variants -%}{"id":{{ v.id }},"price":{{ v.price | money | json }},"compare":{%- if v.compare_at_price > v.price -%}{{ v.compare_at_price | money | json }}{%- else -%}""{%- endif -%}}{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%}]}</script>
+<div class="mb-sa__in">
+{%- if mb_show_thumb -%}
+{%- if mb_img != blank -%}<img class="mb-sa__img" src="{{ mb_img }}{{ mb_q }}width=104" srcset="{{ mb_img }}{{ mb_q }}width=104 1x, {{ mb_img }}{{ mb_q }}width=208 2x" width="44" height="44" alt="" loading="lazy" decoding="async">
+{%- elsif product.featured_image != blank -%}<img class="mb-sa__img" src="{{ product.featured_image | image_url: width: 104 }}" srcset="{{ product.featured_image | image_url: width: 104 }} 1x, {{ product.featured_image | image_url: width: 208 }} 2x" width="44" height="44" alt="" loading="lazy" decoding="async">{%- endif -%}
+{%- endif -%}
+<div class="mb-sa__tx">
+{%- if mb_t != blank -%}<span class="mb-sa__t">{{ mb_t | escape_once }}</span>{%- endif -%}
+{%- if mb_show_price -%}<span class="mb-sa__p" hidden><span class="mb-sa__now" data-now></span><s class="mb-sa__was" data-was hidden></s></span>{%- endif -%}
+</div>
+{%- if mb_note != blank -%}<span class="mb-sa__g"><svg viewBox="0 0 12 14" aria-hidden="true" focusable="false"><path d="M6 1l4.5 1.6v3.9c0 3-1.9 5.2-4.5 6.5C3.4 11.7 1.5 9.5 1.5 6.5V2.6z"/><path d="M4.1 6.9l1.3 1.3 2.5-2.7"/></svg>{{ mb_note }}</span>{%- endif -%}
+<button type="button" class="mb-sa__btn" data-btn><span data-label>{{ mb_label }}</span></button>
+</div>
+</div>
+
+<script>
+(function(){
+function init(bar){
+if(bar.getAttribute('data-on'))return;
+bar.setAttribute('data-on','1');
+var sec=bar.closest('.shopify-section'),scope=sec||document,D={id:0,kaching:false,price:false,variant:0,variants:[]},dEl=bar.querySelector('.mb-sa__data');
+try{if(dEl)D=JSON.parse(dEl.textContent)}catch(e){}
+if(sec&&sec.id)bar.setAttribute('data-sec',sec.id);
+var V={},i;
+for(i=0;i<D.variants.length;i++)V[D.variants[i].id]=D.variants[i];
+var btn=bar.querySelector('[data-btn]'),lbl=bar.querySelector('[data-label]'),pBox=bar.querySelector('.mb-sa__p'),nowEl=bar.querySelector('[data-now]'),wasEl=bar.querySelector('[data-was]');
+if(!btn||!lbl)return;
+var def=lbl.textContent,after=parseFloat(bar.getAttribute('data-after'))||600,useFooter=bar.getAttribute('data-footer')!=='false',real=null,obs=null,shown=false,raf=0,kObs=null,kEl=null,dead=false;
+/* the bar lives on <body>, so no theme column or transform can pull it out of place */
+document.body.appendChild(bar);
+function txt(el){var s=el.querySelector('span');return((s||el).textContent||'').replace(/\s+/g,' ').trim()}
+function submitOf(f){
+var l=f.querySelectorAll('[type="submit"],button[name="add"]'),k,b;
+for(k=0;k<l.length;k++){b=l[k];if(b.closest('.shopify-payment-button')||b.classList.contains('shopify-payment-button__button')||bar.contains(b))continue;return b}
+return null}
+function find(){
+var forms=document.querySelectorAll('form[action*="/cart/add"]'),k,f,p,b;
+if(D.id){for(k=0;k<forms.length;k++){f=forms[k];p=f.querySelector('input[name="product-id"]');if(p&&String(p.value)===String(D.id)){b=submitOf(f);if(b)return b}}}
+if(scope!==document){forms=scope.querySelectorAll('form[action*="/cart/add"]');for(k=0;k<forms.length;k++){b=submitOf(forms[k]);if(b)return b}}
+forms=document.querySelectorAll('form[action*="/cart/add"]');
+for(k=0;k<forms.length;k++){b=submitOf(forms[k]);if(b)return b}
+return null}
+function sync(){
+if(!real)return;
+var dis=real.disabled||real.hasAttribute('disabled');
+var busy=!dis&&(real.getAttribute('aria-disabled')==='true'||real.getAttribute('aria-busy')==='true'||real.classList.contains('loading'));
+btn.disabled=dis;
+btn.classList.toggle('is-busy',busy);
+btn.setAttribute('aria-busy',busy?'true':'false');
+lbl.textContent=dis?(txt(real)||def):def}
+function hook(){
+var r=find();
+if(!r){if(real&&!real.isConnected){real=null;if(obs){obs.disconnect();obs=null}}return!!real}
+if(r!==real){
+real=r;
+if(obs)obs.disconnect();
+obs=new MutationObserver(sync);
+obs.observe(real,{attributes:true,attributeFilter:['disabled','aria-disabled','aria-busy','class'],childList:true,subtree:true,characterData:true});
+}
+sync();
+return true}
+/* the price: the selected Kaching bundle first, otherwise the selected variant */
+function setPrice(p,c){
+if(!pBox)return;
+if(!p){pBox.hidden=true;return}
+nowEl.textContent=p;
+if(c&&c!==p){wasEl.textContent=c;wasEl.hidden=false}else{wasEl.hidden=true}
+pBox.hidden=false}
+function kaching(){
+var k=document.querySelector('.kaching-bundles'),sel=document.querySelector('.kaching-bundles__bar--selected,.kaching-bundles__bar--active,.kaching-bundles__bar.is-selected,.kaching-bundles__bar.is-active,.kaching-bundles__bar.selected,.kaching-bundles__bar.active'),r,a,b;
+if(!k&&!sel)return null;
+if(!sel&&k){r=k.querySelector('input[type="radio"]:checked');r=r&&r.parentElement;while(r&&r!==k){if(r.querySelector('.kaching-bundles__bar-price')){sel=r;break}r=r.parentElement}}
+if(!sel)sel=document.querySelector('.kaching-bundles__bar');
+if(!sel)return null;
+a=sel.querySelector('.kaching-bundles__bar-price');b=sel.querySelector('.kaching-bundles__bar-full-price');
+if(!a)return null;
+a=(a.innerText||a.textContent||'').trim();b=b?(b.innerText||b.textContent||'').trim():'';
+return a?{p:a,c:b}:null}
+function variant(){
+var f=real&&(real.form||real.closest('form')),h=f&&f.querySelector('[name="id"]'),v=(h&&V[parseInt(h.value,10)])||V[D.variant]||D.variants[0];
+return v||null}
+function price(){
+if(!D.price||!pBox)return;
+var k=D.kaching?kaching():null,v;
+if(k){setPrice(k.p,k.c);return}
+v=variant();
+if(v)setPrice(v.price,v.compare);else setPrice('','')}
+function watchK(){
+var k=document.querySelector('.kaching-bundles');
+if(!k||k===kEl)return!!kEl;
+kEl=k;
+if(kObs)kObs.disconnect();
+if(window.MutationObserver){kObs=new MutationObserver(function(){if(shown)price()});kObs.observe(k,{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:['class','checked','aria-checked']})}
+return true}
+function locked(){
+try{return getComputedStyle(document.body).overflowY==='hidden'||getComputedStyle(document.documentElement).overflowY==='hidden'}catch(e){return false}}
+function live(e){return!!e&&e.getClientRects().length>0}
+function target(){
+var a=document.querySelector('.mb-atc-wrap');
+if(live(a))return a;
+if(!real||!real.isConnected)hook();
+return live(real)?real:null}
+function footer(){
+var f=document.querySelector('.shopify-section-group-footer-group'),l;
+if(live(f))return f;
+l=document.querySelectorAll('footer');
+return l.length?l[l.length-1]:null}
+function update(){
+raf=0;
+if(dead)return;
+var on=false,t,f;
+if(!locked()){
+t=target();
+if(t)on=t.getBoundingClientRect().bottom<0;
+else on=(window.pageYOffset||document.documentElement.scrollTop||0)>after;
+if(on&&useFooter){f=footer();if(f&&live(f)&&f.getBoundingClientRect().top<window.innerHeight-8)on=false}
+}
+if(on!==shown){
+shown=on;
+bar.classList.toggle('is-on',on);
+bar.setAttribute('aria-hidden',on?'false':'true');
+if(on){hook();price();watchK()}
+}}
+function soon(){if(!raf&&!dead)raf=requestAnimationFrame(update)}
+function onClick(e){
+var t=e.target;
+if(t&&t.closest&&t.closest('.kaching-bundles'))setTimeout(function(){price();soon()},150);
+else soon()}
+function onChange(e){if(e.target&&e.target.name==='id'){price()}}
+btn.addEventListener('click',function(e){
+e.preventDefault();
+if(btn.disabled||btn.classList.contains('is-busy'))return;
+hook();
+if(real){real.click();return}
+var f=scope.querySelector('form[action*="/cart/add"]')||document.querySelector('form[action*="/cart/add"]');
+if(f){if(f.requestSubmit)f.requestSubmit();else f.submit()}
+});
+function onLoad(){hook();watchK();soon();setTimeout(soon,500);setTimeout(soon,1500)}
+window.addEventListener('scroll',soon,{passive:true});
+window.addEventListener('resize',soon);
+window.addEventListener('orientationchange',soon);
+window.addEventListener('load',onLoad);
+document.addEventListener('click',onClick,true);
+document.addEventListener('change',onChange,true);
+var poll=0,tries=0;
+function retry(){tries++;if((hook()&&watchK())||tries>40){clearInterval(poll);poll=0}}
+if(!(hook()&&watchK())){poll=setInterval(retry,250)}
+bar.__mbSaKill=function(){
+dead=true;
+if(raf)cancelAnimationFrame(raf);
+if(poll)clearInterval(poll);
+if(obs)obs.disconnect();
+if(kObs)kObs.disconnect();
+window.removeEventListener('scroll',soon);
+window.removeEventListener('resize',soon);
+window.removeEventListener('orientationchange',soon);
+window.removeEventListener('load',onLoad);
+document.removeEventListener('click',onClick,true);
+document.removeEventListener('change',onChange,true)};
+update();
+}
+function kill(b){if(b.__mbSaKill)b.__mbSaKill();if(b.parentNode)b.parentNode.removeChild(b)}
+function all(){
+var fresh=document.querySelectorAll('.mb-sa:not([data-on])'),old,i;
+if(!fresh.length)return;
+old=document.querySelectorAll('.mb-sa[data-on]');
+for(i=0;i<old.length;i++)kill(old[i]);
+for(i=1;i<fresh.length;i++)kill(fresh[i]);
+init(fresh[0])}
+all();
+document.addEventListener('shopify:section:load',all);
+document.addEventListener('shopify:section:unload',function(e){
+var id=e.target&&e.target.id,l=document.querySelectorAll('.mb-sa[data-sec]'),i;
+if(!id)return;
+for(i=0;i<l.length;i++){if(l[i].getAttribute('data-sec')===id)kill(l[i])}});
+})();
+</script>
