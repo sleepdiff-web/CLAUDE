@@ -19,7 +19,7 @@
   mb_color_head = row title colour. mb_color_label = gold label colour. mb_color_text = body text colour. mb_icon_color = sparkle icon colour. mb_color_num = colour of the big % numbers in Customer Results.
   mb_border = row border. mb_panel_bg = grey panel colour. mb_radius = corner roundness. mb_gap = space between rows.
   mb_single = true opens one row at a time. mb_open_first = true opens the first row on page load.
-  mb_top / mb_bottom = space above and below the whole block.
+  mb_top = space above the whole block. mb_bottom = space below it, so the section underneath never touches the last row (the space is added inside the block, so the theme cannot cancel it).
 {%- endcomment -%}
 {%- assign mb_t1 = 'Details' -%}
 {%- assign mb_t2 = 'Science' -%}
@@ -101,7 +101,7 @@ Nerola is backed by real results — here&#39;s what our customers reported:
 {%- assign mb_single = true -%}
 {%- assign mb_open_first = false -%}
 {%- assign mb_top = '16px' -%}
-{%- assign mb_bottom = '0px' -%}
+{%- assign mb_bottom = '28px' -%}
 {%- assign mb_uid = 'mb-ac-' | append: section.id | append: block.id -%}
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -110,7 +110,7 @@ Nerola is backed by real results — here&#39;s what our customers reported:
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap"></noscript>
 
 <style>
-.mb-ac{box-sizing:border-box;display:flex;flex-direction:column;gap:var(--mb-ac-gap);width:100%;margin:var(--mb-ac-top) 0 var(--mb-ac-bottom);padding:0;font-family:'Plus Jakarta Sans',sans-serif;text-align:left}
+.mb-ac{box-sizing:border-box;display:flex;flex-direction:column;gap:var(--mb-ac-gap);width:100%;margin:var(--mb-ac-top) 0 0;padding:0 0 var(--mb-ac-bottom);font-family:'Plus Jakarta Sans',sans-serif;text-align:left}
 .mb-ac *{box-sizing:border-box}
 .mb-ac p,.mb-ac li,.mb-ac strong,.mb-ac span{color:var(--mb-ac-tx)!important;-webkit-text-fill-color:var(--mb-ac-tx)!important;letter-spacing:0;text-transform:none;font-style:normal}
 .mb-ac__it{border:1px solid var(--mb-ac-bd)!important;border-radius:var(--mb-ac-r);background:#fff}
