@@ -7,7 +7,7 @@
     Each benefit gets the circle with the white tick. To use your own little picture instead, add ||| and the image link after the text,
     e.g.  Deep hydration where your skin needs it most ||| https://cdn.shopify.com/...png
   mb_text = colour of all the text (locked so the theme cannot change it). mb_icon_color = colour of the circles (#b72e35 is goda's red, #dea531 is your gold). The tick is see-through, so it always shows the colour behind the block (white on a white page).
-  mb_top / mb_bottom = space above and below this block.
+  mb_top / mb_bottom = space above and below this block. The block is already trimmed tight inside; the two settings start at -4px, which pulls it a little closer to what is above and below it. Use 0px for normal spacing, a bigger minus (for example -10px) to pull it even closer, or a plus number to add space.
   On phones each benefit shrinks just enough to stay on ONE line (it sizes itself from your longest benefit and the width of the block).
   Do not use a straight apostrophe (') inside the text, use &#39; instead.
 {%- endcomment -%}
@@ -23,8 +23,8 @@ Recommended by Dermatologists
 {%- endcapture -%}
 {%- assign mb_text = '#2a110a' -%}
 {%- assign mb_icon_color = '#b72e35' -%}
-{%- assign mb_top = '0px' -%}
-{%- assign mb_bottom = '0px' -%}
+{%- assign mb_top = '-4px' -%}
+{%- assign mb_bottom = '-4px' -%}
 {%- assign mb_maxlen = 20 -%}
 {%- assign mb_pre = mb_data | split: '@@' -%}
 {%- for mb_p in mb_pre -%}{%- assign mb_pt = mb_p | split: '|||' | first | strip -%}{%- assign mb_pl = mb_pt | size -%}{%- if mb_pl > mb_maxlen -%}{%- assign mb_maxlen = mb_pl -%}{%- endif -%}{%- endfor -%}
@@ -35,12 +35,12 @@ Recommended by Dermatologists
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:wght@400&display=swap"></noscript>
 
 <style>
-.mb-fl{container-type:inline-size;box-sizing:border-box;width:100%;margin:0;padding:var(--mb-fl-top) 0 var(--mb-fl-bottom);text-align:left}
+.mb-fl{container-type:inline-size;box-sizing:border-box;width:100%;margin:var(--mb-fl-top) 0 var(--mb-fl-bottom);padding:0;text-align:left}
 .mb-fl *{box-sizing:border-box}
 .mb-fl__t{font-family:'Libre Caslon Text',Georgia,'Times New Roman',serif!important;font-weight:400!important;font-style:normal!important;letter-spacing:0!important;text-transform:none!important;text-align:left!important;color:var(--mb-fl-tx)!important;-webkit-text-fill-color:var(--mb-fl-tx)!important}
-.mb-fl__intro{margin:0 0 12px;padding:0;font-size:14px;line-height:1.6}
+.mb-fl__intro{margin:0 0 12px;padding:0;font-size:14px;line-height:1.25}
 .mb-fl .mb-fl__intro{font-family:var(--text-font-family,inherit)!important;font-weight:700!important;font-style:normal!important;letter-spacing:var(--text-letter-spacing,0)!important;text-transform:none!important;text-align:left!important;color:var(--mb-fl-tx)!important;-webkit-text-fill-color:var(--mb-fl-tx)!important}
-.mb-fl__list{margin:0;padding:0;list-style:none}
+.mb-fl__list{margin:0 0 -3px;padding:0;list-style:none}
 .mb-fl__it{display:flex;align-items:flex-start;gap:8px;margin:0;padding:0;list-style:none}
 .mb-fl__ic{display:block;flex:none;width:18px;height:18px;margin-top:3px}
 .mb-fl__ic svg,.mb-fl__ic img{display:block;width:18px!important;height:18px!important;max-width:none!important;margin:0;padding:0;object-fit:contain}
