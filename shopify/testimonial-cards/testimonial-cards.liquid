@@ -1,0 +1,241 @@
+{%- comment -%}
+  "Results" testimonial cards (copy of the goda.co block): one card at a time with a picture on top, a big percentage that COUNTS UP, a short line about it, the customer's quote and "Name | Verified Customer", and little dots underneath to move between the cards.
+  The percentage counts up from 0 when the cards first scroll into view, and again every time a new card slides in. The row loops round forever (swipe past the last card and you are back at the first).
+  No slider app and no slider library, just the browser's own scrolling, so it loads fast. Pictures load only when they get near the screen.
+  WHERE: Online Store > Themes > Customize > Product page > Add block (or Add section) > Custom Liquid, drag it where you want it (for example under your accordions in the product column), paste this in. The card fills the width it is given, up to mb_max_w.
+  EDIT YOUR CONTENT BELOW. Do not use a straight apostrophe (') in the text, use &#39; instead, and write & as &amp;
+  !!! THE THREE CARDS BELOW (REVIEWS, PERCENTAGES AND PICTURES) ARE THE ORIGINAL ONES FROM goda.co. THEY ARE ONLY HERE SO YOU CAN SEE THE SECTION WORKING. Do NOT publish another brand's customers, reviews or results on your own store. Replace every card with REAL reviews from YOUR customers (with their permission), upload your own pictures in Shopify admin > Content > Files, and only use percentages that come from your own real customer survey or testing.
+  mb_cards = the cards, separated by @@ , and each card written as   PICTURE LINK ||| NUMBER ||| LINE UNDER THE NUMBER ||| THE QUOTE ||| NAME
+  Example of one card:   https://yourstore.com/file.jpg ||| 91 ||| Said their skin felt softer ||| &ldquo;Love it!&rdquo; ||| Anna K.     (write 91 for 91%; leave the NUMBER empty to show no percentage; add as many cards as you like).
+  mb_verified = the words after the name (for example Verified Customer). Leave empty to show only the name.
+  mb_ratio = the shape of the card pictures as width / height (1 / 1 = square, 4 / 5 = a little taller, 16 / 9 = wide).
+  mb_max_w = the widest the card gets (use none to always fill the space it sits in).
+  mb_color_text = the line under the number, the quote and the name. mb_color_num = the big percentage. mb_color_check = the little tick next to the name. mb_color_accent = the dots. mb_card_bg / mb_card_border = card colour / its outline.
+  mb_top / mb_bottom = space above and below the block.
+{%- endcomment -%}
+{%- capture mb_cards -%}
+https://goda.co/cdn/shop/files/1739531719-13_4a3e71a4-f54e-4f45-a4ba-cdacab5b8ee1.png?v=1746422692 ||| 93 ||| Reduction of fine lines and wrinkles ||| “Before I found this on Facebook, I felt hopeless about my sagging skin. I tried everything, but nothing worked. After just two days, I saw an incredible difference! My neck line are tighter and I feel so much more confident now.” ||| Sophie L
+@@
+https://goda.co/cdn/shop/files/female.png?v=1779940884 ||| 89 ||| Said their skin felt instantly softer ||| “Finally rocking a bikini after 4 kids, I feel a lot more confident after using the oil, it&#39;s so luxurious makes me feel like royalty! I noticed the difference on my belly after 2 weeks in so that&#39;s amazing.” ||| Jennifer S
+@@
+https://goda.co/cdn/shop/files/download-59-1-2-6754dd7ab2a98.jpg?v=1746422734 ||| 89 ||| Reduction on sagging skin and thigh ||| “It’s not just a body oil, it’s a mood. I was skeptical at first... bought one bottle and WOW. It&#39;s worth every penny. I&#39;ve tried so many products but nothing has made my skin as firm as this Silk Body Oil.” ||| Kim
+{%- endcapture -%}
+{%- assign mb_verified = 'Verified Customer' -%}
+{%- assign mb_ratio = '1 / 1' -%}
+{%- assign mb_max_w = '560px' -%}
+{%- assign mb_color_text = '#5e4312' -%}
+{%- assign mb_color_num = '#986d1d' -%}
+{%- assign mb_color_check = '#986d1d' -%}
+{%- assign mb_color_accent = '#986d1d' -%}
+{%- assign mb_card_bg = '#ffffff' -%}
+{%- assign mb_card_border = 'rgba(152,109,29,.22)' -%}
+{%- assign mb_top = '0px' -%}
+{%- assign mb_bottom = '0px' -%}
+{%- assign mb_items = mb_cards | split: '@@' -%}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Libre+Caslon+Text:wght@400&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Libre+Caslon+Text:wght@400&display=swap"></noscript>
+
+<style>
+.mb-tc{box-sizing:border-box;width:100%;max-width:var(--mb-tc-mw);margin:var(--mb-tc-top) auto var(--mb-tc-bottom);padding:0;font-family:'Plus Jakarta Sans',sans-serif;text-align:left;color:var(--mb-tc-tx)}
+.mb-tc *{box-sizing:border-box}
+.mb-tc .mb-tc__vp{display:flex;align-items:stretch;margin:0;padding:0;list-style:none;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;-webkit-tap-highlight-color:transparent}
+.mb-tc .mb-tc__vp::-webkit-scrollbar{display:none}
+.mb-tc .mb-tc__vp.is-drag{scroll-snap-type:none;cursor:grabbing;user-select:none;-webkit-user-select:none}
+.mb-tc .mb-tc__vp:focus-visible{outline:2px solid var(--mb-tc-ac);outline-offset:2px}
+.mb-tc .mb-tc__sd{display:flex;flex:0 0 100%;width:100%;min-width:0;margin:0;padding:0;list-style:none;scroll-snap-align:start;scroll-snap-stop:always}
+.mb-tc .mb-tc__cd{display:flex;flex-direction:column;width:100%;margin:0;padding:0;overflow:hidden;border:1px solid var(--mb-tc-cb);border-radius:14px;background:var(--mb-tc-cg)}
+.mb-tc .mb-tc__im{position:relative;flex:none;width:100%;margin:0;padding:0;overflow:hidden;aspect-ratio:var(--mb-tc-ratio);background:#efe7d6}
+.mb-tc .mb-tc__im img{position:absolute;inset:0;display:block;width:100%!important;height:100%!important;max-width:none!important;margin:0!important;padding:0!important;border:0!important;border-radius:0!important;box-shadow:none!important;filter:none;opacity:1;transform:none;object-fit:cover;-webkit-user-drag:none;user-select:none}
+.mb-tc .mb-tc__bd{display:flex;flex:1 1 auto;flex-direction:column;margin:0;padding:18px 18px 20px}
+.mb-tc .mb-tc__pd{display:flex;align-items:center;gap:14px;margin:0 0 14px;padding:0}
+.mb-tc .mb-tc__pc{flex:none;margin:0;padding:0;font-family:'Libre Caslon Text',Georgia,serif;font-size:42px;line-height:1;font-weight:400;font-style:normal;letter-spacing:0;text-transform:none;white-space:nowrap;color:var(--mb-tc-nm)!important;-webkit-text-fill-color:var(--mb-tc-nm)!important}
+.mb-tc .mb-tc__pc span{margin:0;padding:0;font:inherit;letter-spacing:0;color:inherit!important;-webkit-text-fill-color:inherit!important}
+.mb-tc .mb-tc__pt{margin:0;padding:0;font-size:15px;line-height:1.35;font-weight:700;font-style:normal;letter-spacing:0;text-transform:none;color:var(--mb-tc-tx)!important;-webkit-text-fill-color:var(--mb-tc-tx)!important}
+.mb-tc .mb-tc__q{margin:0 0 14px;padding:0;font-size:15px;line-height:1.65;font-weight:500;font-style:normal;letter-spacing:0;text-transform:none;color:var(--mb-tc-tx)!important;-webkit-text-fill-color:var(--mb-tc-tx)!important}
+.mb-tc .mb-tc__by{display:flex;align-items:center;gap:6px;margin:auto 0 0;padding:0;font-size:13px;line-height:1.35;font-weight:600;font-style:normal;letter-spacing:0;text-transform:none;color:var(--mb-tc-tx)!important;-webkit-text-fill-color:var(--mb-tc-tx)!important}
+.mb-tc .mb-tc__by svg{display:block;flex:none;width:13px!important;height:12px!important;margin:0!important;padding:0!important}
+.mb-tc .mb-tc__by span{margin:0;padding:0;font-size:inherit;font-weight:inherit;font-style:normal;letter-spacing:0;color:inherit!important;-webkit-text-fill-color:inherit!important}
+.mb-tc .mb-tc__dots{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:4px;margin:14px 0 0;padding:0;list-style:none}
+.mb-tc .mb-tc__dots[hidden]{display:none!important}
+.mb-tc .mb-tc__dots li{display:flex;margin:0;padding:0;list-style:none}
+.mb-tc .mb-tc__dots button{-webkit-appearance:none;appearance:none;display:block;width:22px;height:22px;margin:0;padding:0;border:0;background:transparent;cursor:pointer;position:relative;font-size:0;line-height:0}
+.mb-tc .mb-tc__dots button::before{content:"";position:absolute;left:50%;top:50%;width:9px;height:9px;margin:-4.5px 0 0 -4.5px;border-radius:50%;background:var(--mb-tc-ac);opacity:.28;transition:opacity .2s ease,transform .2s ease}
+.mb-tc .mb-tc__dots button.is-on::before{opacity:1;transform:scale(1.15)}
+.mb-tc .mb-tc__dots button:focus-visible{outline:2px solid var(--mb-tc-ac);outline-offset:0;border-radius:50%}
+</style>
+
+<div class="mb-tc" role="region" aria-roledescription="carousel" aria-label="Customer results" style="--mb-tc-tx:{{ mb_color_text }};--mb-tc-nm:{{ mb_color_num }};--mb-tc-ac:{{ mb_color_accent }};--mb-tc-cg:{{ mb_card_bg }};--mb-tc-cb:{{ mb_card_border }};--mb-tc-ratio:{{ mb_ratio }};--mb-tc-mw:{{ mb_max_w }};--mb-tc-top:{{ mb_top }};--mb-tc-bottom:{{ mb_bottom }}">
+<ul class="mb-tc__vp" tabindex="0" data-vp>
+{%- for mb_it in mb_items -%}
+{%- assign mb_chk = mb_it | strip -%}
+{%- if mb_chk != blank -%}
+{%- assign mb_f = mb_it | split: '|||' -%}
+{%- assign mb_im = mb_f[0] | strip -%}
+{%- assign mb_num = mb_f[1] | strip | remove: '%' -%}
+{%- assign mb_ln = mb_f[2] | strip -%}
+{%- assign mb_q = mb_f[3] | strip -%}
+{%- assign mb_nm = mb_f[4] | strip -%}
+{%- if mb_im contains '?' -%}{%- assign mb_sep = '&amp;' -%}{%- else -%}{%- assign mb_sep = '?' -%}{%- endif -%}
+<li class="mb-tc__sd"><div class="mb-tc__cd">
+{%- if mb_im != blank -%}<div class="mb-tc__im"><img src="{{ mb_im }}{{ mb_sep }}width=600" srcset="{{ mb_im }}{{ mb_sep }}width=400 400w, {{ mb_im }}{{ mb_sep }}width=600 600w, {{ mb_im }}{{ mb_sep }}width=900 900w, {{ mb_im }}{{ mb_sep }}width=1200 1200w" sizes="(max-width: 600px) 100vw, 560px" width="600" height="600" alt="" loading="lazy" decoding="async" draggable="false"></div>{%- endif -%}
+<div class="mb-tc__bd">
+{%- if mb_num != blank or mb_ln != blank -%}<div class="mb-tc__pd">{%- if mb_num != blank -%}<span class="mb-tc__pc"><span data-count="{{ mb_num }}">{{ mb_num }}</span>%</span>{%- endif -%}{%- if mb_ln != blank -%}<p class="mb-tc__pt">{{ mb_ln }}</p>{%- endif -%}</div>{%- endif -%}
+{%- if mb_q != blank -%}<p class="mb-tc__q">{{ mb_q }}</p>{%- endif -%}
+{%- if mb_nm != blank -%}<p class="mb-tc__by"><svg width="13" height="12" viewBox="0 0 13 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path fill-rule="evenodd" clip-rule="evenodd" d="M6.79995 11.8499C10.0308 11.8499 12.65 9.23077 12.65 5.9999C12.65 2.76904 10.0308 0.149902 6.79995 0.149902C3.56909 0.149902 0.949951 2.76904 0.949951 5.9999C0.949951 9.23077 3.56909 11.8499 6.79995 11.8499ZM6.19394 8.91323L6.64902 8.36636L9.89902 4.46597L8.90098 3.63394L6.10703 6.98647L4.65977 5.54018L3.74082 6.45913L5.69004 8.40933L6.19394 8.91323Z" fill="{{ mb_color_check }}"></path></svg><span>{{ mb_nm }}{%- if mb_verified != blank %} | {{ mb_verified }}{%- endif -%}</span></p>{%- endif -%}
+</div>
+</div></li>
+{%- endif -%}
+{%- endfor -%}
+</ul>
+<ul class="mb-tc__dots" data-dots hidden></ul>
+</div>
+
+<script>
+(function(){
+function init(root){
+if(root.getAttribute('data-on'))return;
+root.setAttribute('data-on','1');
+var vp=root.querySelector('[data-vp]'),dotsBox=root.querySelector('[data-dots]');
+if(!vp)return;
+var real=[].slice.call(vp.children),n=real.length;
+if(!n)return;
+var loop=n>1,dots=[],cur=0,seen=false,touching=false,drag=null,st=0,lastW=0;
+/* the row loops round forever: a copy of the last card sits before the first and a copy of the first after the last */
+if(loop){
+var cl=real[n-1].cloneNode(true),cf=real[0].cloneNode(true);
+cl.setAttribute('aria-hidden','true');
+cf.setAttribute('aria-hidden','true');
+vp.insertBefore(cl,real[0]);
+vp.appendChild(cf);
+}
+function w(){return vp.clientWidth}
+function at(k,smooth){vp.scrollTo({left:k*w(),behavior:smooth?'smooth':'auto'})}
+function dom(){var x=w();return x?Math.round(vp.scrollLeft/x):0}
+function ridx(){var d=dom();return loop?(((d-1)%n)+n)%n:0}
+function quiet(f){
+vp.style.scrollSnapType='none';
+f();
+requestAnimationFrame(function(){requestAnimationFrame(function(){vp.style.scrollSnapType=''})});
+}
+/* the counting numbers */
+function fmt(v,dec){return dec?v.toFixed(dec):String(Math.round(v))}
+function decs(el){var s=el.getAttribute('data-count'),d=s.indexOf('.');return d<0?0:Math.min(2,s.length-d-1)}
+function setFinal(el){if(el.__raf){cancelAnimationFrame(el.__raf);el.__raf=0}var v=parseFloat(el.getAttribute('data-count'));if(!isNaN(v))el.textContent=fmt(v,decs(el))}
+function zero(el){if(el.__raf){cancelAnimationFrame(el.__raf);el.__raf=0}el.textContent=fmt(0,decs(el))}
+function run(el){
+var target=parseFloat(el.getAttribute('data-count'));
+if(isNaN(target))return;
+var dec=decs(el),dur=Math.max(500,(Math.abs(target)+2)/60*1000),t0=0;
+if(el.__raf)cancelAnimationFrame(el.__raf);
+el.textContent=fmt(0,dec);
+function step(now){
+if(!t0)t0=now;
+var p=Math.min(1,(now-t0)/dur);
+el.textContent=p>=1?fmt(target,dec):fmt(target*p,dec);
+el.__raf=p<1?requestAnimationFrame(step):0;
+}
+el.__raf=requestAnimationFrame(step);
+}
+function each(slide,f){var l=slide.querySelectorAll('[data-count]'),i;for(i=0;i<l.length;i++)f(l[i])}
+function finishAll(){var a=vp.children,i;for(i=0;i<a.length;i++)each(a[i],setFinal)}
+function runCurrent(){each(real[cur],run)}
+/* the dots */
+function mark(){
+var c=ridx(),i;
+for(i=0;i<dots.length;i++){var on=i===c;dots[i].classList.toggle('is-on',on);if(on)dots[i].setAttribute('aria-current','true');else dots[i].removeAttribute('aria-current')}
+}
+function go(k){at(k+1,true)}
+if(loop){
+for(var i=0;i<n;i++){
+(function(k){
+var li=document.createElement('li'),b=document.createElement('button');
+b.type='button';
+b.textContent=String(k+1);
+b.setAttribute('aria-label',(k+1)+' of '+n);
+b.addEventListener('click',function(){go(k)});
+li.appendChild(b);
+dotsBox.appendChild(li);
+dots.push(b);
+})(i);
+}
+dotsBox.hidden=false;
+mark();
+}
+/* when a slide has settled: jump from a copy to the real card, update dots, count up the new card's number */
+function settle(){
+st=0;
+if(touching||drag)return;
+var d=dom();
+if(loop&&(d===0||d===n+1)){
+d=d===0?n:1;
+quiet(function(){at(d,false)});
+}
+var k=loop?d-1:0;
+if(k!==cur){
+cur=k;
+mark();
+finishAll();
+seen=true;
+runCurrent();
+}else{mark()}
+}
+vp.addEventListener('scroll',function(){mark();clearTimeout(st);st=setTimeout(settle,110)},{passive:true});
+if('onscrollend' in window)vp.addEventListener('scrollend',function(){clearTimeout(st);settle()});
+vp.addEventListener('touchstart',function(){touching=true},{passive:true});
+function touchDone(){touching=false;clearTimeout(st);st=setTimeout(settle,110)}
+vp.addEventListener('touchend',touchDone,{passive:true});
+vp.addEventListener('touchcancel',touchDone,{passive:true});
+vp.addEventListener('keydown',function(e){
+if(!loop)return;
+if(e.key==='ArrowRight'){e.preventDefault();at(Math.min(n+1,dom()+1),true)}
+else if(e.key==='ArrowLeft'){e.preventDefault();at(Math.max(0,dom()-1),true)}
+});
+/* mouse dragging, like the original slider (touch and trackpad already scroll natively) */
+vp.addEventListener('pointerdown',function(e){
+if(!loop||e.pointerType!=='mouse'||e.button!==0)return;
+drag={x:e.clientX,s:vp.scrollLeft};
+vp.classList.add('is-drag');
+try{vp.setPointerCapture(e.pointerId)}catch(x){}
+});
+vp.addEventListener('pointermove',function(e){
+if(!drag)return;
+vp.scrollLeft=drag.s-(e.clientX-drag.x);
+});
+function drop(){
+if(!drag)return;
+var k=Math.round(vp.scrollLeft/(w()||1));
+drag=null;
+vp.classList.remove('is-drag');
+at(k,true);
+clearTimeout(st);
+st=setTimeout(settle,350);
+}
+vp.addEventListener('pointerup',drop);
+vp.addEventListener('pointercancel',drop);
+/* keep the same card in view whenever the width changes (and put the row on the first real card at the start) */
+function relayout(){
+var x=w();
+if(!x||x===lastW)return;
+lastW=x;
+quiet(function(){at(loop?cur+1:0,false)});
+}
+if(window.ResizeObserver)new ResizeObserver(relayout).observe(vp);
+else{window.addEventListener('resize',relayout);relayout()}
+/* the count-up starts when the cards first scroll into view */
+if('IntersectionObserver' in window){
+each(real[0],zero);
+new IntersectionObserver(function(en,o){
+for(var i=0;i<en.length;i++){
+if(en[i].isIntersecting&&!seen){seen=true;o.disconnect();runCurrent();return}
+}
+},{threshold:0.3}).observe(vp);
+}else{seen=true}
+}
+function all(){document.querySelectorAll('.mb-tc').forEach(init)}
+all();
+document.addEventListener('shopify:section:load',all);
+})();
+</script>
