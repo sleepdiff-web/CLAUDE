@@ -1,8 +1,8 @@
 {%- comment -%}
-  Short intro paragraph, then a list of benefits, each with a filled circle and a white tick inside (the same icon as goda.co) in front of it. All in Libre Caslon Text.
+  A bold heading line, then a list of benefits, each with a filled circle and a white tick inside (the same icon as goda.co) in front of it. All in Libre Caslon Text.
   WHERE: Online Store > Themes > Customize > Product page > Product information > Add block > Custom Liquid, drag it where you want it, paste this in.
   EDIT YOUR CONTENT BELOW.
-  mb_intro = the paragraph at the top. Use &amp; for an ampersand and &#39; for an apostrophe.
+  mb_intro = the bold line at the top (leave it empty to hide it). Use &amp; for an ampersand and &#39; for an apostrophe.
   mb_data = one benefit per line, with @@ on its own line between them.
     Each benefit gets the circle with the white tick. To use your own little picture instead, add ||| and the image link after the text,
     e.g.  Deep hydration where your skin needs it most ||| https://cdn.shopify.com/...png
@@ -11,7 +11,7 @@
   On phones each benefit shrinks just enough to stay on ONE line (it sizes itself from your longest benefit and the width of the block).
   Do not use a straight apostrophe (') inside the text, use &#39; instead.
 {%- endcomment -%}
-{%- assign mb_intro = 'Your lotion is 80% water. After menopause, your skin stops making the oil that holds that water in, so you&#39;re dry again by lunchtime. Nerola puts the oil back. Visibly smoother skin in 4 weeks, or your money back.' -%}
+{%- assign mb_intro = 'Deep Hydration for Dry, Crepey &amp; Itchy Menopausal Skin' -%}
 {%- capture mb_data -%}
 Firms, smooths and tightens crepey skin
 @@
@@ -39,6 +39,7 @@ Recommended by Dermatologists
 .mb-fl *{box-sizing:border-box}
 .mb-fl__intro,.mb-fl__t{font-family:'Libre Caslon Text',Georgia,'Times New Roman',serif!important;font-weight:400!important;font-style:normal!important;letter-spacing:0!important;text-transform:none!important;text-align:left!important;color:var(--mb-fl-tx)!important;-webkit-text-fill-color:var(--mb-fl-tx)!important}
 .mb-fl__intro{margin:0 0 12px;padding:0;font-size:14px;line-height:1.6}
+.mb-fl .mb-fl__intro{font-weight:700!important}
 .mb-fl__list{margin:0;padding:0;list-style:none}
 .mb-fl__it{display:flex;align-items:flex-start;gap:8px;margin:0;padding:0;list-style:none}
 .mb-fl__ic{display:block;flex:none;width:18px;height:18px;margin-top:3px}
