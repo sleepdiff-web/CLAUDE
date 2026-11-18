@@ -1,6 +1,6 @@
 {%- comment -%}
   "As seen in" logo strip (clone of the goda.co logo bar): a cream band with thin gold lines above and below and a row of logos that glides slowly and endlessly from right to left.
-  No slider app or library (goda uses Slick): it is plain CSS animation, so it loads fast and keeps moving smoothly.
+  No slider app or library (goda uses Slick): it is plain CSS animation, so it loads fast and keeps moving smoothly. Every width in it is a plain percentage of the strip, so the logos can never overlap or double up, whatever the screen size or page column.
   WHERE: best as its own full-width section: Online Store > Themes > Customize > Product page > Add section > Custom Liquid, drag it where you want it, paste this in.
   If you paste it inside the product info column instead, set mb_bleed to false (otherwise the strip stretches across the whole screen).
   EDIT YOUR CONTENT BELOW. Do not use a straight apostrophe (') in the text, use &#39; instead.
@@ -46,7 +46,9 @@ https://goda.co/cdn/shop/files/image_4.png?v=1744788589 ||| Press logo 5
 {%- if mb_n > 0 -%}
 {%- assign mb_max = mb_show_d | at_least: mb_show_t | at_least: mb_show_m -%}
 {%- assign mb_k = mb_n | minus: 1 | plus: mb_max | divided_by: mb_n -%}
-{%- assign mb_dur = mb_n | times: mb_k | times: mb_speed -%}
+{%- assign mb_per = mb_n | times: mb_k -%}
+{%- assign mb_tot = mb_per | times: 2 -%}
+{%- assign mb_dur = mb_per | times: mb_speed -%}
 {%- capture mb_a -%}{%- for mb_it in mb_items -%}{%- assign mb_chk = mb_it | strip -%}{%- if mb_chk != blank -%}{%- assign mb_f = mb_it | split: '|||' -%}{%- assign mb_u = mb_f[0] | strip -%}{%- assign mb_nm = mb_f[1] | strip -%}{%- if mb_u contains '?' -%}{%- assign mb_src = mb_u | append: '&amp;width=300' -%}{%- else -%}{%- assign mb_src = mb_u | append: '?width=300' -%}{%- endif -%}<div class="mb-ls__it">{%- if mb_u != blank -%}<img src="{{ mb_src }}" alt="{{ mb_nm | escape }}" loading="lazy" decoding="async" draggable="false" onerror="this.parentNode.classList.add('is-bad')">{%- else -%}<span class="mb-ls__ph">{{ mb_nm }}</span>{%- endif -%}</div>{%- endif -%}{%- endfor -%}{%- endcapture -%}
 {%- capture mb_b -%}{%- for mb_it in mb_items -%}{%- assign mb_chk = mb_it | strip -%}{%- if mb_chk != blank -%}{%- assign mb_f = mb_it | split: '|||' -%}{%- assign mb_u = mb_f[0] | strip -%}{%- assign mb_nm = mb_f[1] | strip -%}{%- if mb_u contains '?' -%}{%- assign mb_src = mb_u | append: '&amp;width=300' -%}{%- else -%}{%- assign mb_src = mb_u | append: '?width=300' -%}{%- endif -%}<div class="mb-ls__it" aria-hidden="true">{%- if mb_u != blank -%}<img src="{{ mb_src }}" alt="" loading="lazy" decoding="async" draggable="false" onerror="this.parentNode.classList.add('is-bad')">{%- else -%}<span class="mb-ls__ph">{{ mb_nm }}</span>{%- endif -%}</div>{%- endif -%}{%- endfor -%}{%- endcapture -%}
 {%- capture mb_set -%}{{ mb_a }}{%- for mb_r in (2..mb_k) -%}{{ mb_b }}{%- endfor -%}{%- endcapture -%}
@@ -61,12 +63,11 @@ https://goda.co/cdn/shop/files/image_4.png?v=1744788589 ||| Press logo 5
 .mb-ls *{box-sizing:border-box}
 .mb-ls--bleed{width:100vw;max-width:none;margin-left:calc(50% - 50vw);margin-right:0}
 .mb-ls .mb-ls__h{margin:0 0 15.5px;padding:0;text-align:center;font-family:'Plus Jakarta Sans',sans-serif;font-size:21px;font-weight:400;line-height:1.3;letter-spacing:0;text-transform:none;font-style:normal;color:var(--mb-ls-tx)!important;-webkit-text-fill-color:var(--mb-ls-tx)!important}
-.mb-ls__vp{container-type:inline-size;width:100%;overflow:hidden}
-.mb-ls__trk{display:flex;width:max-content;margin:0;padding:0;animation:mb-ls-run var(--mb-ls-dur) linear infinite;will-change:transform;backface-visibility:hidden}
+.mb-ls__vp{width:100%;margin:0;padding:0;overflow:hidden}
+.mb-ls__trk{display:flex;flex-wrap:nowrap;width:calc(100% * var(--mb-ls-tot) / var(--mb-ls-show));margin:0;padding:0;animation:mb-ls-run var(--mb-ls-dur) linear infinite}
 .mb-ls.is-off .mb-ls__trk{animation-play-state:paused}
-.mb-ls__set{display:flex;flex:none}
-.mb-ls__it{display:flex;align-items:center;justify-content:center;flex:0 0 calc(100vw / var(--mb-ls-show));height:var(--mb-ls-h);margin:0;padding:0 12px}
-@supports (width:1cqw){.mb-ls__it{flex:0 0 calc(100cqw / var(--mb-ls-show))}}
+.mb-ls__set{display:flex;flex:0 0 50%;width:50%;margin:0;padding:0}
+.mb-ls__it{display:flex;align-items:center;justify-content:center;flex:0 0 calc(100% / var(--mb-ls-per));width:calc(100% / var(--mb-ls-per));min-width:0;height:var(--mb-ls-h);margin:0;padding:0 12px}
 .mb-ls .mb-ls__it img{display:block!important;width:100%!important;max-width:100%!important;height:100%!important;max-height:100%!important;min-width:0!important;margin:0!important;padding:0!important;object-fit:contain!important;border:0!important;border-radius:0!important;box-shadow:none!important;filter:none!important;opacity:1!important;transform:none!important;-webkit-user-drag:none;user-select:none;pointer-events:none}
 .mb-ls .mb-ls__it.is-bad img{visibility:hidden!important}
 .mb-ls .mb-ls__note{display:none;margin:0;padding:6px 16px;text-align:center;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:600;line-height:1.5;letter-spacing:0;text-transform:none;font-style:normal;color:var(--mb-ls-tx)!important;-webkit-text-fill-color:var(--mb-ls-tx)!important}
@@ -84,7 +85,7 @@ https://goda.co/cdn/shop/files/image_4.png?v=1744788589 ||| Press logo 5
 }
 </style>
 
-<div class="mb-ls{% if mb_bleed %} mb-ls--bleed{% endif %}" role="group" aria-label="{{ mb_label | escape }}" style="--mb-ls-bg:{{ mb_bg }};--mb-ls-line:{{ mb_line }};--mb-ls-tx:{{ mb_color_text }};--mb-ls-h:{{ mb_logo_h }};--mb-ls-dur:{{ mb_dur }}s;--mb-ls-top:{{ mb_top }};--mb-ls-bottom:{{ mb_bottom }}" data-bleed="{{ mb_bleed }}" data-n="{{ mb_n }}" data-design="{{ request.design_mode }}">
+<div class="mb-ls{% if mb_bleed %} mb-ls--bleed{% endif %}" role="group" aria-label="{{ mb_label | escape }}" style="--mb-ls-bg:{{ mb_bg }};--mb-ls-line:{{ mb_line }};--mb-ls-tx:{{ mb_color_text }};--mb-ls-h:{{ mb_logo_h }};--mb-ls-per:{{ mb_per }};--mb-ls-tot:{{ mb_tot }};--mb-ls-dur:{{ mb_dur }}s;--mb-ls-top:{{ mb_top }};--mb-ls-bottom:{{ mb_bottom }}" data-bleed="{{ mb_bleed }}" data-n="{{ mb_n }}" data-design="{{ request.design_mode }}">
 {%- if mb_title != blank -%}<p class="mb-ls__h">{{ mb_title }}</p>{%- endif -%}
 <p class="mb-ls__note">None of your logos could be loaded. Check the picture links in mb_logos (only you see this note, in the theme editor).</p>
 <div class="mb-ls__vp"><div class="mb-ls__trk"><div class="mb-ls__set">{{ mb_set }}</div><div class="mb-ls__set" aria-hidden="true">{{ mb_set }}</div></div></div>
