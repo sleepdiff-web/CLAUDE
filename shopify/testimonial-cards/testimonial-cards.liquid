@@ -12,6 +12,7 @@
   mb_ratio = the shape of the card pictures as width / height. 413 / 180 is goda's wide shape. Other examples: 1 / 1 = square, 4 / 5 = a little taller. Write auto to show every picture at its own natural shape, uncropped.
   mb_img_pos = which part of the picture stays visible when it is cropped (center, top, bottom, or for example 50% 30%).
   mb_scale = make the whole box bigger or smaller: 1 is the same size as goda's, 1.1 = 10% bigger, 0.9 = 10% smaller.
+  mb_pad_top = the space inside the box above the picture (goda's is about 10px, 22px gives it more room). mb_top (further down) is a different thing: the space ABOVE the whole box, outside it.
   mb_peek = true shows a little of the next card at the right edge (like goda). false shows one card at a time with nothing next to it.
   mb_max_w = the widest the box gets (use none to always fill the space it sits in).
   mb_color_text = the line next to the number, the quote and the name. mb_color_num = the big percentage. mb_color_check = the little tick next to the name. mb_color_accent = the active dot. mb_color_dot = the other dots. mb_card_bg / mb_card_border = the box colour / its outline. mb_img_border = the thin outline round the picture. mb_color_divider = the thin line under the number.
@@ -29,6 +30,7 @@ https://goda.co/cdn/shop/files/download-59-1-2-6754dd7ab2a98.jpg?v=1746422734 ||
 {%- assign mb_img_pos = 'center' -%}
 {%- assign mb_scale = '1' -%}
 {%- assign mb_peek = 'true' -%}
+{%- assign mb_pad_top = '22px' -%}
 {%- assign mb_max_w = '560px' -%}
 {%- assign mb_color_text = '#5e4312' -%}
 {%- assign mb_color_num = '#5e4312' -%}
@@ -53,7 +55,7 @@ https://goda.co/cdn/shop/files/download-59-1-2-6754dd7ab2a98.jpg?v=1746422734 ||
 <style>
 .mb-tc{container-type:inline-size;box-sizing:border-box;width:100%;max-width:var(--mb-tc-mw);margin:var(--mb-tc-top) auto var(--mb-tc-bottom);padding:0;font-family:'Nunito Sans','Avenir Next',Avenir,'Helvetica Neue',Arial,sans-serif;text-align:left;color:var(--mb-tc-tx)}
 .mb-tc *{box-sizing:border-box}
-.mb-tc .mb-tc__box{margin:0;padding:calc(var(--mb-tc-u)*10) 0 calc(var(--mb-tc-u)*20) calc(var(--mb-tc-u)*10);overflow:hidden;border:1px solid var(--mb-tc-cb);border-radius:calc(var(--mb-tc-u)*6);background:var(--mb-tc-cg)}
+.mb-tc .mb-tc__box{margin:0;padding:var(--mb-tc-pt) 0 calc(var(--mb-tc-u)*20) calc(var(--mb-tc-u)*10);overflow:hidden;border:1px solid var(--mb-tc-cb);border-radius:calc(var(--mb-tc-u)*6);background:var(--mb-tc-cg)}
 .mb-tc .mb-tc__vp{display:flex;align-items:stretch;margin:0;padding:0;list-style:none;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;-webkit-tap-highlight-color:transparent}
 .mb-tc .mb-tc__vp::-webkit-scrollbar{display:none}
 .mb-tc .mb-tc__vp::after{content:"";flex:0 0 calc(var(--mb-tc-u)*9)}
@@ -96,7 +98,7 @@ https://goda.co/cdn/shop/files/download-59-1-2-6754dd7ab2a98.jpg?v=1746422734 ||
 }
 </style>
 
-<div class="mb-tc{% if mb_ratio == 'auto' %} mb-tc--auto{% endif %}{% if mb_peek == 'false' %} mb-tc--flat{% endif %}{% if mb_count < 2 %} mb-tc--one{% endif %}" role="region" aria-roledescription="carousel" aria-label="Customer results" style="--mb-tc-u:calc(100cqw / 443 * {{ mb_scale }});--mb-tc-tx:{{ mb_color_text }};--mb-tc-nm:{{ mb_color_num }};--mb-tc-ac:{{ mb_color_accent }};--mb-tc-dc:{{ mb_color_dot }};--mb-tc-cg:{{ mb_card_bg }};--mb-tc-cb:{{ mb_card_border }};--mb-tc-ib:{{ mb_img_border }};--mb-tc-dv:{{ mb_color_divider }};--mb-tc-ratio:{{ mb_ratio }};--mb-tc-pos:{{ mb_img_pos }};--mb-tc-mw:{{ mb_max_w }};--mb-tc-top:{{ mb_top }};--mb-tc-bottom:{{ mb_bottom }}">
+<div class="mb-tc{% if mb_ratio == 'auto' %} mb-tc--auto{% endif %}{% if mb_peek == 'false' %} mb-tc--flat{% endif %}{% if mb_count < 2 %} mb-tc--one{% endif %}" role="region" aria-roledescription="carousel" aria-label="Customer results" style="--mb-tc-u:calc(100cqw / 443 * {{ mb_scale }});--mb-tc-tx:{{ mb_color_text }};--mb-tc-nm:{{ mb_color_num }};--mb-tc-ac:{{ mb_color_accent }};--mb-tc-dc:{{ mb_color_dot }};--mb-tc-cg:{{ mb_card_bg }};--mb-tc-cb:{{ mb_card_border }};--mb-tc-ib:{{ mb_img_border }};--mb-tc-dv:{{ mb_color_divider }};--mb-tc-ratio:{{ mb_ratio }};--mb-tc-pos:{{ mb_img_pos }};--mb-tc-mw:{{ mb_max_w }};--mb-tc-pt:{{ mb_pad_top }};--mb-tc-top:{{ mb_top }};--mb-tc-bottom:{{ mb_bottom }}">
 <div class="mb-tc__box">
 <ul class="mb-tc__vp" tabindex="0" data-vp>
 {%- for mb_it in mb_items -%}
