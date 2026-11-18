@@ -1,18 +1,20 @@
 {%- comment -%}
-  "Results" testimonial cards (copy of the goda.co block): one card at a time with a picture on top, a big percentage that COUNTS UP, a short line about it, the customer's quote and "Name | Verified Customer", and little dots underneath to move between the cards.
+  "Results" testimonial cards (copy of the goda.co block): a cream box with a thin outline, a wide picture on top, a big percentage that COUNTS UP with a short line next to it, a thin divider, the customer's quote in italics, "Name | Verified Customer", and little dash-shaped dots underneath. The next card peeks in at the right edge, so people can see there is more to swipe.
   The percentage counts up exactly like the original script: the first card counts once when the page loads, every number counts again when the cards are half on screen, and the new card counts every time a card slides in. The row loops round forever (swipe past the last card and you are back at the first).
   No slider app and no slider library, just the browser's own scrolling, so it loads fast. Pictures load only when they get near the screen.
-  WHERE: Online Store > Themes > Customize > Product page > Add block (or Add section) > Custom Liquid, drag it where you want it (for example under your accordions in the product column), paste this in. The card fills the width it is given, up to mb_max_w.
+  Everything is sized from the width of the box, so it looks the same as goda's at any width (the text only stops shrinking when it would get too small to read on a phone).
+  WHERE: Online Store > Themes > Customize > Product page > Add block (or Add section) > Custom Liquid, drag it where you want it (for example under your accordions in the product column), paste this in. The box fills the width it is given, up to mb_max_w.
   EDIT YOUR CONTENT BELOW. Do not use a straight apostrophe (') in the text, use &#39; instead, and write & as &amp;
   !!! THE THREE CARDS BELOW (REVIEWS, PERCENTAGES AND PICTURES) ARE THE ORIGINAL ONES FROM goda.co. THEY ARE ONLY HERE SO YOU CAN SEE THE SECTION WORKING. Do NOT publish another brand's customers, reviews or results on your own store. Replace every card with REAL reviews from YOUR customers (with their permission), upload your own pictures in Shopify admin > Content > Files, and only use percentages that come from your own real customer survey or testing.
-  mb_cards = the cards, separated by @@ , and each card written as   PICTURE LINK ||| NUMBER ||| LINE UNDER THE NUMBER ||| THE QUOTE ||| NAME
+  mb_cards = the cards, separated by @@ , and each card written as   PICTURE LINK ||| NUMBER ||| LINE NEXT TO THE NUMBER ||| THE QUOTE ||| NAME
   Example of one card:   https://yourstore.com/file.jpg ||| 91 ||| Said their skin felt softer ||| &ldquo;Love it!&rdquo; ||| Anna K.     (write 91 for 91%; leave the NUMBER empty to show no percentage; add as many cards as you like).
   mb_verified = the words after the name (for example Verified Customer). Leave empty to show only the name.
-  mb_ratio = the shape of the card pictures as width / height (1 / 1 = square, 4 / 5 = a little taller, 16 / 9 = wide). Write auto to show every picture at its own natural shape, uncropped.
-  mb_radius = how round the card corners are. mb_pad = the space inside the text part of the card (top left-right bottom, for example 18px 18px 20px).
-  mb_num_size = the size of the big percentage. mb_text_size = the size of the line under it, the quote and the name.
-  mb_max_w = the widest the card gets (use none to always fill the space it sits in).
-  mb_color_text = the line under the number, the quote and the name. mb_color_num = the big percentage. mb_color_check = the little tick next to the name. mb_color_accent = the dots. mb_card_bg / mb_card_border = card colour / its outline.
+  mb_ratio = the shape of the card pictures as width / height. 413 / 180 is goda's wide shape. Other examples: 1 / 1 = square, 4 / 5 = a little taller. Write auto to show every picture at its own natural shape, uncropped.
+  mb_img_pos = which part of the picture stays visible when it is cropped (center, top, bottom, or for example 50% 30%).
+  mb_scale = make the whole box bigger or smaller: 1 is the same size as goda's, 1.1 = 10% bigger, 0.9 = 10% smaller.
+  mb_peek = true shows a little of the next card at the right edge (like goda). false shows one card at a time with nothing next to it.
+  mb_max_w = the widest the box gets (use none to always fill the space it sits in).
+  mb_color_text = the line next to the number, the quote and the name. mb_color_num = the big percentage. mb_color_check = the little tick next to the name. mb_color_accent = the active dot. mb_color_dot = the other dots. mb_card_bg / mb_card_border = the box colour / its outline. mb_img_border = the thin outline round the picture. mb_color_divider = the thin line under the number.
   mb_top / mb_bottom = space above and below the block.
 {%- endcomment -%}
 {%- capture mb_cards -%}
@@ -23,59 +25,79 @@ https://goda.co/cdn/shop/files/female.png?v=1779940884 ||| 89 ||| Said their ski
 https://goda.co/cdn/shop/files/download-59-1-2-6754dd7ab2a98.jpg?v=1746422734 ||| 89 ||| Reduction on sagging skin and thigh ||| “It’s not just a body oil, it’s a mood. I was skeptical at first... bought one bottle and WOW. It&#39;s worth every penny. I&#39;ve tried so many products but nothing has made my skin as firm as this Silk Body Oil.” ||| Kim
 {%- endcapture -%}
 {%- assign mb_verified = 'Verified Customer' -%}
-{%- assign mb_ratio = '1 / 1' -%}
-{%- assign mb_radius = '14px' -%}
-{%- assign mb_pad = '18px 18px 20px' -%}
-{%- assign mb_num_size = '42px' -%}
-{%- assign mb_text_size = '15px' -%}
+{%- assign mb_ratio = '413 / 180' -%}
+{%- assign mb_img_pos = 'center' -%}
+{%- assign mb_scale = '1' -%}
+{%- assign mb_peek = 'true' -%}
 {%- assign mb_max_w = '560px' -%}
 {%- assign mb_color_text = '#5e4312' -%}
-{%- assign mb_color_num = '#986d1d' -%}
+{%- assign mb_color_num = '#5e4312' -%}
 {%- assign mb_color_check = '#986d1d' -%}
 {%- assign mb_color_accent = '#986d1d' -%}
-{%- assign mb_card_bg = '#ffffff' -%}
-{%- assign mb_card_border = 'rgba(152,109,29,.22)' -%}
+{%- assign mb_color_dot = '#e4d7c1' -%}
+{%- assign mb_card_bg = '#fdfbf8' -%}
+{%- assign mb_card_border = '#cac9c6' -%}
+{%- assign mb_img_border = '#cac9c6' -%}
+{%- assign mb_color_divider = '#e8dfcc' -%}
 {%- assign mb_top = '0px' -%}
 {%- assign mb_bottom = '0px' -%}
 {%- assign mb_items = mb_cards | split: '@@' -%}
+{%- assign mb_count = 0 -%}
+{%- for mb_c in mb_items -%}{%- assign mb_c2 = mb_c | strip -%}{%- if mb_c2 != blank -%}{%- assign mb_count = mb_count | plus: 1 -%}{%- endif -%}{%- endfor -%}
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Libre+Caslon+Text:wght@400&display=swap" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Libre+Caslon+Text:wght@400&display=swap"></noscript>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Nunito+Sans:ital,wght@0,500;1,500&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Nunito+Sans:ital,wght@0,500;1,500&display=swap"></noscript>
 
 <style>
-.mb-tc{box-sizing:border-box;width:100%;max-width:var(--mb-tc-mw);margin:var(--mb-tc-top) auto var(--mb-tc-bottom);padding:0;font-family:'Plus Jakarta Sans',sans-serif;text-align:left;color:var(--mb-tc-tx)}
+.mb-tc{container-type:inline-size;box-sizing:border-box;width:100%;max-width:var(--mb-tc-mw);margin:var(--mb-tc-top) auto var(--mb-tc-bottom);padding:0;font-family:'Nunito Sans','Avenir Next',Avenir,'Helvetica Neue',Arial,sans-serif;text-align:left;color:var(--mb-tc-tx)}
 .mb-tc *{box-sizing:border-box}
+.mb-tc .mb-tc__box{margin:0;padding:calc(var(--mb-tc-u)*10) 0 calc(var(--mb-tc-u)*20) calc(var(--mb-tc-u)*10);overflow:hidden;border:1px solid var(--mb-tc-cb);border-radius:calc(var(--mb-tc-u)*6);background:var(--mb-tc-cg)}
 .mb-tc .mb-tc__vp{display:flex;align-items:stretch;margin:0;padding:0;list-style:none;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;-webkit-tap-highlight-color:transparent}
 .mb-tc .mb-tc__vp::-webkit-scrollbar{display:none}
+.mb-tc .mb-tc__vp::after{content:"";flex:0 0 calc(var(--mb-tc-u)*9)}
 .mb-tc .mb-tc__vp.is-drag{scroll-snap-type:none;cursor:grabbing;user-select:none;-webkit-user-select:none}
 .mb-tc .mb-tc__vp:focus-visible{outline:2px solid var(--mb-tc-ac);outline-offset:2px}
-.mb-tc .mb-tc__sd{display:flex;flex:0 0 100%;width:100%;min-width:0;margin:0;padding:0;list-style:none;scroll-snap-align:start;scroll-snap-stop:always}
-.mb-tc .mb-tc__cd{display:flex;flex-direction:column;width:100%;margin:0;padding:0;overflow:hidden;border:1px solid var(--mb-tc-cb);border-radius:var(--mb-tc-rd);background:var(--mb-tc-cg)}
-.mb-tc .mb-tc__im{position:relative;flex:none;width:100%;margin:0;padding:0;overflow:hidden;aspect-ratio:var(--mb-tc-ratio);background:#efe7d6}
-.mb-tc .mb-tc__im img{position:absolute;inset:0;display:block;width:100%!important;height:100%!important;max-width:none!important;margin:0!important;padding:0!important;border:0!important;border-radius:0!important;box-shadow:none!important;filter:none;opacity:1;transform:none;object-fit:cover;-webkit-user-drag:none;user-select:none}
-.mb-tc .mb-tc__bd{display:flex;flex:1 1 auto;flex-direction:column;margin:0;padding:var(--mb-tc-pd)}
-.mb-tc .mb-tc__pd{display:flex;align-items:center;gap:14px;margin:0 0 14px;padding:0}
-.mb-tc .mb-tc__pc{flex:none;margin:0;padding:0;font-family:'Libre Caslon Text',Georgia,serif;font-size:var(--mb-tc-ns);line-height:1;font-weight:400;font-style:normal;letter-spacing:0;text-transform:none;white-space:nowrap;color:var(--mb-tc-nm)!important;-webkit-text-fill-color:var(--mb-tc-nm)!important}
-.mb-tc .mb-tc__pc span{margin:0;padding:0;font:inherit;letter-spacing:0;color:inherit!important;-webkit-text-fill-color:inherit!important}
-.mb-tc .mb-tc__pt{margin:0;padding:0;font-size:var(--mb-tc-ts);line-height:1.35;font-weight:700;font-style:normal;letter-spacing:0;text-transform:none;color:var(--mb-tc-tx)!important;-webkit-text-fill-color:var(--mb-tc-tx)!important}
-.mb-tc .mb-tc__q{margin:0 0 14px;padding:0;font-size:var(--mb-tc-ts);line-height:1.65;font-weight:500;font-style:normal;letter-spacing:0;text-transform:none;color:var(--mb-tc-tx)!important;-webkit-text-fill-color:var(--mb-tc-tx)!important}
-.mb-tc .mb-tc__by{display:flex;align-items:center;gap:6px;margin:auto 0 0;padding:0;font-size:calc(var(--mb-tc-ts) - 2px);line-height:1.35;font-weight:600;font-style:normal;letter-spacing:0;text-transform:none;color:var(--mb-tc-tx)!important;-webkit-text-fill-color:var(--mb-tc-tx)!important}
+.mb-tc .mb-tc__sd{display:flex;flex:0 0 calc(100% - var(--mb-tc-u)*18);width:calc(100% - var(--mb-tc-u)*18);min-width:0;margin:0 calc(var(--mb-tc-u)*9) 0 0;padding:0;list-style:none;scroll-snap-align:start;scroll-snap-stop:always}
+.mb-tc--flat .mb-tc__box,.mb-tc--one .mb-tc__box{padding-right:calc(var(--mb-tc-u)*10)}
+.mb-tc--flat .mb-tc__vp::after,.mb-tc--one .mb-tc__vp::after{display:none}
+.mb-tc--flat .mb-tc__sd,.mb-tc--one .mb-tc__sd{flex-basis:100%;width:100%;margin-right:0}
+.mb-tc--one .mb-tc__box{padding-bottom:calc(var(--mb-tc-u)*12)}
+.mb-tc .mb-tc__cd{display:flex;flex-direction:column;width:100%;min-width:0;margin:0;padding:0}
+.mb-tc .mb-tc__im{position:relative;flex:none;width:100%;margin:0;padding:0;overflow:hidden;border:1px solid var(--mb-tc-ib);border-radius:0;aspect-ratio:var(--mb-tc-ratio);background:#efe7d6}
+.mb-tc .mb-tc__im img{position:absolute;inset:0;display:block;width:100%!important;height:100%!important;max-width:none!important;margin:0!important;padding:0!important;border:0!important;border-radius:0!important;box-shadow:none!important;filter:none;opacity:1;transform:none;object-fit:cover;object-position:var(--mb-tc-pos);-webkit-user-drag:none;user-select:none}
 .mb-tc--auto .mb-tc__im{aspect-ratio:auto}
 .mb-tc--auto .mb-tc__im img{position:static;height:auto!important}
-.mb-tc .mb-tc__by svg{display:block;flex:none;width:13px!important;height:12px!important;margin:0!important;padding:0!important}
+.mb-tc .mb-tc__pd{display:flex;align-items:center;gap:calc(var(--mb-tc-u)*3.5);margin:calc(var(--mb-tc-u)*13) 0 0;padding:0 0 calc(var(--mb-tc-u)*9);border-bottom:1px solid var(--mb-tc-dv)}
+.mb-tc .mb-tc__pc{flex:none;margin:0;padding:0;font-family:'Libre Caslon Display','Libre Caslon Text',Georgia,'Times New Roman',serif;font-size:26px;font-size:max(26px,calc(var(--mb-tc-u)*29));line-height:1.05;font-weight:400;font-style:normal;letter-spacing:0;text-transform:none;white-space:nowrap;color:var(--mb-tc-nm)!important;-webkit-text-fill-color:var(--mb-tc-nm)!important;-webkit-text-stroke:.35px var(--mb-tc-nm)}
+.mb-tc .mb-tc__pc span{margin:0;padding:0;font:inherit;letter-spacing:0;color:inherit!important;-webkit-text-fill-color:inherit!important}
+.mb-tc .mb-tc__pt{min-width:0;margin:0;padding:0;font-size:12px;font-size:max(12px,calc(var(--mb-tc-u)*12.1));line-height:1.25;font-weight:500;font-style:normal;letter-spacing:0;text-transform:none;color:var(--mb-tc-tx)!important;-webkit-text-fill-color:var(--mb-tc-tx)!important}
+.mb-tc .mb-tc__q{margin:calc(var(--mb-tc-u)*7.5) 0 0;padding:0;font-size:12px;font-size:max(12px,calc(var(--mb-tc-u)*12.4));line-height:1.37;font-weight:500;font-style:italic;letter-spacing:0;text-transform:none;color:var(--mb-tc-tx)!important;-webkit-text-fill-color:var(--mb-tc-tx)!important}
+.mb-tc .mb-tc__by{display:flex;align-items:center;gap:calc(var(--mb-tc-u)*5);margin:calc(var(--mb-tc-u)*10.5) 0 0;padding:0;font-size:12px;font-size:max(12px,calc(var(--mb-tc-u)*12.1));line-height:1.4;font-weight:500;font-style:normal;letter-spacing:0;text-transform:none;color:var(--mb-tc-tx)!important;-webkit-text-fill-color:var(--mb-tc-tx)!important}
+.mb-tc .mb-tc__by svg{display:block;flex:none;width:9px!important;width:max(9px,calc(var(--mb-tc-u)*8))!important;height:8.3px!important;height:max(8.3px,calc(var(--mb-tc-u)*7.4))!important;margin:0!important;padding:0!important}
 .mb-tc .mb-tc__by span{margin:0;padding:0;font-size:inherit;font-weight:inherit;font-style:normal;letter-spacing:0;color:inherit!important;-webkit-text-fill-color:inherit!important}
-.mb-tc .mb-tc__dots{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:4px;margin:14px 0 0;padding:0;list-style:none}
+.mb-tc .mb-tc__dots{display:flex;align-items:center;justify-content:center;flex-wrap:nowrap;gap:calc(var(--mb-tc-u)*7);margin:calc(var(--mb-tc-u)*20) 0 0;padding:0;list-style:none}
+.mb-tc--flat .mb-tc__dots{margin-right:0}
 .mb-tc .mb-tc__dots[hidden]{display:none!important}
 .mb-tc .mb-tc__dots li{display:flex;margin:0;padding:0;list-style:none}
-.mb-tc .mb-tc__dots button{-webkit-appearance:none;appearance:none;display:block;width:22px;height:22px;margin:0;padding:0;border:0;background:transparent;cursor:pointer;position:relative;font-size:0;line-height:0}
-.mb-tc .mb-tc__dots button::before{content:"";position:absolute;left:50%;top:50%;width:9px;height:9px;margin:-4.5px 0 0 -4.5px;border-radius:50%;background:var(--mb-tc-ac);opacity:.28;transition:opacity .2s ease,transform .2s ease}
-.mb-tc .mb-tc__dots button.is-on::before{opacity:1;transform:scale(1.15)}
-.mb-tc .mb-tc__dots button:focus-visible{outline:2px solid var(--mb-tc-ac);outline-offset:0;border-radius:50%}
+.mb-tc .mb-tc__dots button{-webkit-appearance:none;appearance:none;position:relative;display:block;width:14px;width:max(14px,calc(var(--mb-tc-u)*22));height:18px;margin:0;padding:0;border:0;border-radius:0;background:transparent;cursor:pointer;font-size:0;line-height:0;transition:width .25s ease}
+.mb-tc .mb-tc__dots button.is-on{width:26px;width:max(26px,calc(var(--mb-tc-u)*41))}
+.mb-tc .mb-tc__dots button::before{content:"";position:absolute;left:0;right:0;top:50%;height:2px;height:max(2px,calc(var(--mb-tc-u)*2));transform:translateY(-50%);background:var(--mb-tc-dc);transition:background-color .25s ease}
+.mb-tc .mb-tc__dots button.is-on::before{background:var(--mb-tc-ac)}
+.mb-tc .mb-tc__dots button::after{content:"";position:absolute;inset:-6px -4px}
+.mb-tc .mb-tc__dots button:focus-visible{outline:2px solid var(--mb-tc-ac);outline-offset:1px}
+/* on narrow boxes (phones) the text keeps a comfortable minimum size instead of shrinking further */
+@container (max-width:419px){
+.mb-tc .mb-tc__pt,.mb-tc .mb-tc__by{font-size:max(13px,calc(var(--mb-tc-u)*12.1))}
+.mb-tc .mb-tc__q{font-size:max(13.5px,calc(var(--mb-tc-u)*12.4))}
+.mb-tc .mb-tc__pc{font-size:max(28px,calc(var(--mb-tc-u)*29))}
+.mb-tc .mb-tc__pd{gap:7px}
+}
 </style>
 
-<div class="mb-tc{% if mb_ratio == 'auto' %} mb-tc--auto{% endif %}" role="region" aria-roledescription="carousel" aria-label="Customer results" style="--mb-tc-tx:{{ mb_color_text }};--mb-tc-nm:{{ mb_color_num }};--mb-tc-ac:{{ mb_color_accent }};--mb-tc-cg:{{ mb_card_bg }};--mb-tc-cb:{{ mb_card_border }};--mb-tc-ratio:{{ mb_ratio }};--mb-tc-rd:{{ mb_radius }};--mb-tc-pd:{{ mb_pad }};--mb-tc-ns:{{ mb_num_size }};--mb-tc-ts:{{ mb_text_size }};--mb-tc-mw:{{ mb_max_w }};--mb-tc-top:{{ mb_top }};--mb-tc-bottom:{{ mb_bottom }}">
+<div class="mb-tc{% if mb_ratio == 'auto' %} mb-tc--auto{% endif %}{% if mb_peek == 'false' %} mb-tc--flat{% endif %}{% if mb_count < 2 %} mb-tc--one{% endif %}" role="region" aria-roledescription="carousel" aria-label="Customer results" style="--mb-tc-u:calc(100cqw / 443 * {{ mb_scale }});--mb-tc-tx:{{ mb_color_text }};--mb-tc-nm:{{ mb_color_num }};--mb-tc-ac:{{ mb_color_accent }};--mb-tc-dc:{{ mb_color_dot }};--mb-tc-cg:{{ mb_card_bg }};--mb-tc-cb:{{ mb_card_border }};--mb-tc-ib:{{ mb_img_border }};--mb-tc-dv:{{ mb_color_divider }};--mb-tc-ratio:{{ mb_ratio }};--mb-tc-pos:{{ mb_img_pos }};--mb-tc-mw:{{ mb_max_w }};--mb-tc-top:{{ mb_top }};--mb-tc-bottom:{{ mb_bottom }}">
+<div class="mb-tc__box">
 <ul class="mb-tc__vp" tabindex="0" data-vp>
 {%- for mb_it in mb_items -%}
 {%- assign mb_chk = mb_it | strip -%}
@@ -88,17 +110,16 @@ https://goda.co/cdn/shop/files/download-59-1-2-6754dd7ab2a98.jpg?v=1746422734 ||
 {%- assign mb_nm = mb_f[4] | strip -%}
 {%- if mb_im contains '?' -%}{%- assign mb_sep = '&amp;' -%}{%- else -%}{%- assign mb_sep = '?' -%}{%- endif -%}
 <li class="mb-tc__sd"><div class="mb-tc__cd">
-{%- if mb_im != blank -%}<div class="mb-tc__im"><img src="{{ mb_im }}{{ mb_sep }}width=600" srcset="{{ mb_im }}{{ mb_sep }}width=400 400w, {{ mb_im }}{{ mb_sep }}width=600 600w, {{ mb_im }}{{ mb_sep }}width=900 900w, {{ mb_im }}{{ mb_sep }}width=1200 1200w" sizes="(max-width: 600px) 100vw, 560px" width="600" height="600" alt="" loading="lazy" decoding="async" draggable="false"></div>{%- endif -%}
-<div class="mb-tc__bd">
+{%- if mb_im != blank -%}<div class="mb-tc__im"><img src="{{ mb_im }}{{ mb_sep }}width=600" srcset="{{ mb_im }}{{ mb_sep }}width=400 400w, {{ mb_im }}{{ mb_sep }}width=600 600w, {{ mb_im }}{{ mb_sep }}width=900 900w, {{ mb_im }}{{ mb_sep }}width=1200 1200w" sizes="(max-width: 600px) 100vw, 560px" width="600" height="262" alt="" loading="lazy" decoding="async" draggable="false"></div>{%- endif -%}
 {%- if mb_num != blank or mb_ln != blank -%}<div class="mb-tc__pd">{%- if mb_num != blank -%}<span class="mb-tc__pc"><span class="mb-tc__cnt" data-target="{{ mb_num }}">{{ mb_num }}</span>%</span>{%- endif -%}{%- if mb_ln != blank -%}<p class="mb-tc__pt">{{ mb_ln }}</p>{%- endif -%}</div>{%- endif -%}
 {%- if mb_q != blank -%}<p class="mb-tc__q">{{ mb_q }}</p>{%- endif -%}
 {%- if mb_nm != blank -%}<p class="mb-tc__by"><svg width="13" height="12" viewBox="0 0 13 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path fill-rule="evenodd" clip-rule="evenodd" d="M6.79995 11.8499C10.0308 11.8499 12.65 9.23077 12.65 5.9999C12.65 2.76904 10.0308 0.149902 6.79995 0.149902C3.56909 0.149902 0.949951 2.76904 0.949951 5.9999C0.949951 9.23077 3.56909 11.8499 6.79995 11.8499ZM6.19394 8.91323L6.64902 8.36636L9.89902 4.46597L8.90098 3.63394L6.10703 6.98647L4.65977 5.54018L3.74082 6.45913L5.69004 8.40933L6.19394 8.91323Z" fill="{{ mb_color_check }}"></path></svg><span>{{ mb_nm }}{%- if mb_verified != blank %} | {{ mb_verified }}{%- endif -%}</span></p>{%- endif -%}
-</div>
 </div></li>
 {%- endif -%}
 {%- endfor -%}
 </ul>
 <ul class="mb-tc__dots" data-dots hidden></ul>
+</div>
 </div>
 
 <script>
@@ -120,8 +141,10 @@ vp.insertBefore(cl,real[0]);
 vp.appendChild(cf);
 }
 function w(){return vp.clientWidth}
-function at(k,smooth){vp.scrollTo({left:k*w(),behavior:smooth?'smooth':'auto'})}
-function dom(){var x=w();return x?Math.round(vp.scrollLeft/x):0}
+/* one step = the distance from one card to the next (a little less than the row width, because the next card peeks in) */
+function step(){var a=vp.children[0],b=vp.children[1];if(a&&b){var d=b.getBoundingClientRect().left-a.getBoundingClientRect().left;if(d>0)return d}return w()}
+function at(k,smooth){vp.scrollTo({left:k*step(),behavior:smooth?'smooth':'auto'})}
+function dom(){var x=step();return x?Math.round(vp.scrollLeft/x):0}
 function ridx(){var d=dom();return loop?(((d-1)%n)+n)%n:0}
 function quiet(f){
 quietUntil=Date.now()+200;
@@ -215,7 +238,7 @@ vp.scrollLeft=drag.s-(e.clientX-drag.x);
 });
 function drop(){
 if(!drag)return;
-var k=Math.round(vp.scrollLeft/(w()||1));
+var k=Math.round(vp.scrollLeft/(step()||1));
 drag=null;
 vp.classList.remove('is-drag');
 at(k,true);
