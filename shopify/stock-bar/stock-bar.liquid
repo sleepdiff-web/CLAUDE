@@ -5,7 +5,7 @@
   WHERE: Online Store > Themes > Customize > the page > Add section or block > Custom Liquid, drag it where you want it (for example under the benefits list, above the Add to cart button), paste this in.
   EDIT YOUR CONTENT BELOW. Do not use a straight apostrophe (') in the text, use &#39; instead.
   mb_label = the title on the left. mb_percent = how much is sold, a number from 0 to 100 (no % sign). mb_tag = the text in the red tag (leave empty and it writes it for you, for example 83% Sold).
-  The other lines are the original values (colours, sizes, spacing). Only change them if you want it different from Bioroot: mb_margin = space above and below the strip (top-and-bottom then left-and-right).
+  The other lines are the original values (colours, sizes, spacing). Only change them if you want it different from Bioroot: mb_margin = the space around the strip, written as: top, left-and-right, bottom (for example 16px 0 10px = 16px above, none at the sides, 10px below).
 {%- endcomment -%}
 {%- assign mb_label = 'November Batch' -%}
 {%- assign mb_percent = '83' -%}
@@ -17,7 +17,7 @@
 {%- assign mb_tag_color = '#ffffff' -%}
 {%- assign mb_track = '#f5c6cf' -%}
 {%- assign mb_fill = '#c8102e' -%}
-{%- assign mb_margin = '16px 0' -%}
+{%- assign mb_margin = '16px 0 10px' -%}
 {%- assign mb_p = mb_percent | plus: 0 -%}
 {%- if mb_p < 0 -%}{%- assign mb_p = 0 -%}{%- elsif mb_p > 100 -%}{%- assign mb_p = 100 -%}{%- endif -%}
 {%- if mb_tag != blank -%}{%- assign mb_tag_txt = mb_tag -%}{%- else -%}{%- assign mb_tag_txt = mb_p | append: '% Sold' -%}{%- endif -%}
